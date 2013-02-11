@@ -6,7 +6,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In The MAN's hideout, a secure undisclosed location.
+;; 安全に隠された場所にあるにんげんの隠れ家
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_man
                (list 0  0 mans-bed    "sleeping")
@@ -28,144 +28,140 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Yvonne, known as "The MAN", is a female rogue of pre-eminent skill,
-;; living in a secure undisclosed location (The MAN's hideout).
-;; 
+;; 「にんげん」として知られるイヴォンヌは卓越した技術を持ったならず者の女性で
+;; ある。安全な知られていない場所(にんげんの隠れ家)に住んでいる。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (man-hail knpc kpc)
-  (say knpc "[You meet an attractive, middle-aged woman with a catlike poise "
-       "and easy bearing] Hello, Good-looking."))
+  (say knpc "［あなたは人を引きつけるような、猫のように身軽な中年の女性と会った。］"
+       "こんにちは。すてきな方。"))
 
 (define (man-default knpc kpc)
-  (say knpc "You've got me there, hotshot."))
+  (say knpc "ぜひ見てみたいわ。"))
 
 (define (man-name knpc kpc)
-  (say knpc "I'm Yvonne. But everybody calls me The MAN."))
+  (say knpc "私はイヴォンヌ、でも人はにんげんと呼ぶわ。"))
 
 (define (man-join knpc kpc)
-  (say knpc "Can't say I'm not tempted, handsome, but when it comes to "
-       "business I like to work alone."))
+  (say knpc "魅力的な方、引かれるものがないとは言えないわね。でも、何かをするなら一人の方がいいわ。"))
 
 (define (man-job knpc kpc)
-  (say knpc "Hm. How shall I put this? I suppose the truth is easiest: "
-       "I'm a Wrogue."))
+  (say knpc "そうね。私の立ち位置をどこに置くか？答えは簡単、私はならず者よ。"))
 
 (define (man-bye knpc kpc)
-  (say knpc "Bye bye..."))
+  (say knpc "バイバイ…"))
 
 
 ;; Misc
 (define (man-man knpc kpc)
-  (say knpc "[She laughs easily] Were you expecting someone... manlier?")
+  (say knpc "［彼女は少し笑った。］もしかして…男だと思ってたかしら？")
   (kern-conv-get-yes-no? kpc)
-  (say knpc "The MAN is an acronym for the Mistress of Acquisitive "
-       "Nature. Do you like it?")
+  (say knpc "にんげん(MAN)は強欲な気質の女王(Mistress of Acquisitive Nature)の頭文字よ。"
+       "気に入ってくれたかしら？")
   (kern-conv-get-yes-no? kpc)
-  (say knpc "I think it was the Engineer who originally coined it. "
-       "You know those engineering types, suckers for an acronym."))
+  (say knpc "たしか技師が最初にそう呼んだと思うわ。"
+       "こうやって作られた綴りにだまされるのね。"))
 
 (define (man-wrog knpc kpc)
-  (say knpc "A Wrogue specializes in breaking rules. Tell me, stranger, "
-       "do you like to break the rules?")
+  (say knpc "ならず者とは規則破りの専門家よ。"
+       "見知らぬ方よ、教えてくださいな。規則を破るのは好き？")
   (if (kern-conv-get-yes-no? kpc)
-      (say knpc "[She feigns a shocked look. It really is quite fetching.] "
-           "Naughty boy! I may have to edify your character with a "
-           "spanking before you leave.")
-      (say knpc "Oh, so you're a square? I do like squares. Perhaps you'll "
-           "rub off on me. [She gives you a cutely innocent look]")))
+      (say knpc "［彼女は驚いたふりをした。それはとても魅力的だった。］"
+           "悪い子ね！君が帰る前に平手打ちをして教育しなければならないわね。")
+      (say knpc "おやおや、どうしてそんなに四角張っているの？四角張ったのは本当に好きよ。"
+           "もしかするとそれで私を磨いてくれるのかしら？［彼女はあなたを無邪気に見た。］")))
 
 (define (man-rule knpc kpc)
-  (say knpc "A rule, a lock, a secret, a riddle. I love to break them all "
-       "and see what lies behind. It's curiousity mainly, and the challenge "
-       "of the crack. Look around, do you see much wealth here in my home?")
+  (say knpc "規則、鍵、秘密、謎。私はそれらを全て壊し、その向こうにあるものを見たい。"
+       "それは好奇心のため、そして挑戦のためよ。"
+       "まわりを見て。ここにある莫大な富がわかるかしら？")
   (if (kern-conv-get-yes-no? kpc)
-      (say knpc "Sigh. Either you come from a poor childhood or you haven't "
-           "bothered to look.")
-      (say knpc "No, despite my moniker I'm not that acquisitive. There's no "
-           "pleasure for me in HAVING, only in DOING. Once a thing is done "
-           "I've no further interest in it. The most interesting and valuable "
-           "things I've acquired are secrets.")))
+      (say knpc "はぁ。貧しい子供時代をすごしたのか、それとも何も見えていないのか。")
+      (say knpc "いいえ。私はあだ名と違ってそんなに強欲ではないわ。"
+           "私は「持つ」ことには興味はないの。ただ「する」だけよ。"
+           "一度やってしまえば、その後には興味はない。"
+           "私が求める最も興味深く価値あるものは、秘密そのものよ。")))
 
 (define (man-secr knpc kpc)
-  (say knpc "Just try me."))
+  (say knpc "私で試してごらんなさい。"))
 
 (define (man-enem knpc kpc)
-  (say knpc "The Warritrix has a mighty enemy in the person of the "
-       "Stewardess of Glasdrin."))
+  (say knpc "闘士の強力な敵はグラスドリンの統治者かも知れないわ。"))
 
 (define (man-stew knpc kpc)
-  (say knpc "I read her diary once. She really ought to keep it locked up "
-       "better. She hates the Warritrix for defying her at Absalot."))
+  (say knpc "彼女の日記を一度読んだことがあるの。"
+       "本当は彼女を捕らえたほうがいいのかもしれない。"
+       "彼女はアブサロットで背いた闘士を憎んでいるのよ。"))
 
 (define (man-hate knpc kpc)
-  (say knpc "You can read the Stewardess's diary for yourself. "
-       "Would you like to know how?")
+  (say knpc "統治者の日記を自分で読んでみなさい。"
+       "どうすればいいか知りたい？")
   (if (yes? kpc)
-      (say knpc "Just remember two little words: Wis Quas. "
-           "I'm sure a sharp guy like you can figure out the rest.")
-      (say knpc "Oh, but you're missing out! "
-           "It's simply dripping with political intrigue.")))
+      (say knpc "ただこの二つの言葉を覚えておけばいいわ。ウィス・クァス<Wis Quas>よ。"
+           "あなたは鋭いからどこにあるかはわかるでしょう。")
+      (say knpc "ああ、でもあなたは見落としているわ。"
+           "これは政治的な謀略よ。")))
 
 
 ;; Wise Queries
 (define (man-wiza knpc kpc)
-  (say knpc "Yes, they're powerful. But I've pilfered their secrets."))
+  (say knpc "そう、とても強い。でも私は彼らの秘密を盗みたい。"))
 
 (define (man-wrig knpc kpc)
-  (say knpc "A clever bunch, but they've yet to design a lock I can't crack."))
+  (say knpc "賢さの束、でも私が開けられない鍵はまだ作れないようね。"))
 
 (define (man-warr knpc kpc)
-  (say knpc "The Warritrix is legendary for her noble demeanor. I do not know "
-       "her well, but I do know her enemies, perhaps better than she."))
+  (say knpc "彼女はその優雅な振る舞いで知られている。"
+       "私は彼女のことは詳しくは知らないけれど、その敵は、もしかすると彼女自身よりもよく知っているかもしれないわ。"))
 
 (define (man-necr knpc kpc)
-  (say knpc "A useful fellow, the dead know many things forgotten by the "
-       "living, and he knows how to charm them."))
+  (say knpc "便利な友達よ。"
+       "死人は生きている人が忘れたたくさんのことを知っている。"
+       "そして彼はどうやって聞き出すのか知っているのよ。"))
 
 (define (man-alch knpc kpc)
-  (say knpc "I understand he's a clever little worm, but I don't have much "
-       "to do with him."))
+  (say knpc "賢い人なのはわかってるけど、彼とは合わないわね。"))
 
 (define (man-engi knpc kpc)
-  (say knpc "I'd love to challenge myself with a lock of his design, but "
-       "alas, he keeps no secrets or treasure to lock up!"))
+  (say knpc "彼の設計書の束に挑戦してみたいわ。"
+       "でも、ああ、彼には隠している秘密も宝もないのよ！"))
 
 (define (man-ench knpc kpc)
-  (say knpc "My most favorite wizard. I do love to hear him go on and on in "
-       "that virtuous vein of his! But he really should keep his stuff more "
-       "secure."))
+  (say knpc "私の最愛の魔術師。"
+       "彼の話を聞きに行くのも、その高潔な性格も大好きよ！"
+       "でも自分の物はもっとちゃんとしまって置くべきね。"))
 
 ;; Accursed Queries
 (define (man-accu knpc kpc)
-  (say knpc "They speak of freedom, by which they mean the freedom to enslave others. "
-       "Some who would break the rules join them, only to find themselves enchained. "
-       "A nasty bunch."))
+  (say knpc "彼らが自由について話すとき、それは他者を奴隷にする自由を意味する。"
+       "規則を破って彼らに加わった者もいるわ。でもわかったのは彼ら自身が鎖でつながれているということだけ。"
+       "不快の束よ。"))
 
 
 ;; Rune
 (define (man-rune knpc kpc)
-  (say knpc "Runes... I once knew a pirate that carried a Rune. Have you "
-       "heard the tale of Ghertie and the Merciful Death?")
+  (say knpc "石版…かつて海賊が持っていたのを知っているわ。"
+       "ガーティーと「慈悲深い死」号の話を知っているかしら？")
   (if (kern-conv-get-yes-no? kpc)
-      (say knpc "You are already well-traveled. I like an experienced man.")
-      (say knpc "Ask around Oparine about Ghertie."))
-  (say knpc "If you can find where the Merciful Death lies you can raise it "
-       "with a spell. Do you know the spell?")
+      (say knpc "いろいろ旅してるのね。経験豊かな人は好きよ。")
+      (say knpc "オパーリンでガーティーについて聞いてごらんなさい。"))
+  (say knpc "もし慈悲深い死を見つけたら、呪文で引き上げられるわ。"
+       "呪文はわかる？")
   (if (kern-conv-get-yes-no? kpc)
-      (say knpc "Well, aren't we the accomplished magician? I hope you don't "
-           "know any love spells, Wizard!")
+      (say knpc "まあ、あなたはあらゆる魔法を知っているの？"
+           "愛の魔法は知らなければいいけれど、魔法使いさん！")
       (begin
-			(say knpc "Mix mandrake, blood moss and spider silk, then chant Vas "
-			"Uus Ylem next to the spot where the ship has sunk.")
+			(say knpc "マンドレイク、血の苔、そして蜘蛛の糸を調合して、"
+			"ヴァス・ウース・イェム<Vas Uus Ylem>と唱える。"
+			"そして船が沈んだ場所を指し示しなさい。")
 			(quest-data-update 'questentry-rune-c 'shipraise 1)
 		)
 	)
-  (say knpc "Ghertie will not give up the location of her ship freely. But "
-       "even the dead have desires, indeed that is the worst part of "
-       "death! And Ghertie desires nothing more than ^c+mrevenge^c-. Mark that word "
-       "well, and remember it when you meet her ghost.")
+  (say knpc "ガーティーはタダでは船の場所を言わないでしょうね。"
+       "でも死んでしまっても願望はあるわ。たとえ最悪の死に方をしても！"
+       "ガーティーが望んでいるのは、ただ^c+m復讐^c-のみよ。"
+       "この言葉を書き留めておきなさい。そして彼女の幽霊とあったとき思い出すのよ。")
 	(quest-data-update 'questentry-rune-c 'info 1)
 	(quest-data-assign-once 'questentry-rune-c)
 	(quest-data-update 'questentry-ghertie 'ghertieid 1)
@@ -174,8 +170,8 @@
 	)
 
 (define (man-chan knpc kpc)
-  (say knpc "So you've met Chanticleer? No doubt HE was the one who told you where to find me! "
-       "[Sigh] Well, I hope the irresponsible wrogue is well."))
+  (say knpc "オンドリと会ったの？彼は私の居場所をしゃべったに違いないわ。"
+       "はぁ。ええ、あの無責任なならず者は元気なようね。"))
 
 (define man-conv
   (ifc basic-conv
@@ -214,7 +210,7 @@
 (define (mk-the-man)
   (bind 
    (kern-mk-char 'ch_man           ; tag
-                 "The MAN"             ; name
+                 "にんげん"            ; name
                  sp_human            ; species
                  oc_wrogue           ; occ
                  s_brigandess        ; sprite

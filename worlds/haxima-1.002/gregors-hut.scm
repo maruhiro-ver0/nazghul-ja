@@ -40,7 +40,7 @@
 
 (bind 
  (kern-mk-char 'ch_ilya ; tag
-               "Ilya"              ; name
+               "イリア"            ; name
                sp_human            ; species
                nil                 ; occ
                s_child             ; sprite
@@ -62,7 +62,7 @@
 
 
 (kern-mk-place 'p_gregors_hut     ; tag
-               "Gregor's Hut"     ; name
+               "グレゴールの小屋" ; name
                s_hamlet           ; sprite
                m_gregors_hut      ; map
                #f                 ; wraps

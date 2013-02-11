@@ -2,7 +2,7 @@
 ;; Map
 ;; ----------------------------------------------------------------------------
 (mk-19x19-town
- 'p_void_temple "Temple of the Void" s_shrine
+ 'p_void_temple "µõ¶õ¤Î»û±¡" s_shrine
  (list
   "cc cc cc cc cc cc cc .. .. .. .. .. cc cc cc cc cc cc cc "
   "cc cc cc cc cc cc cc cc .. .. .. cc cc cc cc cc cc cc cc "

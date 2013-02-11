@@ -51,10 +51,10 @@ int commonInit(void)
 
 // fixme -- obsolete, use the next one
 static const char *dir_str[] = {
-	"Northwest", "North", "Northeast",
-	"West", "Here", "East",
-	"Southwest", "South", "Southeast", 
-        "Up", "Down"
+	"ÀÃ¿æ", "ÀÃ", "ÀÃ≈Ï",
+	"¿æ", "§≥§≥", "≈Ï",
+	"∆Ó¿æ", "∆Ó", "∆Ó≈Ï", 
+        "æÂ", "≤º"
 };
 
 static unsigned char dir_facing[] = {

@@ -70,6 +70,10 @@ static int conv_keyword_highlighting = 1;
  */
 static int conv_get_player_query(struct KeyHandler *kh, int key, int keymod)
 {
+	char kana_buf[128];
+	int kana_len;
+	int i;
+
 	if (key == CANCEL) {
 		while (conv_ptr > conv_query) {
 			conv_ptr--;
@@ -77,28 +81,46 @@ static int conv_get_player_query(struct KeyHandler *kh, int key, int keymod)
 			cmdwin_pop();
 			conv_room++;
 		}
+		alpha_to_kana(key, NULL);
 		return 1;
 	}
 
 	if (key == '\n') {
+		alpha_to_kana(key, NULL);
 		return 1;
 	}
 
 	if (key == '\b') {
 		if (conv_ptr != conv_query) {
-			conv_ptr--;
-			*conv_ptr = 0;
-			conv_room++;
-			cmdwin_pop();
+			if (*(conv_ptr - 1) & 0x80) {
+				conv_ptr -= 2;
+				*conv_ptr = 0;
+				conv_room += 2;
+				cmdwin_pop();
+				cmdwin_pop();
+			} else {
+				conv_ptr--;
+				*conv_ptr = 0;
+				conv_room++;
+				cmdwin_pop();
+			}
 		}
+		alpha_to_kana(key, NULL);
 		return 0;
 	}
 
-	if (isprintable(key) 
+	if ((isprintable(key) || (key & 0x80))
             && conv_room) {
 		cmdwin_push("%c", key);
 		*conv_ptr++ = key;
 		conv_room--;
+	}
+
+	kana_len = alpha_to_kana (key, kana_buf);
+	if (kana_len) {
+		for (i = 0; i < kana_len; i++) {
+			conv_get_player_query (kh, kana_buf[i], keymod);
+		}
 	}
 
 	return 0;
@@ -363,6 +385,8 @@ void conv_end()
 void conv_enter(Object *npc, Object *pc, struct conv *conv)
 {
 	struct KeyHandler kh;
+	char english[MAX_KEYWORD_SZ];
+	char kanji[MAX_KEYWORD_SZ];
 
         assert(conv);
 
@@ -377,7 +401,7 @@ void conv_enter(Object *npc, Object *pc, struct conv *conv)
             Session->subject = (class Being*)pc;
         }
 
-	log_banner("^c+yCONVERSATION^c-");
+	log_banner("^c+y会話^c-");
 
         session_run_hook(Session, conv_start_hook, "pp", pc, npc);
 
@@ -410,7 +434,7 @@ void conv_enter(Object *npc, Object *pc, struct conv *conv)
 		conv_ptr = conv_query;
 
 		cmdwin_clear();
-		cmdwin_push("Say: ");
+		cmdwin_push("言う: ");
 
 		/*** Get next query ***/
 
@@ -421,9 +445,11 @@ void conv_enter(Object *npc, Object *pc, struct conv *conv)
 		conv_query[MAX_KEYWORD_SZ] = 0;
 		conv_len = strlen(conv_query);
                 if (! conv_len)
-                        sprintf(conv_query, "bye");
-		log_msg("^c+%c%s:^c- %s", CONV_PC_COLOR, 
-                        pc->getName(), conv_query);
+                        sprintf(conv_query, "サヨナラ");
+		kana_to_english(conv_query, english, kanji);
+		strcpy(conv_query, english);
+		log_msg("^c+%c%s: ^c-%s", CONV_PC_COLOR, 
+                        pc->getName(), kanji);
 
 		/*** Check if player ended conversation ***/
 
@@ -458,12 +484,46 @@ int isprintable(int c)
                 );
 }
 
+int iskanji(int c)
+{
+        return c & 0x80;
+}
+
+int conv_lookup_dictionary(char *word, struct dictionary **dic)
+{
+	size_t found_len = 0;
+	size_t kanji_len;
+	int i;
+
+	*dic = NULL;
+
+	for(i = 0; dictionary[i].kana != NULL; i++) {
+		kanji_len = strlen(dictionary[i].kanji);
+		if (kanji_len > found_len && !strncmp(word, dictionary[i].kanji, kanji_len)) {
+			found_len = kanji_len;
+			*dic = &dictionary[i];
+		}
+	}
+
+	return (int )found_len;
+}
+
 int conv_get_word(char *instr, char **beg, char **end)
 {
+        struct dictionary *dic;
+        int len;
         char *inp = instr;
 
-        while (*inp && !isalpha(*inp)) {
-                inp++;
+        if (iskanji(*inp)) {
+                *beg = instr;
+
+                if((len = conv_lookup_dictionary(instr, &dic)) <= 0) {
+                        len = 2;
+                }
+
+                *end = instr + len;
+
+                return 1;
         }
 
         if (!*inp) {
@@ -472,8 +532,14 @@ int conv_get_word(char *instr, char **beg, char **end)
 
         *beg = inp;
 
-        while (*inp && isalpha(*inp)) {
-                inp++;
+        if (isalpha(*inp)) {
+                while (*inp && isalpha(*inp)) {
+                        inp++;
+                }
+        } else {
+                while(*inp && !isalpha(*inp) && !iskanji(*inp)) {
+                        inp++;
+                }
         }
 
         *end = inp;
@@ -483,10 +549,17 @@ int conv_get_word(char *instr, char **beg, char **end)
 
 int conv_is_keyword(struct conv *conv, char *word)
 {
+        struct dictionary *dic;
         int index;
 
         if (! conv_keyword_highlighting) {
                 return 0;
+        }
+
+        if(iskanji(*word)) {
+                if(conv_lookup_dictionary(word, &dic) > 0) {
+                        word = dic->english;
+                }
         }
 
         index = conv_lookup_keyword(conv, word);
@@ -979,7 +1052,7 @@ static void conv_op_run(struct applet *applet, SDL_Rect *dims, struct session *s
 		ca->conv_ptr = ca->conv_query;
 
 		cmdwin_clear();
-		cmdwin_push("Say: ");
+		cmdwin_push("言う：");
 
 		/*** Get next query ***/
 

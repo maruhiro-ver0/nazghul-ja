@@ -88,10 +88,10 @@
   (let ((door (kobj-gob kdoor)))
     (cond 
      ((door-magic-locked? door)
-      (kern-log-msg "Magically locked!\n")
+      (kern-log-msg "魔法で封印されている！\n")
       #f)
      ((door-locked? door)
-      (kern-log-msg "Locked!\n")
+      (kern-log-msg "施錠されている！\n")
       #f)
      ((door-trapped? door)
       (door-trip-traps kdoor khandler)
@@ -117,8 +117,8 @@
 (define (door-lock kdoor khandler)
   (let ((door (kobj-gob kdoor)))
     ;;(display "door-lock:")(display door)(newline)
-    (cond ((door-open? door) (kern-log-msg "Not closed!\n") #f)
-          ((door-locked? door) (kern-log-msg "Already locked!\n") #f)
+    (cond ((door-open? door) (kern-log-msg "閉じていない！\n") #f)
+          ((door-locked? door) (kern-log-msg "既に施錠されている！\n") #f)
           (else
            (door-set-locked! door #t)
            (door-update-kstate kdoor)
@@ -127,9 +127,9 @@
 (define (door-unlock kdoor khandler)
   (let ((door (kobj-gob kdoor)))
     ;;(display "door-unlock:")(display door)(newline)
-    (cond ((door-open? door) (kern-log-msg "Not closed!\n") #f)
-          ((not (door-locked? door)) (kern-log-msg "Not locked!\n") #f)
-          ((door-needs-key? door) (kern-log-msg "Needs the key!\n") #f)
+    (cond ((door-open? door) (kern-log-msg "閉じていない！\n") #f)
+          ((not (door-locked? door)) (kern-log-msg "施錠されていない！\n") #f)
+          ((door-needs-key? door) (kern-log-msg "鍵が必要だ！\n") #f)
           (else
            (door-set-locked! door #f)
            (door-update-kstate kdoor)
@@ -138,9 +138,9 @@
 (define (door-magic-lock kdoor khandler)
   (let ((door (kobj-gob kdoor)))
     ;;(display "door-magic-lock:")(display door)(newline)
-    (cond ((door-open? door) (kern-log-msg "Not closed!\n") #f)
+    (cond ((door-open? door) (kern-log-msg "閉じていない！\n") #f)
           ((door-magic-locked? door) 
-           (kern-log-msg "Already magically locked!\n") #f)
+           (kern-log-msg "既に魔法で封印されている！\n") #f)
           (else
            (door-set-magic-locked! door #t)
            (door-update-kstate kdoor)
@@ -149,9 +149,9 @@
 (define (door-magic-unlock kdoor khandler)
   (let ((door (kobj-gob kdoor)))
     ;;(display "door-magic-unlock:")(display door)(newline)
-    (cond ((door-open? door) (kern-log-msg "Not closed!\n") #f)
+    (cond ((door-open? door) (kern-log-msg "閉じていない！\n") #f)
           ((not (door-magic-locked? door)) 
-           (kern-log-msg "Not magically locked!\n") #f)
+           (kern-log-msg "魔法で封印されていない！\n") #f)
           (else
            (door-set-magic-locked! door #f)
            (door-update-kstate kdoor)
@@ -188,8 +188,8 @@
 
 (define (door-use-key kdoor key-type)
   (let ((door (kobj-gob kdoor)))
-    (cond ((door-open? door) (kern-log-msg "Not closed!"))
-          ((not (door-key-fits? door key-type)) (kern-log-msg "Key won't fit!"))
+    (cond ((door-open? door) (kern-log-msg "閉じていない！"))
+          ((not (door-key-fits? door key-type)) (kern-log-msg "鍵が合わない！"))
           ((door-locked? door)
            (door-set-locked! door #f)
            (door-update-kstate kdoor))
@@ -198,7 +198,7 @@
            (door-update-kstate kdoor)))))
 
 (define (door-search kdoor kchar)
-  (kern-log-begin "Searching door...")
+  (kern-log-begin "扉を調べた…")
   (let ((door (kobj-gob kdoor)))
     (if (foldr (lambda (detected? trap)
                  (trap-search trap kdoor kchar)
@@ -210,36 +210,36 @@
                  (or detected? (trap-detected? trap)))
                #f
                (door-traps door))
-        (kern-log-end "Trap detected!")
-        (kern-log-end "No traps detected!")
+        (kern-log-end "罠が仕掛けられている！")
+        (kern-log-end "罠はないようだ！")
         )))
 
 (define (door-describe kdoor count)
   (let ((door (kobj-gob kdoor)))
-    (kern-log-continue "a ")
+    (kern-log-continue "")
     (if (door-magic-locked? door)
-        (kern-log-continue "magically locked, "))
+        (kern-log-continue "魔法で封印された"))
     (if (door-locked? door)
         (if (door-needs-key? door)
-            (kern-log-continue "locked (with a key), ")
-            (kern-log-continue "padlocked, ")))
+            (kern-log-continue "施錠された")
+            (kern-log-continue "南京錠の掛けられた")))
     (if (door-open? door)
-        (kern-log-continue "open door ")
-        (kern-log-continue "closed door "))
+        (kern-log-continue "開いた扉")
+        (kern-log-continue "閉じた扉"))
     (kern-log-continue "(")
     (if (foldr (lambda (described? trap)
                  (cond ((trap-detected? trap)
                         (if described?
-                            (kern-log-continue ", "))
+                            (kern-log-continue "、"))
                         (kern-log-continue (trap-name trap))
                         (if (trap-tripped? trap)
-                            (kern-log-continue "[disarmed]"))
+                            (kern-log-continue "[解除済]"))
                         #t)
                        (else described?)))
                #f
                (door-traps door))
-        (kern-log-continue " trap(s) detected")
-        (kern-log-continue "no traps detected")
+        (kern-log-continue "の罠が仕掛けられている")
+        (kern-log-continue "罠はないようだ")
         )
     (kern-log-continue ")")
     ))
@@ -281,7 +281,7 @@
        ))
 
 ;; Create the kernel "door" type
-(mk-obj-type 't_door "door" s_stone_arch layer-mechanism 
+(mk-obj-type 't_door "扉" s_stone_arch layer-mechanism 
              door-ifc)
 
 (define (door-state-factory
@@ -363,10 +363,10 @@
   kdoor
   )
   
-(mk-obj-type 't_archway_rock "archway" s_rock_arch layer-mechanism 
+(mk-obj-type 't_archway_rock "拱路" s_rock_arch layer-mechanism 
              nil)
 
-(mk-obj-type 't_archway_stone "archway" s_stone_arch layer-mechanism 
+(mk-obj-type 't_archway_stone "拱路" s_stone_arch layer-mechanism 
              nil)
         
 (define (mk-archway-rock) (kern-mk-obj t_archway_rock 1))

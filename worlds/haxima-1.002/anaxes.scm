@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; No schedule (Cave Shrine within Brundegart).
+;; ブルンデガードの洞窟の神殿
 ;;----------------------------------------------------------------------------
 
 ;;----------------------------------------------------------------------------
@@ -19,117 +19,112 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Anaxes is the lich/shade of a long-dead wizard, who once served 
-;; Luximene and later rebelled against him.
-;; Anaxes abides in the Cave Shrine within the lost realm of Brundegart.
+;; アナクシズは遠い昔死んだ魔術師のリッチ/影で、かつてラクシマニに仕えていた
+;; が、後に離反した。
+;; アナクシズはブルンデガードの失われた領域、洞窟の神殿にいる。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (anaxes-hail knpc kpc)
-  (meet "[You meet the proud shade of a long-dead wizard]")
-  (say knpc "Art thou the agent of Luximene?")
+  (meet "［あなたは誇らしげな、遠い昔に死んだであろう魔術師の影と会った。］")
+  (say knpc "おぬし、ラクシマニの使いか？")
   (if (yes? kpc)
-      (say knpc "But who else? [He chuckles grimly] "
-           "Thou hast broken through the defenses, "
-           "but thy foul master will not find me toothless!")
-      (say knpc "Deny it not, I know he seeks to slay me for my rebellion!"))
+      (say knpc "他の誰だと？［彼は残虐そうな笑いを浮かべた。］"
+           "おぬしは私の封印を破った。"
+           "しかし私を従わせることはできぬ！")
+      (say knpc "偽るな。奴が私を反逆の罪で探していることは知っている！"))
   (aside kpc 'ch_nate 
-         "[Whispering] Milord, Luximene has been dead for ages!")
+         "［ささやき］旦那、ラクシマニは遠い昔に死んだはずですぜ！")
   )
 
 
 (define (anaxes-default knpc kpc)
-  (say knpc "[He silently regards you]"))
+  (say knpc "［彼は黙ってあなたを見ている。］"))
 
 (define (anaxes-name knpc kpc)
-  (say knpc "I am Anaxes, formerly of the Twelve."))
+  (say knpc "私はアナクシズ、かつては十二人の内の一人であった。"))
 
 (define (anaxes-luxi knpc kpc)
-  (say knpc "Luximene is not a man, but a demon in a mask! "
-       "He hath sown dissent and conquered in its wake, "
-       "and now seeks to dethrone the gods.")
+  (say knpc "ラクシマニは人ではない。仮面をした悪魔である！"
+       "反乱の種をまき、芽が出ればそれを刈り取ってきた。"
+       "そして今では神を退かせる方法を探っている。")
   (prompt-for-key)
-  (say knpc "He hath ordered his own image to be erected in the shrines. "
-       "This is too much! Now his perfidy is made plain! ")
+  (say knpc "奴はこの神殿におのれの像を建てるよう命じた。"
+       "出過ぎたことだ！今や奴の背信は明らかになった。")
   (prompt-for-key)
-  (say knpc "So long as I draw breath, the Shrine of Brune will not be defiled!")
-  (aside kpc 'ch_nate "Ah! The name of the god at last! I feared it was forgotten forever!")
+  (say knpc "私が生きている間は、このブルヌの神殿が汚されることはない！")
+  (aside kpc 'ch_nate "ああ！最後の神の名！永遠に忘れられたかと思っていた！")
   (cond ((has? kpc t_lich_skull 1)
-         (say knpc "Wait! What have you there? [He points to Luximene's skull] What doth this mean? Is Luximene then dead?")
+         (say knpc "待て！それは何だ？［彼はラクシマニの頭蓋骨を指差した。］どういうことだ？ラクシマニは死んだのか？")
          (yes? kpc)
-         (say knpc "[He ignores you. The light in his eyes begins to fade and his voice grows weak] It is over...")
+         (say knpc "［彼はあなたを無視した。彼の目の光が消え始め、声はだんだんと弱くなった。］終わったのだ…")
          (prompt-for-key kpc)
-         (say knpc "[He collapses in a heap] ...Isin! ...Isin...")
-         (aside kpc 'ch_nate "Dibs on his boots.")
+         (say knpc "［彼は崩れ落ちた。］…イシン！…イシン")
+         (aside kpc 'ch_nate "あいつの靴は俺の物だ。")
          (kern-conv-end)
          (kern-char-kill knpc))))
 
 (define (anaxes-gods knpc kpc)
-  (say knpc "The gods will take a terrible vengeance on the Shard for its "
-       "faithlessness! Luximene and his followers will be consumed by fire and "
-       "drowned in blood at the last battle! "
-       "Vigilance to the faithful!"))
+  (say knpc "神々は我々の不誠実さに怒りシャルドに復讐するだろう！"
+       "ラクシマニと奴の追随者は、最後の戦いで焼き尽くされ血の海で溺れるであろう！"
+       "戒めに誠実であれ！"))
 
 (define (anaxes-brun knpc kpc)
-  (say knpc "This is the Shrine of Brune, god of vigilance. "
-       "I rebelled against Luximene's order to disgrace it with his image. "
-       "I ordered the entrace to Brune-Guard sealed, and awaited the siege. ")
+  (say knpc "ここは戒めの神、ブルヌの神殿である。"
+       "私はここにラクシマニの像を建てるという恥じるべき命令に反した。"
+       "そしてブルヌの守を封印し攻撃に備えているのだ。")
   )
 
 (define (anaxes-vigi knpc kpc)
-  (say knpc "We have failed in our vigilance! "
-       "Luximene has deceived us all, and now we must pay the price for failure."))
+  (say knpc "我々は戒めを忘れていたのだ！"
+       "ラクシマニは皆を欺き続けた。そして我々は今その代償を払わねばならぬのだ。"))
 
 (define (anaxes-fail knpc kpc)
-  (say knpc "We have failed the gods, it is no wonder they have forsaken us!"))
+  (say knpc "我々は神を裏切った。間違いなく神は我々を見捨てるだろう！"))
 
 (define (anaxes-twel knpc kpc)
-  (say knpc "I was among the Twelve Counselors of Luximene. "
-       "To my shame I helped him achieve his empire. "
-       "I thought a strong ruler would bring order to the Shard, "
-       "and rein in the heresies of the Accursed. "
-       "Alas! We were all deceived!"))
+  (say knpc "私はラクシマニの十二人の助言者の一人だった。"
+       "恥すべきことに、私は奴の帝国を築く手助けをしてしまったのだ。"
+       "強き支配者がシャルドに秩序をもたらし、"
+       "そして呪われた者の邪教を押さえ込むことができると考えていた。"
+       "ああ！我らは裏切られたのだ！"))
 
 (define (anaxes-accu knpc kpc)
-  (say knpc "In the years that followed the Sundering, "
-       "the priesthood became corrupted. "
-       "All manner of wretched men claimed to speak on behalf of the gods, "
-       "polluting the worship of the gods with their foul practices. ")
+  (say knpc "サンダリングの後、"
+       "聖職者たちは堕落した。"
+       "その者たちは神の代弁者であると主張し、その愚かな行為で神への信仰を汚した。")
   (prompt-for-key)
-  (say knpc "Under Luximene we waged war on the heretics. "
-       "We burned the false priests at the stake and put their "
-       "verminous followers to the sword. "))
+  (say knpc "ラクシマニの下で我々はその邪教徒たちと戦った。"
+       "そして、偽りの司祭たちを火刑に処し、その寄生虫のような支持者を刃にかけた。"))
 
 (define (anaxes-bye knpc kpc)
-  (say knpc "On thy guard, defiler of the holy! I shall resist you; "
-       "and should I fall in battle, I will strike from beyond the grave!")
-  (aside kpc 'ch_nate "[Muttering] Methinks he is ahead of schedule.")
+  (say knpc "汝は冒涜する者なり！私は抵抗する。"
+       "たとえこの戦いで朽ちても、墓の向こうから打ち続けるであろう！")
+  (aside kpc 'ch_nate "［つぶやき］既にそうしている！")
   (kern-being-set-base-faction knpc faction-monster)
   )
 
 (define (anaxes-job knpc kpc)
-  (say knpc "I was one of Luximene's Twelve, trusted with the command of "
-       "this fortress and its watch-tower. "
-       "But Luximene has ordered the desecration of the shrines, "
-       "and I have rebelled!")
+  (say knpc "私はラクシマニの十二人の一人で、"
+       "ここにある砦と監視塔での指揮を任されていた。"
+       "しかしラクシマニはこの神殿の冒涜を命じた。"
+       "ゆえに私は反逆したのである！")
   (aside kpc 'ch_nate 
-         "[Whispering] This lich thinks himself a wizard living in the time of Luximene. Can it be that he once was?")
+         "［ささやき］このリッチは自分がラクシマニの時代に生きていると思っていますぜ。")
   )
 
 (define (anaxes-fort knpc kpc)
-  (say knpc "This fortress is Brune-Guard, so-called for this Shrine of Brune, "
-       "and for the vigilance of the tower. It is virtually impregnable to siege."))
+  (say knpc "このブルヌの神殿と監視塔は、ブルヌの守と呼ばれている。"
+       "この砦を攻め落とすことはできぬであろう。"))
 
 (define (anaxes-towe knpc kpc)
-  (say knpc "The watch-tower of Brune-Guard looks far over the sea, the forest, "
-       "the mountains, and deep into the sky. From time beyond memory, "
-       "from before the Sundering, the vigilant have kept lookout here for "
-       "danger below or signs from above."))
+  (say knpc "ブルヌの守の監視塔は、海、森、山、深淵、そして空を見張っている。"
+       "記憶の前、サンダリングの前から、ここで下の危険と上の兆候を監視し続けているのだ。"))
 
 (define (anaxes-sund knpc kpc)
-  (say knpc "The Sundering is the cataclysm that nearly destroyed this world. "
-       "Surely thou dost know this! "
-       "Unless thou art a demon from beyond the void..."))
+  (say knpc "サンダリングとは世界が崩壊するほどの大変動のことである。"
+       "無論おぬしは知らぬであろう！"
+       "虚空を越えて来た悪魔でもない限りは…"))
 
 (define anaxes-conv
   (ifc nil
@@ -165,7 +160,7 @@
           (kern-char-force-drop
            (kern-mk-char 
             'ch_lux          ; tag
-            "Anaxes"         ; name
+            "アナクシズ"     ; name
             anaxes-species   ; species
             anaxes-occ       ; occ
             s_lich           ; sprite

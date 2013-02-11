@@ -23,34 +23,34 @@
 (define (mouse-meet-first-time knpc kpc)
 
   (define (mouse-disappear)
-    (say knpc "Oh, bother. Not again!")
+    (say knpc "おっと兄弟よ、もう会いたくなかったな！")
     (kern-obj-add-effect knpc ef_invisibility nil)
     (kern-conv-end kpc)
     )
 
   (define (mouse-query)
-    (say knpc "Hi. You weren't sent by the Red Lady, were you?")
+    (say knpc "やあ。赤い女のパシリかい？")
     (if (yes? kpc)
         (mouse-disappear)
         (begin
-        	(say knpc "Whew! You scared me for a minute.")
+        	(say knpc "ヒェー！びっくりしたよ。")
         	(mouse-talked)
         )
     ))
 
   (define (mouse-gratitude)
-    (say knpc "Praise be to Alopex! The Red Lady is dead! "
-         "You've done me a great favor.")
+    (say knpc "アロペクスよ感謝します！赤い女は死んだ！"
+         "あんた、よくやってくれたな。")
          (mouse-talked)
          )
 
   (define (kathryn-speech)
-    (say ch_kathryn "Fool, you have led me right to the thief!")
+    (say ch_kathryn "バカな人ね！泥棒の所まで案内してくれるなんて！")
     (kern-obj-set-conv ch_kathryn nil)
     (kern-being-set-base-faction ch_kathryn faction-monster))
 
   (define (thud-speech)
-    (say ch_thud "Thief here! Kill! Kill! Kill!")
+    (say ch_thud "泥棒が　いた！殺す！殺す！殺す！")
     (kern-obj-set-conv ch_thud nil)
     (kern-being-set-base-faction ch_thud faction-monster))
 
@@ -135,46 +135,45 @@
     (if (mouse-first-meeting? mouse)
         (mouse-meet-first-time knpc kpc)
         (begin
-        	(say knpc "Ah, hello. Heh.")
+        	(say knpc "あ、こんにちは。へへっ。")
    	        (mouse-talked)
 	    )
         )))
 
 (define (mouse-default knpc kpc)
-  (say knpc "Got me there."))
+  (say knpc "さあどうかな。"))
 
 (define (mouse-name knpc kpc)
-  (say knpc "I'm the Mouse."))
+  (say knpc "ネズミです。"))
 
 (define (mouse-join knpc kpc)
-  (say knpc "Sorry, I'm not a team player. Heh."))
+  (say knpc "悪いなあ。共同作業には向いてないんだ。へへ。"))
 
 (define (mouse-job knpc kpc)
-  (say knpc "I... uh... collect things."))
+  (say knpc "えー、物を…集めること。"))
 
 
 (define (mouse-coll knpc kpc)
-  (say knpc "Some might even call me a thief."))
+  (say knpc "泥棒と呼ぶ人もいる。"))
 
 (define (mouse-thie knpc kpc)
-  (say knpc "Until recently it was a good business. Somebody wants "
-       "something, they pay me to get it. But then I was hired by this "
-       "strange lady in red."))
+  (say knpc "最近まではいい仕事だったねえ。"
+       "何か欲しい物があれば、それを手に入れるためにあっしに金を払った。"
+       "で、この変な赤い女に雇われたんだ。"))
 
 (define (mouse-lady knpc kpc)
-  (say knpc "The lady hired me to get something and then meet her to "
-       "exchange it for payment. All very typical, you know? But instead "
-       "of paying me, she tried to kill me!"))
+  (say knpc "その赤い女はあっしをある物を手に入れるために雇った。その後、金と交換するために会った。"
+       "ここまではよくあることだ。わかるだろ？"
+       "でも、この女は金を払うかわりに、あっしを殺そうとしたんだ！"))
 
 (define (mouse-kill knpc kpc)
-  (say knpc "That red lady and her brute were relentless! I can't thank you "
-       "enough for getting rid of them, but I have a bad feeling they weren't "
-       "working alone. I'll be hunted for the rest of my life unless I can "
-       "get rid of this stupid rune!"))
+  (say knpc "赤い女とゴツい手下は容赦なかった！"
+       "こいつらを倒したことだけは感謝するよ。だが、こいつらが単独でやったのではない気がする。"
+       "このくだらない石版とおさらばしない限りずっと狙われそうだ！"))
 
 (define (mouse-rune knpc kpc)
   (if (not (in-inventory? knpc t_rune_k))
-      (say knpc "It's your problem now, buddy!")
+      (say knpc "それはもうあんたの問題だ、親友よ！")
       (begin
 
         (define (give-rune gold)
@@ -182,50 +181,48 @@
             (if (> pgold gold)
                 (kern-obj-add-gold kpc (- 0 gold))
                 (let ((price (min pgold gold)))
-                  (say knpc "You don't have enough! Oh well, I'll just take "
-                       "whatever you can give me for it.")
+                  (say knpc "おっと、金が足りないな！"
+                       "払える分だけ受け取っておこう。")
                   (kern-obj-add-gold kpc (- 0 price)))))
           (kern-obj-remove-from-inventory knpc t_rune_k 1)
           (kern-obj-add-to-inventory kpc t_rune_k 1)
           (quest-data-update-with 'questentry-thiefrune 'recovered 1 (quest-notify (grant-party-xp-fn 50)))
           )
         
-        (say knpc "This rune I got for the red lady has been nothing but "
-             "trouble since I first heard of it. I don't even know what "
-             "it's good for! I'll give you a really good deal on it. Say, "
-             "500 gold?")
+        (say knpc "赤い女のために手に入れたこの石版は、最初に聞いたときからずっとやっかいごとに過ぎなかった。"
+             "これが何なのかもわからない！"
+             "お買い得価格であんたに売ってやろう。どう？金貨500枚だ。")
         (if (kern-conv-get-yes-no? kpc)
             (give-rune 500)
             (begin
-              (say knpc "Well, I guess I do owe you for saving me from "
-                   "that red lady. How about 250 gold?")
+              (say knpc "うーん、赤い女から助けてもらった借りがあるからな。250枚はどうだ？")
               (if (kern-conv-get-yes-no? kpc)
                   (give-rune 250)
                   (begin
-                    (say knpc "You drive a hard bargain, buddy. 100 gold?")
+                    (say knpc "商売上手だなあ、親友よ。100枚？")
                     (if (kern-conv-get-yes-no? kpc)
                         (give-rune 100)
                         (begin
-                          (say knpc "50?")
+                          (say knpc "50？")
                           (if (kern-conv-get-yes-no? kpc)
                               (give-rune 50)
                               (begin
-                                (say knpc "Look, just take it ok?")
+                                (say knpc "わかった。持ってけ。これでいいな？")
                                 (if (kern-conv-get-yes-no? kpc)
                                     (give-rune 0)
                                     (begin
-                                      (say knpc "I'm desperate! Here, "
-                                           "I'll pay YOU to take it! "
-                                           "Just get it away from me!")
+                                      (say knpc "たのむよ！"
+                                           "金を出すから持って行ってくれ！"
+                                           "ずーっと遠くへ！")
                                       (give-rune (- 0 100))))))
                           )))))))))
       
 (define (mouse-bye knpc kpc)
-  (say knpc "No offense, but I hope we never meet again."))
+  (say knpc "悪気はないが、もう二度と会いたくないね。"))
 
 (define (mouse-alopex knpc kpc)
-  (say knpc "Alopex? Oh, the old god of thieves. "
-       "Or so I've heard."))
+  (say knpc "アロペクス？ああ、古い泥棒の神だ。"
+       "そう聞いた。"))
 
 (define mouse-conv
   (ifc nil
@@ -253,7 +250,7 @@
     (kern-char-arm-self
      (kern-mk-char 
       'ch_mouse ;;..tag
-      "Mouse" ;;....name
+      "ネズミ" ;;....name
       sp_human ;;.....species
       nil ;;..........occupation
       s_brigand ;;.....sprite

@@ -15,7 +15,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;;
-;; The schedule below is for the place "Engineer's Tower Ground Floor"
+;; 技師の小屋
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_engineer
                (list 0  0  eng-workshop   "working")
@@ -39,63 +39,63 @@
 ;; Voidship plans
 ;; ----------------------------------------------------------------------------
 (mk-reusable-item 
- 't_voidship_plans "Voidship Plans" s_lexicon norm
+ 't_voidship_plans "虚空船計画書" s_lexicon norm
  (lambda (klexicon kuser)
    (kern-ui-page-text
-   "Voidship Plans"
-   "Parts List:"
-   " Sulphurous Ash (20)"
-   " Gems (10)"
-   " Power Core (1)"
+   "虚空船計画書"
+   "部品一覧:"
+   "　硫黄の灰 (20)"
+   "　宝石 (10)"
+   "　炉心 (1)"
    )))
 
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;;
-;; The Engineer is a Wright of great knowledge, and one of the Wise.
-;; He dwells in an isolated workshop on a nearly inaccessible
-;; void-mesa (or void-island) off the edge of the Shard.
+;; 技師は知識のある偉大な職人で、賢者の一人である。
+;; 彼はシャルドの端のたどり着くのが困難な虚空の高原(虚空の島)ある作業場に住ん
+;; でいる。
 ;;----------------------------------------------------------------------------
 (define (eng-hail knpc kpc)
-  (say knpc "[You meet a thin man with wild, white hair. "
-       "He doesn't seem to notice you at first] Oh, hello."))
+  (say knpc "［あなたはやせた、白くボサボサの髪の男と会った。"
+       "彼は最初はあなたに気づいていないようだった。］おっと、こんにちは。"))
 
 (define (eng-name knpc kpc)
-  (say knpc "Rudolph. I'm better known as the Engineer."))
+  (say knpc "ルドルフだ。技師と言った方がわかりやすいだろう。"))
 
 (define (eng-job knpc kpc)
-  (say knpc "Oh, this and that. I like to make things."))
+  (say knpc "ああ、これとあれだ。ものを作るのが好きなんだよ。"))
 
 (define (eng-default knpc kpc)
-  (say knpc "I don't know. Ask the Enchanter."))
+  (say knpc "わからないな。魔道師に聞いてくれ。"))
 
 (define (eng-bye knpc kpc)
-  (say knpc "[He seems to have forgotten about you already]"))
+  (say knpc "［彼はすでにあなたのことを気にかけていないようだ。］"))
 
 (define (eng-join knpc kpc)
-  (say knpc "Too busy. Try the Warritrix, she likes adventures."))
+  (say knpc "忙しすぎるな。闘士に頼んでみなさい。彼女は冒険が好きだから。"))
 
 (define (eng-warr knpc kpc)
-  (say knpc "I understand she's one of the finest warriors to ever live, "
-       "but I know for a fact she's one of the most noble. When she isn't "
-       "off doing something incredibly brave and stupid you can find her "
-       "at Glasdrin.")
+  (say knpc "彼女はこれまでで最も優れた戦士の一人だと考えている。"
+       "だが、最も気高き者の一人だということも知っている。"
+       "彼女が信じられないような勇気ある、そして愚かなことをしたのでなければ"
+       "グラスドリンで会えるだろう。")
     (quest-wise-subinit 'questentry-warritrix)
   	(quest-data-update 'questentry-warritrix 'general-loc 1)
        )
 
 (define (eng-make knpc kpc)
-  (say knpc "I work on all kinds of different things. Lately I've been "
-       "interested in devices for traveling: gates, voidships, etc. "
-       "Inventing is an obsession of mine."))
+  (say knpc "私はどんな種類のものでも作る。最近は旅するものに興味があるな。"
+       "例えば、門、虚空船などだ。"
+       "構想で頭の中がいっぱいだよ。"))
 
 (define (eng-wand knpc kpc)
-  (say knpc "You're a Wanderer? I've always wanted to meet one. "
-       "Did you build your own gate?")
-  (kern-conv-get-reply kpc)
-  (say knpc "I've always wondered how it could be done. "
-       "I have some theories, and I've designed a voidship "
-       "to test some of them, but it isn't finished yet."))
+  (say knpc "君は迷い人か？ずっと会いたいと思っていたんだ。"
+       "門は自分で作ったのか？")
+  (kern-conv-get-yes-no? kpc)
+  (say knpc "ずっとそれがどうなっているのか考えている。"
+       "いくつかの理論を考えた。そしてそれを試すために虚空船を設計したのだ。"
+       "だがまだ結論は出ていない。"))
 
 (define (eng-void knpc kpc)
   (let* ((eng (kobj-gob-data knpc))
@@ -116,11 +116,11 @@
 						(cond 
 							((> nrem 1)
 								(begin
-									(say knpc "We still need " nrem " " (kern-type-get-name (car ktype)) "s")
+									(say knpc "まだ" nrem "の" (kern-type-get-name (car ktype)) "が必要だ。")
 									#t))
 							((> nrem 0)
 								(begin
-									(say knpc "We still need the " (kern-type-get-name (car ktype)))
+									(say knpc "まだ" (kern-type-get-name (car ktype)) "が必要だ。")
 									#t))
 							(else #f))))
 					voidship-parts)))
@@ -130,31 +130,31 @@
             #f)))
 
     (define (build-ship)
-      (say knpc "Yes, it looks like you have everything. "
-           "Well, let's get to work...")
+      (say knpc "よし。全てそろったようだな。"
+           "では取り掛かるとしよう。")
       (remove-stuff)
-      (kern-log-msg "[After a good deal of effort, cursing, trying, failing...]")
+      (kern-log-msg "［数多くの努力、苦労、試行、失敗の後…］")
       (prompt-for-key)
-      (kern-log-msg "[retrying, refailing, pacing up and down, tearing out "
-           "fistfuls of hair...]")
+      (kern-log-msg "［再試行、再失敗、進んで戻って、髪が抜け落ちる…］")
       (prompt-for-key)
-      (kern-log-msg "[more cursing, arguing, starting over, failing again...]")
+      (kern-log-msg "［さらに苦労、議論、やり直し、また失敗…］")
       (prompt-for-key)
-      (kern-log-msg "[retrying, refailing, weeping, gnashing of teeth...]")
+      (kern-log-msg "［再試行、再失敗、涙、歯ぎしり…］")
       (prompt-for-key)
-      (kern-log-msg "[...and so on and so forth...]")
+      (kern-log-msg "［等々、等々…］")
       (prompt-for-key)
-      (kern-log-msg "[...finally...]")
+      (kern-log-msg "［…ついに…］")
       (prompt-for-key)
-      (kern-log-msg "[...oh, hell, now what?...]")
+      (kern-log-msg "［…おっと、ちくしょう、今度は何だ？…］")
       (prompt-for-key)
-      (kern-log-msg "[...but then...]")
+      (kern-log-msg "［…だが、まもなく…］")
+      (prompt-for-key)
       (kern-obj-relocate (mk-voidship) (eval-loc voidship-loc) nil)
-      (kern-log-msg "[You both collapse with exhaustion] ")
+      (kern-log-msg "［二人とも疲れてボロボロだ。］")
       (say knpc
-           "Well. That wasn't so bad. She's all yours now, waiting "
-           "for you outside at the end of the dock. Good luck! ")
-      (kern-log-msg "[He starts to snore]")
+           "うむ…。悪くない出来だ。彼女は全て君のものだ。"
+           "外の船着場で待っているぞ。幸運を祈る！")
+      (kern-log-msg "［彼はいびきをかき始めた。］")
       (kern-obj-add-effect knpc ef_sleep nil)
       (quest-done! quest #t)
       (kern-conv-end))
@@ -163,133 +163,128 @@
       (not (in-inventory? kpc t_power_core)))
 
     (define (has-plans)
-      (say knpc "Ah, you've found the plans for my voidship! "
-           "Do you have all the parts we need?")
+      (say knpc "おお、それが私の虚空船の計画書だ！"
+           "必要な部品は全てあるかね？")
       (if (kern-conv-get-yes-no? kpc)
           (if (really-has-parts?)
               (build-ship))
           (if (missing-power-core?)
-              (say knpc "Somewhere across the chasm to the south lies a wrecked voidship. "
-                   "If you can find a way to cross the chasm it might have a power core "
-                   "you can salvage.")
-              (say knpc "Well, what are you waiting for? Go get them.")
+              (say knpc "南の深い裂け目を渡った場所のどこかに引き上げられた虚空船がある。"
+                   "裂け目を渡る方法を見つければ、そこから炉心を取り出すことができるだろう。")
+              (say knpc "ううむ、何を待っているのかな？それらを持ってきなさい。")
               )))
       
     (define (no-plans)
-      (say knpc "A great void surrounds the Shard. I've designed a ship "
-           "which should be able to cross the void, but it isn't "
-           "finished yet. I've got the plans around here someplace. "
-           "If you find them let me know.")
+      (say knpc "シャルドの周りには広大な虚空が広がっている。"
+           "私は虚空を渡る船の設計をした。だがまだ完成していない。"
+           "どこかに計画書がある。見つけてきたら教えてやろう。")
            (quest-data-update 'questentry-whereami 'shard 2)
            )
 
     (if (quest-done? quest)
-        (say knpc "It's all finished.")
+        (say knpc "全て完成した。")
         (if (in-inventory? kpc t_voidship_plans)
             (has-plans)
             (no-plans)))))
 
 (define (eng-gate knpc kpc)
-  (say knpc "The moongates and Shrine Gate are a mystery. I'd love to figure "
-       "them out. You know about the Demon Gate, right?")
+  (say knpc "月の門と祭壇の門は謎に満ちている。"
+       "私はその謎を解き明かしたい。"
+       "悪魔の門は知っているかね？")
   (if (kern-conv-get-yes-no? kpc)
-      (say knpc "I wish I knew if it really existed or not.")
-      (say knpc "It's a legend. The Demon Gate opened from this world to "
-           "others. Then somebody got paranoid, locked it shut, and "
-           "threw away the key. Pity if it's true.")))
+      (say knpc "それは本当にあるのか、そうではないのか。私は知りたいのだ。")
+      (say knpc "こんな言い伝えがある。"
+           "悪魔の門は、この世界から別の世界へとつながっている。"
+           "そして妄想に捕らわれた者が、それを閉ざし、鍵をどこかへ投げ捨てた。"
+           "もしそれが本当なら残念なことだ。")))
   
 (define (eng-key knpc kpc)
-  (say knpc "Supposedly the key is a set of Runes that were subsequently "
-       "lost or scattered. Typical fairy-tale nonsense. But there may be "
-       "a kernel of truth to it."))
+  (say knpc "鍵はいくつかの石版で、それは失われたか、バラバラになったとされている。"
+       "よくあるつまらないおとぎ話だ。だが、もしかするとそこに真実の核があるのかもしれない。"))
 
 (define (eng-wise knpc kpc)
-  (say knpc "Anyone with the arrogance to call themselves Wise is probably "
-       "an ass. Take the Stewardess of Glasdrin, for example."))
+  (say knpc "自らを賢者と呼ぶ傲慢な者は、ほぼ間違いなく愚かな者だ。"
+       "例を挙げればグラスドリンの統治者だ。"))
 
 (define (eng-stew knpc kpc)
-  (say knpc "She longs to be counted among the Wise, and doesn't care how "
-       "much blood she has to spill to do it. You've heard of Absalot, I "
-       "assume?")
+  (say knpc "彼女は長い間、賢者の一人として数えられていた。"
+       "そして、そのことでどれだけの血が流されたのかわからない。"
+       "アブサロットのことは聞いたな？")
   (if (kern-conv-get-yes-no? kpc)
-      (say knpc "A perfect example of abusive power. Sad.")
-      (say knpc "The Stewardess conned the other cities and the Enchanter "
-           "into massacring the citizens of Absalot. "
-           "Supposedly Absalot was a hotbed of Accursed insurgency. If there "
-           "was any evidence of the Accursed being there, they burned it to "
-           "the ground with the rest of the city.")))
+      (say knpc "力の悪用の完璧な例だ。何と悲しいことか。")
+      (say knpc "統治者は他の町と魔道師を騙し、アブサロットの町で大虐殺を行ったのだ。"
+           "アブサロットは呪われた者の温床とされていた。"
+           "もし呪われた者がいるわずかな証拠でもあれば、残りの町も同じように焼き払っただろう。")))
 
 (define (eng-accu knpc kpc)
-  (say knpc "Supposedly they're a cult of some sort engaging in evil "
-       "practices. People who make it their business to meddle are very "
-       "upset about them. I don't really give a fig."))
+  (say knpc "彼らは悪と契約した者たちの集団とされている。"
+       "余計なことばかり気にしている者たちは、彼らに浮き足立っている。"
+       "私は全く気にしていない。"))
 
 (define (eng-shri knpc kpc)
-  (say knpc "I've studied the records about the Shrine Gate and investigated "
-       "the site, of course. But there's nothing to indicate how it works or "
-       "how to control it. I think the last time it opened was over one "
-       "hundred years ago."))
+  (say knpc "もちろん祭壇の門の記録やその場所をよく調べてみた。"
+       "だが、それがどうなっているのか、どうすれば制御できるのか、それを示すものは何もなかった。"
+       "最後にそれが開いたのは百年以上前のことだと私は考えている。"))
 
 (define (eng-rune knpc kpc)
-  (say knpc "The legend of the Demon Gate insists that it was locked by a set "
-       "of Runes. Some versions say the Runes were scattered so they could "
-       "not be reassambled to open the Gate, others say they were lost "
-       "through simple incompetence and bad luck. Of course, there's no "
-       "telling if the Runes or even the Gate ever existed!"))
+  (say knpc "言い伝えでは悪魔の門はいくつかの石版で封印されたと言われている。"
+       "別の話では石版は二度と門を開けられないようバラバラにされたとも、"
+       "ただ単に運悪く失われたとも言われている。"
+       "もちろんそれはただの言い伝えで、そのような石版や、門の存在すらわからないのだ！"))
 
 (define (eng-wiza knpc kpc)
-  (say knpc "Wizards as a rule tend to be obsessed with power."))
+  (say knpc "魔術師は力に心を奪われがちだ。"))
 
 (define (eng-wrog knpc kpc)
-  (say knpc "Mosts Wrogues are simply pests. They're into everything."))
+  (say knpc "ほとんどのならず者はただの病のようなものだ。彼らはあらゆる所にいる。"))
 
 (define (eng-wrig knpc kpc)
-  (say knpc "Wrights are my kind of people. They like to make things, to "
-       "figure out how things work, and just want the freedom to follow "
-       "their own interests."))
+  (say knpc "職人は私のような者たちだ。"
+       "物を作ることを好み、物の仕組みを見つけ出す。"
+       "そして自由に興味のある物事を追い求めようとする。"))
 
 (define (eng-necr knpc kpc)
-  (say knpc "Not a bad sort. I've conferred with him a time or two.")
+  (say knpc "悪い者ではない。一度か二度、彼と議論したことがある。")
   (quest-data-update 'questentry-necromancer 'nonevil 1)
   )
 
 (define (eng-alch knpc kpc)
-  (say knpc "A tricky bastard but I have to respect him."))
+  (say knpc "油断できないロクデナシだ。だが、尊敬すべきところもある。"))
 
 (define (eng-man knpc kpc)
-  (say knpc "A Wrogue, but a helpful one. We get along."))
+  (say knpc "ならず者、だが助けになる者だ。何とかうまくやっているよ。"))
 
 (define (eng-ench knpc kpc)
-  (say knpc "Bit of a fanatic if you ask me. But it takes all kinds."))
+  (say knpc "私に言わせれば少し狂信的なところがある。人は皆そうだが。"))
 
 (define eng-merch-msgs
-  (list "Not now."
-        "Let me show you some of my inventions..."
+  (list "今はダメだ。"
+        "私が開発した物の一部を見せてやろう…"
         nil
         nil
-        "Always glad to help out a fellow tinkerer."
-        "No problem."
+        "いつも仲間の修理屋に感謝されているよ。"
+        "いいさ。"
    ))
 
 (define eng-catalog
   (list
    ;; Various tools and devices
-   (list t_picklock       10 "I happen to have some spare picklocks. They're handy for all kinds of things.")  ;; high prices, not his specialty
-   (list t_shovel        100 "I hate to part with my shovel, you never know when it might come in handy.")  ;; high prices, not his specialty
-   (list t_pick          100 "I've actually used this pick. Once. I suppose I can part with it.")  ;; high prices, not his specialty
-   (list t_sextant       200 "This is one of my most successful inventions. With this sextant you don't neet the In Wis spell to find your location on the surface.")
-   (list t_chrono        200 "It's a little PORTABLE CLOCK! Isn't it amazing? [He giggles with glee]")
+   (list t_picklock       10 "突然いくつかの予備の鍵が必要になった。どんな錠にも合う便利なものだ。")  ;; high prices, not his specialty
+   (list t_shovel        100 "このシャベルは手放したくないな。どれだけ役に立つか君にはわからないだろう。")  ;; high prices, not his specialty
+   (list t_pick          100 "このつるはしは使ったものだ。一度だけ。これは手放してもいいだろう。")  ;; high prices, not his specialty
+   (list t_sextant       200 "これは私の最高傑作の一つだ。この六分儀があれば、イン・ウィス<In Wis>の呪文なしで地上での位置がわかる。")
+   (list t_chrono        200 "これは小さな、持ち運べる時計だ！面白いだろう？［彼は楽しさのあまり笑った。］")
    
    ;; A bit of oil and grease, for a grease-monkey:
-   (list t_grease         20 "I've got plenty of grease. I use it for everything.")
-   (list t_oil            10 "If I could figure out how to harness the explosive power of this oil, I'm sure I could make a useful engine.")  ;; high prices, not his specialty
+   (list t_grease         20 "脂はたくさんある。色々なことに使っている。")
+   (list t_oil            10 "この油の爆発力の使い道はいくらでもある。これは恐らく動力源にもなるだろう。")  ;; high prices, not his specialty
 
    ;; Crossbows and bolts, as he likes intricate devices
-   (list t_lt_crossbow    50 "Isn't this little crossbow cute? The little levers and actions are quite clever.")
-   (list t_crossbow      100 "I'm a terrible shot, but I wanted to study crossbows to see if I could figure out how to shoot myself safely across the void.")
-   (list t_hvy_crossbow  300 "I couldn't help making some improvements on the standard crossbow. This one works best if you mount it on something first.")
-   (list t_trpl_crossbow 500 "What if a crossbow could fire more than one bolt at a time? I had to try it out, so I made this.") ;; a mechanism of his devising
-   (list t_bolt            2 "I went through a lot of bolts while testing crossbows modifications, and I have a few crates left over.")
+   (list t_lt_crossbow    50 "かわいらしい小さなクロスボウだろう？この小さなレバーと機械は本当によくできている。")
+   (list t_crossbow      100 "私は撃つのは苦手だ。しかし、虚空に向かって自分で安全な撃ち方を教えることができたかと思うと、打ち方を学んでおけばよかったと思うよ。")
+   (list t_hvy_crossbow  300 "標準的なクロスボウを改良せずにはいられなかった。取り付けてみればすぐに傑作だとわかるだろう。")
+   (list t_trpl_crossbow 500 "もし一度に一発より多く撃てるクロスボウがあったら？私は挑戦してみた。そしてこれを作った。") ;; a mechanism of his devising
+   (list t_bolt            2 "クロスボウを改良しているとき、多くの矢が必要だった。今でも何箱か残っている。")
    ))
 
 (define (eng-trade knpc kpc) (conv-trade knpc kpc "buy" eng-merch-msgs eng-catalog))
@@ -301,6 +296,7 @@
        (method 'name eng-name)
        (method 'bye eng-bye)
        (method 'job eng-job)
+       (method 'engi eng-job)
        (method 'join eng-join)
 
        (method 'trad eng-trade)
@@ -325,6 +321,7 @@
        (method 'alch eng-alch)
        (method 'man eng-man)
        (method 'ench eng-ench)
+       (method 'warr eng-warr)
        ))
 
 (define (mk-engineer)
@@ -332,7 +329,7 @@
    (kern-char-arm-self
     (kern-mk-char 
      'ch_engineer ;;..........tag
-     "Engineer" ;;.......name
+     "技師" ;;.......name
      sp_human ;;.....species
      oc_wright ;;.. .occupation
      s_companion_tinker ;;..sprite

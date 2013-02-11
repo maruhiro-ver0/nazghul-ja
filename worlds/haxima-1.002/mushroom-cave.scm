@@ -2,7 +2,7 @@
 ;; Map
 ;;----------------------------------------------------------------------------
 (mk-dungeon-room
- 'p_mushroom_cave "Mushroom Cave"
+ 'p_mushroom_cave "¥­¥Î¥³¤ÎÆ¶·¢"
 	(list
 		"rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn "
 		"rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn "

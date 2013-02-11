@@ -519,8 +519,9 @@
   ;;;(display "using")(newline)
   (apply (kern-type-get-gifc ktype) (list 'use ktype kchar))
   (kern-log-msg (kern-obj-get-name kchar)
-                " uses 1 "
-                (kern-type-get-name ktype))
+                "は"
+                (kern-type-get-name ktype)
+                "を使った。")
   #t)
 
 ;;============================================================================
@@ -589,8 +590,9 @@
       (begin
         (if (not (is-player-party-member? kchar))        
             (kern-log-msg (kern-obj-get-name kchar)
-                          " gets "
-                          (kern-obj-get-name kobj)))
+                          "は"
+                          (kern-obj-get-name kobj)
+                          "を取った。"))
         (kern-obj-inc-ref kobj)
         (kern-obj-remove kobj)
         (kern-obj-dec-ref kobj)
@@ -795,8 +797,9 @@
   (kern-char-dec-mana kchar (spell-cost spell))
   (kern-obj-dec-ap kchar (spell-ap spell))
   (kern-log-msg (kern-obj-get-name kchar) 
-                " casts " 
-                (spell-name spell)))
+                "は" 
+                (spell-name spell)
+                "を唱えた。"))
 
 ;; cast1 - cast a spell which requires one arg if possible, assumes kchar has
 ;; enough mana
@@ -806,11 +809,11 @@
   (kern-char-dec-mana kchar (spell-cost spell))
   (kern-obj-dec-ap kchar (spell-ap spell))
   (kern-log-msg (kern-obj-get-name kchar) 
-                " casts " 
+                "は" 
                 (spell-name spell)
-                " on "
+                "を"
                 (kern-obj-get-name ktarg)
-                "!"))
+                "に唱えた！"))
   
 ;; ----------------------------------------------------------------------------
 ;; terrain-ok-for-field? -- check if the terrain at a given location will allow
@@ -1049,7 +1052,7 @@
               (pathfind kchar (kern-obj-get-location patient)))))))
 
 (define (prompt-for-key)
-  (kern-log-msg "<Hit any key to continue>")
+  (kern-log-msg "<何かキーを押すと続く>")
   (kern-ui-waitkey))
 
 (define (ship-at? loc) (not (null? (kern-place-get-vehicle loc))))
@@ -1076,14 +1079,14 @@
                (kern-char-get-hp kchar))))
     (if (> hp 0)
         (begin
-          (say knpc "VAS MANI! Be healed, "
-               (kern-obj-get-name kchar))
+          (say knpc "ヴァス・マニ<VAS MANI>！"
+               (kern-obj-get-name kchar) "に癒しを！")
           (kern-map-flash hp)
           (kern-obj-heal kchar hp)
           #t)
         (begin
           (say knpc (kern-obj-get-name kchar)
-               " is not wounded!")
+               "は傷ついていない！")
           (prompt-for-key)
           #f))))
   
@@ -1091,13 +1094,13 @@
   ;;(display "cure-service")(newline)
   (if (is-poisoned? kchar)
       (begin
-        (say knpc "AN NOX! You are cured, "
-             (kern-obj-get-name kchar))
+        (say knpc "アン・ノクス<AN NOX>！"
+             (kern-obj-get-name kchar) "は治癒された。")
         (kern-map-flash 1)
         (kern-obj-remove-effect kchar ef_poison))
       (begin
         (say knpc (kern-obj-get-name kchar)
-             " is not poisoned!")
+             "は毒に犯されていない！")
         (prompt-for-key)
         #f)))
 
@@ -1105,14 +1108,14 @@
   ;;(display "resurrect-service")(newline)
   (if (is-dead? kchar)
       (begin
-       (say knpc "IN MANI CORP! Arise, "
-            (kern-obj-get-name kchar))
+       (say knpc "イン・マニ・コープ<IN MANI CORP>！"
+            (kern-obj-get-name kchar) "よ、よみがえれ！")
        (kern-map-flash 500)
        (resurrect kchar)
        (kern-obj-heal kchar 10))
       (begin
         (say knpc (kern-obj-get-name kchar)
-             " is not dead!")
+             "は死んでいない！")
         (prompt-for-key)
         #f)))
 
@@ -1123,9 +1126,9 @@
   (define (list-services)
     (map (lambda (svc)
            (string-append (svc-name svc) 
-                          "..." 
+                          "...金貨" 
                           (number->string (svc-price svc))
-                          " gold"))
+                          "枚"))
          services))
 
   ;; line-name - convert a string like "Heal...30 gold" to "Heal"
@@ -1158,7 +1161,7 @@
       (if (player-has-gold? (svc-price svc))
           #t
           (begin
-            (say knpc "You don't have enough gold!")
+            (say knpc "料金が足りない！")
             #f)))
 
     (define (apply-svc)

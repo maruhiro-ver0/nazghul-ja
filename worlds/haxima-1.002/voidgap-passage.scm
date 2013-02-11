@@ -1,6 +1,6 @@
 (kern-mk-place 
 	'p_voidgap_entrance
-	"Passage to Voidgap"
+	"µõ¶õ¤Î¶¹´Ö¤Ø¤ÎÆ»"
 	s_dungeon          ; sprite
 	(kern-mk-map nil 19 19 pal_expanded
 	(list
@@ -68,7 +68,7 @@
  
 (kern-mk-place 
 	'p_voidgap_exit
-	"Tunnels at Voidgap"
+	"µõ¶õ¤Î¶¹´Ö¤ÎÆ¶·¢"
 	s_dungeon          ; sprite
 	(kern-mk-map nil 19 19 pal_expanded
 	(list
@@ -118,7 +118,7 @@
 
 (kern-mk-place 
 	'p_voidgap_1
-	"Voidgap Tunnels"
+	"µõ¶õ¤Î¶¹´Ö¤ÎÆ¶·¢"
 	 nil          ; sprite
 	(kern-mk-map nil 19 19 pal_expanded
 		(list
@@ -162,7 +162,7 @@
  
  (kern-mk-place 
 	'p_voidgap_2
-	"Voidgap Tunnels"
+	"µõ¶õ¤Î¶¹´Ö¤ÎÆ¶·¢"
 	nil          ; sprite
 	(kern-mk-map nil 19 19 pal_expanded
 		(list
@@ -205,7 +205,7 @@
  
    (kern-mk-place 
 	'p_voidgap_3
-	"Voidgap Tunnels"
+	"µõ¶õ¤Î¶¹´Ö¤ÎÆ¶·¢"
 	 nil          ; sprite
 	(kern-mk-map nil 19 19 pal_expanded
 		(list
@@ -248,7 +248,7 @@
  
    (kern-mk-place 
 	'p_voidgap_4
-	"Voidgap Tunnels"
+	"µõ¶õ¤Î¶¹´Ö¤ÎÆ¶·¢"
 	 nil          ; sprite
 	(kern-mk-map nil 19 19 pal_expanded
 		(list
@@ -291,7 +291,7 @@
  
  (kern-mk-place 
 	'p_voidgap_5
-	"Voidgap Tunnels"
+	"µõ¶õ¤Î¶¹´Ö¤ÎÆ¶·¢"
 	  nil          ; sprite
 	(kern-mk-map nil 19 19 pal_expanded
 		(list

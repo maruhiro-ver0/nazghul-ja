@@ -620,7 +620,7 @@
 
 (kern-mk-place 
  'p_shard
- "The Shard Surface"
+ "シャルドの地"
  nil          ; sprite 
  m_shard      ; map
  #f  ;; wraps

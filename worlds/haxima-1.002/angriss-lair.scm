@@ -32,7 +32,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place 
  'p_angriss_lair ; tag
- "Entrance to Angriss's Lair"   ; name
+ "アングリスの住み家の入り口"   ; name
  s_spider_web     ; sprite
  m_angriss_lair  ; map
  #f               ; wraps
@@ -70,7 +70,7 @@
 (kern-load "angriss.scm")
 
 (mk-dungeon-room
- 'p_angriss_throne_room  "Angriss's Throne Room"
+ 'p_angriss_throne_room  "アングリスの謁見室"
  (list
 		"rn rn rn rn r8 r8 r8 r8 r8 r8 r8 r8 r8 r8 rn rn rn rn rn "
 		"rn rn r8 r4 .. .. .. .. .. .. .. .. .. .. r2 rn r8 rn rn "
@@ -160,7 +160,7 @@
 
 
 (mk-dungeon-room
- 'p_spider_cave "Spider Cave"
+ 'p_spider_cave "クモの洞窟"
 	(list
 		"rn r8 r8 r8 r8 r8 rc .. .. .. .. .. r2 rn r8 r8 r8 r8 rn "
 		"r4 bb .. .. .. .. .. .. .. .. .. .. r2 rc bb .. bb bb r2 "

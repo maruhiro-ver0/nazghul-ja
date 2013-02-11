@@ -1,8 +1,7 @@
 ;;----------------------------------------------------------------------------
-;; Janice
+;; ジャニス
 ;;
-;; Initially Commander Jeffries's assistant, she will be elected to replace
-;; him after the trial.
+;; 最初はジェフリーズ司令官の補佐だが、審判の後に彼の後任に選出される。
 ;;----------------------------------------------------------------------------
 
 ;;----------------------------------------------------------------------------
@@ -31,40 +30,40 @@
 
 ;; Basics...
 (define (jan-hail knpc kpc)
-  (say knpc "Hail, traveler.")
+  (say knpc "こんにちは、旅の方。")
   )
 
 (define (jan-name knpc kpc)
   (if (player-stewardess-trial-done?)
-      (say knpc "I am Commander Janice.")
-      (say knpc "I am Janice.")
+      (say knpc "司令官のジャニスです。")
+      (say knpc "ジャニスです。")
       ))
 
 (define (jan-job knpc kpc)
   (if (player-stewardess-trial-done?)
-      (say knpc "I command Glasdrin's militia.")
-      (say knpc "I am a strategic adviser to Commander Jeffries.")
+      (say knpc "グラスドリンの軍を指揮しています。")
+      (say knpc "ジェフリーズ司令官の補佐をしております。")
       ))
 
 ;; Special
 (define (jan-comm knpc kpc)
   (if (player-stewardess-trial-done?)
-      (say knpc "I was elected to replace Jeffries, the former Commander.")
-      (say knpc "Commander Jeffries is a capable leader.")
+      (say knpc "私はジェフリーズ前司令官の後任として選出されました。")
+      (say knpc "ジェフリーズ司令官は有能な指導者です。")
       ))
 
 (define (jan-repl knpc kpc)
   (if (player-stewardess-trial-done?)
-      (say knpc "It's a shame that his long history of good service to Glasdrin should end in such disgrace.")
-      (say knpc "Why, whatever do you mean?")
+      (say knpc "彼の長いグラスドリンでの経歴が、このような不名誉で終わったのは恥ずかしいことです。")
+      (say knpc "どういう意味ですか？")
       ))
 
 (define (jan-mili knpc kpc)
-  (say knpc "Glasdrin's militia is currently engaged in Kurpolis and border patrols. "
-       "We are not actively fighting any wars."))
+  (say knpc "グラスドリンの軍は、現在はクロポリスと国境の警備を行っています。"
+       "現在は戦争状態ではありません。"))
 
 (define (jan-bord knpc kpc)
-  (say knpc "Although we are currently at peace with Trigrave and Green Tower, we must never relax our vigilance.")
+  (say knpc "現在はトリグレイブや緑の塔との関係は良好ですが、警戒を怠ることはできません。")
   )
 
 ;; Townspeople...
@@ -76,6 +75,7 @@
        (method 'hail jan-hail)
        (method 'job  jan-job)
        (method 'name jan-name)
+       (method 'jani jan-name)
 
        (method 'comm jan-comm)
        (method 'jeff jan-comm)
@@ -87,7 +87,7 @@
 (define (mk-janice)
   (bind 
    (kern-mk-char 'ch_janice       ; tag
-                 "Janice"          ; name
+                 "ジャニス"        ; name
                  sp_human            ; species
                  oc_warrior          ; occ
                  s_cloaked_female ; sprite

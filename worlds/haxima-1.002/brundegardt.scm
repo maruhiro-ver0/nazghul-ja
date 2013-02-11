@@ -4,7 +4,7 @@
 ;; Entrance to Brundegardt
 (kern-mk-place 
  'p_brundegardt     ; tag
- "Brundegardt"      ; name
+ "ブルンデガード"   ; name
  s_dungeon          ; sprite
  (kern-mk-map 
   nil 19 19 pal_expanded
@@ -41,8 +41,8 @@
   (put (mk-monman) 0 0)
   (put (spawn-pt 'troll) 12 14)
   (put (spawn-pt 'troll) 11 15)
-  (put (let ((kriddle (mk-riddle 'noor 't_doorway 18 3 1 1 #t
-                                 "All who would pass must speak the password!")))
+  (put (let ((kriddle (mk-riddle "ノア" 't_doorway 18 3 1 1 #t
+                                 "ここを通る者は合言葉を述べよ！")))
          (riddle-set-rm-on-wrong! (gob kriddle) #f)
          kriddle)
        17 3)
@@ -62,7 +62,7 @@
 ;; Brundegardt Keep
 (kern-mk-place 
  'p_brundegardt_keep     ; tag
- "Brundegardt Keep"      ; name
+ "ブルンデガードの倉庫"  ; name
  nil
  (kern-mk-map 
   nil 25 25 pal_expanded
@@ -209,7 +209,7 @@
 ;;----------------------------------------------------------------------------
 ;; Cave Shrine
 (mk-dungeon-room
- 'p_cave_shrine "Cave Shrine"
+ 'p_cave_shrine "洞窟の神殿"
  (list
 		"rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn "
 		"rn rn rn rn rn ,V ,I ,G ,I ,L ,A ,N ,C ,E rn rn rn rn rn "
@@ -240,7 +240,7 @@
 ;; Ratling Warren
 (kern-mk-place 
  'p_ratling_warren     ; tag
- "Ratling Warren"      ; name
+ "ネズミ人間の巣穴"    ; name
  nil
  (kern-mk-map 
   nil 25 25 pal_expanded
@@ -330,7 +330,7 @@
   (put (mk-corpse) 23 3)
 
   (put (kern-mk-obj t_int_potion 1) 18 4)
-  (put (mk-broken-clock s_clock_hand_s s_clock_hand_n "The clock reads 6:00") 19 4)
+  (put (mk-broken-clock s_clock_hand_s s_clock_hand_n "時計は6時00分だ。") 19 4)
   (put (kern-mk-obj t_mana_potion 1) 20 4)
   (put (kern-mk-obj t_gem 1) 21 4)
   (put (kern-mk-obj t_gold_coins 2) 22 4)
@@ -351,7 +351,7 @@
 ;;----------------------------------------------------------------------------
 ;; Tunnel Turn
 (kern-mk-place 
- 'p_tunnel_turn "Tunnel Turn"
+ 'p_tunnel_turn "曲がり角"
  nil
  (kern-mk-map 
   nil 19 19 pal_expanded
@@ -411,7 +411,7 @@
 ;;----------------------------------------------------------------------------
 ;; Black River
 (mk-dungeon-room
- 'p_black_canal "Black Canal"
+ 'p_black_canal "黒い用水路"
  (list
 		"rn rn r8 r8 r8 rn rn r8 r8 r8 r8 r8 rn rn rn rn rn rn rn "
 		"rn rc gg gg gg ra rc bb ~s _s _s _s ra rn rn rn rn rn rn "
@@ -452,7 +452,7 @@
 ;;----------------------------------------------------------------------------
 ;; Tunnels
 (mk-dungeon-room
- 'p_tunnels "Tunnels"
+ 'p_tunnels "横穴"
  (list
 	  "rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn "
 	  "rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn "
@@ -500,7 +500,7 @@
 ;;----------------------------------------------------------------------------
 ;; Chasm Drawbridge
 (mk-dungeon-room
- 'p_wide_chasm "Wide Chasm"
+ 'p_wide_chasm "広い裂け目"
  (list
 		"rn rn rn rn rn rn rn r8 r8 r8 r8 r8 rn rn rn rn rn rn rn "
 		"rn rn rn rn rn rn rc *3 *1 *1 *1 *5 ra rn rn rn rn rn rn "
@@ -542,7 +542,7 @@
 ;;----------------------------------------------------------------------------
 ;; Tower L1
 (mk-dungeon-room
- 'p_brundegardt_tower_1 "BrundeGardt Tower L1"
+ 'p_brundegardt_tower_1 "ブルンデガードの塔1階"
  (list
   "rn rn rn rn rn xx xx xx xx xx xx xx xx xx rn rn rn rn rn "
   "rn rn rn xx xx xx xx xx cc cc cc xx xx xx xx xx rn rn rn "
@@ -667,7 +667,7 @@
 ;;----------------------------------------------------------------------------
 ;; Tower L2
 (mk-dungeon-room
- 'p_brundegardt_tower_2 "BrundeGardt Tower L2"
+ 'p_brundegardt_tower_2 "ブルンデガードの塔2階"
  (list
 		"rn rn r8 r8 rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn "
 		"rn rc bb bb ra r8 xx xx xx xx xx xx xx rn rn rn rn rn rn "
@@ -702,7 +702,7 @@
 ;;----------------------------------------------------------------------------
 ;; Tower L3
 (mk-dungeon-room
- 'p_brundegardt_tower_3 "BrundeGardt Tower L3"
+ 'p_brundegardt_tower_3 "ブルンデガードの塔3階"
  (list
   "rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn "
   "rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn rn "
@@ -736,7 +736,7 @@
 ;; Tower L4
 (kern-load "tim.scm")
 (mk-19x19-town
- 'p_brundegardt_tower_4 "BrundeGardt Tower L4" nil
+ 'p_brundegardt_tower_4 "ブルンデガードの塔4階" nil
  (list
 		"^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. "
 		"^. ^. ^. ^. ^. bb {1 {5 {{ {{ {3 {1 {1 bb ^. ^. ^. ^. ^. "
@@ -776,7 +776,7 @@
 ;; Tower L5
 (kern-load "eye-of-brune.scm")
 (mk-19x19-town
- 'p_brundegardt_tower_5 "BrundeGardt Tower L5" nil
+ 'p_brundegardt_tower_5 "ブルンデガードの塔5階" nil
  (list
   		"^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. ^. "
 		"^. ^. ^. ^. ^. bb {1 {5 {{ {{ {3 {1 {1 bb ^. ^. ^. ^. ^. "
@@ -838,7 +838,7 @@
 ;;----------------------------------------------------------------------------
 ;; Griffin Peak
 (mk-19x19-town
- 'p_griffin_peak_s "South Face of Griffin Peak" nil
+ 'p_griffin_peak_s "グリフィンの山頂の南面" nil
  (list
 		"^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ {2 .. {4 ^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ "
 		"^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ {2 .. {4 ^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ "
@@ -906,7 +906,7 @@
                    
 
 (mk-19x19-town
- 'p_griffin_peak_se "Southeast Face of Griffin Peak" nil
+ 'p_griffin_peak_se "グリフィンの山頂の南東面" nil
  (list
 		"^^ ^^ ^^ ^^ ^^ ^^ ^^ ^. {a .. .. ^v ^v ^v ^v ^v ^v ^v ^v "
 		"^^ ^^ ^^ ^^ ^^ ^^ ^^ ^. ^. {a .. ^v ^v ^v ^v ^v ^v ^v ^v "
@@ -954,7 +954,7 @@
                   5)
 
 (mk-19x19-town
- 'p_griffin_peak_ne "Northeast Face of Griffin Peak" nil
+ 'p_griffin_peak_ne "グリフィンの山頂の北東面" nil
  (list
 		"^v ^v ^v {{ ta |. |. |. tc {{ ^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ "
 		"^v ^v ^v ^v {% ta |. tc {# ^. ^. ^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ "
@@ -988,7 +988,7 @@
 (mk-place-music p_griffin_peak_ne 'ml-outdoor-adventure)
 
 (mk-19x19-town
- 'p_griffin_peak_n "North Face of Griffin Peak" nil
+ 'p_griffin_peak_n "グリフィンの山頂の北面" nil
  (list
 		"^v ta |. ~a ~5 tt ^v ^v ^. ^. ^. ^^ ^^ ^^ ^^ ^^ ^^ ^. ^. "
 		"^v ^v tt |. ~~ |. t5 ^v ^v ^. ^. ^. ^. ^^ ^^ ^^ ^. ^. ^. "
@@ -1023,7 +1023,7 @@
 ;; will vary at runtime and may break the illusion, but try to initialize
 ;; object placement the same at the start of play.
 (mk-19x19-town
- 'p_griffin_peak "Griffin Peak" nil
+ 'p_griffin_peak "グリフィンの山頂" nil
  (list
   		"^. ^. ^. ^. ^v ^v ^v ^v {2 .. {4 ^v ^v ^v ^v ^. ^. ^. ^. "
 		"^. ^. ^. ^v ^v ^v ^v ^v {2 .. {4 ^v ^v ^v ^v ^. ^. ^. ^. "

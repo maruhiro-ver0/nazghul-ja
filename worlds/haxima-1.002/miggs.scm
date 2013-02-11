@@ -1,7 +1,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;;
-;; The schedule below is for the place "Trigrave"
+;; トリグレイブ
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_miggs
                (list 0  0  trigrave-miggs-bed      "sleeping")
@@ -19,37 +19,37 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;;
-;; Miggs is the tavern-keeper.
+;; メグスは酒場の主人である
 ;;----------------------------------------------------------------------------
 (define miggs-merch-msgs
-  (list "Come by the tavern when I'm open. I open at 7:00AM and close at midnight."
-        "[She silently points to a menu]"
+  (list "酒場が開いているときに来てください。午前7時から深夜までです。"
+        "［彼女は黙ってメニューを指差した。］"
         nil
         nil
-        "Thank you."
-        "Ok."
+        "ありがとう。"
+        "そうですか。"
         ))
 
 (define miggs-catalog
   (list
-   (list t_food 5 "[She ladles some delicious-smelling stew]")
-   (list t_beer 3 "[She points to a cask labeled Fenmire's Finest]")
+   (list t_food 5 "［彼女はおいしそうなにおいのシチューをすくって見せた。］")
+   (list t_beer 3 "［彼女はフェンマイアの特級と書かれたラベルの樽を指差した。］")
   ))
 
 (define (miggs-trade knpc kpc) (conv-trade knpc kpc "buy" miggs-merch-msgs miggs-catalog))
 
 (define (miggs-hail knpc kpc)
-  (kern-print "[You meet a large woman with a pretty face. She shyly avoids "
-              "your gaze]\n"))
+  (kern-print "［あなたは大柄なかわいらしい顔立ちの女性と会った。"
+              "彼女は恥ずかしそうに視線を避けた。］\n"))
 
 (define (miggs-job knpc kpc)
-  (say knpc "I run the the Lusty Jugs."))
+  (say knpc "この「陽気な杯」をしています。"))
 
 (define (miggs-lust knpc kpc)
-  (say knpc "It's a tavern. Want something?")
+  (say knpc "ここは酒場です。何かいりますか？")
   (if (kern-conv-get-yes-no? kpc)
       (miggs-trade knpc kpc)
-      (say knpc "Ok")))
+      (say knpc "そうですか。")))
 
 (define miggs-conv
   (ifc basic-conv
@@ -57,11 +57,11 @@
        ;; 4 characters. The 4-char limit arises from the kernel's practice of
        ;; truncating all player queries to the first four characters. Default,
        ;; on the other hand, is a feature of the ifc mechanism (see ifc.scm).
-       (method 'default (lambda (knpc kpc) (say knpc "[She shrugs]")))
+       (method 'default (lambda (knpc kpc) (say knpc "［彼女は黙ったままだ。］")))
        (method 'hail miggs-hail)
-       (method 'bye (lambda (knpc kpc) (say knpc "[She smiles slightly]")))
+       (method 'bye (lambda (knpc kpc) (say knpc "［彼女は少し微笑んだ。］")))
        (method 'job miggs-job)       
-       (method 'name (lambda (knpc kpc) (say knpc "Miggs")))
+       (method 'name (lambda (knpc kpc) (say knpc "メグス。")))
 
        (method 'trad miggs-trade)
        (method 'buy miggs-trade)
@@ -76,7 +76,7 @@
 (define (mk-miggs tag)
   (bind 
    (kern-mk-char tag                 ; tag
-                 "Miggs"            ; name
+                 "メグス"            ; name
                  sp_human            ; species
                  nil                 ; occ
                  s_fat_townswoman    ; sprite

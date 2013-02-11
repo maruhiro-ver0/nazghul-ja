@@ -8,8 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; Kalcifax travels (notionally by the moon gates) 
-;; to many places, carrying messages and such.
+;; カルシファクスは多くの場所を(月の門を使って)旅し、伝言などを運んでいる。
 ;;----------------------------------------------------------------------------
 (define kalc-bed cheerful-bed-2)
 (define kalc-mealplace )
@@ -36,71 +35,70 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Kalcifax is a female wizard with considerable knowledge of the moon gates.
-;; She travels to many places (notionally by use of the gates),
-;; carrying messages and such.
-;; Kalcifax is a potential party member.
+;; カルシファクスは女性の魔術師で、多くの月の門の知識がある。
+;; 彼女は多くの場所を(月の門を使って)旅し、伝言などを運んでいる。
+;; カルシファクスは仲間になる。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (kalc-hail knpc kpc)
-  (meet "You meet a cute wizard.")
-  (say knpc "Well met, fellow traveler.")
+  (meet "［あなたはかわいらしい魔術師と会った。］")
+  (say knpc "こんにちは、旅人さん。")
   )
 
 (define (kalc-name knpc kpc)
-  (say knpc "I'm Kalcifax. And you are...?")
+  (say knpc "カルシファクスですわ。あなたは…？")
   (kern-conv-get-reply kpc)
-  (say knpc "It's nice to meet you.")
+  (say knpc "会えてうれしいですわ。")
   )
 
 (define (kalc-join knpc kpc)
   (if (is-player-party-member? knpc)
-      (say knpc "I've already joined you!")
+      (say knpc "もう仲間ですわ！")
       (begin
-        (say knpc "Ok, this will be fun!")
+        (say knpc "いいですわ。楽しそう！")
         (join-player knpc)
         (kern-conv-end)
         )
   ))
 
 (define (kalc-job knpc kpc)
-  (say knpc "I travel the gates, running errands for people.")
+  (say knpc "門で旅をして、人々の間を走り回ることですわ。")
   )
 
 (define (kalc-bye knpc kpc)
-  (say knpc "I'm sure we'll meet again!")
+  (say knpc "また会える気がしますわ！")
   )
 
 (define (kalc-gate knpc kpc)
-  (say knpc "The moongates! Do you know how they work?")
+  (say knpc "月の門ですわ。どうなっているかご存知かしら？")
   (if (yes? kpc)
-      (say knpc "I don't know why more people don't do it.")
-      (say knpc "The phase of Lumis decides where you can enter, "
-           "the phase of Ord decides where you emerge!")))
+      (say knpc "どうして皆様も同じようにしないのかしら。")
+      (say knpc "ルミスの相が入り口を決めて、オードの相が出口の決めるのですのよ！")))
 
 (define (kalc-lumi knpc kpc)
-  (say knpc "Lumis is the yellow slow-moving moon."))
+  (say knpc "ルミスは黄色くゆっくり動く方の月のことですわ。"))
 
 (define (kalc-ord knpc kpc)
-  (say knpc "Ord is the blue fast-moving moon."))
+  (say knpc "オードは青く速く動く方の月ですわ。"))
 
 (define (kalc-engi knpc kpc)
-  (say knpc "I'm one of the only people who ever visits the Engineer! "
-       "You have to use a moongate to get to his place. "
-       "Enter when Ord has waxed almost full."))
+  (say knpc "私は技師を訪問した数少ない者の一人ですわ！"
+       "月の門を使わなければ彼の場所には行けませんの。"
+       "オードが満月に近いときに入ればよいのですわ。"))
 
 (define (kalc-peop knpc kpc)
-  (say knpc "I deliver messages and packages for the Engineer, the Enchanter, city officials. "
-       "Anyone who needs something delivered safely and fast, and is willing to pay!"))
+  (say knpc "魔道師や技師、町の役人の伝言を伝えていますの。"
+       "安全で早く何かを運ぶ必要がある、代金を支払ってくれる方なら誰でもですわ！"))
 
 (define (kalc-pay knpc kpc)
-  (say knpc "I do pretty good."))
+  (say knpc "なかなかの稼ぎになりますわ。"))
 
 (define kalc-conv
   (ifc basic-conv
 
        ;; basics
+       (method 'default (lambda (knpc kpc) (say knpc "どうかしら。")))
        (method 'hail kalc-hail)
        (method 'bye  kalc-bye)
        (method 'job  kalc-job)
@@ -120,7 +118,7 @@
   (bind 
    (kern-mk-char 
     'ch_kalc           ; tag
-    "Kalcifax"             ; name
+    "カルシファクス"       ; name
     kalc-species         ; species
     kalc-occ              ; occ
     s_blue_wizard

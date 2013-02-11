@@ -1,6 +1,6 @@
 
 (mk-dungeon-room
- 'p_hydra_fen "Hydra Fen"
+ 'p_hydra_fen "ヒドラの湿原"
 	(list
 		"rn rn rn rn rn rn r8 r8 r8 r8 r8 r8 r8 rn rn rn rn rn rn "
 		"rn rn rn rn rn rc {{ {{ {{ {{ {{ {{ {{ ra rn rn rn rn rn "
@@ -28,7 +28,7 @@
 (mk-place-music p_hydra_fen 'ml-dungeon-adventure)
 
 (mk-dungeon-room
- 'p_pools "Pools"
+ 'p_pools "水辺"
  (list
 		"rn rn r4 .. .. .. .. bb dd dd dd .. .. .. .. .. ra rn rn "
 		"rn r8 r8 r5 .. .. .. .. dd dd dd bb .. .. .. .. .. ra rn "
@@ -62,7 +62,7 @@
  
 (kern-mk-place 
  'p_deepness
- "The Deepness"
+ "深み"
  nil     ; sprite
  (kern-mk-map 
   nil 38 38 pal_expanded 
@@ -131,8 +131,8 @@
   (put (guard-pt 'headless) 3 20)
   (put (spawn-pt 'kraken) 5 9)
   (put (spawn-pt 'sea-serpent) 18 11)
-  (put (step-pt "A yellow slime oozes up!" (list 'yellow-slime 32 11)) 33 10)
-  (put (step-pt "A yellow slime oozes up!" (list 'yellow-slime 26 3)) 26 5)
+  (put (step-pt "黄色い粘菌がにじみ出てきた！" (list 'yellow-slime 32 11)) 33 10)
+  (put (step-pt "黄色い粘菌がにじみ出てきた！" (list 'yellow-slime 26 3)) 26 5)
 
   ;; put a special step trigger on the footbridge across the cistern
   (put (mk-step-trig 'spawn-kraken-lakes-sea-serpent nil) 31 31)

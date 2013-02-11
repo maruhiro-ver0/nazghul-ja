@@ -28,55 +28,55 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;;
-;; Angela is a female innkeeper, who runs the Palisades Inn in Glasdrin.
-;; She is a gracious, mysterious woman.
+;; エンジェラは宿屋「城壁」の主の女性で、城塞都市グラスドリンに住んでいる。
+;; 彼女は上品だが謎の多い女性である。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (ange-hail knpc kpc)
-  (say knpc "[You meet a charming lady] Welcome, traveler."))
+  (say knpc "［あなたは魅力的な女性と会った。］ようこそいらっしゃいました。旅の方。"))
 
 (define (ange-default knpc kpc)
-  (say knpc "I'm afraid I don't know."))
+  (say knpc "残念ですがわかりません。"))
 
 (define (ange-name knpc kpc)
-  (say knpc "I am Angela. And you are?")
+  (say knpc "私はエンジェラです。あなたは？")
   (let ((name (kern-conv-get-string kpc)))
-    (say knpc "I am most pleased to meet you, " name 
-         ". I hope you enjoy your stay in Glasdrin.")))
+    (say knpc "会えてうれしいです、" name 
+         "様。グラスドリンの滞在を楽しんでください。")))
 
 (define (ange-join knpc kpc)
-  (say knpc "You flatter me! It's been years since I've had a good adventure, "
-       "but I must decline."))
+  (say knpc "お世辞はよしてください！何年も前はよき冒険者でしたが、"
+       "もう辞めたのです。"))
 
 (define (ange-job knpc kpc)
-  (say knpc "I'm the Innkeeper of Glasdrin. "
-       "If you'd like a room just ask!"))
+  (say knpc "グラスドリンの宿屋をしております。"
+       "部屋が必要ならお申し付けください！"))
 
 (define (ange-bye knpc kpc)
-  (say knpc "Farewell, traveler, I do hope you come back soon!"))
+  (say knpc "さようなら、旅の方。またいらしてください！"))
 
 ;; Trade...
 (define (ange-trade knpc kpc)
   (if (not (string=? "working" (kern-obj-get-activity knpc)))
-      (say knpc "Oh, do please stop by when I'm at my counter! "
-           "The Palisades is open from 7:00AM to 11:00PM. "
-           "I hope to see you then!")
+      (say knpc "ああ、私が宿にいるときに泊まりに来てください！"
+           "「城壁」は午前7時から午後11時まで開いています。"
+           "また後で会いましょう！")
       (let ((door (eval 'glasdrin-inn-room-1-door)))
         ;; is the room still open?
         (if (not (door-locked? (kobj-gob door)))
             ;; yes - remind player
-            (say knpc "Room 1 is yours until you leave town!")
+            (say knpc "1号室は町を離れるまではあなたの部屋です！")
             ;; no - ask if player needs a room
             (begin
-              (say knpc "Do you need a room?")
+              (say knpc "お部屋が必要ですか？")
               (if (kern-conv-get-yes-no? kpc)
                   ;; yes - player wants a room
                   (begin
                     (say knpc 
-                         "That will be " glasdrin-inn-room-price " gold. "
-                         "The room is yours until you leave town. "
-                         "Is this to your liking?")
+                         "金貨" glasdrin-inn-room-price "枚です。"
+                         "町を出るまではあなたの部屋です。"
+                         "よろしいですか？")
                     (if (kern-conv-get-yes-no? kpc)
                         ;; yes - player agrees to the price
                         (let ((gold (kern-player-get-gold)))
@@ -84,8 +84,8 @@
                           (if (>= gold glasdrin-inn-room-price)
                               ;; yes - player has enough gold
                               (begin
-                                (say knpc "Wonderful! You're in room 1, "
-                                     "our very best! Enjoy your stay.")
+                                (say knpc "ありがとうございます！お部屋は1号室です。"
+                                     "ごゆっくりどうぞ。")
                                 (kern-player-set-gold 
                                  (- gold 
                                     glasdrin-inn-room-price))
@@ -93,49 +93,45 @@
                                 (kern-conv-end)
                                 )
                               ;; no - player does not have enouvh gold)
-                              (say knpc "Oh dear, I'm afraid you don't have "
-                                   "enough gold! I do hope when your fortunes "
-                                   "improve you'll come back and stay." )))
+                              (say knpc "ああ、残念ですが料金が足りません！"
+                                   "お金を稼いだらぜひおこしください。" )))
                         ;; no - player does not agree to the price
-                        (say knpc "I do wish you would stay, "
-                             "I rarely get such intriguing guests!")))
+                        (say knpc "泊まっていただけるとうれしいのですが。"
+                             "珍しいお客様ですね！")))
                   ;; no - player does not want a room
-                  (say knpc "Oh, I am so disappointed, "
-                       "you seem like a very interesting guest! "
-                       "Perhaps another time.")))))))
+                  (say knpc "ああ、残念です。"
+                       "変わったお客様ですね！"
+                       "またの機会にどうぞ。")))))))
 
 ;; Inn...
 (define (ange-inn knpc kpc)
-  (say knpc "The Palisades is a very fine inn, if I say so myself."))
+  (say knpc "城壁はすばらしい宿と思っております。"))
 
 (define (ange-adve knpc kpc)
-  (say knpc "As you may know, all citizens of Glasdrin must serve a tour of "
-       "duty. I was a quartermaster, and once I even went with the paladins "
-       "on patrol."))
+  (say knpc "知っているかもしれませんが、全てのグラスドリン市民には兵役の義務があります。"
+       "私はかつて補給部隊に所属していて、警備の聖騎士と同行していました。"))
 
 (define (ange-patr knpc kpc)
-  (say knpc "It was a lovely walk, and camping under the stars was grand. "
-       "But then gints attacked and ruined the whole mood."))
+  (say knpc "よい任務でした。星の下の陣はすばらしいものでした。"
+       "でも、巨人の襲撃で全てが台無しにされました。"))
 
 (define (ange-gint knpc kpc)
-  (say knpc "Gints are like stocky men but enormous and two-headed. "
-       "They once were common in the mountains, but the vigilance of Glasdrin "
-       "has driven them into caves. They are most fearsome brutes. "
-       "I've seen them hurl grown, heavily armored men like missiles at their "
-       "own comrades!"))
+  (say knpc "巨人は姿は人間と似ていますが、巨大で頭が二つあります。"
+       "かつて山には普通にいましたが、グラスドリンの警備のおかげで洞窟に追いやることができました。"
+       "彼らは最も凶暴で恐るべき存在です。"
+       "巨人が重装備の戦士を石ころのように投げつけるのを見たことがあります！"))
 
 ;; Townspeople...
 (define (ange-glas knpc kpc)
-  (say knpc "Glasdrin is a fair city, do you not think so?")
+  (say knpc "グラスドリンはすばらしい町です。そう思いませんか？")
   (if (kern-conv-get-yes-no? kpc)
-      (say knpc "Indeed.")
-      (say knpc "No doubt you have seen magnificent cities in your travels. "
-           "I suppose I love it because it is home.")))
+      (say knpc "まったくです。")
+      (say knpc "旅の中ですばらしい町をいくつも見てきたのでしょうね。"
+           "私はこの町を愛しています。ここは私の家です。")))
 
 (define (ange-patc knpc kpc)
-  (say knpc "Patch is the best healer around. "
-       "He can even call back the recently deceased, "
-       "if their wounds are not too grievous."))
+  (say knpc "眼帯先生はこのあたりで最も優れた医師です。"
+       "傷がひどくなければ、最近亡くなった人を蘇生することもできます。"))
 
 (define ange-conv
   (ifc glasdrin-conv
@@ -169,7 +165,7 @@
 (define (mk-angela)
   (bind 
    (kern-mk-char 'ch_angela          ; tag
-                 "Angela"            ; name
+                 "エンジェラ"        ; name
                  sp_human            ; species
                  nil                 ; occ
                  s_townswoman        ; sprite

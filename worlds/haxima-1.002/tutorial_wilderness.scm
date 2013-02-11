@@ -2,7 +2,7 @@
 
 (kern-mk-place 
  'p_tutorial_wilderness
- "The Tutorial Wilderness"
+ "チュートリアルの荒野"
  nil          ; sprite 
  (kern-mk-map
   nil 19 19 pal_expanded
@@ -42,37 +42,37 @@
  ;; objects:
  (list
 
-  (put (mk-step-clue "A)ttack the bandits to the south. "
-                     "Combat will take place on a special map. "
-                     "When combat is over press '<' or just walk off the edge of the map.")
+  (put (mk-step-clue "南にいる盗賊と戦いましょう。"
+                     "戦闘は別の地図上で行われます。"
+                     "戦いは、'<'を押すか、端まで移動すると終了します。")
        9 10)
   (put (mk-npc-party 'bandit-party-l1) 9 13)
-  (put (mk-step-clue "You can K)amp in the wilderness to heal your party. Try it now.") 9 13)
+  (put (mk-step-clue "荒野ではキャンプで体力を回復することができます。ここで試してみましょう。('k'コマンド)") 9 13)
  
-  (put (mk-step-clue "Enter the cave below by stepping onto it.")
+  (put (mk-step-clue "下の洞窟には重なると入れます。")
        9 14)
   (put (mk-dungeon 'p_tutorial_cave 7 17) 9 15)
 
-  (put (mk-step-clue "B)oard the ship by stepping onto it and pressing 'b'. "
-                     "Then sail to the dock in the northeast corner using the arrow keys.") 14 5)
-  (put (mk-step-clue "F)ire your cannons at the bandits on the island by pressing 'f' and an arrow key. "
-                     "A ship can only fire broadside, so you may have to maneuver a bit.") 
+  (put (mk-step-clue "船の上に移動して'b'を押すと乗ることができます。"
+                     "北東の端まで矢印キーで移動し上陸しましょう。") 14 5)
+  (put (mk-step-clue "'f'キーと矢印キーを押して島にいる盗賊を砲撃しましょう。"
+                     "船は側面の方向のみ砲撃できます。よって少し考えて操作しなければなりません。") 
        15 4)
-  (put (mk-step-clue "F)ire your cannons at the bandits on the island by pressing 'f' and an arrow key. "
-                     "A ship can only fire broadside, so you may have to maneuver a bit.") 
+  (put (mk-step-clue "'f'キーと矢印キーを押して島にいる盗賊を砲撃しましょう。"
+                     "船は側面の方向のみ砲撃できます。よって少し考えて操作しなければなりません。") 
        15 6)
-  (put (mk-step-clue "F)ire your cannons at the bandits on the island by pressing 'f' and an arrow key. "
-                     "A ship can only fire broadside, so you may have to maneuver a bit.") 
+  (put (mk-step-clue "'f'キーと矢印キーを押して島にいる盗賊を砲撃しましょう。"
+                     "船は側面の方向のみ砲撃できます。よって少し考えて操作しなければなりません。") 
        16 5)
 
   (put (mk-ship) 15 5)
   (put (mk-npc-party 'bandit-party-l1) 16 14)
 
-  (put (mk-step-clue "That's it for the tutorial. There's lots more info in the USERS_GUIDE. "
-                     "You'll find one in the doc directory where you installed the game, or "
-                     "you can find one online at the project website. "
-                     "You may exit the tutorial now by Q)uitting the game with the 'q' key. "
-                     "Have fun!") 17 1)
+  (put (mk-step-clue "これでチュートリアルは終わりです。説明書にはもっと多くの情報が書かれています。"
+                     "それはこのゲームをインストールした場所のdocディレクトリ、または"
+                     "オンラインのウェブサイトにあります。"
+                     "'q'キーを押すとチュートリアルを終了します。"
+                     "それでは本編をお楽しみください！") 17 1)
        
   ) ;; end of objects
 

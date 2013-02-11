@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Green Tower
+;; 緑の塔
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_abigail
                (list 0 0 abigail-bed "sleeping")
@@ -29,38 +29,38 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Abigail is a female goblin child, who lives in Green Tower.
+;; アビガイルはゴブリンの少女で、緑の塔にいる。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (abigail-hail knpc kpc)
-  (kern-log-msg "You meet a goblin child.")
-  (say knpc "Hi.")
+  (kern-log-msg "あなたはゴブリンの子供に会った。")
+  (say knpc "ハーイ。")
   )
 
 (define (abigail-default knpc kpc)
-  (say knpc "[She shrugs]")
+  (say knpc "［彼女は肩をすぼめた。］")
   )
 
 (define (abigail-name knpc kpc)
-  (say knpc "Guto says my name is Abigail.")
+  (say knpc "グトは私の名前はアビガイルだって言ってた。")
   )
 
 (define (abigail-bye knpc kpc)
-  (say knpc "Bye-bye!")
+  (say knpc "バイバイ！")
   )
 
 (define (abigail-guto knpc kpc)
-  (say knpc "Doris is my guto."))
+  (say knpc "ドリスは私のグトなの。"))
 
 (define (abigail-dori knpc kpc)
-  (say knpc "That's my guto!"))
+  (say knpc "それは私のグトよ！"))
 
 (define (abigail-gobl knpc kpc)
-  (say knpc "The green people, like me. I'm both!"))
+  (say knpc "私のような緑のひと。私は両方よ！"))
 
 (define (abigail-both knpc kpc)
-  (say knpc "I talk to goblins. I talk to people. See? Both!"))
+  (say knpc "ゴブリンとも話す。人とも話す。わかる？両方よ！"))
 
 (define abigail-conv
   (ifc nil
@@ -81,7 +81,7 @@
   (bind 
    (kern-mk-char 
     'ch_abigail           ; tag
-    "Abigail"             ; name
+    "アビガイル"             ; name
     abigail-species         ; species
     abigail-occ              ; occ
     s_goblin_child     ; sprite

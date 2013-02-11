@@ -66,6 +66,8 @@ static struct {
 static FILE *log = NULL;
 #endif
 
+struct dictionary *dictionary = NULL;
+
 static inline void cmdwin_clear_no_repaint()
 {
 	memset(cmdwin.buf, 0, cmdwin.blen);
@@ -297,4 +299,366 @@ void cmdwin_flush(void)
 
         log_msg("%s\n", cmdwin.buf);
         cmdwin_clear();
+}
+
+int kana_to_english(char *kana, char *english, char *kanji)
+{
+	int i;
+	
+	for (i = 0; dictionary[i].kana != NULL; i++) {
+		if (!strcmp(kana, dictionary[i].kana)) {
+			if (english) {
+				strcpy(english, dictionary[i].english);
+			}
+			if (kanji) {
+				strcpy(kanji, dictionary[i].kanji);
+			}
+			return true;
+		}
+	}
+
+	if (english) {
+		strcpy(english, kana);
+	}
+	if (kanji) {
+		strcpy(kanji, kana);
+	}
+	return false;
+}
+
+int alpha_to_kana(int key, char *buf)
+{
+	const static struct {
+		const char *alpha;
+		const char *kana;
+	} kana[] = {
+		{ "ayb", "ビャ" },
+		{ "iyb", "ビィ" },
+		{ "uyb", "ビュ" },
+		{ "eyb", "ビェ" },
+		{ "oyb", "ビョ" },
+		{ "ayc", "チャ" },
+		{ "iyc", "チィ" },
+		{ "uyc", "チュ" },
+		{ "eyc", "チェ" },
+		{ "oyc", "チョ" },
+		{ "ayd", "ヂャ" },
+		{ "iyd", "ヂィ" },
+		{ "uyd", "ヂュ" },
+		{ "eyd", "ヂェ" },
+		{ "oyd", "ヂョ" },
+		{ "ayf", "フャ" },
+		{ "iyf", "フィ" },
+		{ "uyf", "フュ" },
+		{ "eyf", "フェ" },
+		{ "oyf", "フョ" },
+		{ "ayg", "ギャ" },
+		{ "iyg", "ギィ" },
+		{ "uyg", "ギュ" },
+		{ "eyg", "ギェ" },
+		{ "oyg", "ギョ" },
+		{ "ayh", "ヒャ" },
+		{ "iyh", "ヒィ" },
+		{ "uyh", "ヒュ" },
+		{ "eyh", "ヒェ" },
+		{ "oyh", "ヒョ" },
+		{ "ayj", "ジャ" },
+		{ "iyj", "ジィ" },
+		{ "uyj", "ジュ" },
+		{ "eyj", "ジェ" },
+		{ "oyj", "ジョ" },
+		{ "ayk", "キャ" },
+		{ "iyk", "キィ" },
+		{ "uyk", "キュ" },
+		{ "eyk", "キェ" },
+		{ "oyk", "キョ" },
+		{ "aym", "ミャ" },
+		{ "iym", "ミィ" },
+		{ "uym", "ミュ" },
+		{ "eym", "ミェ" },
+		{ "oym", "ミョ" },
+		{ "ayn", "ニャ" },
+		{ "iyn", "ニィ" },
+		{ "uyn", "ニュ" },
+		{ "eyn", "ニェ" },
+		{ "oyn", "ニョ" },
+		{ "ayp", "ピャ" },
+		{ "iyp", "ピィ" },
+		{ "uyp", "ピュ" },
+		{ "eyp", "ピェ" },
+		{ "oyp", "ピョ" },
+		{ "ayq", "クァ" },
+		{ "iyq", "クィ" },
+		{ "uyq", "クゥ" },
+		{ "eyq", "クェ" },
+		{ "oyq", "クォ" },
+		{ "ayr", "リャ" },
+		{ "iyr", "リィ" },
+		{ "uyr", "リュ" },
+		{ "eyr", "リェ" },
+		{ "oyr", "リョ" },
+		{ "ays", "シャ" },
+		{ "iys", "シィ" },
+		{ "uys", "シュ" },
+		{ "eys", "シェ" },
+		{ "oys", "ショ" },
+		{ "ayt", "チャ" },
+		{ "iyt", "チィ" },
+		{ "uyt", "チュ" },
+		{ "eyt", "チェ" },
+		{ "oyt", "チョ" },
+		{ "ayv", "ヴャ" },
+		{ "iyv", "ヴィ" },
+		{ "uyv", "ヴュ" },
+		{ "eyv", "ヴェ" },
+		{ "oyv", "ヴョ" },
+		{ "ayx", "ャ" },
+		{ "iyx", "ィ" },
+		{ "uyx", "ュ" },
+		{ "eyx", "ェ" },
+		{ "oyx", "ョ" },
+		{ "ayz", "ジャ" },
+		{ "iyz", "ジィ" },
+		{ "uyz", "ジュ" },
+		{ "eyz", "ジェ" },
+		{ "oyz", "ジョ" },
+		{ "ahc", "チャ" },
+		{ "ihc", "チ" },
+		{ "uhc", "チュ" },
+		{ "ehc", "チェ" },
+		{ "ohc", "チョ" },
+		{ "ahd", "デャ" },
+		{ "ihd", "ディ" },
+		{ "uhd", "デュ" },
+		{ "ehd", "デェ" },
+		{ "ohd", "デョ" },
+		{ "ahp", "ファ" },
+		{ "ihp", "フィ" },
+		{ "uhp", "フ" },
+		{ "ehp", "フェ" },
+		{ "ohp", "フォ" },
+		{ "ahs", "シャ" },
+		{ "ihs", "シ" },
+		{ "uhs", "シュ" },
+		{ "ehs", "シェ" },
+		{ "ohs", "ショ" },
+		{ "aht", "テャ" },
+		{ "iht", "ティ" },
+		{ "uht", "テュ" },
+		{ "eht", "テェ" },
+		{ "oht", "テョ" },
+		{ "ahw", "ウァ" },
+		{ "ihw", "ウィ" },
+		{ "uhw", "ウ" },
+		{ "ehw", "ウェ" },
+		{ "ohw", "ウォ" },
+		{ "ast", "ツァ" },
+		{ "ist", "ツィ" },
+		{ "ust", "ツ" },
+		{ "est", "ツェ" },
+		{ "ost", "ツォ" },
+		{ "ab", "バ" },
+		{ "ib", "ビ" },
+		{ "ub", "ブ" },
+		{ "eb", "ベ" },
+		{ "ob", "ボ" },
+		{ "ac", "カ" },
+		{ "ic", "キ" },
+		{ "uc", "ク" },
+		{ "ec", "ケ" },
+		{ "oc", "コ" },
+		{ "ad", "ダ" },
+		{ "id", "ヂ" },
+		{ "ud", "ヅ" },
+		{ "ed", "デ" },
+		{ "od", "ド" },
+		{ "af", "ファ" },
+		{ "if", "フィ" },
+		{ "uf", "フ" },
+		{ "ef", "フェ" },
+		{ "of", "フォ" },
+		{ "ag", "ガ" },
+		{ "ig", "ギ" },
+		{ "ug", "グ" },
+		{ "eg", "ゲ" },
+		{ "og", "ゴ" },
+		{ "ah", "ハ" },
+		{ "ih", "ヒ" },
+		{ "uh", "フ" },
+		{ "eh", "ヘ" },
+		{ "oh", "ホ" },
+		{ "aj", "ジャ" },
+		{ "ij", "ジ" },
+		{ "uj", "ジュ" },
+		{ "ej", "ジェ" },
+		{ "oj", "ジョ" },
+		{ "ak", "カ" },
+		{ "ik", "キ" },
+		{ "uk", "ク" },
+		{ "ek", "ケ" },
+		{ "ok", "コ" },
+		{ "al", "ァ" },
+		{ "il", "ィ" },
+		{ "ul", "ゥ" },
+		{ "el", "ェ" },
+		{ "ol", "ォ" },
+		{ "am", "マ" },
+		{ "im", "ミ" },
+		{ "um", "ム" },
+		{ "em", "メ" },
+		{ "om", "モ" },
+		{ "an", "ナ" },
+		{ "in", "ニ" },
+		{ "un", "ヌ" },
+		{ "en", "ネ" },
+		{ "on", "ノ" },
+		{ "nn", "ン" },
+		{ "ap", "パ" },
+		{ "ip", "ピ" },
+		{ "up", "プ" },
+		{ "ep", "ペ" },
+		{ "op", "ポ" },
+		{ "aq", "クァ" },
+		{ "iq", "クィ" },
+		{ "uq", "クゥ" },
+		{ "eq", "クェ" },
+		{ "oq", "クォ" },
+		{ "ar", "ラ" },
+		{ "ir", "リ" },
+		{ "ur", "ル" },
+		{ "er", "レ" },
+		{ "or", "ロ" },
+		{ "as", "サ" },
+		{ "is", "シ" },
+		{ "us", "ス" },
+		{ "es", "セ" },
+		{ "os", "ソ" },
+		{ "at", "タ" },
+		{ "it", "チ" },
+		{ "ut", "ツ" },
+		{ "et", "テ" },
+		{ "ot", "ト" },
+		{ "av", "ヴァ" },
+		{ "iv", "ヴィ" },
+		{ "uv", "ヴ" },
+		{ "ev", "ヴェ" },
+		{ "ov", "ヴォ" },
+		{ "aw", "ワ" },
+		{ "iw", "ヰ" },
+		{ "uw", "ウ" },
+		{ "ew", "ウェ" },
+		{ "ow", "ヲ" },
+		{ "ax", "ァ" },
+		{ "ix", "ィ" },
+		{ "ux", "ゥ" },
+		{ "ex", "ェ" },
+		{ "ox", "ォ" },
+		{ "ay", "ヤ" },
+		{ "iy", "イ" },
+		{ "uy", "ユ" },
+		{ "ey", "イェ" },
+		{ "oy", "ヨ" },
+		{ "az", "ザ" },
+		{ "iz", "ジ" },
+		{ "uz", "ズ" },
+		{ "ez", "ゼ" },
+		{ "oz", "ゾ" },
+		{ "'n", "ン" },
+		{ "a", "ア" },
+		{ "i", "イ" },
+		{ "u", "ウ" },
+		{ "e", "エ" },
+		{ "o", "オ" },
+		{ " ", "　" },
+		{ "!", "！" },
+		{ "\"", "”" },
+		{ "#", "＃" },
+		{ "$", "＄" },
+		{ "%", "％" },
+		{ "&", "＆" },
+		{ "'", "’" },
+		{ "(", "（" },
+		{ ")", "）" },
+		{ "*", "＊" },
+		{ "+", "＋" },
+		{ ",", "、" },
+		{ "-", "ー" },
+		{ ".", "。" },
+		{ "/", "・" },
+		{ "0", "０" },
+		{ "1", "１" },
+		{ "2", "２" },
+		{ "3", "３" },
+		{ "4", "４" },
+		{ "5", "５" },
+		{ "6", "６" },
+		{ "7", "７" },
+		{ "8", "８" },
+		{ "9", "９" },
+		{ ":", "：" },
+		{ ";", "；" },
+		{ "<", "＜" },
+		{ "=", "＝" },
+		{ ">", "＞" },
+		{ "?", "？" },
+		{ "@", "＠" },
+		{ "[", "「" },
+		{ "\\", "￥" },
+		{ "]", "」" },
+		{ "^", "＾" },
+		{ "_", "＿" },
+		{ "`", "‘" },
+		{ "{", "｛" },
+		{ "|", "｜" },
+		{ "}", "｝" },
+		{ "~", "〜" },
+		{ NULL, NULL }
+	};
+	static int roman = true;
+	static char roman_buf[] = { "\0\0\0\0\0" };
+	int i;
+	int len;
+	int n;
+	int soku;
+
+	if (key == 0) { /* Clear roman buffer */
+		memset(roman_buf, 0, sizeof(roman_buf));
+		return 0;
+	}
+	if (key == -1) { /* Roman mode off */
+		roman = false;
+		return 0;
+	}
+	if (key == '\t') { /* Toggle roman mode */
+		roman = !roman;
+		memset(roman_buf, 0, sizeof(roman_buf));
+		return 0;
+	}
+
+	if (!roman || (key & 0x80) || !isprint(key)) {
+		memset(roman_buf, 0, sizeof(roman_buf));
+		return 0;
+	}
+
+	memmove(roman_buf + 1, roman_buf, sizeof (roman_buf) - 1);
+	roman_buf[0] = key;
+
+	for (i = 0; kana[i].alpha != NULL; i++) {
+		len = strlen(kana[i].alpha);
+
+		if (!strncasecmp(roman_buf, kana[i].alpha, len)) {
+			soku = (roman_buf[len - 1] == roman_buf[len]);
+
+			if(soku)
+				n = (roman_buf[len + 1] == 'n');
+			else
+				n = (roman_buf[len] == 'n');
+
+			sprintf (buf, "%.*s%s%s%s", len + n + soku, "\b\b\b\b\b", (n ? "ン": ""), (soku ? "ッ": ""), kana[i].kana);
+
+			memset(roman_buf, 0, sizeof (roman_buf));
+			return strlen(buf);
+		}
+	}
+	return 0;
 }

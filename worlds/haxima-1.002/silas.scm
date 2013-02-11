@@ -10,7 +10,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Old Absalot
+;; 古アブサロット
 ;;----------------------------------------------------------------------------
 (define silas-bed oa-bed1)
 (define silas-mealplace oa-tbl3)
@@ -41,196 +41,187 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Silas is the leader of the evil cult of the Accursed.
-;; He is a wizard of considerable power.
+;; サイラスは呪われた者の悪しき教えの指導者である。
+;; 彼は注目すべき力を持った魔術師である。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (silas-hail knpc kpc)
   (if (silas-met? (kobj-gob-data knpc))
-      (say knpc "Hello again, Wanderer.")
+      (say knpc "また会ったな。迷い人よ。")
       (begin
         (silas-set-met! (kobj-gob-data knpc))
-        (say knpc "[You meet a charming older man] Hail, traveler. "
-             "If I am not mistaken, you are a Wanderer. Am I right?")
+        (say knpc "［あなたは魅惑的な老人と会った。］ようこそ、旅の方。"
+             "私の考え違いでなければ、君は迷い人であろう。どうかね？")
         (if (yes? kpc)
-            (say knpc "I knew it! I've actually been expecting you.")
-            (say knpc "[He clearly does not believe you] "
-                 "Really, you are too modest. "
-                 "I've been expecting you for some time.")))))
+            (say knpc "そうだと思った！君を待っていたよ。")
+            (say knpc "［彼は明らかにあなたの言うことを信じていない。］"
+                 "そうか。多くを語らないのだな。"
+                 "ずっと君を待っていた。")))))
 
 (define (silas-default knpc kpc)
-  (say knpc "I'm afraid I cannot help you with that."))
+  (say knpc "残念だがそれは手助けできぬ。"))
 
 (define (silas-name knpc kpc)
-  (say knpc "Forgive me, I am Silas. And you, my friend, "
-       "need no introduction."))
+  (say knpc "失礼。私はサイラスだ。"
+       "君は、友よ、言わずともよい。"))
 
 (define (silas-ask-help knpc kpc)
   (cond ((yes? kpc)
-         (say knpc "I can't tell you how gratified I am to hear that. "
-              "With you on my side we will bring a new age of hope and "
-              "peace to the Shard. When you are ready to begin, "
-              "I have a quest for you.")
+         (say knpc "その答えが聞けた喜びを言い表すことができない。"
+              "君が私の側についたことで、シャルドに希望と安定の新しい時代をもたらすことができるだろう。"
+              "準備はできているか。君がすべきことがある。")
          (silas-set-will-help! (kobj-gob-data knpc))
          (make-allies knpc kpc)
          )
         (else
-         (say knpc "Although success is most doubtful now, "
-              "I shall have to do my best without you. "
-              "It is a pity. You know, in the past, the appearance of a "
-              "Wanderer always occurred at a pivotal moment in history. "
-              "The actions -- or inactions -- of the Wanderer sometimes "
-              "decided the fate of the world for centuries thereafter.")
+         (say knpc "今のままでは成功は疑わしいが、"
+              "君なしで最善を尽くさねばならない。"
+              "残念だ。君は知っているだろう。"
+              "過去に迷い人が現れるのは常に歴史が変わるときであった。"
+              "迷い人の行い…あるいは行わないこと…が時としてその後の数百年の運命を決めたのだ。")
          )))
 
 (define (silas-join knpc kpc)
-  (say knpc "[Chuckling] Actually, I was hoping to convince you to join ME. "
-       "I have a most difficult job ahead of me, but with your help I know it "
-       "can be done. Will you help me?")
+  (say knpc "［彼は笑った。］実際、君を私の仲間に加えようと説得するつもりだった。"
+       "私の目の前には極めて困難な仕事がある。だが、君の力と共にあれば成し遂げられるであろう。"
+       "私の手助けをしてみぬか？")
   (silas-ask-help knpc kpc)
   )
 
 (define (silas-job knpc kpc)
-  (say knpc "My goal is to bring a new golden age to the Shard. "
-       "Many obstacles lie before me, "
-       "and I greatly need someone with your talents. "
-       "Will you help me, Wanderer? I cannot do this without you.")
+  (say knpc "私の目標はこのシャルドに新しい黄金時代をもたらすことだ。"
+       "多くの障害が私の前には横たわっている。"
+       "そしてこの目的のためには才能ある者が必要だ。"
+       "迷い人よ。私の手助けをしてみぬか？君がいなければ成し遂げられない。")
   (silas-ask-help knpc kpc)
   )
 
 (define (silas-help knpc kpc)
-  (say knpc "Will you help me in my task?")
+  (say knpc "私の手助けをしてみぬか？")
   (silas-ask-help knpc kpc)
   )
 
 (define (silas-bye knpc kpc)
-  (say knpc "Farewell, Wanderer, and good fortune!"))
+  (say knpc "さようなら、迷い人、そして幸運を！"))
 
 ;; Tier 2
 (define (silas-expe knpc kpc)
-  (say knpc "Yes, I have heard of your coming. "
-       "I knew that sooner or later you would appear. "
-       "I have studied the history of the Wanderers quite extensively."))
+  (say knpc "そうだ。君が来たことは聞いていた。"
+       "遅かれ早かれ君が現れることはわかっていた。"
+       "迷い人の歴史については幅広く調査している。"))
 (define (silas-hist knpc kpc)
-  (say knpc "When the library above was burnt most of the archives were lost. "
-       "I'm afraid the best record of the Wanderers is now in this feeble book. "
-       "[He taps his head]"))
+  (say knpc "地上の図書館は焼け落ち、大半の記録が失われてしまった。"
+       "迷い人の記録はここにあるわずかな本に残っているだけかも知れぬ。"
+       "［彼は頭を振った。］"))
 (define (silas-wand knpc kpc)
-  (say knpc "All Wanderers arrive through the Shrine Gate, as you did. But did you know there is another Gate?")
+  (say knpc "全ての迷い人は祭壇の門を通って来た。君のようにだ。だが、別の門があることを知っているかね？")
   (if (yes? kpc)
-      (say knpc "You are well-learned already! Of course I am speaking of the Demon Gate.")
-      (say knpc "Indeed there is. It is known as the Demon Gate.")))
+      (say knpc "よくわかっているな。もちろん悪魔の門のことだ。")
+      (say knpc "それは確かに存在する。悪魔の門として知られているものだ。")))
 
 (define (silas-demo knpc kpc)
-  (say knpc "For a long time the Demon Gate connected the Shard to other worlds. "
-       "This was a golden age of progress and enlightenment, "
-       "when Wizards from this world and others would freely mingle, "
-       "sharing knowledge and commerce.")
+  (say knpc "遠い昔、悪魔の門はシャルドと別の世界を結んでいた。"
+       "それは知と進歩の黄金時代で、"
+       "魔術師たちはこの世界と別の世界を自由に行き来し"
+       "知識と物を共有していた。")
   (prompt-for-key)
-  (say knpc "But eventually, trouble began to brew. "
-       "One of the other worlds began to conquer the others, "
-       "using the gate to move its armies. For fear that the Shard also would "
-       "be invaded our Wizards sealed the Demon Gate with eight locks, and divided the "
-       "keys among themselves for safe-keeping."))
+  (say knpc "だが、最終的には問題が起こり始めた。"
+       "ある別の世界の者が、門を使って自らの兵を動かし、他を征服し始めたのだ。"
+       "シャルドに進攻されることを恐れた魔術師たちは、悪魔の門に八つの封印を施し"
+       "八つに分けられた鍵を守ることにした。"))
 
 (define (silas-key knpc kpc)
   (if (any-in-inventory? kpc rune-types)
-      (say knpc "The keys are special runes, like the one you already carry.")
-      (say knpc "The keys are special runes. Unfortunately, they have been lost through the ages.")))
+      (say knpc "鍵は君が持っているような特別な石版だ。")
+      (say knpc "鍵は特別な石版だ。残念だがそれらはこの時代に失われてしまった。")))
 
 (define (silas-rune knpc kpc)
-  (say knpc "I have made it my goal to recover all of the lost runes. Even if "
-       "we choose to keep the Demon Gate locked forever, we should at least know that "
-       "the runes are all accounted for and safely guarded. Don't you agree?")
+  (say knpc "私は目的のため全ての失われた石版を取り戻さなければならない。"
+       "仮に悪魔の門を永遠に封印することを選択したとしても、"
+       "石版の行方を知り、そして安全に管理しなければならない。同意するかね？")
   (if (yes? kpc)
-      (say knpc "Of course, it is merely sound policy.")
-      (say knpc "But consider if the runes were to fall into the wrong hands, "
-           "or if some day we should need to evacuate the Shard, "
-           "or if we needed to call on assistance from the other worlds? "
-           "Surely it is good to have the option of opening the Demon Gate, "
-           "even if we never intend to exercise it.")))
+      (say knpc "もちろんだ。これはまっとうな方針であろう。")
+      (say knpc "しかし考えてみよ。もし石版が悪しき者の手に落ちたら、"
+           "もしシャルドを去らねばならないときが来たら、"
+           "もし別の世界の助けが必要になったとしたら？"
+           "悪魔の門を決して開けるつもりがないとしても、選択肢があるのはよいことだろう。")))
 
 ;; Accursed, Wise
 (define (silas-accu knpc kpc)
-  (say knpc "[He chuckles] Yes, I am Accursed. Unfortunately that name has come "
-       "to be demonized by the popular imagination. All sorts of wild tales abound "
-       "regarding our supposed activities. I assure you that none of them are true. But "
-       "we cannot defend ourselves by revealing what we really do, for we are all sworn "
-       "to secrecy."))
+  (say knpc "［彼は笑った。］その通り。私は呪われた者だ。"
+       "残念なことに、それは多くの者たちの悪魔的な空想からきた呼び名だ。"
+       "あらゆる突飛な話には我々の活動が関わっているとされている。"
+       "私はそれらは全て偽りだと断言する。"
+       "しかし我々の真の行いを明かすことで自らの弁護をすることはできない。"
+       "我々はみな秘密を誓っているからだ。"))
 
 (define (silas-secr knpc kpc)
-  (say knpc "The rites of the Accursed are kept secret to protect them from "
-       "profane people, and to protect foolish people from attempting them! They are "
-       "sacred and dangerous, and not intended for the uninitiated. But I assure you, "
-       "they do not involve anything harmful to innocents!"))
+  (say knpc "呪われた者の教義は外部の者には秘密にされ守られている。"
+       "そして愚かな者がまねようとすることを防いでいる！"
+       "神聖で危険、そして無知な者には無用のものだ。"
+       "だが断言しよう。それは何も知らない人々を巻き込むものではない！"))
 
 (define (silas-wise knpc kpc)
-  (say knpc "Ah, yes. The so-called Wise. You know, they are part of a "
-       "venerable and useful tradition. At least, it was a useful tradition in bygone "
-       "days. [Sigh] I fear that now the Wise are as often an impediment to the Shard as "
-       "they are a help. Consider this whole business with Absalot."))
+  (say knpc "ああ、そうだ。いわゆる賢者。君は知っているであろう。"
+       "彼らは尊敬すべき、そして価値のある伝統の一環だ。少なくとも過ぎし日の価値ある伝統であった。"
+       "［ため息］今日の賢者はシャルドの力添えだけでなく、妨げにもなっている。"
+       "アブサロットでの行いを考えてみたまえ。"))
  
 (define (silas-absa knpc kpc)
-  (say knpc "By now you are no doubt familiar with the story. The Enchanter, in "
-       "misguided jealousy of our secrets, is obsessed with eliminating the "
-       "Accursed. The Stewardess of Glasdrin is hungry for power, and dreams of a "
-       "military empire. She plans to conquer or raze the cities of the Shard one by "
-       "one, Absalot was merely the first and most convenient target. She easily "
-       "manipulated the evidence against Absalot and convinced the other cities and the "
-       "Enchanter to destroy it. The rest is history."))
+  (say knpc "今なら君は間違いなく理解しているだろう。"
+       "魔道師、我々の教えに間違った妬みを持つ者は呪われた者を滅ぼすことに心を奪われており、"
+       "グラスドリンの統治者は力に飢え軍事帝国の夢を抱いている。"
+       "彼女はシャルドの町を一つ一つ征服するか滅ぼすつもりだ。"
+       "アブサロットは最も都合のよい最初の目標だったに過ぎない。"
+       "彼女は簡単に証拠を作り上げ、他の町と魔道師を破壊するよう説き伏せた。"
+       "後は知っての通りだ。"))
 
 ;; Philosophy
 (define (silas-evil knpc kpc)
-  (say knpc "What, really, is evil? Mind you, I am not saying that evil does "
-       "not exist. I simply ask you to challenge your conventional notions of what is "
-       "evil. If an authoritative figure tells us something is wrong, shall we take "
-       "them at their word? Are the authorities not people like us, with their own "
-       "agendas? Everyone acts from their own selfish motives, you know, whether or not "
-       "they admit it.")
+  (say knpc "悪とは本当は何なのか？念のために言うが、私は悪は存在しないと言っているのではない。"
+       "ただ悪とは何かというこれまでの君の観念を問うているのだ。"
+       "もし権威のある者が我々に何が悪であるかを言ったならば、我々はその言葉をそのまま受け入れるべきだろうか？"
+       "我々とは違う権威のある者たちは、彼ら自身の目的があるのではないか？"
+       "あらゆる行動は、それを認めようと認めまいと、各々の利己的な動機に基づいている。")
   (prompt-for-key)
-  (say knpc "And indeed, Wanderer, that is as it should be! All should strive "
-       "after their own interests, for that is the natural way of things. All Men are "
-       "pieces in a game they cannot avoid playing. To deny the game, to deny one's own "
-       "part in it, to accept the belief that one's own interests are not as important "
-       "as those of another, these are all deceptions propogated by one's opponents."))
+  (say knpc "そして実際に、迷い人よ、そうあるべきなのだ！"
+       "全ての者は自身の利益のために戦うべきだ。それが自然な振る舞いである。"
+       "人は皆、抜け出すことができないゲームの駒なのだ。"
+       "ゲームを拒否することは自らを拒否することであり、"
+       "自分の利益より他者の利益を優先すべきという考えは、全て競争相手の流した嘘である。"))
 
 (define (silas-good knpc kpc)
-  (say knpc "You ask me of good, and I ask you in return, what is it that you "
-       "most desire? A thing has value only when it is desired by Men. How ironic, that "
-       "Men are taught to suppress their desires, to quench them with forbearance, as "
-       "if they were evil because they were desires, when in fact the opposite is true! "
-       "I tell you a great secret, it is the desire of certain Men that all other Men "
-       "quench their desires!"))
+  (say knpc "善について尋ねているならば答えよう。君が一番欲しているものは何だ？"
+       "物事は欲する者がいて初めて価値を持つ。"
+       "だが逆に人は欲することは悪であるかのように、欲望を抑え辛抱するよう教えられている。"
+       "それは全くの逆である！"
+       "君に重大な秘密を教えよう。ある種の者たちの欲望は、他の者たちの欲望を押さえ込むことだ！"))
 
 (define (silas-desi knpc kpc)
-  (say knpc "Yes, as the spirit animates the flesh, so desire animates the "
-       "spirit. Without it the spirit is listless and void. This is the first step of "
-       "the Accursed, to acknowledge their own desires as what they are: the ultimate "
-       "good, worthy of all sacrifice and all striving."))
+  (say knpc "そうだ。魂が肉体を動かすように、欲望が魂を動かす。"
+       "欲望がなければ魂は無気力で空虚だ。"
+       "呪われた者の第一歩は、己の欲望、つまり究極の善、全てを犠牲にし、全てを賭ける価値のあるものは何かを知ることだ。"))
 
 (define (silas-sacr knpc kpc)
-  (say knpc "The doctrine of the Accursed holds that sacrifice is the ladder of "
-       "desire. Sacrifice is the inevitable outcome of choice, for not all things are "
-       "possible! To make the object of desires possible, other possibilities must be "
-       "denied. As the branch of a tree can be cut by shears, so each choice one makes "
-       "shears off an entire branch of the future. That is what we mean by sacrifice: "
-       "the pruning of the tree of possibilities."))
+  (say knpc "呪われた者の教義では犠牲は欲望のはしごである。"
+       "犠牲は選択の避けられない結果だ。全てを手にすることはできない！"
+       "ある欲望の実現を目指すなら、他の可能性は失われる。"
+       "木の枝がはさみによって切り落とされるように、人生の行き先の枝分かれも選択の度に切り落とされる。"
+       "それが我々の犠牲、可能性の木の枝を刈ること、の意味だ。"))
 
 ;; People
 (define (silas-ench knpc kpc)
-  (say knpc "'Tis a pity he is such a foe to the Accursed. But I'm afraid he is "
-       "old and inflexible, and once he has decided something is evil there is no "
-       "changing his mind. Unfortunately his notions of good and evil are misguided and "
-       "unworkable."))
+  (say knpc "彼があのような呪われた者の敵であることは残念だ。"
+       "だが、彼が古く、融通が利かず、そして一度悪と決めたものは心の中で決して変えない、ということを私は恐れている。"
+       "不幸なことに彼の善と悪の観念は誤っており、かつ実現不可能だ。"))
 
 (define (silas-deni knpc kpc)
-  (say knpc "Dennis is an earnest but frankly unimaginative young man."))
+  (say knpc "デニスは真面目だが、率直に言って想像力に欠ける若い男だ。"))
 
 (define (silas-sele knpc kpc)
-  (say knpc "Selene is a talented young woman. "
-       "Unfortunately her powers will always be inhibited by her insatiable "
-       "cruelty."))
+  (say knpc "セレネは才能のある若い女性だ。"
+       "不幸なことに、彼女の力は飽くなき残虐さに常に抑圧されている。"))
  
 ;; Quest-related
 (define (silas-ques knpc kpc)
@@ -247,67 +238,65 @@
                                  rune-types)))
 
     (define (give-last-rune)
-      (say knpc "I see you have all save 1 of the runes. Please forgive me for "
-           "a small deception, but I have hidden the last rune here in Old "
-           "Absalot. Consider it one last test for you to find it.")
+      (say knpc "最後の一つを除く全ての石版を持っているようだな。"
+           "少し君を騙していたことを許して欲しい。最後の一つは私がこの古アブサロットに隠したのだ。"
+           "それを見つけるのが君の最後の試練だと考えてくれ。")
 	(quest-data-update-with 'questentry-rune-s 'silasinfo 1 (quest-notify nil))
 	(quest-data-assign-once 'questentry-rune-s)
 	)
 
     (define (continue-quest) 
-      (say knpc "I see you are still missing at least one rune. Don't give up, "
-           "Wanderer! Ask among the Wise, delve into the deeps, search far and wide."))
+      (say knpc "最後の一つが見つからないようだな。迷い人よ、あきらめるな！"
+           "賢者に尋ね、深淵を探り、遠く広く探すのだ。"))
 
     (define (end-quest)
       (quest-done! quest #t)
-      (say knpc "Well done, Wanderer! You have collected all the lost runes, "
-           "a feat worthy of legend. Well done, indeed!")
+      (say knpc "よくやった、迷い人よ。失われた石版、伝説の栄光の時代は全てそろった。"
+           "本当によくやった！")
       (prompt-for-key)
-      (say knpc "Now that all the runes are recovered, it is imperative that "
-           "they be kept safe. Forgive me for being overly suspicious, but I do not trust "
-           "their keeping to the Wise, not even to the Enchanter himself.")
+      (say knpc "今、全ての石版が戻った。安全に保管されなければならない。"
+           "疑い深い意見ですまないが、私は賢者の石版の管理を信用できない。"
+           "魔道師自身でさえそうだろう。")
       (prompt-for-key)
-      (say knpc "I know what you are thinking, my friend, but perish the thought! "
-           "I could not possibly keep them here with me. Nor do I want to. "
-           "No, I have something much more daring in mind. ")
+      (say knpc "君が何を考えているかはわかる、友よ、だがそうではない！"
+           "ここで私が管理することなど到底できない。そして望んでもいない。"
+           "そうではなく、もっと大胆な考えがあるのだ。")
       (prompt-for-key)
-      (say knpc "Wanderer, the time has come to grasp the nettle. Indeed, I "
-           "sense that this is what brought you to the Shard. Take the keys, find the Gate, "
-           "and unlock it. Face what lies within. Be bold, and you will usher in a New "
-           "Age. Will you do this?")
+      (say knpc "迷い人よ。進むべき時が来た。"
+           "このために君がシャルドに呼ばれたのだと私は思っている。"
+           "鍵を手に取り、門を探し、その封印を解く。その向こうにあるものと対面する。"
+           "勇気を示せ。そして新しい時代の先がけとなるのだ。やってくれるか？")
       (if (yes? kpc)
-          (say knpc "Then I will tell you a great secret hidden even from the "
-               "Wise: the gods yet live, as do their foes. I know not which you will face. But "
-               "this I know: their foes sealed the Gate. ")
-          (say knpc "[His shoulders slump] It was not your burden to bear, "
-               "Wanderer, for you are a stranger to this "
-               "world. Keep the keys safe, at least, if you will not change your mind.")))
+          (say knpc "ならば賢者にも隠された重大な秘密を教えよう：神はまだ生きている、その敵も同じ。"
+               "君が何を見るかはわからない。だが、このことはわかっている：彼らの敵が門を封印した。")
+          (say knpc "［彼は肩を落とした。］これは君が負うべきことではない、迷い人よ、君はこの世界のよそ者だ。"
+               "少なくとも、鍵は安全に保管しておきなさい。君が考えを変えるつもりがないのであれば。")))
            
     (define (offer-quest)
-      (say knpc "Wanderer, I have a most important task for you: find the eight "
-           "rune-keys which lock the Demon Gate. Will you do this?")
+      (say knpc "迷い人よ。君がすべき最も重要な仕事がある。"
+           "悪魔の門を封印する八つの鍵の石版を探せ。やってくれるか？")
       (if (yes? kpc)
           (begin
             (quest-accepted! quest #t)
             (cond
             	((has-all-runes?)
-            		(say knpc "You already have the runes?")
+            		(say knpc "すでに石版を持っているな？")
             		(prompt-for-key)
             		(end-quest)
             		)
             	((missing-only-s-rune?)
             		(give-last-rune))
             	(#t
-            		(say knpc "I know I can count on you. There is a most clever man, "
-                 	"an Alchemist, who lives on Oparine. Perhaps you know of him already. He would "
-                 	"be a good place to start."))
+            		(say knpc "頼りになりそうな者を知っている。最も賢い男、オパーリンの錬金術師だ。"
+            		"もしかするとすでに彼を知っているかも知れないが。"
+            		"彼を最初に尋ねるとよいだろう。"))
              ))
-          (say knpc "It is imperative that we find them. I am disappointed, my "
-               "friend, but no doubt you have your reasons.")))
+          (say knpc "それを見つけるのは我々の義務だ。失望した、友よ。"
+               "だが、君には君の理由があることは疑わない。")))
 
     (if (silas-will-help? gob)
         (if (quest-done? quest)
-            (say knpc "Seek the Demon Gate!")
+            (say knpc "悪魔の門を探せ！")
             (if (quest-accepted? quest)
                 (if (has-all-runes?)
                     (end-quest)
@@ -315,9 +304,8 @@
                         (give-last-rune)
                         (continue-quest)))
                 (offer-quest)))
-        (say knpc "Join me, and there will be quests and glory in abundance. "
-             "You will become the most famous Wanderer -- indeed, "
-             "the greatest hero of the Shard -- for all time."))
+        (say knpc "私の仲間になりなさい。そこには多くのすべきことと栄光がある。"
+             "君はあらゆる時代で最も名高い迷い人…シャルドで最も偉大な英雄…になれるであろう。"))
     ))
 
 (define (pissed-off-silas knpc kpc)
@@ -334,14 +322,14 @@
   )
 
 (define (silas-noss knpc kpc)
-  (say knpc "[His face freezes] How did you learn that name, friend?")
+  (say knpc "［彼の表情が凍りついた。］友よ、どのようにしてその名を知った？")
   (kern-conv-get-reply kpc)
-  (say knpc "Have you been nosing around in other people's property?")
+  (say knpc "他の者たちにもそのように嗅ぎまわっているのか？")
   (if (yes? kpc)
-      (say knpc "How unfortunate. I'm afraid it is time for you to leave.")
-      (say knpc "I think you have. I think you have been misbehaving, "
-           "and now you are telling a fib. You are not welcome here. "
-           "Leave at once."))
+      (say knpc "何ということだ。残念だが君と別れるときが来たようだ。")
+      (say knpc "そうであろう。君の行いは無作法で、そして今は小さな嘘をついている。"
+           "君はここでは歓迎されない。"
+           "ただちに去りなさい。"))
   (pissed-off-silas knpc kpc)
   (kern-conv-end)
   )
@@ -387,7 +375,7 @@
   (bind 
    (kern-mk-char 
     'ch_silas           ; tag
-    "Silas"             ; name
+    "サイラス"          ; name
     silas-species         ; species
     silas-occ              ; occ
     s_silas     ; sprite

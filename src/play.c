@@ -102,9 +102,9 @@ static bool quitHandler(struct QuitHandler *kh)
 
 static void play_print_end_of_game_prompt()
 {
-	log_msg("\n\n^c+r*** YOU HAVE DIED ***^c-\n\n");
-        log_msg("No one is left alive in your party!");
-	log_msg("Press any key to exit.\n");
+	log_msg("\n\n^x+r*** あなたは死んだ。 ***^c-\n\n");
+        log_msg("生き残った者は誰もいない！");
+	log_msg("何かキーを押すと終了します。");
 	getkey(NULL, anykey);
 }
 
@@ -298,7 +298,7 @@ int playRun(char *fname)
 		return -1;
         }
 
-        log_msg("'?' for help.");
+        log_msg("'?'で説明を表示する。");
 
         foogodSetMode(FOOGOD_DEFAULT);
 
@@ -352,7 +352,7 @@ int playRun(char *fname)
 static int play_load_session(char *fname)
 {
         int error = 0;
-        log_begin("Loading from %s...", fname);
+        log_begin("%sを読み込み中…", fname);
         log_flush();
         log_disable();
 	kern_intvar_init();  // SAM: Clear the kern_invar hash for the new session
@@ -365,9 +365,9 @@ static int play_load_session(char *fname)
                 }
                 return -1;
         }
-        log_end("^c+gok^c-!");
+        log_end("^c+g完了^c-！");
         assert(Session);
-        log_msg("Save file version is %u.%u.%u", Session->major, Session->minor, Session->release);
+        log_msg("ファイルのバージョンは%u.%u.%u", Session->major, Session->minor, Session->release);
         foogodSetMode(FOOGOD_DEFAULT);
         session_run_hook(Session, new_game_start_hook, "p", Session->player);
         return 0;

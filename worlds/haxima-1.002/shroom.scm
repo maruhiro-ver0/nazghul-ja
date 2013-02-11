@@ -1,10 +1,9 @@
-;; shroom.scm - an old hag with an interesting history who lives in the
-;; northeast corner of green tower.
+;; shroom.scm - 緑の塔の北東に住む歴史を知る老婆
 
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Green Tower.
+;; 緑の塔
 ;;----------------------------------------------------------------------------
 (define (mk-zone x y w h) (list 'p_green_tower x y w h))
 (kern-mk-sched 'sch_shroom
@@ -30,39 +29,38 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Shroom is a female hedge-witch, who sells reagents and potions 
-;; in Green Tower.  She was once a battle-maiden fighting for 
-;; the forces of King Clovis in the Goblin Wars.
+;; シュルームは半魔女であり、緑の塔で秘薬や薬を売っている。
+;; 彼女はゴブリン戦争ではクロービス王の軍で戦い、戦場の乙女と呼ばれていた。
 ;;----------------------------------------------------------------------------
 
 (define shroom-merch-msgs
-  (list "Yes, I trade in mushrooms and the like. Come by my shop in the northeast corner when I'm open."
-        "I know where to find the best in the forest."
-        "If you have something worthwhile perhaps I may be interested."
-        "I have mushrooms and other reagents to trade. Would you care to buy or sell?"
-        "Be careful with those."
-        "Don't try to pick your own. Kill you, the bad ones will!"
-        "Come back when you have more to sell."
-        "Have it your way."
-        "That was a pleasant little bit of business."
-        "I see. Perhaps you'd rather just chat with an old woman."
+  (list "そうさ。キノコなんかを売っている。店が開いているとき北西の角に来なさい。"
+        "森のどこで取るのが一番いいかあたしは知っているのさ。"
+        "何かいいものはあるかね。"
+        "キノコやほかの秘薬がある。何か買うかね？"
+        "気をつけて使ってくれよ。"
+        "自分で取りに行こうとするな。邪悪なものに殺されるよ！"
+        "売るものがあったらまた来な。"
+        "好きにすればいいさ。"
+        "どうも。"
+        "ただ婆さんと話したかっただけかい？"
    ))
 
 (define shroom-catalog
   (list
-   (list sulphorous_ash (*  2 reagent-price-mult) "I have to travel far into the hills to find these foul-smelling clods.")
-   (list garlic         (*  3 reagent-price-mult) "This comes from my own garden. The cook in Bole loves my garlic.")
-   (list ginseng        (*  3 reagent-price-mult) "The forest folk have shown me where to gather wild ginseng.")
-   (list blood_moss     (*  4 reagent-price-mult) "The rare blood moss grows on dead wood in the deep forest.")
-   (list spider_silk    (*  5 reagent-price-mult) "Spider silk is common enough, but dangerous to gather.")
-   (list nightshade     (* 10 reagent-price-mult) "I must search near the rivers of the south to find the deadly nightshade.")
-   (list mandrake       (*  8 reagent-price-mult) "The mandrake root grows wild in these woods, but few know where to find it!")
+   (list sulphorous_ash (*  2 reagent-price-mult) "この臭い塊を見つけるには丘のずっと向こうへ行かねばならん。")
+   (list garlic         (*  3 reagent-price-mult) "あたしの畑で取ったものだ。ボレの料理人もこいつを気に入ってる。")
+   (list ginseng        (*  3 reagent-price-mult) "森人が人参がどこにあるか教えてくれた。")
+   (list blood_moss     (*  4 reagent-price-mult) "この珍しい血の苔は、森の奥の死んだ木に生えてたものだ。")
+   (list spider_silk    (*  5 reagent-price-mult) "蜘蛛の糸は珍しくはない。だが取るのは大変だ。")
+   (list nightshade     (* 10 reagent-price-mult) "ナイトシェイドは南の川の近くで探さねばならん。")
+   (list mandrake       (*  8 reagent-price-mult) "マンドレイクはこの森に生えている。だがどこにあるのか知っている奴は少ない！")
    
-   (list t_heal_potion  20 "Most dangerous, the woods are. Take some of these in case you have an accident.")
-   (list t_mana_potion  20 "One of these will refresh me enough to cast a light spell on the way home from a long day of picking.")
-   (list t_cure_potion  20 "If you're careless enough to get poisoned this will cure you.")
-   (list t_poison_immunity_potion 20 "I always drink one of these before gathering reagents in noxious bogs.")
-   (list t_slime_vial   20 "Lazy adventurers like these, so I carry them. As if there aren't enough slimes in the world.")
+   (list t_heal_potion  20 "森は危ない。何かあったときのため持っていくとよいだろう。")
+   (list t_mana_potion  20 "一日中秘薬を探した帰り、光の呪文を唱えた後にこいつを使っている。")
+   (list t_cure_potion  20 "無用心に毒を食らってしまったらこいつを使えばいい。")
+   (list t_poison_immunity_potion 20 "毒の沼で秘薬を探すときはいつもこいつを飲んでいる。")
+   (list t_slime_vial   20 "ぐうたらな奴はこれを好む。あたしも持ち歩いてる。ネバネバがいくらあっても足りないくらいだ。")
    ))
 
 ;; Shroom's merchant procedure
@@ -75,37 +73,35 @@
         ;; gave quest
         (if (shroom-quest-done? shroom)
             ;; quest already done
-            (say knpc "I've forgotten all the others.")
+            (say knpc "他はみんな忘れちまった。")
             ;; quest NOT yet done
             (begin
-              (say knpc "Bring me the mushrooms and I will teach ye the ward "
-                   "of fire. "
-                   "Do ye remember where they are?")
+              (say knpc "キノコを持ってくれば火の呪文を教えよう。"
+                   "覚えているか？")
               (if (kern-conv-get-yes-no? kpc)
-                  (say knpc "Well...")
-                  (say knpc "[sigh] Perhaps ye should write this down. "
-                       "Leave town and go south to the mountains by the sea. "
-                       "There you will find the cave entrance."))))
+                  (say knpc "うむ…")
+                  (say knpc "［ため息］書き留めておいたほうがよかろう。"
+                       "町を離れ、南へ行くと海の近くに山脈がある。"
+                       "そこに洞窟の入り口があるだろう。"))))
         (begin
-          (say knpc "In my time I knew many battle wards. "
-               "Be wanting me to teach ye, now, won't ye?")
+          (say knpc "あのころ、あたしは戦いの呪文をたくさん知ってた。"
+               "知りたいか？")
           (if (kern-conv-get-yes-no? kpc)
               (begin
-                (say knpc "I know a battle ward that will render fire harmless. "
-                     "But perhaps ye can do me a favor first, yes?")
+                (say knpc "あたしが知ってた呪文は、火から身を守るものだ。"
+                     "だが、まずは頼みを聞いてからだ。よいな？")
                 (if (kern-conv-get-yes-no? kpc)
                     (begin
-                      (say knpc "In a cave to the south grows "
-                           "a purple mushroom. Bring me one. Agreed?")
+                      (say knpc "南の洞窟には紫色のキノコが生えている。"
+                           "それを持ってくるのだ。わかったな？")
                       (if (kern-conv-get-yes-no? kpc)
                           (begin
-                            (say knpc "Good. A colony of slimes infests that "
-                                 "cave, so take plenty of flaming oil!")
+                            (say knpc "よろしい。洞窟の中はネバネバの巣だ。"
+                                 "火炎ビンをたくさん持っていけ！")
                             (shroom-give-quest shroom))
-                          (say knpc "Yes, perhaps ye are afraid.")))
-                    (say knpc "Naught for naught, youngling!")))
-              (say knpc "Of course, a skillful warrior such as you has "
-                   "nothing to learn from an old witch like me."))))))
+                          (say knpc "そうだな。怖いんだろう。")))
+                    (say knpc "タダでは何も買えんぞ、若いの！")))
+              (say knpc "無論そうだろうな。あんたのような優秀な戦士は、あたしのような年寄りの魔女から教わることは何もないのだろうね。"))))))
                                
 (define (shroom-hail knpc kpc)
   (let ((shroom (kobj-gob-data knpc)))
@@ -115,36 +111,36 @@
         ;; gave quest
         (if (shroom-quest-done? shroom)
             ;; quest done
-            (say knpc "Hello again, young wanderer. Come visit a bit with old "
-               "Shroom.")
+            (say knpc "また会ったな、若い迷い人よ。")
             ;; quest not done yet
             (if (in-inventory? kpc t_royal_cape)
                 (begin
                   ;; player has shrooms
-                  (say knpc "Ah, ye have the mushroom, as I requested!")
+                  (say knpc "おお、これじゃ！このキノコだ。")
                   (kern-obj-remove-from-inventory kpc t_royal_cape 1)
                   (shroom-set-quest-done! shroom)
-                  (say knpc "Now for your reward. The ward is called "
-                       "In Flam Sanct, of the first circle. Mix royal cape, "
-                       "sulphurous ash and garlic. Cast it on yourself or a companion "
-                       "and fire will not harm!"))
+                  (say knpc "あたしが教える番だ。"
+                       "その呪文は第一陣のイン・フラム・サンクト<In Flam Sanct>だ。"
+                       "ロイヤルケープ茸、硫黄の灰、大蒜を調合しろ。"
+                       "それを唱え自分や仲間にかけると、火が何ともなくなるのじゃ！"))
                 ;; player does NOT have shrooms yet
-                (say knpc "No purple mushroom yet, I see. No rush, dear. "
-                      "But I would like it before I die.")))
+                (say knpc "まだ紫色のキノコは見つからぬようだな。"
+                      "あせることはない。"
+                      "だが、死ぬ前には欲しいもんだね。")))
         ;; has NOT given quest yet
-        (say knpc "Hello and well met."))))
+        (say knpc "なんか用かね。"))))
 
 (define (shroom-thie knpc kpc)
-  (say knpc "I've seen no one strange about here."))
+  (say knpc "怪しい奴は見なかったがね。"))
 
 (define (shroom-roya knpc kpc)
-  (say knpc "Do you know what the royal cape mushroom is for?")
+  (say knpc "ロイヤルケープ茸の使い方を知ってるか？")
   (if (yes? kpc)
-      (say knpc "Very rare it is, but often found with yellow slimes.")
-      (say knpc "It is used in spells which absorb effects!")))
+      (say knpc "めったに手に入らない。だが、黄色い粘菌のある場所で見つかることがある。")
+      (say knpc "こいつには吸収する力がある！")))
 
 (define (shroom-band knpc kpc)
-  (say knpc "Bandits? Yes, an old woman must be careful in the woods."))
+  (say knpc "盗賊？そう、年寄りは森では気をつけねば。"))
 
 (define shroom-conv
   (ifc basic-conv
@@ -152,56 +148,46 @@
        ;; 4 characters. The 4-char limit arises from the kernel's practice of
        ;; truncating all player queries to the first four characters. Default,
        ;; on the other hand, is a feature of the ifc mechanism (see ifc.scm).
-       (method 'default (lambda (knpc kpc) (say knpc "Long ago I might have "
-                                                "known about that.")))
+       (method 'default (lambda (knpc kpc) (say knpc "昔聞いたような気がするな。")))
        (method 'hail shroom-hail)
-       (method 'bye (lambda (knpc kpc) (say knpc "Toodaloo!")))
-       (method 'job (lambda (knpc kpc) (say knpc "I sell potions, reagents "
-                                            "and the like.")))
-       (method 'name (lambda (knpc kpc) (say knpc "I'm known as Shroom. At "
-                                                "your service.")))
+       (method 'bye (lambda (knpc kpc) (say knpc "さらばじゃ。")))
+       (method 'job (lambda (knpc kpc) (say knpc "薬や秘薬などを売っている。")))
+       (method 'name (lambda (knpc kpc) (say knpc "シュルームと呼ばれている。"
+                                                "用は何かね。")))
        (method 'cape shroom-roya)
        (method 'roya shroom-roya)
-       (method 'shro (lambda (knpc kpc) (say knpc "Mushrooms are my "
-                                                "specialty. That's why they "
-                                                "call me Shroom.")))
-       (method 'maid (lambda (knpc) (say knpc "[she grins with crooked "
-                                           "teeth] Is it so hard to believe I "
-                                           "was once a fair war-maiden? [she "
-                                           "cackles obscenely]")))
+       (method 'shro (lambda (knpc kpc) (say knpc "キノコのことをよく知っている。"
+                                                "だからあたしをシュルームと呼ぶんだろうね。")))
+       (method 'maid (lambda (knpc) (say knpc "［彼女は何本も抜けてしまった歯を見せた。］"
+                                           "あたしがかつて美しき戦場の乙女と呼ばれたなんて信じられるかい？"
+                                           "［彼女はケラケラと笑った。］")))
        (method 'mush shroom-trade)
        (method 'buy (lambda (knpc kpc) (conv-trade knpc kpc "buy" shroom-merch-msgs shroom-catalog)))
        (method 'trad shroom-trade)
        (method 'sell (lambda (knpc kpc) (conv-trade knpc kpc "sell" shroom-merch-msgs shroom-catalog)))
        (method 'reag shroom-trade)
        (method 'poti shroom-trade)
-       (method 'join (lambda (knpc) (say knpc "You're too young for me, "
-                                         "sweetie!")))
-       (method 'gen (lambda (knpc) (say knpc "Aye, a handsome young man he "
-                                        "was, once. He could stay up all night"
-                                        " in bed! But gone a bit strange, he "
-                                        "has, befriending the goblins and all "
-                                        "that.")))
-       (method 'stra (lambda (knpc) (say knpc "He meets them in the forest "
-                                            "and runs with their hunts. "
-                                            "Half-goblin he nearly is; "
-                                            "learned their ways he has. But "
-                                            "ye could never tell him what to "
-                                            "do, the silly man.")))
-       (method 'gobl (lambda (knpc) (say knpc "I trade with them now and "
-                                            "then. Their shamans know well "
-                                            "the plants in these woods. I "
-                                            "even speak a little. Know some "
-                                            "of their magic. But I never "
-                                            "trust them.")))
+       (method 'join (lambda (knpc) (say knpc "あたしには若すぎるよ、坊や！")))
+       (method 'gen (lambda (knpc) (say knpc "ああ、若いときはハンサムだった。"
+                                        "一緒にベッドで夜を明かしたものさ！"
+                                        "だが少しおかしくなっちまった。"
+                                        "ゴブリンと仲良くするなんてさ。")))
+       (method 'stra (lambda (knpc) (say knpc "ジェンは森でゴブリン達と会い、"
+                                            "一緒に狩りをするようになった。"
+                                            "半分ゴブリンみたいなものだ。"
+                                            "奴らのやり方をまねてさ。でも、"
+                                            "もうあのバカにやめさせることはできんよ。")))
+       (method 'gobl (lambda (knpc) (say knpc "奴らとは今も昔も商売をしている。"
+                                            "奴らの呪術師はこの森の植物をよく知ってる。"
+                                            "あたしは奴らの言葉は少しは分かるし、魔法も少し分かる。"
+                                            "だが、奴らは絶対に信用できん。")))
        (method 'thie shroom-thie)
-       (method 'trus (lambda (knpc) (say knpc "The goblins will turn on us "
-                                          "when their opportunity comes. I "
-                                          "would do the same in their "
-                                          "place!")))
-       (method 'wars (lambda (knpc) (say knpc "Ha! Yes, I fought the goblins. "
-                                         "Long ago that was. People forget.")))
+       (method 'trus (lambda (knpc) (say knpc "ゴブリンは機会があれば仕返しするに違いない。"
+                                          "あたしが奴らならそうする！")))
+       (method 'wars (lambda (knpc) (say knpc "ああ！そう、あたしはゴブリンどもと戦った。"
+                                         "ずっと昔のことだ。人は忘れちまったがね。")))
        (method 'ward shroom-wards)
+       (method 'spel shroom-wards)
        (method 'band shroom-band)
        ))
 
@@ -211,7 +197,7 @@
 (define (mk-shroom tag)
   (bind 
    (kern-mk-char tag                 ; tag
-                 "Shroom"            ; name
+                 "シュルーム"        ; name
                  sp_human            ; species
                  nil                 ; occ
                  s_companion_druid   ; sprite

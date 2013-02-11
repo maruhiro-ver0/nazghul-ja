@@ -24,63 +24,63 @@
 
 ;; Basics...
 (define (mesmeme-hail knpc kpc)
-  (kern-log-msg "You meet a battered gazer.")
-  (say knpc "I see you.")
+  (kern-log-msg "あなたは傷だらけのゲイザーと会った。")
+  (say knpc "我、汝を見たり。")
   )
 
 (define (mesmeme-default knpc kpc)
-  (say knpc "No knowing. No asking. Alone.")
+  (say knpc "知らず。答えなし。独りなり。")
   )
 
 (define (mesmeme-name knpc kpc)
-  (say knpc "I Mesmeme.")
+  (say knpc "我、メスメメ。")
   )
 
 (define (mesmeme-leav knpc kpc)
   (if (is-player-party-member? knpc)
       (begin
-		(say knpc "Be alone?")
+		(say knpc "独り？")
         (if (yes? kpc)
             (begin
               (if (kern-char-leave-player knpc)
                   (begin
-                    (say knpc "Here waiting. Until void.")
+                    (say knpc "我、待つ。虚空まで。")
                     (kern-conv-end))
-                  (say knpc "Not now!")))
-            (say knpc "Not alone!")))
+                  (say knpc "ここにあらず！")))
+            (say knpc "独りにあらず！")))
       (begin
-		(say knpc "Until void.")
+		(say knpc "虚空まで。")
 	    (kern-conv-end)))
   )
 
 (define (mesmeme-join knpc kpc)
-  (say knpc "Yes! I alone.")
+  (say knpc "然り！我、独りなり。")
   (join-player knpc)
   (kern-conv-end)
   )
 
 (define (mesmeme-job knpc kpc)
-  (say knpc "No job. No kindred. Alone.")
+  (say knpc "仕事なし。友なし。独りなり。")
   )
 
 (define (mesmeme-bye knpc kpc)
-  (say knpc "Until void.")
+  (say knpc "虚空まで。")
   )
 
 (define (mesmeme-alon knpc kpc)
-  (say knpc "I crippled. No... think voice? Mind voice? No talk kindred. Alone.")
+  (say knpc "我、負傷せり。話？友？否。独りなり。")
   )
 
 (define (mesmeme-kind knpc kpc)
-  (say knpc "Kindred. Gazers. Swarm.")
+  (say knpc "友。ゲイザー。虫使い。")
   )
 
 (define (mesmeme-crip knpc kpc)
-  (say knpc "Gint slave, mine. Too strong. Broke free, hurt!")
+  (say knpc "巨人の奴隷なり。強し。拘束、傷！")
   )
 
 (define (mesmeme-slav knpc kpc)
-  (say knpc "Tools. Hands. One body too few!")
+  (say knpc "道具、手先。我独りでは足りず！")
   )
 
 (define mesmeme-conv
@@ -105,7 +105,7 @@
   (bind 
    (kern-mk-char 
     'ch_mesmeme           ; tag
-    "Mesmeme"             ; name
+    "メスメメ"             ; name
     mesmeme-species         ; species
     mesmeme-occ              ; occ
     s_gazer     ; sprite

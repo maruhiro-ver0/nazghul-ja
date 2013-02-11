@@ -23,63 +23,61 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Lia is a female wizard and reagent-seller who dwells in Oparine,
-;; so that she may remain in the proximity to her true love,
-;; the Nixie prince Fing.
+;; リアはオパーリンに住む女性の魔術師で、秘薬を売っている。
+;; そして彼女が愛するニキシーの王子のフィンの近くにいる。
 ;; 
-;; She is said to be under a curse, of obscure nature.
-;; One likely interpretation is that she is only in human form through 
-;; having been transformed, being born a Nixie or some other water-folk.
+;; 彼女はよくわからない呪いをかけられていると言われている。
+;; 彼女はニキシーか他の海の民で、人間の姿に変身しているだけかもしれない。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (lia-hail knpc kpc)
-  (say knpc "[You meet a haunting beauty] Welcome."))
+  (say knpc "［あなたは忘れられないような美人と会った。］いらっしゃいませ。"))
 
 (define (lia-default knpc kpc)
-  (say knpc "I cannot help you with that."))
+  (say knpc "それはお手伝いできません。"))
 
 (define (lia-name knpc kpc)
-  (say knpc "I am Lia."))
+  (say knpc "私はリアです。"))
 
 (define (lia-join knpc kpc)
-  (say knpc "I cannot leave these shores."))
+  (say knpc "この岸を離れることはできません。"))
 
 (define (lia-job knpc kpc)
-  (say knpc "I sell reagents, including the rare black pearl."))
+  (say knpc "秘薬を売っています。珍しい黒真珠もありますよ。"))
 
 (define (lia-bye knpc kpc)
-  (say knpc "Goodbye, Wanderer."))
+  (say knpc "さようなら、迷い人さん。"))
 
 ;; Trade...
 (define lia-merch-msgs
-  (list "My shop is open from 8:00AM to 8:00PM."
-        "Here are my wares."
-        "I will buy rare ingredients if they are a good value."
-        "Do you wish to buy or do you have something to sell?"
-        "A blessing on your magic."
-        "Very well."
-        "I will be happy to purchase more."
-        "I only offer what is fair."
-        "May the gods of the deep favour you."
-        "As you wish."
+  (list "私の店は午前8時から午後8時まで開いています。"
+        "これだけの品があります。"
+        "よい物があれば買い取ります。"
+        "買いますか？それとも売りたい物がありますか？"
+        "あなたの魔法に加護がありますように。"
+        "わかりました。"
+        "何か他に必要な物はありますか？"
+        "適正な価格を提示しただけです。"
+        "深き神があなたを助けるでしょう。"
+        "そう望むなら。"
    ))
 
 (define lia-catalog
   (list
-   (list sulphorous_ash         (*  2 reagent-price-mult) "This ash comes from the bed of dragons in the Fire Sea.")
-   (list garlic                 (*  4 reagent-price-mult) "Garlic is a common enough herb, but useful in spells.")
-   (list ginseng                (*  4 reagent-price-mult) "I grow this ginseng myself alongside mandrake.")
-   (list black_pearl            (*  4 reagent-price-mult) "These come from my own special source. You will find no others like them.")
-   (list blood_moss             (*  6 reagent-price-mult) "It is difficult to get blood moss here.")
-   (list nightshade             (* 11 reagent-price-mult) "The nightshade is rare in these parts.")
-   (list mandrake               (* 11 reagent-price-mult) "I grow mandrake with my ginseng.")
+   (list sulphorous_ash         (*  2 reagent-price-mult) "この灰は火の海にある竜の寝床から取ってきたものです。")
+   (list garlic                 (*  4 reagent-price-mult) "大蒜はよくある、でも呪文で使いやすい薬草です。")
+   (list ginseng                (*  4 reagent-price-mult) "この人参はマンドレイクと一緒に自分で育てたものです。")
+   (list black_pearl            (*  4 reagent-price-mult) "私の特別な場所で取ったものです。他では見つからないでしょう。")
+   (list blood_moss             (*  6 reagent-price-mult) "このあたりでは血の苔はなかなか見つかりません。")
+   (list nightshade             (* 11 reagent-price-mult) "ナイトシェイドはこのあたりでは珍しいものです。")
+   (list mandrake               (* 11 reagent-price-mult) "マンドレイクは人参と一緒に育てています。")
    
-   (list t_in_an_scroll         (*  3 base-scroll-cost) "When faced with magic stronger than your own, use this to even the score.")
-   (list t_in_mani_corp_scroll  (*  8 base-scroll-cost) "You need not mourn a fallen companion when you carry one of these.")
-   (list t_vas_rel_por_scroll   (*  3 base-scroll-cost) "You can travel great distances or escape dire circumstances with this gate scroll.")
-   (list t_vas_mani_scroll      (*  2 base-scroll-cost) "When sorely wounded this will restore you to health.")
-   (list t_wis_quas_scroll      (*  2 base-scroll-cost) "This scroll will open your eyes to the invisible world.")
+   (list t_in_an_scroll         (*  3 base-scroll-cost) "魔力で勝る者と直面しても、これがあれば同格になります。")
+   (list t_in_mani_corp_scroll  (*  8 base-scroll-cost) "仲間が倒れてもこれがあれば悲しむことはありません。")
+   (list t_vas_rel_por_scroll   (*  3 base-scroll-cost) "この門の巻物があれば、遠くへ旅することも、悲惨な状態から逃げることもできます。")
+   (list t_vas_mani_scroll      (*  2 base-scroll-cost) "ひどい傷を負ってもこれで回復することができます。")
+   (list t_wis_quas_scroll      (*  2 base-scroll-cost) "この巻物で見えない世界への目が開くでしょう。")
    ))
 
 (define (lia-trade knpc kpc)  (conv-trade knpc kpc "trade" lia-merch-msgs lia-catalog))
@@ -95,46 +93,46 @@
 
 ;; Shores...
 (define (lia-shor knpc kpc)
-  (say knpc "I must stay by the shore so I can be near my love."))
+  (say knpc "愛する人の近くにいるため、私はここにいなければなりません。"))
 
 (define (lia-love knpc kpc)
-  (say knpc "My beloved cannot leave the sea, "
-       "he is a prince among the Sea People. "
-       "He is bold and true, and has not left me despite my curse."
+  (say knpc "私の愛する人は海を離れることができません。"
+       "彼は海の人の王子なのです。"
+       "勇敢で誠実、そして私の呪いにもかかわらず私を見捨てないでいます。"
        ))
 
 ;; Sea
 (define (lia-sea knpc kpc)
-  (say knpc "How I long to return to my home! "
-       "I miss the courtyards of the deep, "
-       "and watching the ships cross my ceiling, "
-       "and hearing the conversations of Men as only a distant murmur."))
+  (say knpc "長い間、故郷に戻っていません！"
+       "深き場所の中庭が、"
+       "天をかける船が、"
+       "そして遠くざわめく人々の会話が恋しい。"))
 
 (define (lia-curs knpc kpc)
-  (say knpc "I'd prefer not to speak of it."))
+  (say knpc "それは話したくありません。"))
 
 ;; Townspeople...
 (define (lia-opar knpc kpc)
-  (say knpc "All cities of Men are too dry for my liking."))
+  (say knpc "この町の人々は私には乾きすぎています。"))
 
 (define (lia-gher knpc kpc)
-  (say knpc "The scavengers of the sea used to follow her ship. "
-       "They were well-fed with her victims."))
+  (say knpc "海の死肉漁りが彼女の船をよく追っていました。"
+       "彼らは彼女の犠牲者でよく肥えていました。"))
 
 (define (lia-alch knpc kpc)
-  (say knpc "He sometimes visits me, and we discuss magic. "
-       "I have few other friends among Men."))
+  (say knpc "彼は時々来て、私と魔法の話をします。"
+       "私の人間の友達の一人です。"))
 
 (define (lia-osca knpc kpc)
-  (say knpc "I know little of him, except that he has never been to sea."))
+  (say knpc "彼のことは、海に行ったことがないこと以外はよく知りません。"))
 
 (define (lia-henr knpc kpc)
-  (say knpc "He was a fine sailor once. The great ones of the deep sometimes "
-       "spoke of his courage."))
+  (say knpc "彼はかつてすばらしい船乗りでした。"
+       "深き場所の偉大な者が時々その勇敢さを語っていました。"))
 
 (define (lia-bart knpc kpc)
-  (say knpc "His ships are well-respected, but all ships are clumsy and "
-       "ponderous in my sight."))
+  (say knpc "彼の船は高く評価されています。"
+       "でも、私にとって船は不格好で重々しいものです。"))
 
 (define lia-conv
   (ifc basic-conv
@@ -176,7 +174,7 @@
 (define (mk-lia)
   (bind 
    (kern-mk-char 'ch_lia           ; tag
-                 "Lia"             ; name
+                 "リア"            ; name
                  sp_human            ; species
                  oc_wizard           ; occ
                  s_townswoman        ; sprite

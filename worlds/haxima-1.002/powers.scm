@@ -265,7 +265,7 @@
 (define (powers-blink caster ktarg power)
 	(if (kern-place-is-passable ktarg caster)
 		(kern-obj-relocate caster ktarg nil)
-		(kern-log-msg "Blink Failed: Impassable terrain")
+		(kern-log-msg "移動できない：不可能な地形")
 	)
 	result-ok)
 	
@@ -276,7 +276,7 @@
 (define (powers-blink-party caster ktarg power)
 	(if (kern-place-is-passable ktarg (kern-char-get-party caster))
 		(kern-obj-relocate (kern-char-get-party caster) ktarg nil)
-		(kern-log-msg "Blink Failed: Impassable terrain")
+		(kern-log-msg "移動できない：不可能な地形")
 	)
 	result-ok)
 
@@ -287,7 +287,7 @@
 (define (powers-charm caster target power)
 	(cond
          ((has-charm-immunity? target)
-          (msg-log-visible (kern-obj-get-location target) (kern-obj-get-name target) " immune to charm")
+          (msg-log-visible (kern-obj-get-location target) (kern-obj-get-name target) "は魅了への耐性がある。")
           )
          ((contest-of-skill
            (+ power 1)
@@ -297,11 +297,11 @@
                                  ef_charm 
                                  (charm-mk (kern-being-get-current-faction caster)))
             (kern-map-flash-sprite s_heart (loc-x tloc) (loc-y tloc))
-					(msg-log-visible tloc (kern-obj-get-name target) " is charmed")
+					(msg-log-visible tloc (kern-obj-get-name target) "は魅了された。")
                                         )
           )
          (else 
-          (msg-log-visible (kern-obj-get-location target) (kern-obj-get-name target) " resists charm")
+          (msg-log-visible (kern-obj-get-location target) (kern-obj-get-name target) "は魅了に抵抗した。")
           (kern-harm-relations target caster)
           )
          )
@@ -313,15 +313,15 @@
 ;; use it against outlaws, cave goblins, etc.
 (define (powers-beastly-illusion caster target power)
   (cond ((has-charm-immunity? target)
-         (msg-log-visible (kern-obj-get-location target) (kern-obj-get-name target) " resists illusion")
+         (msg-log-visible (kern-obj-get-location target) (kern-obj-get-name target) "は幻覚に抵抗した。")
          )
         ((contest-of-skill (+ power 1) (occ-ability-magicdef target))
          (let ((tloc (kern-obj-get-location target)))
            (kern-obj-add-effect target ef_charm (charm-mk faction-monster))
            (kern-map-flash-sprite s_heart (loc-x tloc) (loc-y tloc))
-           (msg-log-visible tloc (kern-obj-get-name target) " is deluded")
+           (msg-log-visible tloc (kern-obj-get-name target) "は幻覚に捕らわれた。")
            ))
-        (else (msg-log-visible (kern-obj-get-location target) (kern-obj-get-name target) " resists illusion"))
+        (else (msg-log-visible (kern-obj-get-location target) (kern-obj-get-name target) "は幻覚に抵抗した。"))
         )
   (kern-harm-relations target caster)
   result-ok
@@ -493,13 +493,13 @@
   (let ((traps (ifccall ktarg 'get-traps)))
     (cond ((null? traps)
            (kern-log-msg (kern-obj-get-name caster)
-                         " does not detect any traps")
+                         "は罠を見つけられなかった。")
            )
           (else
            (map (lambda (trap)
                   (trap-set-detected! trap #t)
                   (kern-log-msg (kern-obj-get-name caster)
-                                " detects a " (trap-name trap) " trap!")
+                                "は" (trap-name trap) "の罠を見つけた！")
                   )
                 traps)
            )))
@@ -507,7 +507,7 @@
 
 ;again, a bit of range for powerful users?
 (define (powers-dispel-field caster ktarg power)
-   (kern-print "Dispelled field!\n")
+   (kern-print "場の魔法を解いた！\n")
    (kern-obj-remove ktarg)
    (kern-map-repaint)
    result-ok)
@@ -529,7 +529,7 @@
            result-no-effect
            )
           ((not (handles? ktarg 'rm-traps)) 
-           (kern-log-msg "Traps can't be removed!")
+           (kern-log-msg "この罠は外せない！")
            result-no-effect
            )
           (else
@@ -545,7 +545,7 @@
                      (> (+ roll bonus) dc)
                      )
                     ;; Success - disarm the trap
-                    (kern-log-msg (kern-obj-get-name kchar) " ^c+gdisarms^c- a " (trap-name trap) " trap!")
+                    (kern-log-msg (kern-obj-get-name kchar) "は" (trap-name trap) "の罠を^c+g外した^c-！")
                     (trap-set-tripped! trap #t)
                     result-ok
                     )
@@ -560,7 +560,7 @@
 ;todo limit range?
 (define (powers-fear caster unused power)			
 	(define (repel kchar)
-		(msg-log-visible (kern-obj-get-location kchar) (kern-obj-get-name kchar) " flees in terror!")
+		(msg-log-visible (kern-obj-get-location kchar) (kern-obj-get-name kchar) "は恐怖で逃走した！")
 		(kern-map-flash-sprite s_magicflash (loc-x tloc) (loc-y tloc))
 		(kern-char-set-fleeing kchar #t)
 		)
@@ -730,7 +730,7 @@
           (define (fire-damage kobj)
             (if (kern-obj-is-char? kobj)
                 (begin
-                  (kern-log-msg "Burning!")
+                  (kern-log-msg "炎に包まれた！")
                   (if (not (has-fire-immunity? kobj))
                       (kern-obj-inflict-damage kobj "burning" (kern-dice-roll damdf) caster)
                 		 (if (not (null? damdi))
@@ -780,10 +780,10 @@
 		)
 		(if (null? targchar)
 			(kern-log-msg (kern-obj-get-name caster)
-							" hurls a fireball")
+							"は火の玉を放った。")
 			(kern-log-msg (kern-obj-get-name caster)
-							" hurls a fireball at "
-						(kern-obj-get-name targchar)))
+							"は"
+						(kern-obj-get-name targchar) "に火の玉を放った。"))
 		(temp-ifc-set 
 			(lambda (kmissile kuser ktarget kplace x y)
 				(do-fireball-effect kplace x y)
@@ -818,10 +818,11 @@
 ;todo should the messages be in the ui part?
 (define (powers-great-heal kchar ktarg power)
   (kern-log-msg (kern-obj-get-name kchar)
-                " casts a great healing spell on "
+                "は大回復の呪文を"
                 (if (eqv? kchar ktarg)
-                    "self"
-                    (kern-obj-get-name ktarg)))
+                    "自分"
+                    (kern-obj-get-name ktarg))
+                "にかけた。")
   (kern-obj-heal ktarg 
                  (+ 10 power (kern-dice-roll "2d20")
                     (kern-dice-roll (mkdice 4 power))))
@@ -830,10 +831,11 @@
 ;todo should the messages be in the ui part?
 (define (powers-heal kchar ktarg power)
   (kern-log-msg (kern-obj-get-name kchar)
-                " casts a healing spell on "
+                "は回復の呪文を"
                 (if (eqv? kchar ktarg)
-                    "self"
-                    (kern-obj-get-name ktarg)))
+                    "自分"
+                    (kern-obj-get-name ktarg))
+                "にかけた。")
   (kern-obj-heal ktarg 
                  (+ 2 (kern-dice-roll "1d10")
                     (kern-dice-roll (mkdice 2 power))))
@@ -847,8 +849,9 @@
 ;todo hack in something for xp & hostility
 (define (powers-kill kchar ktarg)
   (kern-log-msg (kern-obj-get-name kchar)
-                " casts kill at "
-                (kern-obj-get-name ktarg))
+                "は"
+                (kern-obj-get-name ktarg)
+                "に死の呪文をかけた。")
 	(kern-sound-play-at sound-missile (kern-obj-get-location kchar))
 	(kern-sound-play-at sound-missile (kern-obj-get-location ktarg))
   (cast-missile-proc kchar ktarg t_deathball)
@@ -925,7 +928,7 @@
     (if (not (null? (car targets)))
         (map
          (lambda (zappee)
-           (kern-log-msg (kern-obj-get-name zappee) " shocked!")
+           (kern-log-msg (kern-obj-get-name zappee) "は感電した！")
            (kern-obj-inflict-damage zappee "shocked" (kern-dice-roll dam) caster)						
            )
          (car targets)
@@ -943,8 +946,8 @@
 	
 (define (powers-locate caster ktarg power)
 	(let ((loc (kern-obj-get-location caster)))
-		(kern-log-msg "You are in " (kern-place-get-name (car loc)) 
-                              " at [x=" (cadr loc) " y=" (caddr loc) "]"))
+		(kern-log-msg "あなたは" (kern-place-get-name (car loc)) 
+                              "[x=" (cadr loc) " y=" (caddr loc) "]にいる。"))
 	result-ok)
 
 (define (powers-magic-missile-range power)
@@ -955,8 +958,9 @@
 	(kern-sound-play-at sound-missile (kern-obj-get-location kchar))
 	(kern-sound-play-at sound-missile (kern-obj-get-location ktarg))
 	(kern-log-msg (kern-obj-get-name kchar)
-			" fires magic missile at "
-			(kern-obj-get-name ktarg))
+			"は"
+			(kern-obj-get-name ktarg)
+			"に魔法の矢を放った。")
 	(if (cast-missile-proc kchar ktarg t_magicarrow_p)
 		(let* (
 			(apower 
@@ -998,7 +1002,7 @@
                        power
                        (occ-ability-dexdefend ktarg))
                       (apply-poison ktarg)
-                      (kern-log-msg (kern-obj-get-name ktarg) " avoids poison!")
+                      (kern-log-msg (kern-obj-get-name ktarg) "は毒を逃れた！")
 		)))
 	)
 
@@ -1011,8 +1015,9 @@
               			)
 	(temp-ifc-set do-poison-effect)
 	(kern-log-msg (kern-obj-get-name caster)
-				" hurls poison missile at "
-				(kern-obj-get-name ktarg))
+				"は"
+				(kern-obj-get-name ktarg)
+				"に毒を浴びせた。")
 	(kern-harm-relations ktarg caster)
 	(kern-harm-relations ktarg caster)
 	(kern-harm-relations ktarg caster)
@@ -1088,10 +1093,10 @@
 (define (powers-sleep-apply target power)
 	(if (contest-of-skill power (occ-ability-magicdef target))
 			(begin
-				(msg-log-visible (kern-obj-get-location target) (kern-obj-get-name target) " slept")
+				(msg-log-visible (kern-obj-get-location target) (kern-obj-get-name target) "は眠った。")
 				(apply-sleep target))
 			(begin 
-				(msg-log-visible (kern-obj-get-location target) (kern-obj-get-name target) " resists sleep"))
+				(msg-log-visible (kern-obj-get-location target) (kern-obj-get-name target) "は眠りに抵抗した。"))
 	))
 	
 (define (powers-sleep-target caster ktarg power)
@@ -1256,11 +1261,11 @@
 				(occ-ability-magicdef kchar))
 			(let ((tloc (kern-obj-get-location kchar)))
 				(kern-map-flash-sprite s_magicflash (loc-x tloc) (loc-y tloc))
-				(msg-log-visible tloc (kern-obj-get-name kchar) " turned")
+				(msg-log-visible tloc (kern-obj-get-name kchar) "は土に帰った。")
 				(kern-char-set-fleeing kchar #t)
 			)
 			(begin
-				(msg-log-visible (kern-obj-get-location kchar) (kern-obj-get-name kchar) " resists")
+				(msg-log-visible (kern-obj-get-location kchar) (kern-obj-get-name kchar) "は抵抗した。")
 			)
 		)
 	)
@@ -1326,7 +1331,7 @@
 	(kern-map-center-camera (kern-obj-get-location caster))
 	(kern-map-set-peering #t)
 	(kern-map-repaint)
-	(kern-print "Hit a key when done gazing...\n")
+	(kern-print "よく見たらキーを押せ…\n")
 	(ui-waitkey)
 	(kern-map-set-peering #f)
 	(kern-map-repaint)
@@ -1354,10 +1359,10 @@
 	(let ((targchar (get-being-at target)))	
 		(if (null? targchar)
 			(kern-log-msg (kern-obj-get-name caster)
-							" hurls a web")
+							"は網を放った。")
 			(kern-log-msg (kern-obj-get-name caster)
-							" hurls a web at "
-						(kern-obj-get-name targchar)))
+							"は"
+						(kern-obj-get-name targchar) "に網を放った。"))
 		(temp-ifc-set 
 			(lambda (kmissile kplace x y)
 				(do-web-effect kplace x y)
@@ -1411,14 +1416,14 @@
     ;; special case: when jumping 1 (or fewer tiles) use normal movement mode
     (define (jump-one)
       (cond ((not (kern-place-move-is-passable? cloc ktarg caster))
-             (kern-log-msg "Jump failed: blocked!")
+             (kern-log-msg "跳べない：妨害された！")
              result-no-effect)
             (else
              (kern-obj-relocate caster ktarg nil)
              result-ok)))
 
     (cond ((not (kern-place-is-passable ktarg caster))
-           (kern-log-msg "Jump Failed: Impassable terrain")
+           (kern-log-msg "跳べない：不可能な地形")
            result-no-effect)
           (else
            (let* ((vect (loc-diff cloc ktarg))
@@ -1440,7 +1445,7 @@
                                                              (+ (cdr vtt) (loc-y cloc)))
                                                      caster))))
                                          #f vttjo)
-                                  (kern-log-msg "Jump failed: blocked!")
+                                  (kern-log-msg "跳べない：妨害された！")
                                   result-no-effect)
                                  (else
                                   (kern-obj-relocate caster ktarg nil)
@@ -1468,7 +1473,7 @@
            (let ((loc (loc-mk kplace (car xy) (cdr xy))))
              (cond ((or (not (passable? loc caster))
                         (occupied? loc))
-                    (println loc " impassable")
+                    (println loc " 通れない")
                     #f
                     )
                    ((not (kern-char-is-dead? caster))
@@ -1490,14 +1495,14 @@
   (kern-obj-set-mmode caster mmode-wriggle)
   (cond ((not (kern-place-move-is-passable? (kern-obj-get-location caster)
                                             ktarg caster))
-         (kern-log-msg "Wriggle failed: blocked!")
+         (kern-log-msg "這い回れない：妨害された！")
          (kern-obj-set-mmode caster nil)
          result-not-here)
         (else
          (kern-obj-relocate caster ktarg nil)
          (kern-obj-set-mmode caster nil)
          (cond ((passable? (kern-obj-get-location caster) caster)
-                (kern-log-msg "(Was that really necessary?)")
+                (kern-log-msg "(本当に必要か？)")
                 result-ok
                 )
                ((not (check-roll dc-avoid-stuck (occ-thief-dice-roll caster)))

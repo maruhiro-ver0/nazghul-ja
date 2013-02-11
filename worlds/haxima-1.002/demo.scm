@@ -11,7 +11,7 @@
 
 ;; Setup progress bar stuff. The number 44 should be the total number of files
 ;; we're going to load.
-(kern-progress-bar-start "Loading" 44)
+(kern-progress-bar-start "読み込み中" 44)
 
 ;; Wrap the original definition of (load ...) with one that advances the
 ;; progress bar.
@@ -819,7 +819,7 @@
     (kern-map-repaint)
     )
   
-  (kern-log-msg "VAS AN EX REL POR!")
+  (kern-log-msg "VAS AN EX REL POR! (ヴァス アン イクス レル ポー！)")
   ;; we need a better rumbling thunder/ earthquake type noise
   (kern-sound-play sound-lightning)
   (shake-map 15)
@@ -897,7 +897,7 @@
   )
 
 (define (scene-mgr-start-days-pass kobj)
-  (kern-log-msg "Days pass...")
+  (kern-log-msg "幾日が過ぎ…")
   (set-car! flee-gate #f)
   (let ((kplace (loc-place (kern-obj-get-location kobj))))
     (define (wolf-mk from-loc to-xy)
@@ -922,7 +922,7 @@
       ))
 
 (define (scene-mgr-years-pass kobj)
-  (kern-log-msg "Then years...")
+  (kern-log-msg "幾年が過ぎ…")
   (let ((kplace (loc-place (kern-obj-get-location kobj))))
     (define (mk-troll loc)
       (let ((kchar (mk-npc 'troll 9)))
@@ -973,7 +973,7 @@
 
 
 (define (scene-mgr-ages-pass kobj)
-  (kern-log-msg "Then ages...")
+  (kern-log-msg "幾世代が過ぎ…")
   (let ((kplace (loc-place (kern-obj-get-location kobj))))
     (kern-blit-map (kern-place-map kplace) 0 0
                    (kern-mk-map
@@ -1027,7 +1027,7 @@
 
 
 (define (scene-mgr-conclude kobj)
-  (kern-log-msg "Until what was closed and locked by magic has been forgotten.")
+  (kern-log-msg "何が閉じられ、何が封印されたのかは、忘れ去られた。")
   (let ((kplace (loc-place (kern-obj-get-location kobj))))
     (kern-blit-map (kern-place-map kplace) 0 0
                    (kern-mk-map
@@ -1997,7 +1997,7 @@
 
 (kern-mk-place
  'p_demo_scene   ; tag
- "Demo Scene"    ; name
+ "プロローグ"    ; name
  nil             ; sprite
  m_demo_scene    ; map
  #f              ; wraps
@@ -2036,7 +2036,7 @@
   
 (let ((kchar (kern-mk-char 
               'ch_wanderer
-              "John the Mute"       ; name
+              "無言のジョン"        ; name
               sp_human              ; species
               oc_wanderer           ; occ
               s_beggar    ; sprite

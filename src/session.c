@@ -537,7 +537,7 @@ static void save_write(save_t *save, const char *fmt, ...)
         va_list args;
         va_start(args, fmt);
         save_vwrite(save, fmt, args);
-        va_end(args);        
+        va_end(args);
 }
 
 static void save_append(save_t *save, const char *fmt, ...)
@@ -641,7 +641,7 @@ int session_save(char *fname)
         }
 
         save->write(save, ";; Progress bar\n");
-        save->write(save, "(kern-progress-bar-start \"Loading\" %d)\n", 
+        save->write(save, "(kern-progress-bar-start \"読み込み中\" %d)\n", 
                     Session->num_kern_includes + object_saves);
         
         /* Generate code to advance the progress bar as each file is loaded. */

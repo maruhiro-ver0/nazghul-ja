@@ -23,12 +23,12 @@
 ;;         / g         / m       / -  / - / m / m /
 ;;        / a         / a       / o  / o / a / r / p
 ;;       / t         / n       / t  / t / d / a / x
-(mk-occ 'oc_wizard   "wizard"   -1  -1  -1  -1   4 nil)
-(mk-occ 'oc_warrior  "warrior"   1   0   1   0   4 sks_warrior)
-(mk-occ 'oc_wright   "wright"    0   1   0   1   4 sks_wright)
-(mk-occ 'oc_wrogue   "wrogue"    1   1   0   0   4 sks_wrogue)
-(mk-occ 'oc_wanderer "wanderer"  5   5   5   5   8 sks_wanderer)
-(mk-occ 'oc_ranger   "ranger"    1   1   0   0   4 sks_ranger)
+(mk-occ 'oc_wizard   "Ëâ½Ñ»Õ"   -1  -1  -1  -1   4 nil)
+(mk-occ 'oc_warrior  "Àï»Î"      1   0   1   0   4 sks_warrior)
+(mk-occ 'oc_wright   "¿¦¿Í"      0   1   0   1   4 sks_wright)
+(mk-occ 'oc_wrogue   "¤Ê¤é¤º¼Ô"  1   1   0   0   4 sks_wrogue)
+(mk-occ 'oc_wanderer "ÌÂ¤¤¿Í"    5   5   5   5   8 sks_wanderer)
+(mk-occ 'oc_ranger   "·ÙÈ÷Ââ°÷"  1   1   0   0   4 sks_ranger)
 
 (define (occ-get-abil kocc ability)
 	(if (null? kocc)

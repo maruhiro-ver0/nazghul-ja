@@ -2,7 +2,7 @@
 ;; Map
 ;;----------------------------------------------------------------------------
 (mk-dungeon-room
- 'p_tutorial_cave "Tutorial Cave"
+ 'p_tutorial_cave "チュートリアルの洞窟"
  (list
       "rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr "
       "rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr "
@@ -25,9 +25,9 @@
       "rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr "
   )
  (put (spawn-pt 'bat) 7 7)
- (put (mk-step-clue "Now would be a good time to U)se a torch!") 7 15)
- (put (mk-step-clue "Kill the bat, then enter F)ollow mode and look around. "
-                    "When you're done, go back to the ladder and press E)nter to climb back up.")
+ (put (mk-step-clue "'u'キーで松明を使うとよいでしょう！") 7 15)
+ (put (mk-step-clue "コウモリを倒した後、'f'キーを押してあたりを調べてみましょう。"
+                    "調べ終わったら、はしごに戻って'e'キーを押すと登って出られます。")
       7 14)
  (put (mk-ladder-up 'p_tutorial_wilderness 9 15) 7 17)
  )

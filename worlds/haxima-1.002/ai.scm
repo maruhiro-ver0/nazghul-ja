@@ -216,14 +216,14 @@
 
 (define bandit-taunts 
   (list 
-   "Yer money or yer life!"
-   "Have at 'cher!"
-   "Yer a dead man, ye are!"
-   "Oy!  You!  Gerrout!"
-   "'Ave at 'im, boys!"
-   "Circle round, we've got a dead one!"
-   "Dibs on 'is boots!"
-   "Stranger, meetcha couple my friends..."
+   "金か命かだ！"
+   "早くよこせ！"
+   "死ね！"
+   "クソッ！野郎！出て行け！"
+   "とっとと出せ、ガキ！"
+   "囲め！殺してでも奪え！"
+   "靴は俺の分け前だ！"
+   "誰だか知らねえが俺のダチに会わせてやる…"
    ))
 
 (define (bandit-taunt kbandit ktarg)
@@ -478,7 +478,7 @@
       (spell-sword-ai kchar)))
 
 (define (flee kchar)
-  (println (kern-obj-get-name kchar) " flees")
+  (println (kern-obj-get-name kchar) "は逃げ出した。")
   (kern-char-set-fleeing kchar #t)
   )
 
@@ -658,8 +658,9 @@
       (cond ((null? ratlings) #f)
             (else
              (kern-log-msg (kern-obj-get-name kchar)
-                           " eats "
-                           (kern-obj-get-name (car ratlings)))
+                           "は"
+                           (kern-obj-get-name (car ratlings))
+                           "を食べた。")
              (kern-obj-remove (car ratlings))
              (kern-obj-heal kchar 2)
              #t
@@ -696,7 +697,7 @@
                  (else
                   (cond ((loc-equal? (kern-obj-get-location kchar)
                                      (kern-obj-get-location kcorpse))
-                         (kern-log-msg (kern-obj-get-name kchar) " eats " (kern-obj-get-name kcorpse))
+                         (kern-log-msg (kern-obj-get-name kchar) "は" (kern-obj-get-name kcorpse) "を食べた。")
                          (kern-obj-remove kcorpse)
                          (kern-obj-heal kchar (kern-dice-roll "1d10+2"))
                          #t)

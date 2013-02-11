@@ -1,5 +1,5 @@
 ;;----------------------------------------------------------------------------
-;; Abandoned Farm
+;; 荒れ果てた農地
 ;;
 ;; The abandoned farm is a wrecked homestead. Not long ago (weeks or at most
 ;; months) renegade trolls attacked, killing the husband and wife who lived
@@ -55,7 +55,7 @@
 
 
 (kern-mk-place 'p_abandoned_farm  ; tag
-               "Abandoned Farm"   ; name
+               "荒れ果てた農地"   ; name
                s_hamlet           ; sprite
                m_abandoned_farm   ; map
                #f                 ; wraps
@@ -75,7 +75,7 @@
                 (list (mk-door-in-rock) 13 17)
                 (list (mk-door-in-rock) 7 25)
                 (list (mk-ladder-down 'p_abandoned_cellar 6 25) 6 25)
-				(list (mk-broken-clock s_clock_hand_s s_clock_hand_ne "The clock reads 6:12") 6 23)
+				(list (mk-broken-clock s_clock_hand_s s_clock_hand_ne "時計は6時12分だ。") 6 23)
                 )
                (list 'on-entry-to-dungeon-room) ; hooks
                nil ; edge entrances

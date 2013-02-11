@@ -1,5 +1,5 @@
 (mk-tower
- 'p_westpass "Westpass"
+ 'p_westpass "À¾Â¦¤Ø¤ÎÆ»"
 	(list
 		"^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ {{ {a tt tt || || || || || || "
 		"^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ ^^ {{ {{ tt tt || || || || || || "

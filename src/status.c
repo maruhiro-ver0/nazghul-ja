@@ -340,7 +340,7 @@ void status_show_arms_stats(SDL_Rect *rect, ArmsType *arms)
 	char *armor = arms->getArmorDice();
 
 	screenPrint(rect, 0, 
-		    "^c+%cHit:^c%c%s ^c%cDmg:^c%c%s ^c%cDef:^c%c%s ^c%cArm:^c%c%s^c-", 
+		    "^c+%c命中:^c%c%s ^c%c打撃:^c%c%s ^c%c回避:^c%c%s ^c%c防御:^c%c%s^c-", 
 
 		    STAT_LABEL_CLR,
 		    status_arms_stat_color(hit), hit,
@@ -421,9 +421,9 @@ static void status_show_character_var_stats(SDL_Rect *rect,
 	/* Show the xp, hp and mp */
 	/* Note that getXpForLevel(2) - getXpForLevel(1) != getXpForLevel(1)*/
 	screenPrint(rect, 0, 
-			"^c+%cHP:^c%c%d^cw/%d "
-			"^c%cMP:^c%c%d^cw/%d "
-			"^c%cAP:^c%c%d^cw/%d "
+			"^c+%c体:^c%c%d^cw/%d "
+			"^c%c魔:^c%c%d^cw/%d "
+			"^c%c行:^c%c%d^cw/%d "
 			"^c%cLvl:^cw%d^c%c(%d%%)^c-"
 			, STAT_LABEL_CLR
 			, status_range_color(pm->getHp(), pm->getMaxHp())
@@ -940,6 +940,15 @@ static void mySetPageMode(void)
 				ptr++;
 				continue;
 			}
+			if (*ptr & 0x80) /* if Kanji */
+			{
+				if (kanjiPaint(((unsigned char )*ptr << 8) | (unsigned char )*(ptr + 1), c * ASCII_W, y * ASCII_H,
+						Status.pg_surf)) {
+					c += 2;
+					ptr += 2;
+				}
+				continue;
+			}
 			if (asciiPaint(*ptr++, c * ASCII_W, y * ASCII_H,
 					Status.pg_surf))
 			{
@@ -964,7 +973,7 @@ static void mySetPageMode(void)
 
 	// Clear the cmdwin and print instructions for exiting page mode.
 	cmdwin_clear();
-	cmdwin_push("(Hit ESC when done reading)");
+	cmdwin_push("(読み終わったらESCを押して戻る)");
 }
 
 static void myPaintTrade(void)
@@ -1033,8 +1042,8 @@ static void myPaintTrade(void)
 
 		// quantity
 		if (Status.trades[i].show_quantity) {
-			screenPrint(&qrect, 0, "[You have %d]", 
-												Status.trades[i].quantity);
+			screenPrint(&qrect, 0, "[%dつ持っている]", 
+					Status.trades[i].quantity);
 		}
 		// price
 		screenPrint(&prect, SP_RIGHTJUSTIFIED, "%dgp",
@@ -1317,7 +1326,7 @@ void statusSetMode(enum StatusMode mode)
 		
 	case ShowParty:
 		switch_to_short_mode();
-		status_set_title("Party");	
+		status_set_title("仲間たち");
 		Status.pcIndex = -1;
 		Status.scroll = 0;
 		Status.paint = myShowParty;
@@ -1325,7 +1334,7 @@ void statusSetMode(enum StatusMode mode)
 		
 	case SelectCharacter:
 		switch_to_tall_mode();
-		status_set_title("Select Member");
+		status_set_title("人を選択");
 		Status.scroll = myScrollParty;
 		Status.paint = myShowParty;
 		Status.pcIndex = 0;
@@ -1349,7 +1358,7 @@ void statusSetMode(enum StatusMode mode)
 		
 	case Use:
 		switch_to_tall_mode();
-		status_set_title("Use");
+		status_set_title("使う");
 		Status.topLine = 0;
 		Status.curLine = 0;
 		Status.container = player_party->inventory;
@@ -1369,7 +1378,7 @@ void statusSetMode(enum StatusMode mode)
 		
 	case Trade:
 		switch_to_tall_mode();
-		status_set_title("Trade");
+		status_set_title("取引");
 		Status.topLine = 0;
 		Status.curLine = 0;
 		Status.maxLine = Status.list_sz - Status.numLines;
@@ -1380,7 +1389,7 @@ void statusSetMode(enum StatusMode mode)
 		
 	case MixReagents:
 		switch_to_tall_mode();
-		status_set_title("Select Reagents");
+		status_set_title("秘薬を選択");
 		Status.topLine = 0;
 		Status.curLine = 0;
 		Status.container = player_party->inventory;
@@ -1630,7 +1639,7 @@ static void stat_super_generic_paint()
 	/* check for empty list */
 	if (!node)
 	{
-		screenPrint(&rect, 0, "No Skills!");
+		screenPrint(&rect, 0, "能力がない！");
 		return;
 	}
 

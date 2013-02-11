@@ -37,6 +37,6 @@
        ))
 
 
-(mk-obj-type 't_food (list "food" "food") s_food layer-item food-ifc)
-(mk-obj-type 't_beer "beer" s_beer layer-item alcohol-ifc)
-(mk-obj-type 't_wine (list "wine" "wine") s_wine layer-item alcohol-ifc)
+(mk-obj-type 't_food (list "食料" "食料") s_food layer-item food-ifc)
+(mk-obj-type 't_beer "ビール" s_beer layer-item alcohol-ifc)
+(mk-obj-type 't_wine (list "ワイン" "ワイン") s_wine layer-item alcohol-ifc)

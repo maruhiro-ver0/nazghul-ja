@@ -1477,7 +1477,7 @@ static int place_describe_objects(struct place *place, int x, int y,
                 // there are no objects on the tile, but I don't think the
                 // 'ands' and commas are correct if there are.
                 // ------------------------------------------------------------
-                log_continue(" and the entrance to %s", tile->subplace->name);
+                log_continue("と%sの入り口", tile->subplace->name);
         }
 
 	node_for_each(&tile->objstack, l) {
@@ -1558,9 +1558,9 @@ static int place_describe_objects(struct place *place, int x, int y,
                                         first_thing_listed = 0;
                                 } else {
                                         if (n_types == 1)
-                                                log_continue(" and ");
+                                                log_continue("、そして");
                                         else
-                                                log_continue(", ");
+                                                log_continue("、");
                                 }
 
                                 prev_obj->describe();
@@ -1580,9 +1580,9 @@ static int place_describe_objects(struct place *place, int x, int y,
                          prev_obj->isShaded())) {
                 if (!first_thing_listed) {
                         if (n_types == 1)
-                                log_continue(" and ");
+                                log_continue("、そして");
                         else
-                                log_continue(", ");
+                                log_continue("、");
                 }
 
                 prev_obj->describe();
@@ -1593,9 +1593,9 @@ static int place_describe_objects(struct place *place, int x, int y,
         if (tile->vehicle && (tile->vehicle->isVisible() || Reveal || 
                               obj->isShaded())) {
                 if (n_types == 1)
-                        log_continue(" and ");
+                        log_continue("、そして");
                 else
-                        log_continue(", ");
+                        log_continue("、");
                 tile->vehicle->describe();
                 n_described++;
                 n_types--;
@@ -1618,7 +1618,7 @@ static void place_examine_objects(struct place *place, int x, int y)
 		return;
 
 	if (tile->subplace) {
-                log_continue("\nthe entrance to %s", tile->subplace->name);
+                log_continue("\n%sの入り口", tile->subplace->name);
 	}
 	
 	node_for_each(&tile->objstack, l) {
@@ -1655,7 +1655,7 @@ void place_describe(struct place *place, int x, int y, int flags)
         WRAP_COORDS(place, x, y);
 
 	if (place_off_map(place, x, y)) {
-		log_continue("nothing!");
+		log_continue("何もない！");
 		return;
 	}
         if (flags & PLACE_DESCRIBE_TERRAIN) {
@@ -1666,7 +1666,7 @@ void place_describe(struct place *place, int x, int y, int flags)
                 count += place_describe_objects(place, x, y, 
                                        (flags & PLACE_DESCRIBE_TERRAIN) == 0);
         if (!count)
-                log_continue("nothing!");
+                log_continue("何もない！");
 }
 
 void place_examine(struct place *place, int x, int y)
@@ -1674,7 +1674,7 @@ void place_examine(struct place *place, int x, int y)
 	WRAP_COORDS(place, x, y);
 
 	if (place_off_map(place, x, y)) {
-		log_continue("nothing!");
+		log_continue("何もない！");
 		return;
 	}
 	

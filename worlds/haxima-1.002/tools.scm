@@ -1,9 +1,9 @@
 ;; ----------------------------------------------------------------------------
-;; tools.scm -- "usable" stuff that isn't a book, scroll or potion
+;; tools.scm -- 本、巻物、薬ではない「使える」もの
 ;; ----------------------------------------------------------------------------
 
 ;; torch -- use two in-lor spells
-(mk-usable-item 't_torch "torch" s_torch norm
+(mk-usable-item 't_torch "松明" s_torch norm
                 (lambda (kobj kuser) 
                   (kern-obj-add-effect kuser ef_torchlight nil)
                   result-ok))
@@ -31,7 +31,7 @@
                        (kern-char-task-end kchar)
                        )
                       (else
-                       (kern-log-msg "Picklock broke!")
+                       (kern-log-msg "鍵開け道具が壊れた！")
                        (kern-obj-remove-from-inventory kchar t_picklock 1)
                        (kern-char-task-end kchar) 
                        )
@@ -39,25 +39,25 @@
         
 
 (mk-reusable-item 
-  't_picklock "picklock" s_picklock norm
+  't_picklock "鍵開け道具" s_picklock norm
   (lambda (kobj kuser)
     (if (not (has-skill? kuser sk_unlock))
         result-lacks-skill
         (let ((ktarg (ui-target (kern-obj-get-location kuser) 1 (mk-ifc-query 'unlock))))
           (cond ((null? ktarg) result-no-target)
                 (else
-                 (kern-char-task-begin kuser "picking a lock" 'picklock-proc ktarg)
+                 (kern-char-task-begin kuser "錠前外し" 'picklock-proc ktarg)
                  result-ok
                  ))))))
 
 ;; gem -- use peer spell
-(mk-usable-item 't_gem "gem" s_gem norm
+(mk-usable-item 't_gem "宝石" s_gem norm
                 (lambda (kgem kuser)
                   (powers-view kuser kuser 12)
                   result-ok))
 
 ;; sledge-hammer -- shatter rocks
-(mk-reusable-item 't_pick "pick" s_pick v-hard
+(mk-reusable-item 't_pick "つるはし" s_pick v-hard
                   (lambda (ktool kuser)
                     (let ((loc (kern-ui-target (kern-obj-get-location kuser)
                                                1)))
@@ -66,25 +66,25 @@
                           (let ((kter (kern-place-get-terrain loc)))
                             (cond ((eqv? kter t_boulder)
                                    (kern-log-msg (kern-obj-get-name kuser)
-                                                 " pulverizes a boulder!")
+                                                 "は岩を砕いた！")
                                    (kern-place-set-terrain loc t_grass)
                                    (cond ((> (kern-dice-roll "1d20") 16)
-                                          (kern-log-msg "The pick shatters!")
+                                          (kern-log-msg "つるはしが壊れた！")
                                           (kern-obj-remove-from-inventory kuser ktool 1)))
                                    result-ok)
                                   (else
                                    result-no-effect)))))))
 
 ;; sextant -- gives location
-(mk-reusable-item 't_sextant "sextant" s_sextant hard
+(mk-reusable-item 't_sextant "六分儀" s_sextant hard
                   (lambda (ktool kuser)
                     (let ((loc (kern-obj-get-location kuser)))
                       (cond ((kern-place-is-wilderness? (loc-place loc))
-                             (kern-log-msg "You are at [x=" 
-                                           (cadr loc) " y=" (caddr loc) "]")
+                             (kern-log-msg "[x=" 
+                                           (cadr loc) " y=" (caddr loc) "]にいる。")
                              result-ok)
                             (else
-                             (kern-log-msg "Usable only in the wilderness!")
+                             (kern-log-msg "外でしか使えない！")
                              result-not-here)))))
 
 ;; ----------------------------------------------------------------------------
@@ -125,7 +125,7 @@
                             (buried-quan buried))))
     (kern-obj-put-at kobj
                      (kern-obj-get-location kburied))
-    (kern-log-msg "You dig up something!")
+    (kern-log-msg "何かを掘り出した！")
     (kern-obj-remove kburied)))
 
 (define buried-ifc
@@ -142,19 +142,19 @@
   (eqv? (kern-obj-get-type kobj)
         t_buried))
 
-(mk-reusable-item 't_shovel "shovel" s_shovel v-hard
+(mk-reusable-item 't_shovel "シャベル" s_shovel v-hard
                 (lambda (kshovel kuser)
                   (let ((ktarg (filter is-buried?
                                        (kern-get-objects-at 
                                         (kern-obj-get-location kuser)))))
                     (cond ((null? ktarg)
-                           (kern-log-msg "Nothing buried here!")
+                           (kern-log-msg "何も埋まっていなかった！")
                            result-no-effect)
                           (else
                            (signal-kobj (car ktarg) 'digup (car ktarg) nil)
                            result-ok)))))
 						  
-(mk-reusable-item 't_chrono "chronometer" s_chrono hard
+(mk-reusable-item 't_chrono "懐中時計" s_chrono hard
                   (lambda (kclock kuser)
                     (let* ((time (kern-get-time))
                            (hour (number->string
@@ -165,7 +165,7 @@
                            (min (if (< (time-minute time) 10)
                                     (string-append "0" minbase)
                                     minbase)))
-                      (kern-log-msg "The chronometer reads " hour ":" min)
+                      (kern-log-msg "懐中時計は" hour "時" min "分だ。")
                       result-ok)))
 			
 (define clock-hand-icons (list s_clock_hand_n s_clock_hand_ne s_clock_hand_se s_clock_hand_s s_clock_hand_sw s_clock_hand_nw))
@@ -188,7 +188,7 @@
                   (min (if (< (time-minute time) 10)
                            (string-append "0" minbase)
                            minbase)))
-             (kern-log-msg "The clock reads " hour ":" min)
+             (kern-log-msg "時計は" hour "時" min "分だ。")
              result-ok))))
     (ifc '()
          (method 'handle 
@@ -246,7 +246,7 @@
                    ))
          )))
 
-(mk-obj-type 't_clock "clock"
+(mk-obj-type 't_clock "時計"
              (mk-composite-sprite (list s_clock_body s_clock_hand_n s_clock_spin))
              layer-mechanism clock-ifc)
 
@@ -256,7 +256,7 @@
           (bind kclock nil)
           kclock))
 
-(mk-obj-type 't_broken_clock "clock"
+(mk-obj-type 't_broken_clock "時計"
              s_clock_stopped
              layer-mechanism broken-clock-ifc)
 	
@@ -283,7 +283,7 @@
   (ifc '()
        (method 'handle 
                (lambda (kmirror kuser)
-                 (kern-log-msg (kern-obj-get-name kuser) " spots " (kern-obj-get-name kuser) " in the mirror")
+                 (kern-log-msg (kern-obj-get-name kuser) "は鏡の中に" (kern-obj-get-name kuser) "を見つけた。")
                  result-ok))
        (method 'step
                (lambda (kmirror kuser)
@@ -304,7 +304,7 @@
                  ))
        ))
 
-(mk-obj-type 't_mirror "mirror"
+(mk-obj-type 't_mirror "鏡"
              '()
              layer-mechanism mirror-ifc)
 
@@ -328,7 +328,7 @@
                  ))
        ))
 
-(mk-obj-type 't_shelf "set of shelves"
+(mk-obj-type 't_shelf "棚"
              s_bookshelf
              layer-mechanism shelf-ifc)
 
@@ -361,7 +361,7 @@
     kstop))
 
 ;; grease -- inert object, required for the Wriggle skill
-(mk-obj-type 't_grease "grease" s_grease layer-item obj-ifc)
+(mk-obj-type 't_grease "脂" s_grease layer-item obj-ifc)
 
 ;;----------------------------------------------------------------------------
 ;; rope-and-hook -- use the wrogue's Reach skill. Works like telekineses but
@@ -369,7 +369,7 @@
 ;;
 
 (mk-reusable-item 
- 't_rope_hook "rope & hook" s_rope_hook hard
+ 't_rope_hook "鍵爪付きの縄" s_rope_hook hard
  (lambda (kobj kuser)
    (if (not (has-skill? kuser sk_reach)) 
        result-lacks-skill

@@ -395,7 +395,7 @@ bool Vehicle::isNamed()
 void Vehicle::describe()
 {
         if (name) {
-                log_continue("the %s", name);
+                log_continue("%s", name);
         } else {
                 Object::describe();
         }

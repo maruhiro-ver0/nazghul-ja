@@ -1,5 +1,5 @@
 (mk-dungeon-room
- 'p_lich_tomb "Lich Tomb"
+ 'p_lich_tomb "リッチの墓"
 	(list
 		"xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx "
 		"xx %3 %% %% %5 pp ,, ,, ,, cc ,, ,, ,, pp %3 %% %% %5 xx "

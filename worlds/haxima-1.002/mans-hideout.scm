@@ -36,7 +36,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place 
  'p_mans_hideout ; tag
- "The MAN's Hideout"   ; name
+ "にんげんの隠れ家"    ; name
  s_dungeon      ; sprite
  m_mans_hideout  ; map
  #f               ; wraps

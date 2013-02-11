@@ -51,7 +51,7 @@
 
 (define (spider-egg-hatch kegg)
   (spider-display "spider-egg-hatch")(spider-newline)
-  (kern-log-msg "A spider hatches!")
+  (kern-log-msg "クモが孵った！")
   (kern-obj-put-at (mk-npc 'giant-spider (calc-level)) (kern-obj-get-location kegg))
   (kern-obj-remove kegg))
 
@@ -66,7 +66,7 @@
        (method 'exec spider-egg-exec)))
 
 (mk-obj-type 'spider-egg-type
-             "spider egg"
+             "クモの卵"
              s_magic
              layer-item
              spider-egg-ifc)
@@ -81,8 +81,9 @@
 
 (define (suck-hp kspider ktarg amount)
   (kern-log-msg (kern-obj-get-name kspider) 
-                " sucks the juices from " 
-                (kern-obj-get-name ktarg))
+                "は"
+                (kern-obj-get-name ktarg)
+                "の体液を吸った！")
   (let ((amount (min amount (kern-char-get-hp ktarg))))
     (kern-obj-apply-damage ktarg nil amount)
     (kern-obj-heal kspider amount)))

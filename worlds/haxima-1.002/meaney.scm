@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In the Poorhouse, near Oparine.
+;; オパーリンの近くの救貧院
 ;;----------------------------------------------------------------------------
 (define meaney-bed poorh-bed1)
 (define meaney-mealplace poorh-sup1)
@@ -44,85 +44,83 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Meaney is a monk of the Order of the Crossroad, 
-;; living in the Poorhouse near Oparine.
-;; He was once a pirate, in the crew of the Merciful Death,
-;; and is sought for vengeance by the ghost captain Ghertie.
+;; ミーニーは十字路教団の僧侶で、オパーリンの近くの救貧院に住んでいる。
+;; 彼はかつて慈悲深い死号の乗組員の海賊だった。
+;; そして亡霊となったガーティ船長に復讐のため追われている。
 ;;----------------------------------------------------------------------------
 
-;; Basics...
+;; 基本
 (define (meaney-hail knpc kpc)
-  (say knpc "I greet thee, traveler."))
+  (say knpc "あなたを歓迎します。旅の方。"))
 
 (define (meaney-default knpc kpc)
-  (say knpc "I cannot help thee with that."))
+  (say knpc "それはお手伝いできません。"))
 
 (define (meaney-name knpc kpc)
-  (say knpc "I am brother Meaney.")
+  (say knpc "修道僧のミーニーです。")
   (quest-data-update 'questentry-ghertie 'meaney-loc 1))
 
 (define (meaney-join knpc kpc)
-  (say knpc "My duty is to the poor and afflicted."))
+  (say knpc "私には貧しい者と怪我をした者への義務があります。"))
 
 (define (meaney-job knpc kpc)
-  (say knpc "I run the poor house, "
-       "where we care for the sick and destitute."))
+  (say knpc "この救貧院で"
+       "病の者、貧しい者のために働いています。"))
 
 (define (meaney-bye knpc kpc)
-  (say knpc "Farewell."))
+  (say knpc "さようなら。"))
 
 ;; Second-tier responses
 (define (meaney-get-donation knpc kpc)
   (define (rejected)
     (cond ((> (kern-player-get-gold) 0)
-           (say knpc "I see. Perhaps another time. [He turns away sadly]")
+           (say knpc "そうですが。ではまたのときに。［彼は悲しそうに背を向けた。］")
            (kern-conv-end))
           (else
-           (say knpc "Perhaps you also are in great need."))))
+           (say knpc "あなたも必要かもしれません。"))))
   (let ((meaney (kobj-gob-data knpc)))
     (if (not (meaney-donated? meaney))
         (begin
-          (say knpc "Wilt thou donate some gold to help the poor?")
+          (say knpc "貧しい者のため寄付をお願いできますか？")
           (if (kern-conv-get-yes-no? kpc)
               (let ((q (get-gold-donation knpc kpc)))
                 (if (> q 0)
                     (begin
-                      (say knpc "Bless you, stranger! "
-                           "Your kindness will be remembered.")
+                      (say knpc "旅の方に祝福あれ！"
+                           "あなたの行いは記憶されるでしょう。")
                       (meaney-donate! meaney q))
                     (rejected)))
               (rejected))))))
 
 (define (meaney-poor knpc kpc)
-  (say knpc "At the poor house we aid widows and orphans mostly. "
-       "Art thou in great need?")
+  (say knpc "この救貧院では未亡人と孤児を支援しています。"
+       "あなたは助けが必要ですか？")
   (if (kern-conv-get-yes-no? kpc)
-      (say knpc "Then we gladly share what little food we have with thee.")
+      (say knpc "ならば喜んで食料を少し分け与えましょう。")
       (meaney-get-donation knpc kpc)))
 
 (define (meaney-sick knpc kpc)
-  (say knpc "We heal any who come here in need. Do you need healing?")
+  (say knpc "ここに来た者は必要ならば誰でも治療します。治療が必要ですか？")
   (if (kern-conv-get-yes-no? kpc)
       (meaney-trade knpc kpc)
       (meaney-get-donation knpc kpc)))
 
 (define (meaney-brot knpc kpc)
-  (say knpc "I am a monk of the Order of the Crossroad. "
-       "My order was founded by the Wanderer Davis over seven centuries ago "
-       "to minister to the poor."))
+  (say knpc "私は十字路教団の僧侶です。"
+       "この教団は迷い人のデービスにより、7世紀以上前に貧しい人々を救うために設立されました。"))
 
 ;; Trade...
 (define (meaney-trade knpc kpc)
   (if (trade-services knpc kpc
                       (list
-                       (svc-mk "Heal" 0 heal-service)
-                       (svc-mk "Cure" 0 cure-service)
+                       (svc-mk "体力回復" 0 heal-service)
+                       (svc-mk "治癒" 0 cure-service)
                        ))
       (begin
-        (say knpc "How else can I aid you?")
+        (say knpc "他に治療が必要な人はいますか？")
         (meaney-trade knpc kpc))
       (begin
-        (say knpc "Will there be anything else?")
+        (say knpc "他に何か必要ですか？")
         (if (kern-conv-get-yes-no? kpc)
             (meaney-trade knpc kpc)
             (meaney-get-donation knpc kpc)))))
@@ -132,71 +130,67 @@
 ;; Quest-related
 (define (meaney-pira knpc kpc)
 	(quest-data-update 'questentry-ghertie 'meaney-loc 1)
-	(say knpc "Yes, I was once a pirate, long ago. "
-		"I sailed with Ma Ghertie on the Merciful Death. "
-		"Now I spend my life in penance to the poor."))
+	(say knpc "そう。私はかつては海賊でした。ずっと昔のことです。"
+		"おっかさんのガーティーと共に慈悲深い死号に乗っていました。"
+		"今はその償いとして貧しい人たちに人生を捧げています。"))
 
 (define (meaney-gher knpc kpc)
-  (say knpc "Ma Ghertie treated us crew like family. "
-       "She was a ruthless brigand and thoroughly wicked. "
-       "No doubt she deserved to die, "
-       "but not at the hands of her own Bully Boys."))
+  (say knpc "ガーティーは私たち手下を家族のようにあつかってくれました。"
+       "同時に容赦ない略奪者で、紛れもない悪党でもありました。"
+       "彼女は死ぬべきだったでしょう。"
+       "しかし、それは彼女の息子たちによってなされるべきではありませんでした。"))
 
 (define (meaney-pena knpc kpc)
-  (say knpc "I am guilty of many heinous crimes, "
-       "and all the bloodletting was for naught. "
-       "I betrayed my captain, and was betrayed in turn."))
+  (say knpc "私は数多くの罪を犯し、そしてたくさんの人の血を流しました。"
+       "私は船長を裏切り、そして逆に裏切られました。"))
 
 (define (meaney-betr knpc kpc)
-  (say knpc "The whole crew conspired to murder our captain and divide the loot. "
-       "We were certain she was going to murder us all first if we did not. "
-       "The first mate, the cook and I did the deed while she lay drunk, "
-       "but when we returned to the dock the ship had sailed without us."))
+  (say knpc "手下全員で共謀し船長を殺し、奪ったものを分けました。"
+       "自分たちがそうしなければ、彼女は自分たち全員を殺すだろうと思い込んでいたのです。"
+       "最初の友、料理人、そして私は酒を飲んで横になっている間に彼女を殺害しました。"
+       "しかし船着場に戻ってみると、船は私たちを置いて行ってしまったのです。"))
 
 (define (meaney-firs knpc kpc)
-  (say knpc "The first mate was an evil wretch named Jorn. "
-       "I heard he is a bandit now, somewhere in the great forest to the east. "
-       "You might ask around Green Tower.")
+  (say knpc "最初の友はジョーンという名の悪党です。"
+       "今でも東の広大な森のどこかで盗賊をやっていると聞きました。"
+       "緑の塔で聞けばよいかもしれません。")
        (quest-data-update 'questentry-ghertie 'jorn-forest 1))
 
 (define (meaney-cook knpc kpc)
-  (say knpc "Gholet is no doubt either dead or rotting in prison somewhere. "
-       "The last time I saw him he stopped here for the night. "
-       "When I awoke the next morning I found the lock on our donation box broken. "
-       "The box was even more empty than usual.")
+  (say knpc "ゴレットは死んだか、どこかの牢獄に放り込まれているでしょう。"
+       "最後に会ったのは真夜中にここを訪れたときでした。"
+       "次の朝、目が覚めると募金箱の鍵が壊されていました。"
+       "もちろん箱の中は空でした。")
        (quest-data-update 'questentry-ghertie 'gholet-prison 1)
        )
 
 (define (meaney-ring knpc kpc)
   (if (not (meaney-has-ring (kobj-gob-data knpc)))
-      (say knpc "I hope I never see that cursed thing again.")
+      (say knpc "もうその呪われた指輪は見たくないものです。")
       (begin
-        (say knpc "Yes, I wear the ring of Ma Ghertie's Bully Boys, "
-             "the crew of the Merciful Death. Yes, I am a murdering pirate. ")
+        (say knpc "はい。私はガーティーの息子、慈悲深い死号の指輪をつけています。"
+             "そう、私は人殺しの海賊なのです。")
         (prompt-for-key)
-        (say knpc "Legend says the Wanderer Luto traveled the countryside, "
-              "dispensing justice at the point of his sword. Have you come to "
-              "slay me for my crimes?")
+        (say knpc "言い伝えによるとこの地に来た迷い人のルトは、その剣によって正義を施したそうです。"
+              "私を断罪してくれますか？")
         (if (yes? kpc)
             (begin
-              (say knpc "Then be done with it, I am ready. [He stands with head bowed].")
+              (say knpc "その剣で行ってください。覚悟はできています。［彼は頭を下げた。］")
               (kern-conv-end))
             (begin
-              (say knpc "You are merciful. "
-                    "But it is time I parted ways with this ring, "
-                    "which means I must part ways with this finger. "
-                    "I have not the courage to cut it off, "
-                    "will you do it?")
+              (say knpc "あなたは慈悲深い方だ。"
+                    "しかし、今がこの指輪と別れるとき、そのためにはこの指と別れなければなりません。"
+                    "私にはこの指を切り落とす勇気はありません。あなたがやってくれますか？")
               (if (yes? kpc)
                   (begin
-                    (say knpc "[With a quick motion you grab his hand and hack off the "
-                          "finger] Ah! There, it is off, and I am free from its curse. "
-                          "I thank you, Wanderer. Know that if you ever need aid "
-                          "or healing, I will do what I can for you.")
+                    (say knpc "［あなたは彼の手をつかみ、素早く指を切り落とした。］"
+                          "あああっ！これで私は呪いから解き放たれました。"
+                          "ありがとうございます、迷い人。"
+                          "もし何か助けや治療が必要なら、私はあなたのために行います。")
 			(skullring-m-get nil kpc)
 			(meaney-remove-ring (kobj-gob-data knpc))
                     )
-                  (say knpc "I wish I could be rid of the wretched thing!")))))))
+                  (say knpc "私はこの悪しきものから解放されたいのです！")))))))
 
 (define meaney-conv
   (ifc basic-conv
@@ -228,7 +222,7 @@
        ;; pirate quest replies
        (method 'pira meaney-pira)
        (method 'gher meaney-gher)
-       (method 'ma   meaney-gher)
+       ;(method 'ma   meaney-gher)
        (method 'capt meaney-gher)
        (method 'pena meaney-pena)
        (method 'betr meaney-betr)
@@ -244,7 +238,7 @@
 	(let ((knpc
     (kern-mk-char 
      'ch_meaney           ; tag
-     "Meaney"             ; name
+     "ミーニー"           ; name
      meaney-species         ; species
      meaney-occ              ; occ
      s_companion_shepherd  ; sprite

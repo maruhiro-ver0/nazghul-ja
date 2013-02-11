@@ -150,7 +150,7 @@ static int console_handle_repeated_msg(void)
                 }
                 // Print the repeat notice for the first time.
                 snprintf(Console.lines[Console.line], CONSOLE_MAX_MSG_SZ, 
-                         "[again]");
+                         "[繰り返し]");
                 Console.room -= strlen(Console.lines[Console.line]);
                 Console.cursor += strlen(Console.lines[Console.line]);
 
@@ -160,7 +160,7 @@ static int console_handle_repeated_msg(void)
                 // with the updated repeat count.
                 memset(Console.lines[Console.line], 0, CONSOLE_MAX_MSG_SZ + 1);
                 snprintf(Console.lines[Console.line], CONSOLE_MAX_MSG_SZ,
-                         "[%d times]", Console.repeat);
+                         "[%d回目]", Console.repeat);
         }
 
         consoleRepaint();
@@ -236,7 +236,7 @@ void consolePrint(const char *fmt, ...)
                 if (Console.room == CONSOLE_MAX_MSG_SZ) {
 
                         /* Rule 2 */
-                        while (isspace(*ptr) && printed) {
+                        while (isspace((unsigned char )*ptr) && printed) {
 
                                 if (!wrapped) {
                                         if (*ptr == '\n') {
@@ -256,22 +256,33 @@ void consolePrint(const char *fmt, ...)
                         }
 
                         /* Rule 3 */
-                        while (!isspace(*ptr) && printed && Console.room) {
-
-                                /* copy the char */
-                                *Console.cursor = *ptr;
+                        if ((*ptr & 0x80) && printed >= 2 && Console.room >= 2) {
+                                /* copy the char (kanji) */
+                                *(Console.cursor + 0) = *(ptr + 0);
+                                *(Console.cursor + 1) = *(ptr + 1);
 
                                 /* advance source and destination */
-                                printed--;
-                                ptr++;
-                                Console.room--;
-                                Console.cursor++;
+                                printed -= 2;
+                                ptr += 2;
+                                Console.room -= 2;
+                                Console.cursor += 2;
+                        } else {
+                                while (!isspace((unsigned char )*ptr) && !(*ptr & 0x80) && printed && Console.room) {
+                                        /* copy the char */
+                                        *Console.cursor = *ptr;
+
+                                        /* advance source and destination */
+                                        printed--;
+                                        ptr++;
+                                        Console.room--;
+                                        Console.cursor++;
+                                }
                         }
 
                         words++;
 
                         /* Check for end-of-line */
-                        if (!Console.room) {
+                        if (!Console.room || Console.room == 1) {
                                 wrapped = 1;
                                 goto newline;
                         }
@@ -284,7 +295,7 @@ void consolePrint(const char *fmt, ...)
 
                 wrapped = 0;
 
-                while (isspace(*ptr) && Console.room && printed) {
+                while (isspace((unsigned char )*ptr) && Console.room && printed) {
 
                         if (*ptr == '\n') {
                                 ptr++;
@@ -302,7 +313,7 @@ void consolePrint(const char *fmt, ...)
                         Console.cursor++;
                 }
 
-                if (!Console.room) {
+                if (!Console.room || ((*ptr & 0x80) && Console.room == 1)) {
                         wrapped = 1;
                         goto newline;
                 }
@@ -312,11 +323,13 @@ void consolePrint(const char *fmt, ...)
 
                 /* All right. At this point I know I have space left and
                  * another word to print. Rule 5. */
-                eow = strpbrk(ptr, " \t\n\r");
-                if (eow)
+                if (*ptr & 0x80)
+                        wlen = 2;
+                else {
+                        for (eow = ptr; *eow != 0 && *eow != ' ' && *eow != '\t' && *eow != '\n' && *eow != '\r' && !(*eow & 0x80); eow++)
+                                ;
                         wlen = eow - ptr;
-                else
-                        wlen = printed;
+                }
 
                 if (wlen > Console.room) {
                         wrapped = 1;

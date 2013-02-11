@@ -1,5 +1,5 @@
 (mk-dungeon-room
- 'p_altar_room "Altar Room"
+ 'p_altar_room "∫◊√≈§Œ…Ù≤∞"
  (list
       "xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx "
       "xx xx xx xx xx xx xx pp ,, ,, ,, pp xx xx xx xx xx xx xx "

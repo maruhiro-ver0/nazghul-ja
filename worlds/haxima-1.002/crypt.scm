@@ -1,7 +1,7 @@
 (kern-load "keep_crypt_mech.scm")
 
 (mk-dungeon-room
- 'p_crypt "Crypt"
+ 'p_crypt "遺体置き場"
  (list
       "xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx "
       "xx xx xx ,, ,, ,, xx x! ,, ,, ,, x! xx ,, ,, ,, xx ,, xx "

@@ -5,7 +5,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Glasdrin.
+;; グラスドリン
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_jeff
                (list 0  0  gcj-bed      "sleeping")
@@ -36,89 +36,85 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Jeffreys is the Commander of the Paladins of Glasdrin.
-;; He lives in Glasdrin, and reports directly to the ruler there,
-;; currently the Stewardess, Victoria.
+;; ジェフリーズはグラスドリンの聖騎士たちの司令官である。
+;; 彼はグラスドリンに住んでいて、そこで指導者、現在は統治者のヴィクトリアに直
+;; 接報告している。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (jeff-hail knpc kpc)
   (cond	((player-stewardess-trial-done?)
-         (say knpc "I want you to know Wanderer, I did not betray the Warritrix. I did not know about the ambush. "
-              "But I knew something was amiss, I should have acted on my suspicions. "
-              "The Commander of Glasdrin must never fail in diligence. "
-              "For that reason, I have resigned my post.")
-         (aside kpc 'ch_ini "Don't pretend innocence, you corrupt old toad. "
-                "Should we ever meet on the field it will be the end of one of us.")
+         (say knpc "迷い人よ、このことはわかってくれ。私は闘士を裏切ってはいない。待ち伏せのことは何も知らないのだ。"
+              "だが、私はいくつかの点で間違っていたと思う。疑念を持ったときに行動すべきだった。"
+              "グラスドリンの司令官は決して努力を怠ってはならない。"
+              "ゆえに私は辞任したのだ。")
+         (aside kpc 'ch_ini "知らなかったふりをするな、手先のヒキガエルめ。"
+                "次に会ったときは、どちらかが滅びるまで戦うことになるだろう。")
          (kern-conv-end)
          )
         (else
-         (say knpc "[You meet a splendid paladin] Well-met, sir.")
+         (say knpc "［あなたは立派な姿の聖騎士と会った。］よくぞ参られた。")
          )))
 
 (define (jeff-default knpc kpc)
-  (say knpc "I cannot help you with that."))
+  (say knpc "そのようなことは手助けできない。"))
 
 (define (jeff-name knpc kpc)
-  (say knpc "I am Commander Jeffreys."))
+  (say knpc "司令官のジェフリーズである。"))
 
 (define (jeff-join knpc kpc)
-  (say knpc "I already have a job."))
+  (say knpc "私にはすでに仕事がある。"))
 
 (define (jeff-job knpc kpc)
-  (say knpc "I command the paladins of Glasdrin."))
+  (say knpc "グラスドリンの聖騎士を指揮することだ。"))
 
 (define (jeff-bye knpc kpc)
-  (say knpc "Fare thee well."))
+  (say knpc "さらばだ。"))
 
 ;; Special
 (define (jeff-comm knpc kpc)
-  (say knpc "I am the highest-ranking official in Glasdrin, "
-       "save the Stewardess. The military arm of Glasdrin reports to me."))
+  (say knpc "司令官はグラスドリンでの最高位の役職で、統治者を守る者だ。"
+       "グラスドリンの軍は全て私の指揮下にある。"))
 
 (define (jeff-mili knpc kpc)
-  (say knpc "Glasdrin is unbeatable on land. All citizens of Glasdrin are "
-       "required to serve a tour. Since everyone has received basic training "
-       "they can be called to duty in a crisis."))
+  (say knpc "グラスドリンは難攻不落の都市だ。"
+       "全ての市民には兵役の義務がある。全員が危機のときに戦えるよう、軍事訓練の基礎を受けているのだ。"))
 
 (define (jeff-pala knpc kpc)
-  (say knpc "The paladins of Glasdrin are the finest warriors the Shard has "
-       "ever seen. Individually their skills vary, of course, but their "
-       "strength comes from fighting as a unit."))
+  (say knpc "グラスドリンの聖騎士はこのシャルドにおいて今日までで優れた戦士だ。"
+       "個人の能力はもちろんだが、その強さは団結力から生まれるのだ。"))
 
 (define (jeff-skil knpc kpc)
-  (say knpc "Yes, whether they be a raw recruit or the Warritrix herself, "
-       "when fighting with others in a unit the paladins of Glasdrin are "
-       "nigh unbeatable."))
+  (say knpc "そうだ。"
+       "命令のもと新兵も闘士も一丸となって戦うグラスドリンの聖騎士が敗れることはない。"))
 
 (define (jeff-warr knpc kpc)
   (cond ((player-found-warritrix?)
-         (if (ask? knpc kpc "[Cough] Yes. Most unfortunate. We all mourn her loss. "
-                   "But to lose her whole squad like that she must have made some error in judgment. "
-                   "Don't you think so?")
-             (say knpc "Yes. It happens to the best of us. Every military leader makes mistakes, "
-                  "and it costs lives. Now I'm afraid I'm very busy. Good day, sir.")
-             (if (ask? knpc kpc "Are you implying that she was led into some kind of trap?")
-                 (say knpc "Ridiculous. I do not have to answer to you. "
-                      "Speak to the Stewardess if you have a complaint. "
-                      "And if you try to make trouble, the guards will expel you from the city. "
-                      "In fact, it might be best if you left now.")
-                 (say knpc "Good. Mistakes happen in war. Sometimes even friends are slain, "
-                      "when they are mistaken for foes. I hope you take care, friend. Good day.")
+         (if (ask? knpc kpc "［ゴホン］そうだ。不幸なことだ。我々はみな彼女の死を悲しんでいる。"
+                   "だが、部隊が全滅したのは彼女の判断にいくつもの誤りがあったからではないだろうか。"
+                   "そう思わぬか？")
+             (say knpc "その通りだ。それは我々の内の最高の者にも起こりうる。あらゆる軍の指導者も失敗を犯す可能性がある。"
+                  "そしてそれは命に関わることだ。すまぬが今は忙しいのだ。さらばだ。")
+             (if (ask? knpc kpc "何かの罠だったとでも言いたいのか？")
+                 (say knpc "話にならぬ。何と答えればよいのか。"
+                      "もし不満があるのであれば、統治者に言うがよい。"
+                      "そして問題を起こすのであれば、衛兵がおまえをこの町から追い出すであろう。"
+                      "実際には今すぐ立ち去るのが最もよいのだが。")
+                 (say knpc "よろしい。戦いでは間違いが起こりうる。時には敵と見誤って友を殺すこともある。"
+                      "気をつけることだな、友よ。さらばだ。")
                  ))
          (kern-conv-end)
          )
 	 ((quest-data-assigned? 'questentry-wise)
-         (say knpc "The Warritrix is a living treasure; the most cunning, versatile "
-              "warrior of the age. I've seen her beat men twice her size and "
-              "slay fearsome beasts. At the moment she has been called away on an "
-              "errand.")
+         (say knpc "闘士、この時代で最も狡猾で多才な戦士は生ける宝だ。"
+              "私は彼女が自分の倍もある男を倒し、恐ろしい獣たちを圧倒する姿を見たことがある。"
+              "現在はある任務の遂行中である。")
               (quest-data-update 'questentry-warritrix 'assignment 1)
          )
 	 (else
-         (say knpc "The Warritrix is a living treasure; the most cunning, versatile "
-              "warrior of the age. I've seen her beat men twice her size and "
-              "slay fearsome beasts. At the moment she is out on patrol.")
+         (say knpc "闘士、この時代で最も狡猾で多才な戦士、は生ける宝だ。"
+              "私は彼女が自分の倍もある男を倒し、恐ろしい獣たちを圧倒する姿を見たことがある。"
+              "現在は警備に出ている。")
               (quest-data-update 'questentry-warritrix 'general-loc 1)
          )
 	 ))
@@ -131,58 +127,58 @@
 
 (define (jeff-erra knpc kpc)
 	(jeff-warr-ready (lambda ()
-  (say knpc "[He looks a bit uneasy] Yes, she took a squad to the Lost Halls. "
-       "It's odd that she hasn't reported back yet... "
-       "Normally I would send a search party, "
-       "but at the moment I haven't the troops to spare.")
+  (say knpc "［彼は少し難しそうな顔をした。］"
+       "そうだ。彼女は部隊を引き連れ、失われた殿堂へ向かった。"
+       "奇妙なことにあれから何の連絡もまだないのだ…"
+       "通常なら捜索隊を出すところだが、今はそれに割ける部隊がいない。")
       (quest-data-update-with 'questentry-rune-l 'located 1 (quest-notify nil)) 
       (quest-data-update 'questentry-warritrix 'lost-hall 1)
        )))
 
 (define (jeff-sear knpc kpc)
 	(jeff-warr-ready (lambda ()
-	(say knpc "[He grows exasperated] I can spare no one to search for the "
-       "Warritrix! Now, if you don't mind, I'm a busy man...")
+	(say knpc "［彼はいら立った。］闘士の捜索に割ける部隊はいない！"
+	   "失礼する。私は忙しいのだ…")
   (kern-conv-end)
   (if (is-player-party-member? ch_ini)
-      (say ch_ini "Something smells rotten in Denmark. "
-           "We've got to find her!"))
+      (say ch_ini "腐敗のにおいがする。"
+           "彼女を探さねば！"))
   )))
 
 ;; Townspeople...
 (define (jeff-glas knpc kpc)
-  (say knpc "A mighty city, Glasdrin has never fallen to invaders."))
+  (say knpc "強固な町グラスドリンは侵略者によって陥落することはないであろう。"))
 
 (define (jeff-ange knpc kpc)
-  (say knpc "Angela is a most gracious, hospitable woman."))
+  (say knpc "エンジェラは最も礼儀正しく、心優しい女性だ。"))
 
 (define (jeff-patc knpc kpc)
-  (say knpc "Doc Patch is an experienced medik and head of our hospital."))
+  (say knpc "眼帯は経験豊かな医師で、我々の病院の院長だ。"))
 
 (define (jeff-stew knpc kpc)
-  (say knpc "The Stewardess bears the weight of leadership well."))
+  (say knpc "統治者のヴィクトリアはよくその重みに耐えている。"))
 
 (define (jeff-ini knpc kpc)
-  (say knpc "Lt. Inago is a natural warrior and a fine officer."))
+  (say knpc "アイナゴ少佐は生まれながらの戦士で、優れた士官だ。"))
 
 (define (jeff-jess knpc kpc)
-  (say knpc "Jess is a cheery lass, and a welcome sight at the end of a "
-       "hard day as she pours a glass."))
+  (say knpc "ジェスは明るい女性だ。"
+       "そして苦しい日々が終わり、酒を注ぐのが楽しいように見える。"))
 
 (define (jeff-ches knpc kpc)
-  (say knpc "We miss his mighty arm in battle, but his weapons and armor "
-       "serve us well, too."))
+  (say knpc "我々は彼の力を失ってしまった。"
+       "だが、彼の武器は今でも我々を助けてくれる。"))
 
 (define (jeff-lost knpc kpc)
-  (say knpc "The Lost Halls are very dangerous. No place for amateurs. "
-       "I'd advise you to stay away! Now good day, sir!")
+  (say knpc "失われた殿堂はとても危険な所だ。一般人の行くところではない。"
+       "そこに近づいてはならぬぞ！では失礼する！")
   (kern-conv-end)
   (if (is-player-party-member? ch_ini)
 	(begin
-      (say ch_ini "Don't worry. I know where to find the Lost Halls. "
-           "We'll need to get a ship and sail to ["
-           (loc-x lost-halls-loc) " "
-           (loc-y lost-halls-loc) "].")
+      (say ch_ini "案ずるな。失われた殿堂の場所は知っている。"
+           "船で["
+           (loc-x lost-halls-loc) ","
+           (loc-y lost-halls-loc) "]まで航行すれば見つかるだろう。")
 	   (quest-data-update-with 'questentry-rune-l 'know-hall 1 (quest-notify nil))
 	   (quest-data-update 'questentry-warritrix 'lost-hall-loc 1)
 	   )
@@ -201,7 +197,8 @@
        (method 'join jeff-join)
 
        (method 'comm jeff-comm)
-       (method 'jani (lambda (knpc kpc) (say knpc "My assistant Janice is invaluable as a tactician.")))
+       (method 'jeff jeff-comm)
+       (method 'jani (lambda (knpc kpc) (say knpc "私の補佐官のジャニスは戦術家として計り知れないほど重要である。")))
        (method 'mili jeff-mili)
        (method 'pala jeff-pala)
        (method 'warr jeff-warr)
@@ -221,7 +218,7 @@
 (define (mk-jeffreys)
   (bind 
    (kern-mk-char 'ch_jeffreys       ; tag
-                 "Jeffreys"          ; name
+                 "ジェフリーズ"     ; name
                  sp_human            ; species
                  oc_warrior          ; occ
                  s_companion_paladin ; sprite

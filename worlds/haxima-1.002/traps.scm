@@ -57,13 +57,13 @@
           ((or (= roll 20)
                (> (+ roll bonus) avoid))
            (kern-log-msg (kern-obj-get-name kchar) 
-                         " ^c+gavoids^c- a " 
+                         "は" 
                          (trap-type-name ttype) 
-                         " trap!"))
+                         "の罠を^c+gかわした^c-！"))
           (else
-           (kern-log-msg (kern-obj-get-name kchar) " ^c+rtrips^c- a "
+           (kern-log-msg (kern-obj-get-name kchar) "は"
                          (trap-type-name ttype)
-                         " trap!")
+                         "の罠に^c+rかかった^c-！")
            (apply (eval (trap-type-proc (trap-type trap)))
                   (list kchar kobj))))))
 
@@ -80,9 +80,9 @@
                     (> (+ roll bonus) 
                        (trap-detect-dc trap))))
            (kern-log-msg (kern-obj-get-name kchar) 
-                         " ^c+gfinds^c- a " 
+                         "は" 
                          (trap-type-name ttype) 
-                         " trap!")
+                         "の罠を^c+g見つけた^c-！")
            (trap-set-detected! trap #t))
           ((or (= roll 1)
                (< (+ roll bonus) (trap-fumble-dc trap)))
@@ -98,7 +98,7 @@
 (define (sleep-trap-proc actor subject) (apply-sleep actor))
 
 (define (spike-trap-proc actor subject)
-  (kern-obj-apply-damage actor "ouch" 
+  (kern-obj-apply-damage actor "ああっ"
                          (kern-dice-roll "1d6")))
 
 (define (bomb-trap-proc actor subject)
@@ -119,10 +119,10 @@
   (ifccall subject 'self-destruct)
   )
 
-(define lightning-trap (mk-trap-type "lightning" 'lightning-trap-proc))
-(define burn-trap (mk-trap-type "burn" 'burn-trap-proc))
-(define poison-trap (mk-trap-type "poison" 'poison-trap-proc))
-(define sleep-trap (mk-trap-type "sleep" 'sleep-trap-proc))
-(define spike-trap (mk-trap-type "spike" 'spike-trap-proc))
-(define bomb-trap (mk-trap-type "bomb" 'bomb-trap-proc))
-(define self-destruct-trap (mk-trap-type "self-destruct" 'self-destruct-trap-proc))
+(define lightning-trap (mk-trap-type "電撃" 'lightning-trap-proc))
+(define burn-trap (mk-trap-type "炎" 'burn-trap-proc))
+(define poison-trap (mk-trap-type "毒" 'poison-trap-proc))
+(define sleep-trap (mk-trap-type "催眠" 'sleep-trap-proc))
+(define spike-trap (mk-trap-type "トゲ" 'spike-trap-proc))
+(define bomb-trap (mk-trap-type "爆発" 'bomb-trap-proc))
+(define self-destruct-trap (mk-trap-type "自爆" 'self-destruct-trap-proc))

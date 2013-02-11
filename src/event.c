@@ -113,7 +113,7 @@ static int mapKey(SDL_keysym * keysym)
         /* If the key has a UNICODE representation and its from the default
          * Basic Latin code page then return it as an ASCII character. */
         /* fixme: unicode is messing up ctrl+key sequences */
-        if (keysym->unicode) {
+        if (keysym->unicode && !(key >= SDLK_KP0 && key <= SDLK_KP9)) {
 
                 /* Map CR to LF (legacy code expects this) */
                 if (keysym->unicode == 0x000d)

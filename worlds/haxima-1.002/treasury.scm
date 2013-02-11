@@ -1,5 +1,5 @@
 (mk-dungeon-room
- 'p_treasury2 "Lost Treasury of Luximene"
+ 'p_treasury2 "失われたラクシマニの宝物庫"
  (list
       "xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx "
       "xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx "

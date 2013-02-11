@@ -12,7 +12,7 @@
 ;;
 
 (mk-dungeon-room
- 'p_kurpolis_entrance "Entrance to Kurpolis"
+ 'p_kurpolis_entrance "クロポリスの入り口"
 	(list
 		"rr rr rr rr xx xx x! xx xx && xx xx x! xx xx rn rn rn rn "
 		"rr .. .. .. ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, xx rn rn rn rn "
@@ -60,7 +60,7 @@
 (mk-place-music p_kurpolis_entrance 'ml-castle)
 
 (mk-dungeon-room
- 'p_goblin_crossroads "Goblin Crossroads"
+ 'p_goblin_crossroads "ゴブリンの交差点"
 	(list
 		"rn rn rn rn rn rn r4 {{ {{ ,, ,, {{ ra r8 r8 rn rn rn rn "
 		"rn rn rn rn rn rn rn r5 {{ ,, {# {{ {{ {{ {{ ra r8 rn rn "
@@ -94,7 +94,7 @@
 (mk-place-music p_goblin_crossroads 'ml-dungeon-adventure)
 
 (mk-dungeon-room
- 'p_cave_goblin_village "Cave Goblin Village"
+ 'p_cave_goblin_village "洞窟ゴブリンの村"
 	(list
 		"rn rn rn rn rn rn r8 r8 r8 r8 r8 r8 rn rn rn rn rn rn rn "
 		"rn rn rn rn rn rc {{ {{ {{ {{ {{ {{ ra rn r8 r8 r8 rn rn "
@@ -137,7 +137,7 @@
 (mk-place-music p_cave_goblin_village 'ml-dungeon-adventure)
 
 (mk-dungeon-room
- 'p_trolls_den "Troll's Den"
+ 'p_trolls_den "トロルの住み家"
 	(list
 		"rn r8 r8 r8 rn rn r4 {{ {2 ,, ,, {{ r2 rn rn rn rn rn rn "
 		"r4 {{ {{ {{ ra rn r4 {{ {2 ,, {B {{ r2 rn rn rn rn rn rn "
@@ -175,7 +175,7 @@
 (mk-place-music p_trolls_den 'ml-dungeon-adventure)
 
 (mk-dungeon-room
- 'p_shamans_grove "Shaman's Grove"
+ 'p_shamans_grove "呪術師の林"
 	(list
 		"rn rn rn rn rn rn rn rn r8 r8 r8 rn rn rn rn rn rn rn rn "
 		"rn rn rn rn rn rn rn rc t7 bb t7 ra rn rn rn rn rn rn rn "
@@ -224,7 +224,7 @@
 (mk-place-music p_shamans_grove 'ml-dungeon-adventure)
 
 (mk-dungeon-room
- 'p_watchpoint  "Watchpoint"
+ 'p_watchpoint  "見張り場"
 	(list
 		"rn rn rn rn rn rn r4 {{ {C ,, ,, {{ r2 rn rn rn rn rn rn "
 		"rn rn rn rn rn rn rc {{ ,, ,, {4 {{ ra rn rn rn rn rn rn "

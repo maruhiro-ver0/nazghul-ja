@@ -352,7 +352,7 @@ int main(int argc, char **argv)
         /* The first time we start print the vesrsion info. */
         if (print_version) {
                 print_version = 0;
-                log_banner("^c+bNazghul version^c- ^c+G%s^c-", PACKAGE_VERSION );
+                log_banner("^c+bNazghul^c- ^c+G%s 日本語版^c-", PACKAGE_VERSION );
         }
 
         /* paint the border for the first time */

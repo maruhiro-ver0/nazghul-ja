@@ -69,6 +69,6 @@ void ztats_reagents_init(void)
                 NULL
         };
 
-        ztats_container_pane_init(&pane, "Reagents", &filter, &ops);
+        ztats_container_pane_init(&pane, "ÈëÌô", &filter, &ops);
         ztats_add_pane(&pane.base);
 }

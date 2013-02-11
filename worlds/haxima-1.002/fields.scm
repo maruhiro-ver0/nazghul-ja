@@ -18,20 +18,20 @@
 ;; field. See effects.scm.
 ;;----------------------------------------------------------------------------
 
-(kern-mk-field-type 'F_illum  "glowing mote" s_magic          1024 5  pclass-none  nil	mmode-field)
-(kern-mk-field-type 'F_fire   "fire field"   s_field_fire     512  20 pclass-none  'burn	mmode-field)
-(kern-mk-field-type 'F_poison "poison field" s_field_poison   256  20 pclass-none  'apply-poison	mmode-field)
-(kern-mk-field-type 'F_sleep  "sleep field"  s_field_sleep    256  20 pclass-none  'apply-field-sleep	mmode-field)
-(kern-mk-field-type 'F_energy "energy field" s_field_energy   512  20 pclass-repel 'apply-lightning	mmode-field)
-(kern-mk-field-type 'F_acid "acid field" s_field_acid   256  20 pclass-none 'apply-acid	mmode-field)
-(kern-mk-field-type 'web-type "spider web"   s_spider_web     0    20 pclass-none  'ensnare	mmode-field)
+(kern-mk-field-type 'F_illum  "µ±§Øø–" s_magic          1024 5  pclass-none  nil	mmode-field)
+(kern-mk-field-type 'F_fire   "±Í" s_field_fire     512  20 pclass-none  'burn	mmode-field)
+(kern-mk-field-type 'F_poison "∆«Ã∏" s_field_poison   256  20 pclass-none  'apply-poison	mmode-field)
+(kern-mk-field-type 'F_sleep  "∫≈Ã≤•¨•π"  s_field_sleep    256  20 pclass-none  'apply-field-sleep	mmode-field)
+(kern-mk-field-type 'F_energy "•®•Õ•Î•Æ°ºæÏ" s_field_energy   512  20 pclass-repel 'apply-lightning	mmode-field)
+(kern-mk-field-type 'F_acid "ª¿" s_field_acid   256  20 pclass-none 'apply-acid	mmode-field)
+(kern-mk-field-type 'web-type "•Ø•‚§Œ¡„"   s_spider_web     0    20 pclass-none  'ensnare	mmode-field)
 
-(kern-mk-field-type 'F_poison_perm "poison field" s_field_poison 256 -1 pclass-none  'apply-poison	mmode-field)
-(kern-mk-field-type 'F_sleep_perm  "sleep field"  s_field_sleep  256 -1 pclass-none  'apply-field-sleep	mmode-field)
-(kern-mk-field-type 'F_energy_perm "energy field" s_field_energy 512 -1 pclass-repel 'apply-lightning	mmode-field)
-(kern-mk-field-type 'F_fire_perm   "fire field"   s_field_fire   512 -1 pclass-none  'burn	mmode-field)
-(kern-mk-field-type 'F_acid_perm "acid field" s_field_acid 256 -1 pclass-none 'apply-acid	mmode-field)
-(kern-mk-field-type 'F_web_perm    "spider web"   s_spider_web   0   -1 pclass-none  'ensnare	mmode-field)
+(kern-mk-field-type 'F_poison_perm "∆«Ã∏" s_field_poison 256 -1 pclass-none  'apply-poison	mmode-field)
+(kern-mk-field-type 'F_sleep_perm  "∫≈Ã≤•¨•π"  s_field_sleep  256 -1 pclass-none  'apply-field-sleep	mmode-field)
+(kern-mk-field-type 'F_energy_perm "•®•Õ•Î•Æ°ºæÏ" s_field_energy 512 -1 pclass-repel 'apply-lightning	mmode-field)
+(kern-mk-field-type 'F_fire_perm   "±Í"   s_field_fire   512 -1 pclass-none  'burn	mmode-field)
+(kern-mk-field-type 'F_acid_perm "ª¿" s_field_acid 256 -1 pclass-none 'apply-acid	mmode-field)
+(kern-mk-field-type 'F_web_perm    "•Ø•‚§Œ¡„"   s_spider_web   0   -1 pclass-none  'ensnare	mmode-field)
 (kern-mk-field-type 'F_illum_perm    nil   nil   256   -1 pclass-none  nil	mmode-field)
 
 (define all-field-types
@@ -97,7 +97,7 @@
                                          ))))))))))
 
 
-(mk-obj-type 't_smoke_cloud "smoke" s_smoke layer-projectile smoke-ifc)
+(mk-obj-type 't_smoke_cloud "±Ï" s_smoke layer-projectile smoke-ifc)
 
 (define (fields-smoke-apply kplace x y power)
 	(define (tryput loc)

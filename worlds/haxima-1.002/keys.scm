@@ -21,5 +21,5 @@
 ;; List all the key types. This doesn't *need* to be done here, but like any
 ;; type, it must be done in a file that is kern-loaded, which means it can't be
 ;; done in a place file. So by convention let's list them here.
-(mk-key-type 't_brundegardt_tower_4_key "weathered key" s_picklock)
-(mk-key-type 't_stewardess_chest_key    "shiny key"     s_picklock)
+(mk-key-type 't_brundegardt_tower_4_key "»¬¤Ó¤¿¸°" s_picklock)
+(mk-key-type 't_stewardess_chest_key    "µ±¤¯¸°"   s_picklock)

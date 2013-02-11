@@ -165,28 +165,28 @@
 ;; Movement modes
 (define mmodes
   (list
-   (list 'mmode-walk      "walking"     0)
-   (list 'mmode-hover     "hovering"    1)
-   (list 'mmode-ship      "sailing"     2)
-   (list 'mmode-phase     "phasing"     3)
-   (list 'mmode-fly       "flying"      4)
-   (list 'mmode-skiff     "rowing"      5)
-   (list 'mmode-fish      "swimming"    6)
-   (list 'mmode-crawl     "crawling"    7) ;; spiders, can cross boulders
-   (list 'mmode-voidship  "sailing"     8)
-   (list 'mmode-ranger    "stalking"    9)
-   (list 'mmode-none      "stationary" 10)
-   (list 'mmode-wriggle   "wriggle"    11) ;; rogue special move
-   (list 'mmode-missile   "missile"    12)
-   (list 'mmode-fastfly   "flying"     13)
-   (list 'mmode-fastrun   "running"    14)
-   (list 'mmode-fastcrawl "crawling"   15)
-   (list 'mmode-smallobj  "smallobj"   16) ;; for determining dropability of small objects
-   (list 'mmode-largeobj  "largeobj"   17) ;; for determining dropability of big objects- basically, stuff that wont fit through bars/windows
-   (list 'mmode-field     "field"      18) ;; for determining dropability of fields
-   (list 'mmode-return    "return"     19) ;; return path for magic axe (for now assume it always returns)
-   (list 'mmode-cannon    "cannon"     20) ;; enhanced missile passibility for cannon shells
-   (list 'mmode-large     "striding"   21) ;; big critters
+   (list 'mmode-walk      "歩いている"   0)
+   (list 'mmode-hover     "浮いている"   1)
+   (list 'mmode-ship      "航行している" 2)
+   (list 'mmode-phase     "変形している" 3)
+   (list 'mmode-fly       "飛行している" 4)
+   (list 'mmode-skiff     "漕いでいる"   5)
+   (list 'mmode-fish      "泳いでいる"   6)
+   (list 'mmode-crawl     "這っている"   7) ;; spiders, can cross boulders
+   (list 'mmode-voidship  "航行している" 8)
+   (list 'mmode-ranger    "追跡している" 9)
+   (list 'mmode-none      "動かない"    10)
+   (list 'mmode-wriggle   "忍び込んでいる" 11) ;; rogue special move
+   (list 'mmode-missile   "飛んでいる"   12)
+   (list 'mmode-fastfly   "飛行している" 13)
+   (list 'mmode-fastrun   "走っている" 14)
+   (list 'mmode-fastcrawl "這っている" 15)
+   (list 'mmode-smallobj  "小さいもの" 16) ;; for determining dropability of small objects
+   (list 'mmode-largeobj  "大きいもの" 17) ;; for determining dropability of big objects- basically, stuff that wont fit through bars/windows
+   (list 'mmode-field     "場"         18) ;; for determining dropability of fields
+   (list 'mmode-return    "戻っている" 19) ;; return path for magic axe (for now assume it always returns)
+   (list 'mmode-cannon    "砲"         20) ;; enhanced missile passibility for cannon shells
+   (list 'mmode-large     "巨大なもの" 21) ;; big critters
 ))
 (map (lambda (mmode) (apply kern-mk-mmode mmode)) mmodes)
 
@@ -392,7 +392,7 @@
 (load "quest-sys.scm")
 
 ;; Miscellaneous crap
-(mk-obj-type 't_crosshair "crosshair" s_crosshair layer-crosshair nil)
+(mk-obj-type 't_crosshair "照準線" s_crosshair layer-crosshair nil)
 (kern-set-crosshair t_crosshair)
 (kern-set-frame s_frame_ulc
                 s_frame_urc

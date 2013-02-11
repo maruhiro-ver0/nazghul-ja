@@ -1,5 +1,5 @@
 (mk-19x19-town
- 'p_florinth_wharf "Wharf of Florinth" s_town
+ 'p_florinth_wharf "フローリンスの埠頭" s_town
  (list
   ".. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. "
   ".. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. "
@@ -25,7 +25,7 @@
  )
 
 (mk-19x19-town
- 'p_florinth_n_tower "North Watchtower of Florinth" s_town
+ 'p_florinth_n_tower "フローリンスの北監視塔" s_town
  (list
   ".. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. "
   ".. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. "
@@ -51,7 +51,7 @@
  )
 
 (mk-19x19-town
- 'p_florinth_s_tower "South Watchtower of Florinth" s_town
+ 'p_florinth_s_tower "フローリンスの南監視塔" s_town
  (list
   ".. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. "
   ".. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. "
@@ -77,7 +77,7 @@
  )
 
 (mk-19x19-town
- 'p_florinth_bazaar "Bazaar of Florinth" s_town
+ 'p_florinth_bazaar "フローリンスの市場" s_town
  (list
   ".. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. "
   ".. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. "

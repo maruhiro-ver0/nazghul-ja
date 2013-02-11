@@ -649,7 +649,7 @@ struct inv_entry *ui_select_item(void)
 	kh.data = &sc;
 
 	eventPushKeyHandler(&kh);
-	cmdwin_push("<select>");
+	cmdwin_push("<選択>");
 	eventHandle();
 	cmdwin_pop();
 	eventPopKeyHandler();
@@ -658,7 +658,7 @@ struct inv_entry *ui_select_item(void)
 
 	ie = (struct inv_entry *) sc.selection;
 	if (ie == NULL) {
-		cmdwin_push("none!");
+		cmdwin_push("何もしない！");
 		return NULL;
 	}
 
@@ -692,7 +692,7 @@ class Character *select_party_member(void)
 	kh.data = &sc;
 
 	eventPushKeyHandler(&kh);
-	cmdwin_push("<select>");
+	cmdwin_push("<選択>");
 	eventHandle();
 	cmdwin_pop();
 	eventPopKeyHandler();
@@ -702,7 +702,7 @@ class Character *select_party_member(void)
 	character = (class Character *) sc.selection;
 
 	if (character == NULL) {
-		cmdwin_push("none!"); /* fixme: move to cmd_front_end? */
+		cmdwin_push("何もしない！"); /* fixme: move to cmd_front_end? */
 		/* Hack alert: this saves the caller from having to remember to
 		 * do this. Doing it unconditionally is undesirable because it
 		 * can cause status screen flashes if the old mode requires a
@@ -733,11 +733,11 @@ void getkey(void *data, int(*handler) (struct KeyHandler * kh, int key, int keym
 int ui_get_direction(void)
 {
 	int dir;
-	cmdwin_push("<direction>");
+	cmdwin_push("<方向>");
 	getkey(&dir, dirkey);
 	cmdwin_pop();
 	if (dir == CANCEL) {
-		cmdwin_push("none!");
+		cmdwin_push("何もしない！");
 	} else {
 		cmdwin_spush(directionToString(dir));
 	}
@@ -762,7 +762,7 @@ bool cmdSearch(class Character *pc)
         struct place *place = 0;
 
 	cmdwin_clear();
-	cmdwin_spush("Search");
+	cmdwin_spush("探す");
 
         /* FIXME: this is duplicated in cmdHandle(), these command functions
          * all need to be cleaned up to ensure consistency. */
@@ -797,11 +797,11 @@ bool cmdSearch(class Character *pc)
         place_for_each_object_at(place, x2, y2, search_visitor, pc);
         obj_dec_ref(pc);
 
-	log_begin("You find ");
+	log_begin("");
         old_reveal = Reveal;
         Reveal = true;
 	place_describe(place, x2, y2, PLACE_DESCRIBE_ALL);
-        log_end(".");
+        log_end("を見つけた。");
         Reveal = old_reveal;
         pc->decActionPoints(kern_intvar_get("AP_COST:search"));  // SAM: We may want a '-1' value here, to signify "all remaining AP"...
 	
@@ -821,7 +821,7 @@ bool cmdGet(class Object *actor)
 	int x, y;
 	
 	cmdwin_clear();
-	cmdwin_spush("Get");
+	cmdwin_spush("取る");
 	
 	dir = ui_get_direction();
 	
@@ -834,7 +834,7 @@ bool cmdGet(class Object *actor)
 	item = place_get_filtered_object(actor->getPlace(), x, y, 
 	cmdGetFilter);
 	if (!item) {
-		log_msg("Get - nothing there!");
+		log_msg("取る - 何もない！");
 		return false;
 	}
 	
@@ -877,7 +877,7 @@ bool cmdOpen(class Character * pc)
 	class Container *container;
 
 	cmdwin_clear();
-	cmdwin_spush("Open");
+	cmdwin_spush("開く");
 
 	// Get the party member who will open the container (in combat mode
 	// this is passed in as a parameter).
@@ -929,7 +929,7 @@ bool cmdOpen(class Character * pc)
                  struct KeyHandler kh;
                  struct ScrollerContext data;
 
-                 cmdwin_push("<select>");
+                 cmdwin_push("<選択>");
 
                  statlist[0].sprite = mech->getSprite();
                  snprintf(statlist[0].line1, sizeof(statlist[0].line1), "%s",
@@ -946,7 +946,7 @@ bool cmdOpen(class Character * pc)
                  foogodSetHintText(SCROLLER_HINT);
                  foogodSetMode(FOOGOD_HINT);        
                  omode = statusGetMode();
-                 statusSetGenericList("Choose Target", 2, statlist);
+                 statusSetGenericList("対象", 2, statlist);
                  statusSetMode(GenericList);
                  
                  data.selection = NULL;
@@ -981,8 +981,8 @@ bool cmdOpen(class Character * pc)
 
          /* Nothing to open */
          if (NULL == container) {
-                 cmdwin_push("abort!");
-                 log_msg("Open - nothing there!");
+                 cmdwin_push("中止！");
+                 log_msg("開く - 何もない！");
                  return false;
          }
 
@@ -995,7 +995,7 @@ bool cmdOpen(class Character * pc)
         cmdwin_push("%s!", container->getName());
 
         // Describe the contents of the container.
-        log_msg("You find:");
+        log_msg("見つけたもの:");
         container->forEach(cmd_describe_inv_entry, NULL);
 
 	// Open the container (automagically spills all the contents onto the
@@ -1046,33 +1046,33 @@ bool cmdQuit(void)
 	eventPushQuitHandler(&qh);
         
 	cmdwin_clear();
-	cmdwin_spush("Quit");
+	cmdwin_spush("終了する");
         cmdwin_spush("<y/n>");
 	getkey(&yesno, yesnokey);
 	cmdwin_pop();
 
         /* Cancel quit? */
 	if (yesno == 'n') {
-                cmdwin_spush("abort!");
+                cmdwin_spush("中止！");
                 Quit = false;
                 goto pop_qh;
         }
 
-        cmdwin_spush("save");
+        cmdwin_spush("保存する");
         cmdwin_spush("<y/n>");
         getkey(&yesno, yesnokey);
         cmdwin_pop();
 
         /* Don't save? */
         if (yesno == 'n') {
-                cmdwin_spush("not saving!");
+                cmdwin_spush("保存しない！");
                 Quit = true;
                 goto pop_qh;
         }
 
         if (cmdSave()) {
-            cmdwin_spush("saved!");
-            log_msg("Goodbye!\n");
+            cmdwin_spush("保存した！");
+            log_msg("さようなら！\n");
             Quit = true;
         } else {
             Quit = false;
@@ -1098,12 +1098,12 @@ void cmdAttack(void)
 		
         // Get the direction
 	cmdwin_clear();
-	cmdwin_spush("Attack");
-        cmdwin_spush("<direction>");
+	cmdwin_spush("攻撃する");
+        cmdwin_spush("<方向>");
 	getkey(&dir, cardinaldirkey);
 	cmdwin_pop();
 	if (dir == CANCEL) {
-		cmdwin_spush("none!");
+		cmdwin_spush("何もしない！");
 		return;
 	}
 	cmdwin_spush("%s", directionToString(dir));
@@ -1117,8 +1117,8 @@ void cmdAttack(void)
         info.npc_party = place_get_Party(info.place, info.x, info.y);
 				
         if (info.npc_party == NULL) {
-                cmdwin_spush("nobody there!");
-                log_msg("Attack - nobody there!");
+                cmdwin_spush("誰もいない！");
+                log_msg("攻撃する - 誰もいない！");
                 return;
         } 
         info.px = player_party->getX();
@@ -1129,23 +1129,23 @@ void cmdAttack(void)
         // If the npc is not hostile then get player confirmation.
         if (! are_hostile(info.npc_party, player_party)) {
                 int yesno;
-                cmdwin_spush("attack non-hostile");
+                cmdwin_spush("敵でない者を攻撃する");
                 cmdwin_spush("<y/n>");
                 getkey(&yesno, yesnokey);
                 cmdwin_pop();
                 if (yesno == 'n') {
-                        cmdwin_spush("no");
+                        cmdwin_spush("いいえ");
                         return;
                 }
-                cmdwin_spush("yes");
+                cmdwin_spush("はい");
 
                 make_hostile(info.npc_party, player_party);
         }
 
         // Log the attack.
-        log_begin("You attack ");
+        log_begin("");
         info.npc_party->describe();
-        log_end(".");
+        log_end("を攻撃した。");
 
         // Enter combat
         combat_enter(&cinfo);
@@ -1181,7 +1181,7 @@ void cmdFire(void)
 	int dir;
 
 	cmdwin_clear();
-	cmdwin_spush("Fire");
+	cmdwin_spush("砲撃する");
 
         class Vehicle *vehicle = player_party->getVehicle();
 	if ((!vehicle ||
@@ -1189,18 +1189,18 @@ void cmdFire(void)
                 // SAM: 
                 // In future, we may check for adjacent "cannon" 
                 // mechanisms here (as in U5).
-		cmdwin_spush("No cannons available!");
-                log_msg("Fire - no cannons!");
+		cmdwin_spush("砲撃できない！");
+                log_msg("砲撃する - 大砲がない！");
 		return;
 	}
 
 	cmdwin_spush("%s", vehicle->getOrdnance()->getName());
-        cmdwin_spush("<direction>");
+        cmdwin_spush("<方向>");
 	getkey(&dir, dirkey);
 	cmdwin_pop();
 
 	if (dir == CANCEL) {
-		cmdwin_spush("none!");
+		cmdwin_spush("何もしない！");
 		return;
 	}
 
@@ -1208,8 +1208,8 @@ void cmdFire(void)
 	if (! vehicle->fire_weapon(directionToDx(dir), 
                                                  directionToDy(dir), 
                                                  player_party)) {
-		cmdwin_spush("Not a broadside!");
-                log_msg("Fire - not a broadside!");
+		cmdwin_spush("側面方向でない！");
+                log_msg("砲撃する - 側面方向でない！");
 		return;
         }
 }
@@ -1223,7 +1223,7 @@ bool cmdReady(class Character * member)
 	const char *msg = 0;
 
 	cmdwin_clear();
-	cmdwin_spush("Ready");
+	cmdwin_spush("装備する");
 
         // Select user
         if (member) {
@@ -1234,15 +1234,15 @@ bool cmdReady(class Character * member)
                         return false;       
 
                 if (member->isCharmed()) {
-                        cmdwin_push("Charmed!");
-                        log_msg("Ready - charmed!");
+                        cmdwin_push("魔法がかけられている！");
+                        log_msg("装備する - 魔法がかけられている！");
                         return false;
                 }
 
         }
 
         log_begin_group();
-        log_msg("%s readies arms:", member->getName());
+        log_msg("%sの装備:", member->getName());
 
 	statusSelectCharacter(member->getOrder());
 
@@ -1255,7 +1255,7 @@ bool cmdReady(class Character * member)
 	kh.data = &sc;
 	eventPushKeyHandler(&kh);
 
-        cmdwin_spush("<select/ESC>");
+        cmdwin_spush("<選択/ESC>");
 
 	for (;;) {
 
@@ -1266,7 +1266,7 @@ bool cmdReady(class Character * member)
 
 		ie = (struct inv_entry *) sc.selection;
 		if (ie == NULL) {
-			cmdwin_spush("done!");
+			cmdwin_spush("終えた！");
 			break;
 		}
 
@@ -1277,7 +1277,7 @@ bool cmdReady(class Character * member)
                 log_begin("%s - ", arms->getName());
 
 		if (ie->ref && member->unready(arms)) {
-			msg = "unreadied!";
+			msg = "外した！";
 			member->decActionPoints(arms->getRequiredActionPoints());
 			statusRepaint();
 		} else {
@@ -1285,7 +1285,7 @@ bool cmdReady(class Character * member)
 			switch (member->ready(arms)) {
 			case Character::Readied:
 				statusRepaint();
-				msg = "readied!";
+				msg = "装備した！";
 				member->decActionPoints(arms->getRequiredActionPoints());
            /* Move the readied item to the front of the
             * list for easy access next time, and to
@@ -1298,13 +1298,13 @@ bool cmdReady(class Character * member)
            //statusSetMode(Ready);
 				break;
 			case Character::NoAvailableSlot:
-				msg = "all full!";
+				msg = "持ちきれない！";
 				break;
 			case Character::WrongType:
-				msg = "can't use!";
+				msg = "使えない！";
 				break;
 			case Character::TooHeavy:
-				msg = "too heavy!";
+				msg = "重すぎる！";
 				break;
 			default:
 				assert(false);
@@ -1447,7 +1447,7 @@ int ui_select_target_generic(ui_select_target_req_t *req)
 
         eventPushMouseButtonHandler(&mbh);
         eventPushKeyHandler(&kh);
-        cmdwin_spush("<target> (ESC to exit)");
+        cmdwin_spush("<対象> (ESCで中止)");
         eventHandle();
         cmdwin_pop();
         eventPopKeyHandler();
@@ -1461,7 +1461,7 @@ int ui_select_target_generic(ui_select_target_req_t *req)
         mapSetDirty();
   
         if (data.abort) {
-                cmdwin_spush("Done.");
+                cmdwin_spush("終えた。");
                 return -1;
         }
   
@@ -1485,7 +1485,7 @@ bool cmdHandle(class Character * pc)
 	int y;
 
 	cmdwin_clear();
-	cmdwin_spush("Handle");
+	cmdwin_spush("操作する");
 
 	if (pc) {
 		// A party member was specified as a parameter, so this must be
@@ -1525,8 +1525,8 @@ bool cmdHandle(class Character * pc)
             || ! mech->getObjectType()->canHandle()
             || (! mech->isVisible()            
                 && ! Reveal)) {
-                cmdwin_spush("nothing!");
-                log_msg("Handle - nothing there to handle!");
+                cmdwin_spush("何もない！");
+                log_msg("操作する - 何もない！");
                 return false;
         }
 
@@ -1534,10 +1534,10 @@ bool cmdHandle(class Character * pc)
         // remain hidden from x)amine and s)earch commands)
         const char *mechName=mech->getName();
         if (!mechName) {
-                mechName = "a hidden mechanism";
+                mechName = "隠された装置";
         }
         cmdwin_spush("%s", mechName);
-        log_msg("%s handles %s", pc->getName(), mechName);
+        log_msg("%sは%sを操作した。", pc->getName(), mechName);
         mech->getObjectType()->handle(mech, pc);
         pc->runHook(OBJ_HOOK_HANDLE_DONE, "p", mech);
         pc->decActionPoints(kern_intvar_get("AP_COST:handle_mechanism"));
@@ -1558,7 +1558,7 @@ bool cmdUse(class Character * member, int flags)
         int result;
 
 	cmdwin_clear();
-	cmdwin_spush("Use");
+	cmdwin_spush("使う");
 
         // Select user
         if (flags & CMD_SELECT_MEMBER) {
@@ -1624,7 +1624,7 @@ void cmdNewOrder(void)
                 assert(0);
                 break;
         case 1:
-                log_msg("New Order - only one party member!");
+                log_msg("順序 - あなたしかいない！");
                 return;
         case 2:
                 pc1 = player_party->getMemberByOrder(0);
@@ -1633,7 +1633,7 @@ void cmdNewOrder(void)
         }
 
 	cmdwin_clear();
-	cmdwin_spush("Switch");
+	cmdwin_spush("入れ替わる");
 
         // Set the mode now - before calling select_party_member - so that the
         // screen will not flash back to a short status window between the two
@@ -1646,7 +1646,7 @@ void cmdNewOrder(void)
 		return;
         }
 
-	cmdwin_spush("with");
+	cmdwin_spush("と");
 
 	pc2 = select_party_member();
 	if (pc2 == NULL) {
@@ -1658,7 +1658,7 @@ void cmdNewOrder(void)
  swap:
         player_party->switchOrder(pc1, pc2);
 
-	log_msg("New Order: %s switched with %s\n", pc1->getName(),
+	log_msg("順序: %sは%sと入れ替わった。", pc1->getName(),
 		     pc2->getName());
 
         // If one of the switched members was the party leader then make the
@@ -1825,7 +1825,7 @@ void cmdTalk(Object *member)
 	// *** Prompt user & check if valid ***
 
 	cmdwin_clear();
-	cmdwin_spush("Talk");
+	cmdwin_spush("話す");
 
         if (! member) {
                 member = select_party_member();
@@ -1850,8 +1850,8 @@ void cmdTalk(Object *member)
 	obj = place_get_object(Place, x, y, being_layer);
 
 	if (!obj) {
-                cmdwin_spush("nobody there!");
-                log_msg("Try talking to a PERSON.");
+                cmdwin_spush("誰もいない！");
+                log_msg("人と話すように！");
                 goto cleanup;
         }
 
@@ -1859,22 +1859,22 @@ void cmdTalk(Object *member)
         // speaker is not the party itself.
         obj = obj->getSpeaker();
         if (! obj) {
-                cmdwin_spush("cancel");
+                cmdwin_spush("中止");
                 goto cleanup;
         }
 
         if (TimeStop && !obj->isPlayerPartyMember()) {
-                cmdwin_spush("time stopped!");
-                log_msg("This person seems frozen in time.");
+                cmdwin_spush("時が止まっている！");
+                log_msg("この人はまるで凍っているようだ。");
                 goto cleanup;
         }
 
         conv = obj->getConversation();
         if (!conv) {
-		cmdwin_spush("no response!");
-                log_begin("No response from ");
+		cmdwin_spush("反応がない！");
+                log_begin("");
                 obj->describe();
-                log_end(".");
+                log_end("からは何の反応もなかった。");
                 goto cleanup;
         }
 
@@ -1908,10 +1908,10 @@ static int select_hours(int allow_sunrise)
 	struct get_char_info info;
 
         if (allow_sunrise) {
-                cmdwin_spush("<hours[0-9]/[s]unrise>");
+                cmdwin_spush("<[0-9]時間/[s]夜明け>");
                 info.string = "0123456789sS";
         } else {
-                cmdwin_spush("<hours[0-9]>");
+                cmdwin_spush("<[0-9]時間>");
                 info.string = "0123456789";
         }
 
@@ -1921,7 +1921,7 @@ static int select_hours(int allow_sunrise)
 
 	if (! info.c || info.c == '0') {
                 cmdwin_pop();
-		cmdwin_spush("none!");
+		cmdwin_spush("何もしない！");
                 return 0;
         }
         else if (allow_sunrise
@@ -1931,7 +1931,7 @@ static int select_hours(int allow_sunrise)
                 int sunrise;
 
                 cmdwin_pop();
-                cmdwin_push("until sunrise");
+                cmdwin_push("夜明けまで");
                 hour = clock_time_of_day() / 60;
                 sunrise = SUNRISE_HOUR + 1;
                 if (hour < sunrise)
@@ -1939,11 +1939,11 @@ static int select_hours(int allow_sunrise)
                 return HOURS_PER_DAY - hour + sunrise;
         }
 	else if (info.c == '1') {
-		cmdwin_push(" hour");
+		cmdwin_push("時間");
                 return 1;
         }
 	else {
-		cmdwin_push(" hours");
+		cmdwin_push("時間");
                 return info.c - '0';
         }
 }
@@ -1955,10 +1955,10 @@ int ui_get_quantity(int max)
 
         /* Push the prompt but remember it for use within getnum() */
 	if (max == -1) {
-                snprintf(prompt, sizeof(prompt), "<quantity>");
+                snprintf(prompt, sizeof(prompt), "<数量>");
 	} else {
                 snprintf(prompt, sizeof(prompt), 
-                         "<quantity[0-%d]/RET=%d>", max, max);
+                         "<数量[0-%d]/ENT=%d>", max, max);
 	}
 
 	info.digit = 0;
@@ -1973,8 +1973,9 @@ int ui_get_quantity(int max)
 			info.digit = 0;
 		else
 			info.digit = max;
-	} else if (info.state == GN_CANCEL)
-		cmdwin_spush("none!");
+	} else if (info.state == GN_CANCEL) {
+		cmdwin_spush("何もしない！");
+	}
 
 	return info.digit;
 }
@@ -1985,20 +1986,20 @@ int cmd_camp_in_wilderness(class Party *camper)
 	class Character *guard = 0;
 
 	cmdwin_clear();
-	cmdwin_spush("Camp");
+	cmdwin_spush("休息を取る");
 
 	if (!place_is_passable(camper->getPlace(), camper->getX(), 
                                camper->getY(), camper, PFLAG_IGNOREVEHICLES)) {
-		cmdwin_spush("not here!");
-                log_msg("Camp - not here!");
+		cmdwin_spush("ここではできない！");
+                log_msg("休息を取る - ここではできない！");
 		return 0;
 	}
 
         if (place_get_subplace(camper->getPlace(), 
                                camper->getX(), 
                                camper->getY())) {
-		cmdwin_spush("not here!");
-                log_msg("Camp - not here!");
+		cmdwin_spush("ここではできない！");
+                log_msg("休息を取る - ここではできない！");
                 return 0;
         }
 
@@ -2007,7 +2008,7 @@ int cmd_camp_in_wilderness(class Party *camper)
 		return 0;
 
         cmdwin_spush(""); /* for the '-' */
-	cmdwin_spush("set a watch");
+	cmdwin_spush("見張りを置く");
         cmdwin_spush("<y/n>");
 	getkey(&yesno, &yesnokey);
 
@@ -2017,17 +2018,16 @@ int cmd_camp_in_wilderness(class Party *camper)
 		guard = select_party_member();
 		if (!guard) {
                         cmdwin_pop();
-			cmdwin_push("no watch");
+			cmdwin_push("見張りなし");
 		}
                 else if (guard->isDead()) {
-                        log_msg("You prop up the corpse and wave off "
-                                "the flies...");
+                        log_msg("遺体を立てかけ、蝿を払いのけた…");
                 }
                 // else select_party_member() prints the name
 
 	} else {
 		cmdwin_pop();
-		cmdwin_spush("no watch");
+		cmdwin_spush("見張りなし");
 	}
 
 	player_party->beginCamping(guard, hours);
@@ -2042,21 +2042,21 @@ void cmdLoiter(class Being *subject)
     int hours = 0;
 
         cmdwin_clear();
-        cmdwin_spush("Loiter");
+        cmdwin_spush("うろつく");
 
         /* Check if enemies are around. */
         if (place_contains_hostiles(subject->getPlace(), subject)) {
-                cmdwin_spush("foes nearby!");
-                log_msg("Loiter - foes nearby!");
+                cmdwin_spush("敵が近くにいる！");
+                log_msg("うろつく - 敵が近くにいる！");
                 return;
         }
         
         /* Check if any party members are engaged in a task. */
         class Character *pc;
         if ((pc = cmdAnyPartyMemberEngagedInTask())) {
-            log_msg("Loiter - %s engaged in task!", pc->getName());
-            cmdwin_spush("busy with tasks!");
-            return;
+                log_msg("うろつく - %sは別のことをしている！", pc->getName());
+                cmdwin_spush("忙しい！");
+                return;
         }
 
         /* Prompt for the number of hours. */
@@ -2066,7 +2066,7 @@ void cmdLoiter(class Being *subject)
         }
 
         /* Tell the party to start loitering. */
-        cmdwin_spush("loitering...");
+        cmdwin_spush("うろついている…");
         player_party->beginLoitering(hours);
 
         /* End the turn. */
@@ -2079,14 +2079,14 @@ int cmd_camp_in_town(class Character *camper)
         int hours;
 
         cmdwin_clear();
-        cmdwin_spush("Rest");
+        cmdwin_spush("休息を取る");
 
         // Party must be in follow mode.
         if (player_party->getPartyControlMode() != PARTY_CONTROL_FOLLOW) {
                 cmdwin_spush("must be in follow mode!");
                 log_begin_group();
-                log_msg("Camp - party not in follow mode!");
-                log_msg("(Hint: hit 'f' to enter follow mode)");
+                log_msg("休息を取る - 追跡中でない！");
+                log_msg("ヒント: 'f'を押すと追跡する。");
                 log_end_group();
                 return 0;
         }
@@ -2094,15 +2094,15 @@ int cmd_camp_in_town(class Character *camper)
         // Check for an object that will serve as a bed.
         if (place_get_object(camper->getPlace(), camper->getX(), 
                              camper->getY(),  bed_layer) == NULL) {
-                cmdwin_spush("no bed!");
-                log_msg("Camp - no bed here!");
+                cmdwin_spush("ベッドがない！");
+                log_msg("休息を取る - ベッドがない！");
                 return 0;
         }
 
         // Rendezvous the party around the bed.
         if (! player_party->rendezvous(camper->getPlace(), camper->getX(), 
                                        camper->getY())) {
-                log_msg("Camp - party can't rendezvous!");
+                log_msg("休息を取る - 仲間と集合していない！");
                 return 0;
         }
 
@@ -2113,7 +2113,7 @@ int cmd_camp_in_town(class Character *camper)
 
         // Put the party in "sleep" mode before returning back to the main
         // event loop.
-        cmdwin_spush("resting...");
+        cmdwin_spush("休息中…");
         player_party->beginResting(hours);
         camper->endTurn();
 
@@ -2235,7 +2235,7 @@ int select_spell(struct get_spell_name_data *context)
 
 	memset(context, 0, sizeof(*context));
 	context->ptr = context->spell_name;
-        context->prompt = "<spell name>";
+        context->prompt = "<呪文>";
         context->state = GN_ZERO;
 
 	kh.fx = get_spell_name;
@@ -2247,7 +2247,7 @@ int select_spell(struct get_spell_name_data *context)
 	eventPopKeyHandler();
 
 	if (strlen(context->spell_name) == 0) {
-		cmdwin_spush("none!");
+		cmdwin_spush("何もしない！");
 		return -1;
 	}
 
@@ -2272,15 +2272,15 @@ static int cmd_eval_and_log_result(int result)
                 const char *string;
                 int success;
         } tbl[] = {
-                { "^c+gok^c-!",               1 },
-                { "^c+Gno target^c-!",        0 },
-                { "^c+yno effect^c-!",        1 },
-                { "^c+yno hostiles here^c-!", 1 },
-                { "^c+Glacks skill^c-!",      0 },
-                { "^c+rfailed^c-!",           1 },
-                { "^c+Gnot here^c-!",         0 },
-                { "^c+rcritical fail^c-!!!",  1 },
-                { "^c+ynot now^c-!",          0 },
+                { "^c+g成功^c-！",              1 },
+                { "^c+G対象がない^c-！",        0 },
+                { "^c+y効果がない^c-！",        1 },
+                { "^c+y敵がいない^c-！",        1 },
+                { "^c+G能力が足りない^c-！",    0 },
+                { "^c+r失敗^c-！",              1 },
+                { "^c+Gここではできない^c-！",  0 },
+                { "^c+r致命的な失敗^c-！！！",  1 },
+                { "^c+y今はできない^c-！",      0 },
         };
 
         if (result < 0 || result >= array_sz(tbl)) {
@@ -2303,12 +2303,12 @@ bool cmdCastSpell(class Character * pc)
         char spell_name[MAX_SPELL_NAME_LENGTH];
 
         if (MagicNegated) {
-                log_msg("Cast - magic negated!\n");
+                log_msg("唱える - 打ち消された！\n");
                 return false;
         }
 
 	cmdwin_clear();
-	cmdwin_spush("Cast");
+	cmdwin_spush("唱える");
 
 	/* If the pc is null then we are in non-combat mode and need to promp
          * the user. */
@@ -2322,14 +2322,14 @@ bool cmdCastSpell(class Character * pc)
 
         /* Make sure the PC is not asleep, dead, etc. */
         if (pc->isDead()) {
-                cmdwin_spush("unable right now!");
-                log_msg("Cast - %s is too dead!", pc->getName());
+                cmdwin_spush("今はできない！");
+                log_msg("唱える - %sは死んでいる！", pc->getName());
                 return false;
         }
 
         if (pc->isAsleep()) {
-                cmdwin_spush("unable right now!");
-                log_msg("Cast - %s is asleep!", pc->getName());
+                cmdwin_spush("今はできない！");
+                log_msg("唱える - %sは眠っている！", pc->getName());
                 return false;
         }
 
@@ -2349,15 +2349,15 @@ bool cmdCastSpell(class Character * pc)
 	spell = magic_lookup_spell(&Session->magic, context.spell_name);
 	if (!spell) {
                 /* Bugfix for SF1564255: don't let player guess at spells. */
-		cmdwin_spush("none mixed!");
-                log_end("none mixed!");
+		cmdwin_spush("調合していない！");
+                log_end("調合していない！");
 		return false;
 	}
 
 	/* Check if the spell can be used in this context. */
 	if (!(player_party->getContext() & spell->context)) {
-		cmdwin_spush("not here!");
-                log_end("not here!");
+		cmdwin_spush("ここでは使えない！");
+                log_end("ここでは使えない！");
 		return false;
 	}
 
@@ -2375,8 +2375,8 @@ bool cmdCastSpell(class Character * pc)
          * try to cast In Nox Por to see what I mean...
          */
 	if (!natural && pc->getLevel() < spell->level) {
-		cmdwin_spush("need more experience!");
-                log_end("must be level %d!", spell->level);
+		cmdwin_spush("もっと経験が必要！");
+                log_end("レベル%d以上必要だ！", spell->level);
 		return false;
 	}
 
@@ -2388,15 +2388,15 @@ bool cmdCastSpell(class Character * pc)
 	}
 
 	if (!natural && !mixed) {
-		cmdwin_spush("none mixed!");
-                log_end("none mixed!");
+		cmdwin_spush("調合していない！");
+                log_end("調合していない！");
 		return false;
 	}
 
 	/* Check if the character has enough mana to cast the spell. */
 	if (pc->getMana() < spell->cost) {
-		cmdwin_spush("need more mana!");
-                log_end("need more mana!");
+		cmdwin_spush("もっと魔力が必要！");
+                log_end("もっと魔力が必要だ！");
 		return false;
 	}
 
@@ -2419,7 +2419,11 @@ bool cmdCastSpell(class Character * pc)
 	if (mixed) {
                 int count = ie->count - 1;
 		player_party->takeOut(ie->type, 1);
-                log_msg("%d %s remaining", count, spell_name);
+                if (count) {
+                        log_msg("後%d回残っている。", count);
+                } else {
+                        log_msg("もう残っていない。");
+                }
         }
 
         /* Some spells have status in the foogod window, so repaint it now. */
@@ -2444,7 +2448,7 @@ bool cmdMixReagents(class Character *character)
 	list_init(&reagents);
 
 	cmdwin_clear();
-	cmdwin_spush("Mix");
+	cmdwin_spush("調合する");
 
 	// Select a spell...
 	if (select_spell(&context) == -1)
@@ -2465,15 +2469,15 @@ bool cmdMixReagents(class Character *character)
                 ie_spell = player_party->inventory->search(spell->type);
         }
         if (ie_spell && ie_spell->count) {
-                cmdwin_spush("%d mixed", ie_spell->count);
+                cmdwin_spush("%dつ調合されている", ie_spell->count);
         } else {
-                cmdwin_spush("0 mixed");
+                cmdwin_spush("調合されていない");
         }
 
 	// Prompt for reagents 
-	cmdwin_spush("<select, then M)ix>");
+	cmdwin_spush("<選択した後'm'で調合>");
 
-        foogodSetHintText("\005\006=scroll ENT=add/remove ESC=abort M=done");
+        foogodSetHintText("\005\006=選択 ENT=加える/取り除く ESC=中断 M=調合");
         foogodSetMode(FOOGOD_HINT);
 
 	// Show the reagents in the status window
@@ -2499,7 +2503,7 @@ bool cmdMixReagents(class Character *character)
 			// u5 silently aborts here
                         cmdwin_pop();
 			eventPopKeyHandler();
-			cmdwin_spush("none!");
+			cmdwin_spush("何もしない！");
 			goto done;
 		}
 
@@ -2512,7 +2516,7 @@ bool cmdMixReagents(class Character *character)
                          * whatsoever. */
 			cmdwin_pop();
 			eventPopKeyHandler();
-			cmdwin_spush("none!");
+			cmdwin_spush("なにもしない！");
 			goto done;
                 }
 
@@ -2533,7 +2537,7 @@ bool cmdMixReagents(class Character *character)
 	eventPopKeyHandler();
 
 	if (list_empty(&reagents)) {
-		cmdwin_spush("none!");
+		cmdwin_spush("何もしない！");
 		goto done;
 	}
 
@@ -2562,13 +2566,13 @@ bool cmdMixReagents(class Character *character)
 			break;
 
                 cmdwin_spush(0); /* for the '-' after the quantity */
-		cmdwin_spush("not enough reagents!");
+		cmdwin_spush("秘薬が足りない！");
 		getkey(&dummy, anykey);
 		cmdwin_pop_to_mark();
 	}
 
         cmdwin_push("-");
-	log_begin("Mix: %s - ", spell_name);
+	log_begin("調合する: %s - ", spell_name);
 
 	// For each reagent required by the spell, check if it is in the list
 	// of reagents given by the player. If not then remember this fact. If
@@ -2654,22 +2658,22 @@ bool cmdMixReagents(class Character *character)
 	// If the spell is invalid or the reagents are incorrect then punish
 	// the player.
 	if (!spell) {
-                cmdwin_spush("oops!");
+                cmdwin_spush("おおっと！");
                 player_party->damage(DAMAGE_ACID);
-                log_end("ACID!");
+                log_end("酸だ！");
                 goto done;
 
         } else if (mistake) {
-                cmdwin_spush("ouch!");
+                cmdwin_spush("うわあっ！");
                 player_party->damage(DAMAGE_BOMB);
-                log_end("BOMB!");
+                log_end("爆発！");
                 goto done;
 	}
 
 	// All is well. Add the spell to player inventory.
-        cmdwin_spush("ok");
+        cmdwin_spush("成功");
 	player_party->add(spell->type, quantity);
-        log_end("ok!");
+        log_end("成功！");
 
  done:
 	// In case of cancellation I need to unselect all the reagents.
@@ -2696,16 +2700,16 @@ void look_at_XY(struct place *place, int x, int y, void *unused)
 
         if ( mapTileIsVisible(x, y) ) {
                 if (mapTileLightLevel(x,y) < MIN_XAMINE_LIGHT_LEVEL) {
-                        log_continue("Too dark!");
+                        log_continue("暗すぎる！");
                 } else {
-                        log_continue("You see ");
                         place_describe(place, x, y, PLACE_DESCRIBE_ALL);
+                        log_continue("が見える。");
                 }
         } else if (ShowAllTerrain || XrayVision) {
-                log_continue("You see (via xray) ");
                 place_describe(place, x, y, PLACE_DESCRIBE_TERRAIN);
+                log_continue("が透視できる。");
         } else {
-                log_continue("You can't see!");
+                log_continue("見えない！");
         }
 
         log_end(NULL);
@@ -2714,23 +2718,23 @@ void look_at_XY(struct place *place, int x, int y, void *unused)
 int detailed_examine_XY(struct place *place, int x, int y, void *unused)
 {
 	if (DeveloperMode) {
-			log_begin("At XY=(%d,%d): ", x, y);
+		log_begin("At XY=(%d,%d): ", x, y);
 	} else {
-			log_begin("");
+		log_begin("");
 	}
 
 	if ( mapTileIsVisible(x, y) ) {
-			if (mapTileLightLevel(x,y) < MIN_XAMINE_LIGHT_LEVEL) {
-					log_continue("You can't see!");
-			} else {
-					log_continue("You see:\n");
-					place_examine(place, x, y);
-			}
-	} else if (ShowAllTerrain || XrayVision) {
-			log_continue("You see (via xray):\n");
+		if (mapTileLightLevel(x,y) < MIN_XAMINE_LIGHT_LEVEL) {
+			log_continue("見えない！");
+		} else {
+			log_continue("次のものが見える。\n");
 			place_examine(place, x, y);
+		}
+	} else if (ShowAllTerrain || XrayVision) {
+		log_continue("次のものが透視で見える。\n");
+		place_examine(place, x, y);
 	} else {
-			log_continue("You can't see!");
+		log_continue("見えない！");
 	}
 
 	#if 0
@@ -2776,7 +2780,7 @@ bool cmdXamine(class Object * pc)
         bool ret = true;
 
 	cmdwin_clear();
-	cmdwin_spush("Xamine");
+	cmdwin_spush("調べる");
 
         x = pc->getX();
         y = pc->getY();
@@ -2784,9 +2788,9 @@ bool cmdXamine(class Object * pc)
         log_begin_group();
 
         if (pc)
-                log_msg("%s examines around...", pc->getName());
+                log_msg("%sはあたりを調べた…", pc->getName());
         else
-                log_msg("You examine around...");
+                log_msg("あなたはあたりを調べた…");
 
         look_at_XY(pc->getPlace(), x, y, 0);  // First look at the current tile
 	if (select_target_with_doing(x, y, &x, &y, pc->getVisionRadius(),
@@ -2804,10 +2808,10 @@ const char * name_of_context (void)
         // SAM: Perhaps this function belongs in common.c?
         switch (player_party->getContext()) {
         case CONTEXT_WILDERNESS:
-                return "Party Context";
+                return "全員の状態";
                 break;
         default:
-                return "Character Context";
+                return "個人の状態";
                 break;
         }
 } // name_of_context()
@@ -2834,7 +2838,7 @@ bool cmdAT (class Character * pc)
         else {
 		// Must be party mode. 
 		// Use the player party's location as the origin.
-                who = "The party";
+                who = "全員";
                 place_name = player_party->getPlace()->name;
                 x = player_party->getX();
                 y = player_party->getY();
@@ -2845,27 +2849,25 @@ bool cmdAT (class Character * pc)
         // place_name = player_party->getPlace()->name;
     
         log_begin_group();
-        log_msg("This is %s.", name_of_context() );
-        log_msg("%s is in %s.", who, place_name);
-		if (Place->underground) {
-			log_msg("It is %s, %s of %s in the year %d.",
-                day_name(), week_name(), month_name(), Session->clock.year );
-        }
-		else
-		{
-			log_msg("It is %s on %s, "
-                "%s of %s in the year %d.",
-                vague_time_as_string(), day_name(), 
-                week_name(), month_name(), Session->clock.year );
-		}
+        log_msg("これは%sである。", name_of_context() );
+        log_msg("%sは%sにいる。", who, place_name);
+	if (Place->underground) {
+		log_msg("今は%d年 %s %s %sだ。", 
+                Session->clock.year, month_name(), week_name(), day_name() );
+        } else {
+		log_msg("今は%d年 %s %s "
+                "%sの%sだ。",
+                Session->clock.year, month_name(), week_name(), 
+                day_name(), vague_time_as_string() );
+	}
         // SAM: Is this really interesting though, I wonder?
-        log_msg("%d game turns have passed.", Turn);
+        log_msg("%d回が経過した。", Turn);
 
-        log_msg("The wind is blowing from the %s.",
+        log_msg("風は%sから吹いている。",
                 directionToString(windGetDirection()) );
 
         if (Place->underground) {
-                log_msg("%s is underground, and cannot see the sky.", 
+                log_msg("%sは地下にいて空は見えない。", 
                         who);
         } // underground
         else {
@@ -2875,46 +2877,47 @@ bool cmdAT (class Character * pc)
                 // This message won't be true if you are under 
                 // a roof in a town.  In future there should be 
                 // logic querying the (future) roof-ripping code here.
-                log_msg("%s is beneath the open sky.", who);
+                log_msg("%sは空の見える場所にいる。", who);
 
                 // The kernel no longer has any special knowledge about which
                 // astral body is the sun, so we have to deal with all astral
                 // bodies generically now. I mean, a game may have two or even
                 // more suns. The time runs independently and isn't cued off
                 // the sun.
-                if (is_noon())
-                        log_msg("It is noon.");
-                else if (is_midnight())
-                        log_msg("It is midnight.");
+                if (is_noon()) {
+                        log_msg("日が昇っている。");
+                } else if (is_midnight()) {
+                        log_msg("日は沈んでいる。");
+                }
 
                 // Report on each astral body generically.
                 list_for_each(&Session->sky.bodies, elem) {
                         struct astral_body *body;
                         body = outcast(elem, struct astral_body, list);
                         if (astral_body_is_visible(body->arc)) {
-                                log_begin("%s is up at arc %d", body->name, 
+                                log_begin("%sの高さは%d度", body->name, 
                                         body->arc);
                                 if (body->n_phases > 1) {
                                         char *phase_name = 
                                                 body->phases[body->phase].
                                                 name;
-                                        if (phase_name)
-                                                log_continue(" in its %s "
-                                                             "phase", 
+                                        if (phase_name) {
+                                                log_continue("、%s",
                                                              phase_name);
-                                        else
-                                                log_continue(" in phase %d", 
+                                        } else {
+                                                log_continue("、月相は%d", 
                                                              body->phase);
+                                        }
                                 }
-                                log_end(".");
+                                log_end("だ。");
                         }
                 }
 
         } // open air, under the sky
 
         if (player_party->getVehicle()) {
-                log_msg("%s is %s a %s.", 
-                        who, "using", player_party->getVehicle()->getName() );
+                log_msg("%sは%sに乗っている。", 
+                        who, player_party->getVehicle()->getName() );
                 // SAM:
                 // In future, we shall want GhulScript to specify 
                 // whether one is to be
@@ -2927,7 +2930,7 @@ bool cmdAT (class Character * pc)
                 // SAM: Not true for a party of Gazers or Nixies.
                 // Similar GhulScript for party / character movement mode
                 // descriptions and gerunds?
-                log_msg("%s is on foot.", who);
+                log_msg("%sは歩いている。", who);
         }
 
         log_end_group();
@@ -3020,11 +3023,11 @@ void cmdZoomIn(void)
                         // Standing over a subplace. Try to enter with no
                         // direction, this will prompt the player to provide a
                         // direction.
-                        log_msg("Enter-%s", subplace->name);
+                        log_msg("入る-%s", subplace->name);
                         player_party->try_to_enter_subplace_from_edge(subplace,
                                                                       0, 0);
                 } else {
-                        log_msg("Enter-Use a side entrance!");
+                        log_msg("入る-入り口から入った！");
                 }
 
         } else if (!place_is_passable(player_party->getPlace(),
@@ -3043,14 +3046,14 @@ void cmdZoomIn(void)
                         place_get_terrain(player_party->getPlace(),
                                           player_party->getX(),
                                           player_party->getY() );
-                log_msg("Enter-Cannot zoom-in to %s!", tt->name);
+                log_msg("入る-%sには入れない！", tt->name);
         } else {
                 // If standing on ordinary terrain, zoom in:
                 struct terrain * tt = 
                         place_get_terrain(player_party->getPlace(),
                                           player_party->getX(),
                                           player_party->getY() );
-                log_msg("Enter-%s", tt->name);
+                log_msg("入る-%s", tt->name);
                 run_combat(false, 0, 0, NULL);
         }
 }
@@ -3060,25 +3063,25 @@ bool cmdSave(void)
     bool ret = true;
     class Character *pc;
     if ((pc = cmdAnyPartyMemberEngagedInTask())) {
-        log_msg("Denied - %s engaged in task!", pc->getName());
+        log_msg("拒否 - %sは別のことをしている！", pc->getName());
         cmdwin_spush("busy with tasks!");
         return false;
     }
 
     char *fname = save_game_menu();
     if (!fname) {
-        cmdwin_spush("abort!");
+        cmdwin_spush("中止！");
         return false;
     }
     
-    log_begin("Saving to %s...", fname);
+    log_begin("%sに保存中…", fname);
     if (session_save(fname)) {
-        log_end("^c+rfailed!^c-");
-        cmdwin_spush("failed!");
+        log_end("^c+r失敗！^c-");
+        cmdwin_spush("失敗！");
         ret = false;
     } else {
         cmdwin_spush("ok!");
-        log_end("^c+gok!^c-");
+        log_end("^c+g完了！^c-");
     }
     session_save(fname);
     free(fname);
@@ -3099,17 +3102,17 @@ int ui_get_yes_no(const char *name)
 {
 	int yesno;
 	cmdwin_clear();
-	cmdwin_spush("Reply");
+	cmdwin_spush("返答");
         cmdwin_spush("<y/n>");
 	getkey(&yesno, yesnokey);
 	cmdwin_pop();
 	if (yesno == 'y') {
-		cmdwin_spush("yes");
-		log_msg("^c+%c%s:^c- Yes", CONV_PC_COLOR, name);
+		cmdwin_spush("はい");
+		log_msg("^c+%c%s:^c- はい", CONV_PC_COLOR, name);
                 return 1;
 	} else {
-		cmdwin_spush("no");
-		log_msg("^c+%c%s:^c- No", CONV_PC_COLOR, name);
+		cmdwin_spush("いいえ");
+		log_msg("^c+%c%s:^c- いいえ", CONV_PC_COLOR, name);
                 return 0;
 	}
 }
@@ -3124,6 +3127,9 @@ typedef struct ui_getline_data {
 static int ui_getline_handler(struct KeyHandler *kh, int key, int keymod)
 {
         getline_t *data = (getline_t*)kh->data;
+        char kana_buf[128];
+        int kana_len;
+        int i;
 
 	if (key == CANCEL) {
 		while (data->ptr > data->buf) {
@@ -3132,33 +3138,52 @@ static int ui_getline_handler(struct KeyHandler *kh, int key, int keymod)
 			cmdwin_pop();
 			data->room++;
 		}
+		alpha_to_kana(0, NULL);
 		return 1;
 	}
 
 	if (key == '\n') {
+		alpha_to_kana(0, NULL);
 		return 1;
 	}
 
 	if (key == '\b') {
 		if (data->ptr != data->buf) {
-			data->ptr--;
-			*data->ptr = 0;
-			data->room++;
-			cmdwin_pop();
+			if (*(data->ptr - 1) & 0x80) {
+				data->ptr -= 2;
+				*data->ptr = 0;
+				data->room += 2;
+				cmdwin_pop();
+				cmdwin_pop();
+			} else {
+				data->ptr--;
+				*data->ptr = 0;
+				data->room++;
+				cmdwin_pop();
+			}
 		}
+		alpha_to_kana(0, NULL);
 		return 0;
 	}
 
         if (data->filter
             && data->filter(key)) {
+		alpha_to_kana(0, NULL);
                 return 0;
         }
 
-	if (isprintable(key) 
+	if ((isprintable(key) || (key & 0x80))
             && data->room) {
 		cmdwin_push("%c", key);
 		*data->ptr++ = key;
 		data->room--;
+	}
+
+	kana_len = alpha_to_kana (key, kana_buf);
+	if (kana_len) {
+		for (i = 0; i < kana_len; i++) {
+			ui_getline_handler (kh, kana_buf[i], keymod);
+		}
 	}
 
 	return 0;
@@ -3194,7 +3219,7 @@ int ui_getline_plain(char *buf, int len)
 int ui_getline(char *buf, int len)
 {
         cmdwin_clear();
-        cmdwin_push("Say: ");
+        cmdwin_push("言う: ");
         return ui_getline_plain(buf, len);
 }
 
@@ -3219,8 +3244,8 @@ int ui_buy(struct merchant *merch)
 		sc.selection = NULL;
 
 		cmdwin_clear();
-		cmdwin_spush("Buy");
-                cmdwin_spush("<select/ESC>");
+		cmdwin_spush("買う");
+                cmdwin_spush("<選択/ESC>");
 		eventPushKeyHandler(&kh);
 		eventHandle();
 		eventPopKeyHandler();
@@ -3229,7 +3254,7 @@ int ui_buy(struct merchant *merch)
 		trade = (struct trade_info *) sc.selection;
 
 		if (!trade) {
-			cmdwin_spush("none!");
+			cmdwin_spush("何もしない！");
 			break;
 		}
 
@@ -3243,7 +3268,7 @@ int ui_buy(struct merchant *merch)
 
 		if (player_party->gold < trade->cost) {
 			int dummy;
-			cmdwin_spush("not enough gold! <hit any key>");
+			cmdwin_spush("金貨が足りない！ <キーを押す>");
 			getkey(&dummy, anykey);
 			continue;
 		}
@@ -3255,7 +3280,7 @@ int ui_buy(struct merchant *merch)
                 cmdwin_pop_to_mark();
 
 		if (quantity == 0) {
-			cmdwin_spush("none!");
+			cmdwin_spush("何もしない！");
 			continue;
 		}
 
@@ -3267,9 +3292,9 @@ int ui_buy(struct merchant *merch)
 		// *** trade ***
 
                 class ObjectType *type = (class ObjectType*)trade->data;
-		cmdwin_spush("ok");
-		log_msg("You buy %d %s%s for %d gold\n", quantity,
-			     trade->name, quantity > 1 ? "s" : "", cost);
+		cmdwin_spush("買った");
+		log_msg("あなたは%sを金貨%d枚で%dつ買った。\n", trade->name, 
+			     cost, quantity);
 
 		player_party->gold -= cost;
                 if (type->canBuy()) {
@@ -3341,7 +3366,7 @@ int ui_sell(struct merchant *merch)
 	// Allocate the trade list.
 	trades = new struct trade_info[merch->n_trades];
 	if (!trades) {
-		log_msg("^c+%c%s:^c- I don't need anything.\n", 
+		log_msg("^c+%c%s:^c- それはいらない。\n", 
                         CONV_NPC_COLOR, merch->name);                
 		return 0;
 	}
@@ -3362,8 +3387,8 @@ int ui_sell(struct merchant *merch)
 		sc.selection = NULL;
 
 		cmdwin_clear();
-		cmdwin_spush("Sell");
-                cmdwin_spush("<select or ESC>");
+		cmdwin_spush("売る");
+                cmdwin_spush("<選択/ESC>");
 		eventPushKeyHandler(&kh);
 		eventHandle();
 		eventPopKeyHandler();
@@ -3372,7 +3397,7 @@ int ui_sell(struct merchant *merch)
 		trade = (struct trade_info *) sc.selection;
 
 		if (!trade) {
-			cmdwin_spush("none!");
+			cmdwin_spush("何もしない！");
 			break;
 		}
 
@@ -3392,7 +3417,7 @@ int ui_sell(struct merchant *merch)
                 cmdwin_pop_to_mark();
 
 		if (quantity == 0) {
-			cmdwin_spush("none!");
+			cmdwin_spush("何もしない！");
 			continue;
 		}
 
@@ -3405,9 +3430,8 @@ int ui_sell(struct merchant *merch)
 		foogodRepaint();
 
 		cmdwin_spush("ok");
-		log_msg("You sell %d %s%s for %d gold\n", quantity,
-			     trade->name, quantity > 1 ? "s" : "",
-			     quantity * trade->cost);
+		log_msg("あなたは%sを金貨%d枚で%dつ売った。\n", trade->name,
+			     quantity * trade->cost, quantity);
 
 		// refresh the sell list
 		n_trades = fill_sell_list(merch, trades);
@@ -3449,8 +3473,8 @@ int ui_trade(struct merchant *merch)
 
 	for (;;) {
 		cmdwin_clear();
-		cmdwin_spush("Buy or sell");
-                cmdwin_spush("<B/S/ESC>");
+		cmdwin_spush("買う/売る？");
+                cmdwin_spush("<B:買う/S:売る/ESC>");
 		getkey(&key, get_buy_or_sell_key);
 
 		switch (key) {
@@ -3469,38 +3493,42 @@ int ui_trade(struct merchant *merch)
 }
 
 static const char *cmd_help_text =
-"Use the arrow keys to indicate direction.\n"
-"Use the ESC key to cancel commands.\n"
-"Use the first letter to start a command.\n"
+"方向は矢印キー(テンキー)で示す。\n"
+"ESCを押すと命令を中断する。\n"
+"命令は次の通りである。\n"
 "\n"
-"A)ttack something\n"
-"B)oard a ship or other vehicle\n"
-"C)ast a spell\n"
-"E)nter a town or dungeon\n"
-"F)ire a ship's cannon or other ordnance\n"
-"G)et something on the ground\n"
-"H)andle a lever or mechanism\n"
-"K)amp in a bed or the wilderness\n"
-"L)oiter for a while\n"
-"N)ew-Order (rearrange party order)\n"
-"O)pen a chest, door or other closed object\n"
-"Q)uit and save the game\n"
-"R)eady weapons or armor\n"
-"S)earch for hidden stuff\n"
-"T)alk to somebody\n"
-"U)se an item in inventory\n"
-"Z)tats (show party status)\n"
-"X)amine around\n"
-"@)AT (info about place & time)\n"
-"<space> (pass a turn)\n"
-"CTRL-Q)uit without saving\n"
-"CTRL-S)ave without quitting\n"
-"CTRL-R)eload the last saved game\n"
+"A)何かを攻撃する\n"
+"B)船などに乗る\n"
+"C)呪文を唱える\n"
+"E)町や洞窟に入る\n"
+"F)船の大砲などで砲撃する\n"
+"G)置かれたものを取る\n"
+"H)レバーや機械を操作する\n"
+"K)ベッドや荒野で休息を取る\n"
+"L)しばらくうろつく\n"
+"N)順序を変更する\n"
+"O)箱や扉などを開く\n"
+"Q)ゲームを終了する\n"
+"R)武器や防具を装備する\n"
+"S)隠されたものを探す\n"
+"T)誰かと話す\n"
+"U)持ち物を使う\n"
+#ifdef USE_SKILLS
+"Y)能力を使う\n"
+#endif
+"Z)状態を表示する\n"
+"X)あたりを調べる\n"
+"@)場所や時間について表示する\n"
+"<space> 何もしない\n"
+"CTRL-Q)保存せずゲームを終了する\n"
+"CTRL-S)終了せずゲームを保存する\n"
+"CTRL-R)最後に保存した状態を読み込む\n"
+"会話中に<Tab>アルファベット・ローマ字の切替\n"
 "\n"
-"When talking to people, enter a keyword.\n"
-"Most people reply to NAME, JOB, TRADE and\n"
-"JOIN. Their replies will give you hints\n"
-"about more keywords.\n"
+"会話中はキーワードを入力する。多くの人物は、\n"
+"名前、仕事、取引、仲間に対して反応する。こた\n"
+"えには更なるキーワードの手がかりが含まれてい\n"
+"ることがある。\n"
 ;
 
 void cmdHelp(void)
@@ -3509,7 +3537,7 @@ void cmdHelp(void)
 
         foogodSetHintText(PAGER_HINT);
         foogodSetMode(FOOGOD_HINT);
-        statusSetPageText("Commands", cmd_help_text);
+        statusSetPageText("命令", cmd_help_text);
         statusSetMode(Page);
 
         kh.fx = scroller;
@@ -3527,32 +3555,32 @@ void ui_name_vehicle(class Vehicle *vehicle)
         int yesno;
         char buf[64];
 
-        log_begin("Do you want to name your ");
+        log_begin("あなたの");
         vehicle->describe();
-        log_end("?");
+        log_end("に名前をつけるか？");
+        cmdwin_spush("名づける");
 
-        cmdwin_spush("Name");
         cmdwin_spush("<y/n>");
         getkey(&yesno, yesnokey);
         cmdwin_pop();
         cmdwin_pop();
 
         if (yesno == 'n') {
-                cmdwin_spush("no!");
-                log_msg("It's likely to be stolen!");
+                cmdwin_spush("いいえ！");
+                log_msg("まるで盗んだもののようだ！");
                 return;
         }
 
         if (!ui_getline(buf, sizeof(buf))) {
-                log_msg("It's likely to be stolen!");
+                log_msg("まるで盗んだもののようだ！");
                 return;
         }
 
         vehicle->setName(buf);
 
-        log_begin("You christen ");
+        log_begin("あなたは");
         vehicle->describe();
-        log_end(".");
+        log_end("と名づけた。");
 }
 
 void cmdSettings(void)
@@ -3572,10 +3600,10 @@ void cmdDrop(class Character *actor)
         assert(actor);
 
         cmdwin_clear();
-        cmdwin_spush("Drop");
+        cmdwin_spush("置く");
 
         omode = statusGetMode();
-        statusBrowseContainer(actor->getInventoryContainer(), "Drop");
+        statusBrowseContainer(actor->getInventoryContainer(), "置く");
         ie = ui_select_item();
         statusSetMode(omode);
 
@@ -3589,7 +3617,7 @@ void cmdDrop(class Character *actor)
         /* Don't drop quest items in temporary places! */
         if (place_is_wilderness_combat(actor->getPlace())
             && ie->type->isQuestItem()) {
-                log_msg("%s seems important, it might get lost here!", 
+                log_msg("%sは重要そうだ。ここに置くと失うに違いない！",
                         ie->type->getName());
                 return;
         }
@@ -3633,11 +3661,11 @@ void cmdDrop(class Character *actor)
       	                NULL);
 	        actor->takeOut(ie->type, quantity);
 	        actor->runHook(OBJ_HOOK_DROP_DONE, "pd", ie->type, quantity);
-	        log_msg("%s wouldnt fit!", ie->type->getName());
+                log_msg("%sは合わない！", ie->type->getName());
 		 }
 		 else
 		 {
-			 log_msg("Couldnt drop %s!", ie->type->getName());
+		         log_msg("%sを置けない！", ie->type->getName());
 		 }
         /* remove from party inventory */
         actor->decActionPoints(kern_intvar_get("AP_COST:drop_item"));
@@ -3663,7 +3691,7 @@ static const void *cmd_select_generic()
 	kh.data = &sc;
 
 	eventPushKeyHandler(&kh);
-	cmdwin_push("<select>");
+	cmdwin_push("<選択>");
 	eventHandle();
 	cmdwin_pop();
 	eventPopKeyHandler();
@@ -3701,16 +3729,16 @@ static class Character *cmd_front_end(class Character *pc, const char *cmdstr)
 
         /* dead actor? */
         if (pc->isDead()) {
-                log_msg("%s - %s is too dead!", cmdstr, pc->getName());
-                cmdwin_push("can't!");
+                log_msg("%s - %sは死んでいる！", cmdstr, pc->getName());
+                cmdwin_push("できない！");
                 return 0;
         }
 
         /* sleeping actor? */
         if (pc->isAsleep()) {
-                log_msg("%s - %s rolls over and snores!", cmdstr, 
+                log_msg("%s - %sはひっくり返っていびきをかいている！", cmdstr, 
                         pc->getName());
-                cmdwin_push("can't!");
+                cmdwin_push("できない！");
                 return 0;
         }
 
@@ -3791,7 +3819,7 @@ static int cmd_paint_skill(struct stat_super_generic_data *self,
 
         /* level, ap, mp */
         screenPrint(rect, SP_RIGHTJUSTIFIED, 
-                    "^c+GLvl:^c+y%d^c- MP:^c+b%d^c- AP:^c+r%d^c-^c-",
+                    "^c+Gレベル:^c+y%d^c- 魔力:^c+b%d^c- 行動:^c+r%d^c-^c-",
                     ssent->level, 
                     skill->mp, 
                     skill->ap);
@@ -3903,7 +3931,7 @@ static struct skill_set_entry *cmd_select_skill(class Character *pc)
         /* setup the status browser data */
         memset(&data, 0, sizeof(data));
         cmd_build_skill_list(&data.list, pc);
-        data.title = "Yuse";
+        data.title = "能力";
         data.paint = cmd_paint_skill;
         data.unref = cmd_skill_list_unref;
 
@@ -3920,7 +3948,7 @@ static struct skill_set_entry *cmd_select_skill(class Character *pc)
                 cmdwin_push(ssent->skill->name);
         } else {
                 ssent = 0;
-                cmdwin_push("none");
+                cmdwin_push("何もしない");
         }
 
         /* restore browser status mode */
@@ -3938,7 +3966,7 @@ void cmdYuse(class Character *actor)
         int cant = 0, result = 0, yused = 0;
 
         /* select/verify the actor */
-        if (!(actor = cmd_front_end(actor, "Yuse"))) {
+        if (!(actor = cmd_front_end(actor, "能力"))) {
                 return;
         }
 
@@ -3953,19 +3981,19 @@ void cmdYuse(class Character *actor)
         if (! skill->wilderness_ok
             && place_is_wilderness(actor->getPlace())) {
                 cant = 1;
-                log_msg("Not in the wilderness!");
+                log_msg("荒野では使えない！");
         }
 
         /* check level */
         if (actor->getLevel() < ssent->level) {
                 cant = 1;
-                log_msg("Must be level %d!", ssent->level);
+                log_msg("レベル%d以上必要だ！", ssent->level);
         }
 
         /* check mana */
         if (actor->getMana() < skill->mp) {
                 cant = 1;
-                log_msg("Not enough mana!");
+                log_msg("魔力が足りない！");
         }
 
         /* check tools */
@@ -3976,7 +4004,7 @@ void cmdYuse(class Character *actor)
                         struct inv_entry *ie=player_party->inventory->
                                 search(tool);
                         if (!ie || !ie->count) {
-                                log_msg("Need %s!", tool->getName());
+                                log_msg("%sが必要だ！", tool->getName());
                                 cant = 1;
                         }
                 }
@@ -3995,7 +4023,7 @@ void cmdYuse(class Character *actor)
                         ie = player_party->inventory->search(objtype);
                         if (!ie || ie->count < mat->quantity) {
                                 cant = 1;
-                                log_msg("Need %d %s!", mat->quantity, 
+                                log_msg("%dつの%sが必要だ！", mat->quantity, 
                                         objtype->getName());
                         }
                 }
@@ -4009,8 +4037,8 @@ void cmdYuse(class Character *actor)
 
         /* cant? */
         if (cant) {
-                cmdwin_push("failed!");
-                log_end("^c+rFailed!^c-");
+                cmdwin_push("失敗！");
+                log_end("^c+r失敗！^c-");
                 return;
         }
 
@@ -4052,7 +4080,7 @@ bool cmdSetSoloMode(int party_member_index)
         ) {
 
         if (solo_member->engagedInTask()) {            
-            log_msg("%s is engaged in %s, abort?", solo_member->getName(), solo_member->getTaskName());
+            log_msg("%sは%sしている。中断するか？", solo_member->getName(), solo_member->getTaskName());
             if (! ui_get_yes_no(solo_member->getName())) {
                 return false;
             }
@@ -4066,13 +4094,13 @@ bool cmdSetSoloMode(int party_member_index)
 
 bool cmdToggleFollowMode(void)
 {
-    log_begin("Follow mode ");
+    log_begin("追跡");
     if (player_party->getPartyControlMode() == PARTY_CONTROL_FOLLOW) {
-        log_end("OFF");
+        log_end("しない。");
         player_party->enableRoundRobinMode();
         return false;
     } else {
-        log_end("ON");
+        log_end("する。");
         player_party->enableFollowMode();
         return true;
     }   

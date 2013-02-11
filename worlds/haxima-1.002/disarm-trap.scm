@@ -27,7 +27,7 @@
            (kern-char-task-end kchar)
            )
           ((not (handles? ktarg 'rm-traps)) 
-           (kern-log-msg "Traps can't be removed!")
+           (kern-log-msg "この罠は外せない！")
            (kern-char-task-abort kchar)
            )
           (else
@@ -54,7 +54,7 @@
                            (> (+ roll bonus) dc)
                            )
                           ;; Success - disarm the trap
-                          (kern-log-msg (kern-obj-get-name kchar) " ^c+gdisarms^c- a " (trap-name trap) " trap!")
+                          (kern-log-msg (kern-obj-get-name kchar) "は" (trap-name trap) "の罠を^c+g外した^c-！")
                           (trap-set-tripped! trap #t)
                           )
                       (else
@@ -85,7 +85,7 @@
              )
             (else
              ;; Start a task to disarm the traps
-             (kern-char-task-begin kactor "disarming a trap" 'disarm-task ktarg)
+             (kern-char-task-begin kactor "罠の解除" 'disarm-task ktarg)
              result-ok
              ))))
 

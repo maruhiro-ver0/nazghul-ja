@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In the Poor House (at least until such time as she joins the Wanderer).
+;; 救貧院(迷い人の仲間になるまで)
 ;;----------------------------------------------------------------------------
 (define amy-bed poorh-bed2)
 (define amy-mealplace poorh-sup2)
@@ -33,58 +33,57 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Amy is a female tinker, fallen upon hard times.
-;; She currently dwells in the Poor House.
-;; Amy is a potential party member.
+;; エイミーは職人の女性だが、職を失っている。
+;; 彼女は救貧院にいる。
+;; エイミーは仲間にすることができる。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (amy-hail knpc kpc)
-  (meet "You meet a practical-looking tinker woman.")
-  (say knpc "Hello.")
+  (meet "あなたは経験豊かそうな職人の女性と会った。")
+  (say knpc "こんにちは。")
   )
 
 (define (amy-name knpc kpc)
-  (say knpc "You can call me Amy.")
+  (say knpc "エイミーと呼んでください。")
   )
 
 (define (amy-join knpc kpc)
   (if (is-player-party-member? knpc)
-      (say knpc "I already joined you!")
+      (say knpc "もう仲間に加わっています！")
       (begin
-        (say knpc "I thought you'd never ask!")
+        (say knpc "そう言ってくれるとは思ってなかったわ！")
         (join-player knpc)
         (kern-conv-end)
         )))
 
 (define (amy-job knpc kpc)
-  (say knpc "Well, I'm a tinker by trade, "
-       "but I haven't had much luck finding work lately.")
+  (say knpc "ええ…、修理屋を生業としているのだけれど、"
+       "最近はあまり仕事がないのよ。")
   )
 
 (define (amy-bye knpc kpc)
-  (say knpc "So long.")
+  (say knpc "さようなら。")
   )
 
 (define (amy-mean knpc kpc)
-  (say knpc "He's great. "
-       "I don't know where I'd go if it weren't for the poor house. "
-       "He doesn't even stare at my boobs all that much.")
+  (say knpc "彼はすばらしい人です。"
+       "この救貧院にいなければ、私はどうなっていたかわかりません。"
+       "私の胸をジロジロ見ることもないですし。")
   )
 
 (define (amy-tink knpc kpc)
-  (say knpc "A tinker is a wandering wright. "
-       "We travel from town to town, fixing things up for people.")
+  (say knpc "修理屋は渡り歩く職人です。"
+       "町から町へと旅し、色々な人のものを修理します。")
   )
 
 (define (amy-luck knpc kpc)
-  (say knpc "People are nervous of strangers now, "
-       "what with the Accursed and all.")
+  (say knpc "人々は見知らぬ者に神経質になっています。"
+       "みんな呪われた者のせいです。")
   )
   
 (define (amy-accu knpc kpc)
-  (say knpc "The Accursed are a secret cult who "
-       "follow evil ways.")
+  (say knpc "呪われた者というのは悪を崇拝する秘密の邪教の信者たちです。")
   )
 
 ;; Quest-related
@@ -110,7 +109,7 @@
   (bind 
    (kern-mk-char 
     'ch_amy           ; tag
-    "Amy"             ; name
+    "エイミー"             ; name
     amy-species         ; species
     amy-occ              ; occ
     s_companion_tinker ; sprite

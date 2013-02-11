@@ -13,7 +13,7 @@
                             (hidden-quan hidden))))
     (kern-obj-put-at kobj
                      (kern-obj-get-location khidden))
-    (kern-log-msg "You find something!")
+    (kern-log-msg "何かを見つけた！")
     (kern-obj-remove khidden)))
 
 (define hidden-ifc

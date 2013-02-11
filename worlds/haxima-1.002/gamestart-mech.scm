@@ -2,13 +2,13 @@
   
 (define (get-player-name kbeing)
       (begin
-        (kern-log-msg "Speak your name, Seeker")
+        (kern-log-msg "名乗れ、探求者よ。")
 		(let
       		((reply (kern-conv-get-string kbeing)))
             (if (equal? reply "")
 				nil
             	(begin
-            		(kern-log-msg (string-append "Hail, " reply "!"))
+            		(kern-log-msg (string-append "ようこそ、" reply "！"))
                  	(kern-being-set-name kbeing reply)
 					(kern-map-flash 1)
                )
@@ -44,7 +44,7 @@
 (define (gamestart-statue-speak kbeing speaker messageid)
 	(if (is-player-party-member? kbeing)
 		(begin
-			(kern-log-msg "A statue suddenly speaks to you!")
+			(kern-log-msg "突然、像が話しかけてきた！")
 			(kern-conv-begin (eval speaker))
 			))
 			#f
@@ -134,9 +134,9 @@
 		(kern-char-set-dexterity    kbeing (/ (- (+ 12 (list-ref rdata 0)) (list-ref rdata 2)) 2))
 		(kern-char-set-intelligence kbeing (/ (+       (list-ref rdata 1)  (list-ref rdata 2)) 2))
 
-		(kern-log-msg "Strength: "     (number->string (kern-char-get-strength     kbeing)) ", "
-			      "Dexterity: "    (number->string (kern-char-get-dexterity    kbeing)) ", "
-			      "Intelligence: " (number->string (kern-char-get-intelligence kbeing))
+		(kern-log-msg "腕力: "     (number->string (kern-char-get-strength     kbeing)) "、"
+			      "敏捷: "    (number->string (kern-char-get-dexterity    kbeing)) "、"
+			      "知能: " (number->string (kern-char-get-intelligence kbeing))
 			      )
 
 	))
@@ -149,7 +149,7 @@
 	#f
 	)
 	
-(mk-obj-type 't_start_portal "path forward" s_blackgate_full layer-mechanism step-trig-ifc)	
+(mk-obj-type 't_start_portal "進むべき道" s_blackgate_full layer-mechanism step-trig-ifc)	
 
 (define (mk-start-portal proc-tag . args)
   (bind (kern-mk-obj t_start_portal 1)
@@ -158,7 +158,7 @@
 (define (start-cutscene kplayer startgate)
 	(kern-char-set-sleep ch_wanderer #t)
 	(kern-log-enable #t)
-	(kern-log-msg "A dark gate rises in a quiet clearing...")
+	(kern-log-msg "暗い門が何もない所から浮かび上がり…")
 	(moongate-animate black-gate blackgate-stages)
 	(kern-sleep 2000)	
 	(kern-log-enable #f)
@@ -177,20 +177,20 @@
   (kern-obj-relocate kplayer (list p_moongate_clearing 11 12) (mk-start-cutscene kplayer (get-gamestart-data kplayer 3)))
 
   (kern-log-enable #t)
-  (kern-log-msg "Then closes without a trace...")
+  (kern-log-msg "そして跡形もなく消え去った…")
   (moongate-animate black-gate (reverse blackgate-stages))
   (kern-sleep 1000)
   
-  (kern-log-msg "You lie dreaming for a while, of another life...")
+  (kern-log-msg "しばらくの間、別の人生の夢を見ていたようだ…")
   (kern-sleep 2000)
 
   (kern-log-enable #f)
   (kern-char-set-sleep ch_wanderer #f)
   (kern-player-set-follow-mode)
   (kern-log-enable #t)  
-  (kern-log-msg "...then awaken to a strange new world.")
-  (kern-log-msg "To the southwest you see a cave.")
+  (kern-log-msg "…目覚めるとそこは奇妙な新しい世界だった。")
+  (kern-log-msg "南西に洞窟が見える。")
   (quest-remove (quest-data-get 'questentry-charcreate))
   (quest-assign (quest-data-get 'questentry-whereami))
   )
-	
+

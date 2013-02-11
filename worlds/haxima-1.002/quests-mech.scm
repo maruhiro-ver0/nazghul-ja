@@ -5,7 +5,7 @@
 
 (define (quest-complete quest)
 	(if (and (quest-assigned? quest) use-quest-pane)
-		(kern-log-msg "^c+mQuest completed:^c-\n^c+m" (qst-title quest) "^c-")
+		(kern-log-msg "^c+m肆副を窗位した:^c-\n^c+m" (qst-title quest) "^c-")
 		)
 	(qst-complete! quest)
 	)
@@ -30,8 +30,8 @@
 ;; causes a notification on assignment
 (define (quest-assign-notify quest target)
 	(let ((notifytext (if (qst-complete? quest)
-						"^c+mQuest completed:^c-\n^c+m"
-						"^c+mNew quest:^c-\n^c+m"
+						"^c+m肆副を窗位した:^c-\n^c+m"
+						"^c+m糠しい肆副:^c-\n^c+m"
 						)))
 		(if use-quest-pane
 			(kern-log-msg notifytext (qst-title quest) "^c-")
@@ -177,7 +177,7 @@
   (println "quest-notify")
 	(lambda (quest) 
 		(if (and (quest-assigned? quest) use-quest-pane)
-			(kern-log-msg "^c+mQuest updated:^c-\n^c+m" (qst-title quest) "^c-")
+			(kern-log-msg "^c+m肆副が渴んだ:^c-\n^c+m" (qst-title quest) "^c-")
 			)
 		(if (not (null? subfunction))
 			(subfunction quest))

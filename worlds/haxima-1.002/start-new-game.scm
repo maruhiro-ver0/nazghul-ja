@@ -6,11 +6,11 @@
 ;; load the file, too.
 ;;----------------------------------------------------------------------------
 (load "naz.scm")
-(kern-script-version "0.7.0")
+(kern-script-version "0.7.1")
 
 ;; Setup progress bar for loading. I arrived at the number by printing the
 ;; current number of steps in src/foogod.c:foogod_progress_bar_finish().
-(kern-progress-bar-start "Loading" 205)
+(kern-progress-bar-start "読み込み中" 205)
 
 ;; Wrap the original definition of (load ...) with one that advances the
 ;; progress bar.
@@ -120,7 +120,7 @@
 ;;----------------------------------------------------------------------------
  (kern-mk-char 
   'ch_wanderer
-  "The Wanderer"        ; name
+  "迷い人"              ; name
   sp_human              ; species
   oc_wanderer           ; occ
   s_wanderer    ; sprite
@@ -201,7 +201,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-astral-body
  'sun              ; tag
- "Fyer (the sun)"  ; name
+ "フィア(太陽)"    ; name
  1                 ; relative astronomical distance 
  1                 ; minutes per phase (n/a for sun)
  (/ (* 24 60) 360) ; minutes per degree
@@ -222,7 +222,7 @@
 ;; with respect to phase vs sun position
 ;;----------------------------------------------------------------------------
 (mk-moon 'lumis  ; tag
-         "Lumis" ; name
+         "ルミス" ; name
          5       ; hours per phase
          60      ; hours per revolution
          22      ; initial arc
@@ -244,7 +244,7 @@
 ;; with respect to phase vs sun position
 ;;----------------------------------------------------------------------------
 (mk-moon 'ord    ; tag
-         "Ord"   ; name
+         "オード" ; name
          9       ; hours per phase
          36      ; hours per revolution
          67     ; initial arc
@@ -296,7 +296,7 @@
 ;;----------------------------------------------------------------------------
 (define (start-scene kplayer)
 
-  (kern-log-msg "A dark gate rises in a quiet clearing...")
+  (kern-log-msg "暗い門が何もない所から浮かび上がり…")
   (moongate-animate black-gate blackgate-stages)
   (kern-sleep 2000)
 
@@ -305,19 +305,19 @@
   (kern-obj-put-at kplayer (list p_moongate_clearing 11 12))
 
   (kern-log-enable #t)
-  (kern-log-msg "Then closes without a trace...")
+  (kern-log-msg "そして跡形もなく消え去った…")
   (moongate-animate black-gate (reverse blackgate-stages))
   (kern-sleep 1000)
   
-  (kern-log-msg "You lie dreaming for a while, of another life...")
+  (kern-log-msg "しばらくの間、別の人生の夢を見ていたようだ…")
   (kern-sleep 2000)
 
   (kern-log-enable #f)
   (kern-char-set-sleep ch_wanderer #f)
   (kern-player-set-follow-mode)
   (kern-log-enable #t)  
-  (kern-log-msg "...then awaken to a strange new world.")
-  (kern-log-msg "To the southwest you see a cave.")
+  (kern-log-msg "…目覚めるとそこは奇妙な新しい世界だった。")
+  (kern-log-msg "南西に洞窟が見える。")
   )
 
 (define (simple-start kplayer)

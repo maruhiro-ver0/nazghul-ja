@@ -1,5 +1,5 @@
 (mk-dungeon-room
- 'p_forsaken_prison "Forsaken Prison"
+ 'p_forsaken_prison "見捨てられた収容所"
  (list
 	  "rn rn rn rn xx xx xx xx xx xx xx xx xx xx xx rn rn rn rn "
 	  "rn rn rn rn xx ,, ,, xx ,, ,, ,, xx ,, ,, xx rn rn rn rn "

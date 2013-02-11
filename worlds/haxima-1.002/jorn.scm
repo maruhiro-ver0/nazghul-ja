@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Green Tower.
+;; 緑の塔
 ;;----------------------------------------------------------------------------
 (define jorn-bed gt-jorn-bed)
 (define jorn-mealplace gt-ws-tbl1)
@@ -35,56 +35,53 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Jorn is a bravo and former pirate, currently living in Green Tower.
-;; He was once a member of the crew of the Merciful Death, 
-;; and is sought for vengeance by the ghost Ghertie.
+;; ジョーンは元海賊の悪党で、今は緑の塔にいる。
+;; 彼はかつて慈悲深い死号の乗組員で、亡霊となったガーティ船長に復讐のため追わ
+;; れている。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (jorn-hail knpc kpc)
-  (say knpc "[You meet a rough-looking, surly man] What do you want?"))
+  (say knpc "［あなたは乱暴そうな不機嫌な男と会った。］何だ？"))
 
 (define (jorn-default knpc kpc)
-  (say knpc "Go bother someone else."))
+  (say knpc "他を当たってくれ。"))
 
 (define (jorn-name knpc kpc)
-  (say knpc "I'm Jorn. Heard of me?")
+  (say knpc "俺はジョーンだ。聞いたことあるか？")
    (quest-data-update 'questentry-ghertie 'jorn-loc 1)
   (if (yes? kpc)
-      (say knpc "Good, then you've been warned.")
-      (say knpc "Too bad. Don't make me make an example out of you.")))
+      (say knpc "そりゃいい。警告されただろう？")
+      (say knpc "お気の毒に。怪我したくないだろう？")))
 
 (define (jorn-join knpc kpc)
-  (say knpc "[He laughs coarsely]"))
+  (say knpc "［彼は冷ややかに笑った。］"))
 
 (define (jorn-job knpc kpc)
-  (say knpc "None of your business."))
+  (say knpc "あんたには関係ないね。"))
 
 (define (jorn-bye knpc kpc)
-  (say knpc "[He ignores your departure]"))
+  (say knpc "［彼はあなたを無視した。］"))
 
 
 ;; Town & Townspeople
 
 ;; Quest-related
 (define (jorn-pira knpc kpc)
-  (say knpc "You're starting to get on my nerves."))
+  (say knpc "癪にさわる奴だな。"))
 
 (define (jorn-ring knpc kpc)
       (quest-data-update 'questentry-ghertie 'jorn-loc 1)
-        (say knpc "[He gives you a cold look] What of it? Do you want it?")
+        (say knpc "［彼は冷たい目であなたを見た。］なに？これが欲しいのか？")
         (if (no? kpc)
-            (say knpc "Then quit staring at it.")
+            (say knpc "なら黙ってろ。")
             (begin
-              (say knpc "Well, you're going to have to cut it off my finger "
-                   "to get it. What do you think of that? Are you ready to "
-                   "try and cut it off my finger?")
+              (say knpc "ならばこの指を切らねばならんな。"
+                   "どうだ？切る準備はできたか？")
               (if (no? kpc)
-                  (say knpc "[He sneers] I didn't think so.")
+                  (say knpc "［彼はあざ笑った。］そうは思わないね。")
                   (begin
-                    (say knpc "[With a roar, too fast for you to see, "
-                         "he draws his sword and thrusts at you in the same "
-                         "motion!]")
+                    (say knpc "［叫び声を上げると、彼は見えないほどの速さで剣を抜き、あなたと同じように切りつけてきた！］")
                     (kern-being-set-base-faction knpc faction-outlaw)
                     (kern-conv-end))))))
 
@@ -111,7 +108,7 @@
 	(let ((knpc
 		(kern-mk-char 
 			'ch_jorn           ; tag
-			"Jorn"             ; name
+			"ジョーン"         ; name
 			jorn-species     ; species
 			jorn-occ         ; occ
 			s_brigand        ; sprite

@@ -7,6 +7,7 @@
  ;; These are the letters used by the console, etc, in the UI. The character
  ;; sprites need to be arranged in a specific order in this image.
  "ascii-image-filename"  "charset.png"
+ "kanji-image-filename"  "kanji.png"
 
  ;; This is the cursor prompt used by the command window in the UI. It should
  ;; have four animation frames.

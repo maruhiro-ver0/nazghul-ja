@@ -5,7 +5,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Oparine.
+;; オパーリン
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_henry
                (list 0  0  bilge-water-bed     "sleeping")
@@ -21,99 +21,96 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Henry is a one-handed tavern-keeper, doing trade in Oparine.
-;; He was once a mighty mariner.
+;; ヘンリーはオパーリンの片手の酒場の主で、取り引きできる。
+;; 彼はかつて屈強な船乗りであった。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (henry-hail knpc kpc)
-  (say knpc "[You meet a cheery man with a hook for one hand] "
-       "Welcome, matey!"))
+  (say knpc "［あなたは陽気な、片手が鉤の男と会った。］"
+       "よお、相棒！"))
 
 (define (henry-default knpc kpc)
-  (say knpc "Ye be askin' the wrong salt about that!"))
+  (say knpc "悪い塩に聞いているようなもんだ！"))
 
 (define (henry-name knpc kpc)
-  (say knpc "I's Henry! Henry the barkeep."))
+  (say knpc "オレはヘンリー！酒場のヘンリーだ。"))
 
 (define (henry-join knpc kpc)
-  (say knpc "I'd join ye in a 'eartbeat, lad, but oo's goin' to keep the "
-       "tankards full 'round here if I be goin'? 'Twouldn't be right!"))
+  (say knpc "心が踊るな、若いの。"
+       "だが、オレが出て行ったら誰がここで器を満たすんだ？ムリだな！"))
 
 (define (henry-job knpc kpc)
-  (say knpc "Why I's a minister! I fills the mugs 'ith 'oly sacraments!"))
+  (say knpc "なぜオレが牧師になったか！それはこの器を聖餐(せいさん)で満たすためだ！"))
 
 (define (henry-bye knpc kpc)
-  (say knpc "Keep a weather eye!"))
+  (say knpc "天気に注意しろよ！"))
 
 (define henry-catalog
   (list
-   (list t_food 5 "My famous clam chowder will warm you to your toes.")
-   (list t_beer 5 "Aye, drink and be merry, fer tomorro' mornin' you'll be wishin' you were dead!")
-   (list t_wine 7 "I keep some o' the fancy-shmancy stuff fer the occasional gen'leman.")
+   (list t_food 5 "名物のクラムチャウダーは足まで温かくなるぞ。")
+   (list t_beer 5 "ああ、飲んで楽しもう。たとえ明日の朝に死ぬとしても！")
+   (list t_wine 7 "突然、紳士様が来たときのために優雅なモノも用意している。")
    ))
 
 (define henry-merch-msgs
-  (list "I'll serve ye when my hangover's gone."
-        "Let the good times roll!"
-        "I've no interest in used food or drink."
-        "Now we're talkin'!"
-        "Don't drink and sail!"
-        "If yer just lookin' for someplace to loiter, there's a dock outside."
-        "I suppose I can make stew from this."
-        "Good. Fine."
-        "Come back when you need a refill!"
-        "If yer just lookin' for someplace to loiter, there's a dock outside."
+  (list "二日酔いがおさまったら何か出そう。"
+        "陽気にいこう！"
+        "食べかけや飲みかけはいらん。"
+        "今話している！"
+        "飲んだら船に乗るな！"
+        "ただブラブラしたいだけなら船着場がいいだろう。"
+        "これでシチューができるな。"
+        "まあいい。"
+        "腹が減ったら戻ってきな！"
+        "ただブラブラしたいだけなら船着場がいいだろう。"
         ))
 
 ;; Trade...
 (define (henry-buy knpc kpc) (conv-trade knpc kpc "buy" henry-merch-msgs henry-catalog))
-(define (henry-sell knpc kpc) (say knpc "I've no use for solicitors."))
+(define (henry-sell knpc kpc) (say knpc "押し売りはお断りだ。"))
 
 ;; Hook...
 (define (henry-hook knpc kpc)
-  (say knpc "Oy, lost me arm, me did, fightin' fearsome monsters of "
-       "the deep."))
+  (say knpc "おお、手はなくなっちまった。深海の恐ろしい怪物と戦ったからよ！"))
 
 (define (henry-mons knpc kpc)
-  (say knpc "The kraken took me arm, snapped it right off 'ith 'is nasty "
-       "beak, 'e did! The kraken won't shoot from afar like the cowardly "
-       "sea serpent. No, 'e likes to munch right through the decks and get "
-       "in snugly!"))
+  (say knpc "クラーケンはオレの腕をあっと言う間に汚ねえクチバシでもぎ取った！"
+       "ヤツは勇気のねえ海ヘビのように遠くからは撃ってこなかった。"
+       "船にぴったりと吸い付いて、甲板を食い破ったんだ！"))
 
 (define (henry-serp knpc kpc)
-  (say knpc "The sea serpent can crush a ship 'ith its coils, "
-       "but it's a craven beast, and prefers to spit fireballs from afar."))
+  (say knpc "海ヘビが巻きついて船を壊すことはある。"
+       "だが、ヤツらは臆病で、遠くから火の玉を吐くのを好む。"))
 
 ;; Townspeople...
 (define (henry-opar knpc kpc)
-  (say knpc "It's a fair enough place."))
+  (say knpc "ここはいい所だ。"))
 
 (define (henry-gher knpc kpc)
-  (say knpc "So ye've 'eard the legend o' Ghastly Ghertie! "
-       "If ye don't mind a bit o' unsolicited advice from an old seabird, "
-       "steer clear o' ghosts! 'ungry they is!")
+  (say knpc "恐怖のガーティーの伝説を聞いたんだな！"
+       "古い海鳥が尋ねられてもいない警告を1つしておこう。"
+       "亡霊を避けよ！ヤツらは怒りに満ちている！")
 	(quest-data-assign-once 'questentry-ghertie))
 
 (define (henry-ghos knpc kpc)
-  (say knpc "The sea is full of the dead, and Ghertie did her share o' "
-       "puttin' 'em there. I've seen nights on full moons where they rise "
-       "up an' prowl the waves like cats! Dreadful is the dead, "
-       "an' Henry's in no 'urry to be joinin' 'em!")
+  (say knpc "海は死人でいっぱいだ。そしてその内の何人かはガーティーによるものだ。"
+       "満月の夜、ヤツらが猫のように音もなく獲物を探すのを見たことがある！"
+       "恐るべき者は死んだ。そしてヘンリーの宿に居座った！")
 	(quest-data-assign-once 'questentry-ghertie))
 
 (define (henry-alch knpc kpc)
-  (say knpc "Aye, 'e's a queer one."))
+  (say knpc "ああ、おかしなヤツだ。"))
 
 (define (henry-bart knpc kpc)
-  (say knpc "[loudly] Bart's the finest shipwright on the Peninsula! "
-       "[leaning in closer and more softly] And the only shipwright, too!"))
+  (say knpc "［大声で］バートはこの半島で最高の造船職人だ！"
+       "［寄りかかり、少し小さな声で］そして唯一の造船職人でもある！"))
 
 (define (henry-seaw knpc kpc)
-  (say knpc "A lovely lass, but strange as a fish on land!"))
+  (say knpc "かわいい娘だが陸の魚のような変わり者だ！"))
 
 (define (henry-osca knpc kpc)
-  (say knpc "A pathetic, misplaced soul, but 'e drinks 'is share."))
+  (say knpc "みじめで、おかしな考えのヤツだ。でもここでは一緒に飲んでいる。"))
 
 (define henry-conv
   (ifc basic-conv
@@ -147,6 +144,7 @@
        (method 'ghas henry-gher)
        (method 'bart henry-bart)
        (method 'witc henry-seaw)
+       (method 'lia  henry-seaw)
        (method 'osca henry-osca)
 
        ))
@@ -154,7 +152,7 @@
 (define (mk-henry)
   (bind 
    (kern-mk-char 'ch_henry           ; tag
-                 "Henry"             ; name
+                 "ヘンリー"          ; name
                  sp_human            ; species
                  nil                 ; occ
                  s_townsman          ; sprite

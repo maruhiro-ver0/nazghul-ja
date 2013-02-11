@@ -41,7 +41,7 @@ static void ztats_arms_paint_item(struct inv_entry *ie, SDL_Rect *rect)
 	
 	/* quantity and name */
 	if (ie->ref) {
-		screenPrint(rect, 0, "%2d %s ^c+%c[%d in use]^c-", ie->count, arms->getName(), STAT_INUSE_CLR, ie->ref);
+		screenPrint(rect, 0, "%2d %s ^c+%c[%d »ÈÍÑÃæ]^c-", ie->count, arms->getName(), STAT_INUSE_CLR, ie->ref);
 	} else {
 		screenPrint(rect, 0, "%2d %s", ie->count, arms->getName());
 	}
@@ -69,6 +69,6 @@ void ztats_arms_init(void)
                 NULL
         };
 
-        ztats_container_pane_init(&pane, "Armaments", &filter, &ops);
+        ztats_container_pane_init(&pane, "ÉğÁõ", &filter, &ops);
         ztats_add_pane(&pane.base);
 }

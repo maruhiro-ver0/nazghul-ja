@@ -5,7 +5,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Glasdrin
+;; グラスドリン
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_patch
                (list 0  0  gdp-bed "sleeping")
@@ -27,92 +27,89 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; An old wizard living in Glasdrin, who works as a healer.
-;; He wears an eyepatch, and is known as "Doc Patch".
+;; グラスドリンに住む老人の魔術師で、医師として働いている。
+;; 彼は眼帯をしていて、「眼帯の先生」として知られている。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (patch-hail knpc kpc)
-  (say knpc "[You meet a sprightly old wizard with an eyepatch] "
-       "Hail, traveler."))
+  (say knpc "［あなたは眼帯をした元気な魔術師の老人と会った。］"
+       "こんにちは、旅の方。"))
 
 (define (patch-default knpc kpc)
-  (say knpc "I can't help you with that."))
+  (say knpc "それは手助けできないな。"))
 
 (define (patch-name knpc kpc)
-  (say knpc "People call me Doc Patch."))
+  (say knpc "人々は私を眼帯の先生と呼んでいる。"))
 
 (define (patch-join knpc kpc)
-  (say knpc "No, my duty is here, Wanderer."))
+  (say knpc "いいや。ここにいるのが私の務めだ、迷い人よ。"))
 
 (define (patch-job knpc kpc)
-  (say knpc "I run the hospital. Do you need healing?")
+  (say knpc "この病院で働いている。治療が必要かね？")
   (if (kern-conv-get-yes-no? kpc)
       (patch-trade knpc kpc)
-      (say knpc "Well if you ever do, I can fix you up.")))
+      (say knpc "必要なときに治療しよう。")))
 
 (define (patch-bye knpc kpc)
-  (say knpc "Keep well!"))
+  (say knpc "おだいじに！"))
 
 ;; Trade...
 (define (patch-trade knpc kpc)
   (if (trade-services knpc kpc
                       (list
-                       (svc-mk "Heal" 30 heal-service)
-                       (svc-mk "Cure" 30 cure-service)
-                       (svc-mk "Resurrect" 100 resurrect-service)))
+                       (svc-mk "回復" 30 heal-service)
+                       (svc-mk "治癒" 30 cure-service)
+                       (svc-mk "蘇生" 100 resurrect-service)))
       (begin
-        (say knpc "What else can I do for you?")
+        (say knpc "他に何かすることがあるかね？")
         (patch-trade knpc kpc))
       (begin
-        (say knpc "Will there be anything else?")
+        (say knpc "他に何かあるかね？")
         (if (kern-conv-get-yes-no? kpc)
             (patch-trade knpc kpc)
-            (say knpc "Very well.")))))
+            (say knpc "よろしい。")))))
   
 ;; Patch...
 (define (patch-patc knpc kpc)
-  (say knpc "I lost my eye in Kurpolis. It's so dark there I didn't really "
-       "need it. [He winks. With his good eye.]"))
+  (say knpc "クロポリスで片目を失った。そこはとても暗いので本当は必要なかったのだ。"
+       "［彼は見えるほうの目をウィンクした。］"))
 
 (define (patch-kurp knpc kpc)
-  (say knpc "The paladins keep an outpost in the dungeon, and "
-       "I did a tour of duty down there in my youth."))
+  (say knpc "聖騎士は迷宮の前線を守っている。"
+       "そして、若いころ兵役に就いていたときは、そこにいたのだ。"))
 
 (define (patch-tour knpc kpc)
-  (say knpc "All citizens of Glasdrin are required to serve a tour of duty. "
-       "I was a medik."))
+  (say knpc "全てのグラスドリンの市民は兵役の義務がある。"
+       "私は医師だった。"))
 
 (define (patch-medi knpc kpc)
-  (say knpc "A medik is a mage that specializes in healing arts. Paladin "
-       "squads are all assigned a medik to support them in battle. "
-       "We get some basic combat training, but I only had to use my dagger "
-       "once."))
+  (say knpc "医師は治療の技術に長けた魔術師だ。"
+       "全ての聖騎士の部隊には戦いを支援するため医師が加わっている。"
+       "戦闘の基礎訓練も受ける。しかし私は短剣を一度使っただけだ。"))
 
 (define (patch-dagg knpc kpc)
-  (say knpc "Yep, I carried that dagger for six months and finally got to use "
-       "it... peeling potatoes for kitchen duty."))
+  (say knpc "そうだ。短剣を六ヶ月持ち歩き、ついにそれを使った…。"
+       "炊事の番でイモの皮を剥いたのだ。"))
 
 (define (patch-dung knpc kpc)
-  (say knpc "Monsters breed in the deeps, and it's better to stop them there "
-       "before they can get to the surface. Don't you agree?")
+  (say knpc "怪物たちは深淵で生まれる。奴らが地上に来る前に止めなければならない。"
+       "そう思うだろう？")
   (if (kern-conv-get-yes-no? kpc)
-      (say knpc "You're damned tootin'! So the paladins keep a company there "
-           "to patrol the middle levels. If you ever find yourself in need "
-           "of help down there, seek them out. They'll have a medik.")
-      (say knpc "Harumph! I suppose you'd rather let them run amok over "
-           "the countryside!")))
+      (say knpc "その通り！だから聖騎士はそこに部隊を置き、中間を警備しているのだ。"
+           "迷宮で助けが必要なら彼らを探しなさい。部隊には医師がいる。")
+      (say knpc "ゴホン！彼らが怒り田舎に帰ってしまうぞ！")))
 
 (define (patch-doc knpc kpc)
-  (say knpc "I'm a medik. Are you in need of healing?")
+  (say knpc "私は医師だ。治療が必要かね？")
   (if (kern-conv-get-yes-no? kpc)
       (patch-trade knpc kpc)
-      (say knpc "Ok. Come by the hospital if you ever need assistance. "
-           "I know how you adventurers get torn up in fights!")))
+      (say knpc "よろしい。助けが必要になったらこの病院に来なさい。"
+           "君のような冒険者は戦いでどれだけボロボロになるか、私は知っている！")))
 
 (define (patch-hosp knpc kpc)
-  (say knpc "Yep. The paladins of Glasdrin are always getting in scraps. "
-       "I get the odd adventurer and sick villager in, too."))
+  (say knpc "そうだ。グラスドリンの聖騎士は常に戦っている。"
+       "突然来る冒険者や村の病気の者も診る。"))
 
 ;; Townspeople...
 
@@ -152,7 +149,7 @@
 (define (mk-patch)
   (bind 
    (kern-mk-char 'ch_patch           ; tag
-                 "Patch"             ; name
+                 "眼帯"              ; name
                  sp_human            ; species
                  oc_wizard           ; occ
                  s_companion_wizard  ; sprite

@@ -47,6 +47,6 @@ void ztats_misc_init(void)
                 NULL
         };
 
-        ztats_container_pane_init(&pane, "Miscellaneous", &filter, &ops);
+        ztats_container_pane_init(&pane, "¤½¤ÎÂ¾", &filter, &ops);
         ztats_add_pane(&pane.base);
 }

@@ -145,7 +145,7 @@ static bool pc_eat_food(class Character * pm, void *data)
 		return false;
 	}
 
-	log_msg("Starving!");
+	log_msg("飢え死にしそうだ！");
 
         /* Partial fix for SF BUG [ 1526910 ] "starvation is lame". Instead of
          * a fixed amount of damage, make damage proportional to existing
@@ -161,7 +161,7 @@ void PlayerParty::changePlaceHook()
         mapSetPlace(place);
         Place = place;
         place_enter(place);
-        log_banner("Entering %s", Place->name);
+        log_banner("%sに足を踏み入れた", Place->name);
         
         // --------------------------------------------------------------------
         // If the party is relocating to a non-wilderness place then I have to
@@ -172,8 +172,8 @@ void PlayerParty::changePlaceHook()
                 distributeMembers(place, x, y, dx, dy);
                 return;
         } else {
-            foogod_set_title("Wilderness Travel");
-            foogodRepaint();
+                foogod_set_title("荒野の旅");
+                foogodRepaint();
         }
 }
 
@@ -607,9 +607,9 @@ bool PlayerParty::add(class ObjectType * type, int quantity)
 	if (!quantity)
 		return true;
 
-        log_begin("You get ");
+        log_begin("");
         type->describeType(quantity);
-        log_end(NULL);
+        log_end("を手に入れた。");
 
         return inventory->add(type, quantity);
 }
@@ -617,9 +617,9 @@ bool PlayerParty::add(class ObjectType * type, int quantity)
 bool PlayerParty::takeOut(ObjectType *type, int q)
 {
         // Some types can be in more than one category, so remove from all.
-        log_begin("You lose ");
+        log_begin("");
         type->describeType(q);
-        log_end(NULL);
+        log_end("を失った。");
         return inventory->takeOut(type, q);
 }
 
@@ -875,9 +875,9 @@ void PlayerParty::board_vehicle(void)
 
 	// already in a vehicle so exit
 	if (vehicle) {
-                log_begin("You exit ");
+                log_begin("");
                 vehicle->describe();
-                log_end(".");
+                log_end("から降りた。");
 		vehicle->setOccupant(0);
 		vehicle->relocate(getPlace(), getX(), getY());
                 obj_dec_ref(vehicle);
@@ -896,9 +896,9 @@ void PlayerParty::board_vehicle(void)
 
         obj_inc_ref(vehicle);
 
-        log_begin("You board ");
+        log_begin("");
         vehicle->describe();
-        log_end(".");
+        log_end("に乗った。");
 
 	vehicle->setOccupant(this);
 	vehicle->remove();
@@ -1054,7 +1054,7 @@ void PlayerParty::paint(int sx, int sy)
 
 const char *PlayerParty::getName()
 {
-	return "player party";
+	return "全員";
 }
 
 bool PlayerParty::isVisible()
@@ -1064,7 +1064,7 @@ bool PlayerParty::isVisible()
 
 void PlayerParty::describe()
 {
-	log_continue("the %s", getName());
+	log_continue("%s", getName());
 }
 
 struct formation *PlayerParty::get_formation()
@@ -1098,7 +1098,7 @@ void PlayerParty::beginLoitering(int hours)
         assert(hours > 0);
 
         log_begin_group();
-        log_msg("Loitering...");
+        log_msg("うろうろしている…");
         FOR_EACH_MEMBER(entry, member) {
                 member->beginLoitering(hours);
         }
@@ -1163,7 +1163,7 @@ void PlayerParty::beginResting(int hours)
         assert(hours > 0);
 
         log_begin_group();
-        log_msg("Begin resting...");
+        log_msg("休息を始めた…");
         forEachMember(member_begin_resting, &hours);
         log_end_group();
 
@@ -1384,7 +1384,7 @@ void PlayerParty::enableFollowMode()
             enableRoundRobinMode();
         } else {
             control_mode = PARTY_CONTROL_FOLLOW;
-            foogod_set_title("Follow: %s", leader->getName());
+            foogod_set_title("追跡: %s", leader->getName());
             foogodRepaint();
         }
 
@@ -1397,7 +1397,7 @@ void PlayerParty::enableRoundRobinMode()
         disableCurrentMode();
         forEachMember(member_set_control_mode, &mode);
         control_mode = PARTY_CONTROL_ROUND_ROBIN;
-        foogod_set_title("Round Robin: <pending>");
+        foogod_set_title("追跡: <未定>");
         foogodRepaint();
 }
 
@@ -1412,7 +1412,7 @@ void PlayerParty::enableSoloMode(class Character *solo)
         solo->setSolo(true);
         solo_member = solo;
         control_mode = PARTY_CONTROL_SOLO;
-        foogod_set_title("Solo: %s", solo->getName());
+        foogod_set_title("単独: %s", solo->getName());
         foogodRepaint();
 }
 
@@ -1436,7 +1436,7 @@ void PlayerParty::chooseNewLeader()
         if (NULL != leader) {
                 leader->setLeader(true);
                 if (PARTY_CONTROL_FOLLOW == control_mode) {
-                    foogod_set_title("Follow: %s", leader->getName());
+                    foogod_set_title("追跡: %s", leader->getName());
                     foogodRepaint();
                 }
         }
@@ -1521,13 +1521,13 @@ bool PlayerParty::rendezvous(struct place *place, int rx, int ry)
                                                member);
 
                 if (!member->cachedPath) {
-                        log_msg("%s cannot make the rendezvous!", 
+                        log_msg("%sは集合できない！", 
                                      member->getName());
                         abort = true;
                 }
                 else if (max_path_len > 0 && 
                          member->cachedPath->len > max_path_len) {
-                        log_msg("%s is too far away!", 
+                        log_msg("%sは遠すぎる！", 
                                      member->getName());
                         abort = true;
                 }
@@ -1778,9 +1778,9 @@ bool PlayerParty::addFood(int amount)
                 return true;
 
         if (amount > 0)
-                log_msg("You get %d food.", amount);
+                log_msg("%dの食料を手に入れた。", amount);
         else
-                log_msg("You lose %d food.", -amount);
+                log_msg("%dの食料を失った。", amount);
 
         food += amount;
         if (food < 0)
@@ -1796,9 +1796,9 @@ bool PlayerParty::addGold(int amount)
                 return true;
 
         if (amount > 0)
-                log_msg("You get %d gold.", amount);
+                log_msg("%dの金を得た。", amount);
         else
-                log_msg("You lose %d gold.", -amount);
+                log_msg("%dの金を失った。", -amount);
 
         gold += amount;
         if (gold < 0)

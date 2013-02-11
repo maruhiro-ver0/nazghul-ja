@@ -31,7 +31,7 @@
   	 	)
   	 )
     (if (<= (kern-char-get-mana kchar) 0)
-        (kern-log-msg (kern-obj-get-name kchar) " is exhausted!"))
+        (kern-log-msg (kern-obj-get-name kchar) "は能力を使い果たした！"))
     result))
 
 
@@ -47,18 +47,18 @@
     (kern-obj-apply-damage ktarg "life drained" amount)
     (kern-obj-heal kchar amount)
     (kern-log-msg (kern-obj-get-name kchar)
-                  " drains life from "
+                  "は"
                   (kern-obj-get-name ktarg)
-                  "!")
+                  "の生命を吸い取った！")
     (kern-obj-dec-ref ktarg))
   #t)
 
 (define (disease-touch-proc kchar ktarg)
   (if (kern-obj-add-effect ktarg ef_disease nil)
       (kern-log-msg (kern-obj-get-name kchar)
-                    " inflicts "
+                    "は"
                     (kern-obj-get-name ktarg)
-                    " with Disease!"))
+                    "を罹患させた！"))
   #t)
 
 (define (disarm kchar ktarg)
@@ -70,41 +70,45 @@
                   (kern-char-get-level ktarg)))
             (let ((ktype (random-select readied)))
               (kern-log-msg (kern-obj-get-name kchar)
-                            " disarms "
-                            (kern-obj-get-name ktarg))
+                            "は"
+                            (kern-obj-get-name ktarg)
+                            "の装備を外した。")
               (kern-char-unready ktarg ktype)
               (kern-obj-remove-from-inventory ktarg ktype 1)
               (kern-obj-put-at (kern-mk-obj ktype 1)
                                (kern-obj-get-location ktarg))
               )
             (kern-log-msg  (kern-obj-get-name kchar)
-                           " fails to disarm "
-                           (kern-obj-get-name ktarg))
+                           "は"
+                           (kern-obj-get-name ktarg)
+                           "の装備を外せなかった。")
             #t))))
 
 (define (heal-proc kchar ktarg)
   (kern-log-msg (kern-obj-get-name kchar)
-                " casts a healing spell on "
+                "は回復の呪文を"
                 (if (eqv? kchar ktarg)
-                    "self"
-                    (kern-obj-get-name ktarg)))
+                    "自分"
+                    (kern-obj-get-name ktarg))
+                "にかけた。")
 	(kern-obj-heal ktarg 
 		(+ 2 (kern-dice-roll "1d10")
 			(kern-dice-roll (string-append "2d" (number->string (occ-ability-whitemagic kchar)))))))
 
 (define (great-heal-proc kchar ktarg)
   (kern-log-msg (kern-obj-get-name kchar)
-                " casts a great healing spell on "
+                "は大回復の呪文を"
                 (if (eqv? kchar ktarg)
-                    "self"
-                    (kern-obj-get-name ktarg)))
+                    "自分"
+                    (kern-obj-get-name ktarg))
+                "にかけた。")
   (kern-obj-heal ktarg (kern-dice-roll "4d20+20")))
 
 ;;----------------------------------------------------------------------------
 ;; field spells
 (define (cast-field-proc kchar loc ktype)
   (kern-log-msg (kern-obj-get-name kchar)
-                " casts "(kern-type-get-name ktype) "!")
+                "は"(kern-type-get-name ktype) "の呪文をかけた！")
   (kern-obj-put-at (kern-mk-obj ktype 1) loc))
   
 (define (cast-fire-field-proc kchar ktarg)
@@ -146,20 +150,23 @@
 
 (define (cast-kill-proc kchar ktarg)
   (kern-log-msg (kern-obj-get-name kchar)
-                " casts kill at "
-                (kern-obj-get-name ktarg))
+                "は"
+                (kern-obj-get-name ktarg)
+                "に死の呪文をかけた。")
   (cast-missile-proc kchar ktarg t_deathball))
 
 (define (cast-acid-missile-proc kchar ktarg)
   (kern-log-msg (kern-obj-get-name kchar)
-                " hurls acid missile at "
-                (kern-obj-get-name ktarg))
+                "は"
+                (kern-obj-get-name ktarg)
+                "に酸を浴びせた。")
   (cast-missile-proc kchar ktarg t_acid_bolt))
 
 (define (web-spew-proc kchar ktarg)
   (kern-log-msg (kern-obj-get-name kchar)
-                " spews web at "
-                (kern-obj-get-name ktarg))
+                "は"
+                (kern-obj-get-name ktarg)
+                "に網を放った。")
   (define (spew-in-dir dir)
     (define (ensnare-loc loc)
       (kern-obj-put-at (kern-mk-obj web-type 1) loc))
@@ -176,13 +183,14 @@
 
 (define (teleport-proc kchar loc)
   (kern-log-msg (kern-obj-get-name kchar)
-                " teleports")
+                "は瞬間移動した。")
   (kern-obj-relocate kchar loc nil))
 
 (define (fire-wind-proc3 kchar ktarg)
   (kern-log-msg (kern-obj-get-name kchar)
-                " blasts fire at "
-                (kern-obj-get-name ktarg))
+                "は"
+                (kern-obj-get-name ktarg)
+                "に向かって炎の風を放った。")
   (define (spew-in-dir dir)
     (define (ensnare-loc loc)
       (kern-obj-put-at (kern-mk-obj F_fire 1) loc))
@@ -205,8 +213,9 @@
 			(begin 
 				;;(println "flamewind2")
 				(kern-log-msg (kern-obj-get-name kchar)
-	                " blasts fire at "
-	                (kern-obj-get-name ktarg))
+	                "は"
+	                (kern-obj-get-name ktarg)
+	                "に向かって炎の風を放った。")
 		   	(powers-cone-fire kchar target power)
 		  ))
 	))
@@ -216,8 +225,9 @@
 			(power (occ-ability-blackmagic kchar)))
 		(and (powers-lightning-collateral-check kchar target power)
 			(begin (kern-log-msg (kern-obj-get-name kchar)
-	                " streams lightning at "
-	                (kern-obj-get-name ktarg))
+	                "は"
+	                (kern-obj-get-name ktarg)
+	                "に稲妻を放った。")
 		   	(powers-lightning kchar target power)
 		   ))
 	))
@@ -243,10 +253,10 @@
                     (+ 1 (run-loop (- count 1)))))))))
   (cond ((> (run-loop quantity)
             0)
-         (kern-log-msg (kern-obj-get-name kchar) " summons help")
+         (kern-log-msg (kern-obj-get-name kchar) "は仲間を召還した。")
          #t)
         (else
-         (kern-log-msg (kern-obj-get-name kchar) " fails to summon help")
+         (kern-log-msg (kern-obj-get-name kchar) "は召還に失敗した。")
          #f)))
 
 (define (summon-skeleton-proc kchar)
@@ -284,8 +294,9 @@
 ;; enslave -- aka charm
 (define (enslave-proc kchar ktarg)
   (kern-log-msg (kern-obj-get-name kchar)
-                " enslaves "
-                (kern-obj-get-name ktarg))
+                "は"
+                (kern-obj-get-name ktarg)
+                "を奴隷にした。")
   (kern-obj-add-effect ktarg 
                        ef_charm 
                        (charm-mk (kern-being-get-current-faction kchar))))
@@ -297,7 +308,7 @@
   		  ((not (null? (get-being-at loc))) #f)
         (else
          (kern-place-set-terrain loc t_shallow)
-         (msg-log-visible (kern-obj-get-location kchar) (kern-obj-get-name kchar) " chomps through the deck!")
+         (msg-log-visible (kern-obj-get-location kchar) (kern-obj-get-name kchar) "は甲板を貫いた！")
          (map kern-obj-remove
          	(kern-get-objects-at loc))
          (if (kern-place-is-combat-map? (loc-place loc))
@@ -316,7 +327,7 @@
   (cond ((not (is-deck? (kern-place-get-terrain loc))) #f)
         (else
          (kern-place-set-terrain loc t_shallow_sludge)
-         (kern-log-msg (kern-obj-get-name kchar) " chomps through the deck!")
+         (kern-log-msg (kern-obj-get-name kchar) "は甲板を貫いた！")
          #t)))
 
 ;;----------------------------------------------------------------------------
@@ -326,7 +337,7 @@
     (cond ((null? hostiles) #f)
           (else
            (kern-log-msg (kern-obj-get-name kchar)
-                         " beckons slumber to its foes")
+                         "は奇妙な手振りで敵を眠らせようとした。")
            (map (lambda (ktarg)
                   (if (> (- (+ (kern-dice-roll "1d20") 
                                (kern-char-get-level kchar)) 
@@ -334,9 +345,9 @@
                          12)
                       (begin
                         (apply-sleep ktarg)
-                        (kern-log-msg (kern-obj-get-name ktarg) " succumbs!")
+                        (kern-log-msg (kern-obj-get-name ktarg) "は眠った！")
                         )
-                      (kern-log-msg (kern-obj-get-name ktarg) " resists!")))
+                      (kern-log-msg (kern-obj-get-name ktarg) "は抵抗した！")))
                 hostiles)
            #t))))
 
@@ -344,7 +355,7 @@
 ;; turn invisible
 (define (turn-invisible-proc kchar)
   (kern-log-msg (kern-obj-get-name kchar)
-                " vanishes!")
+                "は消えた！")
   (kern-obj-add-effect kchar ef_invisibility nil))
 
 ;;----------------------------------------------------------------------------

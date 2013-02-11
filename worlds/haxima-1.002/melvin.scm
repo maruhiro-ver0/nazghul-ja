@@ -1,7 +1,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;;
-;; In Bole.
+;; ボレ
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_melvin
                (list 0  0  bole-bed-melvin      "sleeping")
@@ -20,16 +20,16 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;;
-;; Melvin is the cook at the Inn in Bole.
-;; He is the (seventh) husband to May.
+;; メルヴィンはボレの宿の料理人である。
+;; 彼はメイの(7番目の)夫である。
 ;;----------------------------------------------------------------------------
 (define melv-merch-msgs
-  (list "Come by the tavern when I'm open. I open at 7:00AM and close at midnight."
-        "Try the daily special." ;; buy
+  (list "酒場が開いてるときに来てくれ。午前7時から深夜までやってる。"
+        "今日のご馳走だ。" ;; buy
         nil ;; sell
         nil ;; trade
-        "Not bad, eh?" ;; sold-something
-        "Now don't be shy." ;; sold-nothing
+        "悪くないだろ？" ;; sold-something
+        "まあ食ってみなよ。" ;; sold-nothing
         nil ;; bought-something
         nil ;; bought-nothing
         nil ;; traded-something
@@ -38,80 +38,79 @@
 
 (define melv-catalog
   (list
-   (list t_beer  4 "Beer; it's what's for breakfast!")
-   (list t_food  3 "Folks say I make the best jalapeno quiche in the Shard!")
+   (list t_beer  4 "ビール、これは朝飯だ！")
+   (list t_food  3 "このあたりじゃシャルドいちのパラペーニョ・キッシュと評判だ！")
    ))
 
 (define (melvin-buy knpc kpc) (conv-trade knpc kpc "buy" melv-merch-msgs melv-catalog))
 
 ;; basics...
 (define (melvin-default knpc kpc)
-  (say knpc "Ask May about that, I don't know."))
+  (say knpc "メイに聞いてくれ。俺にはわからん。"))
 
 (define (melvin-hail knpc kpc)
-  (say knpc "[You meet a hungover chef] Hello, partner."))
+  (say knpc "［あなたは二日酔いの料理人と会った。］いらっしゃい。"))
 
 (define (melvin-name knpc kpc)
-  (say knpc "I'm Melvin, the cook."))
+  (say knpc "料理人のメルヴィンだ。"))
 
 (define (melvin-job knpc kpc)
-  (say knpc "I run the Bole Inn & Tavern with my wife, May. I cook, she "
-       "serves."))
+  (say knpc "ボレの酒場と宿を妻のメイとやっている。"
+       "俺が料理して、メイが出す。"))
 
 (define (melvin-join knpc kpc)
-  (say knpc "I wouldn't be much good to you, partner. Better leave me here "
-       "to my kitchen where at least I can cook you some grub."))
+  (say knpc "きっとうまくやれねえな。"
+       "少なくともここにいた方がいい料理ができる。"))
 
 (define (melvin-bye knpc kpc)
-  (say knpc "Farewell, partner. Come back any time you're hungry."))
+  (say knpc "ありがとう。腹が減ったらいつでも戻ってこいよ。"))
 
 ;; other characters & town...
 (define (melvin-may knpc kpc)
-  (say knpc "My wife May is an ornery woman, but sharp as a tack."))
+  (say knpc "妻のメイは平凡な女だ。だが針のように鋭い。"))
 
 (define (melvin-kath knpc kpc)
-  (say knpc "That red lady is a wicked beauty! But I'm neither drunk nor "
-       "fool enough to mingle with wizards business. Take my advice, stay "
-       "far away from her and that thing she travels with!"))
+  (say knpc "あの赤いきれいな女！"
+       "だが、俺も魔法使いの厄介ごとに首を突っ込むほど飲みすぎてもいないし、バカでもない。"
+       "悪いことは言わん。あの女とその連れには近づくな！"))
 
 (define (melvin-bill knpc kpc)
-  (say knpc "He's missing a screw or two, but he's a good lad."))
+  (say knpc "あいつはネジが1本か2本外れてる。でもいい奴だ。"))
 
 (define (melvin-thud knpc kpc)
-  (say knpc "That's no man traveling with the red lady, but I've never seen a "
-       "troll that could talk so well. I'm not sure what it is, but magic had "
-       "a hand in making it."))
+  (say knpc "赤い女と一緒に来たのは人間じゃない。"
+       "でも、あんなにうまくしゃべれるトロルは見たことがない。"
+       "よくわからんが、何かの魔法かもしれん。"))
 
 (define (melvin-bole knpc kpc)
-  (say knpc "It's a nice enough place."))
+  (say knpc "全くいい所だ。"))
 
 (define (melvin-hack knpc kpc)
-  (say knpc "Hackle lives in the northwest corner of town across the bridge. "
-       "She's a crazy old hedge-witch but harmless."))
+  (say knpc "ハックルはこの町の北西の橋を渡った所にいる。"
+       "おかしな魔女だが、危険ではない。"))
 
 
 ;; thief quest...
 (define (melvin-thie knpc kpc)
-  (say knpc "There was a strange rogue who came in here not long ago, "
-       "looking like he had demons hounding his trail. He left shortly after "
-       "the red lady arrived. Spoke with Hackle before he left, I think. "
-       "Most odd."))
+  (say knpc "最近怪しい奴がこのあたりにいたな。地獄の猟犬みたいに嗅ぎまわっていたが、"
+       "あの赤い女が来てすぐにいなくなった。いなくなる前にハックルと話していたと思う。"
+       "一番奇妙なことだ。"))
 
 ;; misc...
 (define (melvin-wiza knpc kpc)
-  (say knpc "There's foul business afoot! There's something going on between "
-       "that red sorceress and that mysterious rogue, I know it."))
+  (say knpc "おかしなことになっているんだよ！"
+       "赤い魔法使いと変な奴の間で何かが起こっている。俺にはわかるんだ。"))
 
 (define (melvin-inn knpc kpc)
-  (say knpc "If you need a room for the night or something cold to wash the "
-       "dust from your throat, talk to May. But if you're hungry just say so "
-       "and I'll fix you right up!"))
+  (say knpc "部屋がいるか、冷たい飲み物が欲しければメイに言ってくれ。"
+       "だが、腹が減ったら俺にそう言ってくれ。"
+       "すぐに出すぞ！"))
 
 (define (melvin-hung knpc kpc)
-  (say knpc "Are you hungry?")
+  (say knpc "腹は減っているか？")
   (if (kern-conv-get-yes-no? kpc)
       (melvin-buy knpc kpc)
-      (say knpc "Well if you get hungry just say so!")))
+      (say knpc "そう。腹が減ったらそう言ってくれ！")))
 
 (define melvin-conv
   (ifc basic-conv
@@ -154,6 +153,8 @@
        (method 'thie melvin-thie)
        (method 'rogu melvin-thie)
        (method 'char melvin-thie)
+
+       (method 'bole melvin-bole)
        ))
 
 ;;----------------------------------------------------------------------------
@@ -162,7 +163,7 @@
 (define (mk-melvin)
   (bind 
    (kern-mk-char 'ch_melvin          ; tag
-                 "Melvin"            ; name
+                 "メルヴィン"        ; name
                  sp_human            ; species
                  nil                 ; occ
                  s_townsman          ; sprite

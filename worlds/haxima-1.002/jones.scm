@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In the Keep guarding Kurpolis.
+;; クロポリスの砦
 ;;----------------------------------------------------------------------------
 (define jones-bed ph-bed1)
 (define jones-mealplace ph-tbl1)
@@ -33,39 +33,39 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Jones runs the supply depot for the Glasdrin militia.
-;; He is stationed in the Keep guarding Kurpolis.
+;; ジョーンジーはグラスドリン軍の補給部隊で働いている。
+;; 彼はクロポリスの砦にいる。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (jones-name knpc kpc)
-  (say knpc "Jonesy at yer service."))
+  (say knpc "ジョーンジーだ。何でもどうぞ。"))
 
 (define (jones-job knpc kpc)
-  (say knpc "I run the Supply Depot for the Glasdrin militia. Would you like to buy some supplies?")
+  (say knpc "グラスドリン軍の補給部隊で働いている。何か買っていくか？")
   (if (yes? kpc)
       (jones-trade knpc kpc)
-      (say knpc "If you ever need any I'll be right here.")))
+      (say knpc "なにかいるものがあったら来てくれ。")))
 
 ;; Trade...
 (define jones-merch-msgs
-  (list "Come by the Supply Depot between 9:00AM and 6:00PM."
-        "I keep the basics in stock."
+  (list "午前9時から午後6時の間に補給基地に来てくれ。"
+        "基本的な物はそろっている。"
         nil
         nil
-        "Are you sure you have enough? You better get some more."
-        "I hope you've got enough, for your sake."
+        "それで十分か？もっとあった方がいいのでは？"
+        "装備は十分にあった方がいいぞ。"
    ))
 
 (define jones-catalog
   (list
-   (list t_arrow        1 "Down here you'll go through arrows like a troll goes through grog!")
-   (list t_bolt         1 "You can run out of bolts in the blink of a gazer's eye!")
-   (list t_oil          6 "Yes, stock up on plenty of that flaming oil. It gets worse deeper down.")
-   (list t_torch        6 "You don't want to run out of torches down here!")
-   (list t_heal_potion 23 "Yes, they are spendy, but healing potions are hard to get and critical to have.")
-   (list t_mana_potion 23 "You better buy extra mana potions. Your mages will be working overtime.")
-   (list t_food        10 "There's nothing worse than runnning out of food when you're lost in the lower levels.")
+   (list t_arrow        1 "下ではトロルが酒を飲むように矢を使うことになるぞ！")
+   (list t_bolt         1 "ゲイザーが瞬きしている間に弾を使い果たしてしまうだろう！")
+   (list t_oil          6 "そう、火炎ビンはたくさん持っておけ。下はもっとひどいぞ。")
+   (list t_torch        6 "下で松明を切らせたくはないだろう！")
+   (list t_heal_potion 23 "そう、少し高い。だが、ここでは回復の薬は手に入りにくく、そして絶対に必要だ。")
+   (list t_mana_potion 23 "魔力の薬は多めに買ったほうがよい。仲間の魔術師はいつもより働かなければならないだろう。")
+   (list t_food        10 "下の層で迷ったとき、食料がなくなったら最悪だ。")
    ))
 
 (define (jones-trade knpc kpc) (conv-trade knpc kpc "buy" jones-merch-msgs jones-catalog))
@@ -89,7 +89,7 @@
   (bind 
    (kern-mk-char 
     'ch_jones        ; tag
-    "Jones"             ; name
+    "ジョーンジー"      ; name
     jones-species         ; species
     jones-occ              ; occ
     s_townsman     ; sprite

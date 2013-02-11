@@ -17,7 +17,7 @@
        ))
 
 ;; Make a kernel drawbridge type
-(mk-obj-type 'TF_drawbridge "drawbridge" nil layer-tfeat drawbridge-ifc)
+(mk-obj-type 'TF_drawbridge "Ä·¤Í¶¶" nil layer-tfeat drawbridge-ifc)
 
 ;; Define a constructor
 (define (mk-drawbridge dir)

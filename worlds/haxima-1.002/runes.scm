@@ -23,7 +23,7 @@
            result-no-target)
           ((eqv? (kern-place-get-terrain loc) t_rune_altar)
            (shake-map 5)
-           (kern-log-msg "A LOCK IS RELEASED!")
+           (kern-log-msg "封印は解かれた！")
            (kern-obj-remove-from-inventory kuser ktype 1)
            (kern-place-set-terrain loc t_active_altar)
            (send-signal kuser demon-gate 'on)
@@ -39,7 +39,7 @@
 ;; special extended interface for rune of leadership: summon the ghost of the
 ;; warritrix when the player picks it up
 (define (rune-li-get kobj kchar)
-  (kern-log-msg "An apparition appears!")
+  (kern-log-msg "何かの亡霊が現れた！")
   (kern-obj-put-at (mk-warritrix)
                    (kern-obj-get-location kobj))
   (let ((sprite (kern-obj-get-sprite kobj)))
@@ -123,15 +123,15 @@
        (method 'get rune-s-get)))
 
 ;; rune types
-(mk-quest-obj-type 't_rune_k "Rune of Knowledge" s_runestone_k layer-item rune-k-ifc)
-(mk-quest-obj-type 't_rune_p "Rune of Power" s_runestone_p layer-item rune-p-ifc)
-(mk-quest-obj-type 't_rune_s "Rune of Skill" s_runestone_s layer-item rune-s-ifc)
-(mk-quest-obj-type 't_rune_c "Rune of Curiosity" s_runestone_c layer-item rune-c-ifc)
-(mk-quest-obj-type 't_rune_f "Rune of Freedom" s_runestone_f layer-item rune-f-ifc)
-(mk-quest-obj-type 't_rune_w "Rune of Wisdom" s_runestone_w layer-item rune-w-ifc)
-(mk-quest-obj-type 't_rune_d "Rune of Discretion" s_runestone_d layer-item rune-d-ifc)
-(mk-quest-obj-type 't_rune_l "Rune of Leadership" s_runestone_l layer-item rune-l-ifc)
-(mk-quest-obj-type 't_rune_l_init "Rune of Leadership" s_runestone_l layer-item rune-li-ifc)
+(mk-quest-obj-type 't_rune_k "知識の石版" s_runestone_k layer-item rune-k-ifc)
+(mk-quest-obj-type 't_rune_p "力の石版" s_runestone_p layer-item rune-p-ifc)
+(mk-quest-obj-type 't_rune_s "技能の石版" s_runestone_s layer-item rune-s-ifc)
+(mk-quest-obj-type 't_rune_c "思慮の石版" s_runestone_c layer-item rune-c-ifc)
+(mk-quest-obj-type 't_rune_f "自由の石版" s_runestone_f layer-item rune-f-ifc)
+(mk-quest-obj-type 't_rune_w "理性の石版" s_runestone_w layer-item rune-w-ifc)
+(mk-quest-obj-type 't_rune_d "分別の石版" s_runestone_d layer-item rune-d-ifc)
+(mk-quest-obj-type 't_rune_l "統制の石版" s_runestone_l layer-item rune-l-ifc)
+(mk-quest-obj-type 't_rune_l_init "統制の石版" s_runestone_l layer-item rune-li-ifc)
 
 ;; list of all rune types
 (define rune-types 

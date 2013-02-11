@@ -26,20 +26,20 @@
 ;;----------------------------------------------------------------------------
 
 (define (gate-guard-default knpc kpc)
-  (say knpc "[No reply]"))
+  (say knpc "［返事がなかった。］"))
 
 (define (gate-guard-hail knpc kpc)
-  (say knpc "Halt! What is the password?")
-  (let ((passwd (kern-conv-get-reply kpc)))
-    (if (eq? passwd (gate-guard-passwd (gob knpc)))
+  (say knpc "待て！合言葉は？")
+  (let ((passwd (kern-conv-get-string kpc)))
+    (if (string=? passwd (gate-guard-passwd (gob knpc)))
         (let* ((guard (kobj-gob-data knpc))
                (gate (eval (gate-guard-gate-tag guard))))
           (signal-kobj gate 'on gate nil)
           (gate-guard-start-timer! guard)
-          (say knpc "You may pass")
+          (say knpc "通ってよい。")
           (kern-conv-end))
         (begin
-          (say knpc "That is not correct")
+          (say knpc "違う！")
           (kern-conv-end)
           ))))
 
@@ -63,7 +63,7 @@
   (if (and (need-more-troops? kchar)
            (> (kern-char-get-mana kchar) 4))
       (begin
-        (kern-log-msg "The mage guard summons help!")
+        (kern-log-msg "魔術師の衛兵は助けを呼んだ！")
         (summon (kern-obj-get-location ktarg) 
                 mk-ranger
                 (kern-being-get-current-faction kchar)
@@ -114,7 +114,7 @@
 (define (guard-close-gate! guard kgate)
   (signal-kobj kgate 'off kgate nil)
   (gate-guard-set-gate-timer! guard 0)
-  (kern-log-msg "The guard closes the gate"))
+  (kern-log-msg "衛兵は門を閉じた。"))
 
 (define (guard-too-far-from-gate? kguard kgate)
   (> (distance kguard kgate) 1))
@@ -151,7 +151,7 @@
    (set-level
     (kern-char-arm-self
      (mk-stock-char
-      "a guard captain" ;;......name
+      "衛兵" ;;......name
       sp_human ;;.........species
       oc_warrior ;;........occupation
       s_companion_paladin ;;........sprite

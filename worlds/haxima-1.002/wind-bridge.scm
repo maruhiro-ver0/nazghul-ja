@@ -51,7 +51,7 @@
     ;;(println "wind=" wind "gob=" gob "loc=" loc)
      (define (turn amap dir)
       (cond ((< (wind-bridge-delay gob) 2)
-             (kern-log-msg "The bridge creaks in the wind!")
+             (kern-log-msg "橋は風できしむ音を立てた！")
              (wind-bridge-inc-delay! gob))
             (else
              (kern-blit-map (kern-place-map (loc-place loc))

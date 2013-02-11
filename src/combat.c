@@ -136,13 +136,13 @@ void combat_set_state(enum combat_state new_state)
         case COMBAT_STATE_DONE:
                 switch (new_state) {
                 case COMBAT_STATE_FIGHTING:
-                        log_banner("^c+mCOMBAT^c-");
+                        log_banner("^c+mÀïÆ®^c-");
                         sound_play(Combat.sound_enter, SOUND_MAX_VOLUME);
                         break;
                 case COMBAT_STATE_LOOTING:
                         break;
                 case COMBAT_STATE_CAMPING:
-                        log_banner("CAMPING");
+                        log_banner("µÙÂ©");
                         break;
                 default:
                         assert(false);
@@ -153,12 +153,12 @@ void combat_set_state(enum combat_state new_state)
         case COMBAT_STATE_FIGHTING:
                 switch (new_state) {
                 case COMBAT_STATE_LOOTING:
-                        log_banner("^c+gVICTORY^c-");
+                        log_banner("^c+g¾¡Íø^c-");
                         sound_play(Combat.sound_victory, SOUND_MAX_VOLUME);
                         player_party->addExperience(COMBAT_VICTORY_XP);
                         break;
                 case COMBAT_STATE_DONE:
-                        log_banner("^c+rDEFEAT^c-");
+                        log_banner("^c+rÇÔËÌ^c-");
                         sound_play(Combat.sound_defeat, SOUND_MAX_VOLUME);
                         break;
                 default:
@@ -170,7 +170,7 @@ void combat_set_state(enum combat_state new_state)
         case COMBAT_STATE_LOOTING:
                 switch (new_state) {
                 case COMBAT_STATE_FIGHTING:
-                        log_banner("^c+mCOMBAT^c-");
+                        log_banner("^c+mÀïÆ®^c-");
                         sound_play(Combat.sound_enter, SOUND_MAX_VOLUME);
                         break;
                 case COMBAT_STATE_DONE:
@@ -184,7 +184,7 @@ void combat_set_state(enum combat_state new_state)
         case COMBAT_STATE_CAMPING:
                 switch (new_state) {
                 case COMBAT_STATE_FIGHTING:
-                        log_banner("^c+mCOMBAT^c-");
+                        log_banner("^c+mÀïÆ®^c-");
                         sound_play(Combat.sound_enter, SOUND_MAX_VOLUME);
                         break;
                 case COMBAT_STATE_LOOTING:
@@ -1628,8 +1628,8 @@ bool combat_enter(struct combat_info * info)
                 if (!combat_position_enemy(info->move->npc_party, 
                                            info->move->dx, info->move->dy, 
                                            !info->defend, Place)) {
-                        log_begin("*** FORFEIT ***");
-                        log_msg("Your opponent slips away!");
+                        log_begin("*** ÁÓ¼º ***");
+                        log_msg("Áê¼ê¤ò¸«¼º¤Ã¤¿¡ª");
                         log_end(NULL);
                         combat_set_state(COMBAT_STATE_LOOTING);
                 }

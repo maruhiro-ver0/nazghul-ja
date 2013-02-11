@@ -15,131 +15,126 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Clarissa (known as the Warritrix) was in life a powerful female Warrior
-;; of superlative might and warcraft.  Now slain, she may be encountered
-;; as a shade, summoned by the use of the Rune of Leadership,
-;; found among her effects where her corpse lies (in the Broken Sanctuary
-;; in the Lost Halls).
+;; クラリッサ(闘士として知られている)は、生きているときには比類なき強さと技の
+;; 女戦士であった。殺された今、亡骸の側(失われた殿堂の破壊された祭壇)で統制の
+;; 石版の力によって影になっている。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (warr-hail knpc kpc)
-  (meet "The spectre of a calm, stately woman confronts you.")
-  (say knpc "Hail, Wanderer.")
+  (meet "静かな威厳のある女性の亡霊があなたの目の前にいる。")
+  (say knpc "よく来たな。迷い人よ。")
   (quest-data-update 'questentry-warritrix 'found 1)
   (quest-data-icon! 'questentry-warritrix 's_ghost)
   (quest-data-complete 'questentry-warritrix)
   )
 
 (define (warr-name knpc kpc)
-  (say knpc "I was Clarissa, known to many as the Warritrix.")
+  (say knpc "私はクラリッサ。多くの者には闘士として知られていた。")
   )
 
 (define (warr-join knpc kpc)
-  (say knpc "Would that we had met in life!")
+  (say knpc "生きているときに会っていれば！")
   )
 
 (define (warr-job knpc kpc)
-  (say knpc "To serve justice. Do you the same?")
+  (say knpc "正義に仕えることだ。おまえも同じか？")
   (if (yes? kpc)
       (begin
-        (say knpc "To serve justice you must know what is just. "
-             "I was ordered to explore these caves completely, "
-             "and when my party was weak from fighting off monsters, "
-             "we were ambushed by Accursed assassins, and all slain. "
-             "Tell me, is it just to avenge my death on my betrayers?")
+        (say knpc "正義に仕えるためには正義を知らねばならぬ。"
+             "私はこの洞窟を完全に探索することを命じられた。"
+             "部隊が怪物たちとの戦いで弱り果てたとき、"
+             "呪われた者の暗殺者の待ち伏せに会った。そしてみな殺された。"
+             "答えてくれ。裏切り者への復讐を果たしてくれるか？")
         (yes? kpc)
-        (say knpc "Justice hastens not to punish, but rather to reward. "
-             "Betrayers will be rewarded with ruin, "
-             "schemers and plotters will bring their own downfall, "
-             "those who seek power will be powerless in their hour of need. "
-             "Do not avenge me, but rather seek the truth.")
+        (say knpc "正義は罰ではなく報いによってもたらされる。"
+             "私を殺した者にはこの廃墟がふさわしく、"
+             "謀略を考えた者は自らの失脚を招くだろう。"
+             "力を求める者は自らの助けを求めるときには力を失うものだ。"
+             "復讐するな。それよりも真実を求めるべきだ。")
         )
-      (say knpc "Injustice is served well by inaction."))
+      (say knpc "不正は何もしないことによってなされるのだ。"))
   )
 
 (define (warr-trut knpc kpc)
-  (say knpc "To find the truth, you must find evidence."))
+  (say knpc "真実を求めよ。そのためには証拠が必要だ。"))
 
 (define (warr-warr knpc kpc)
-  (say knpc "It was a title I bore to gratify others. "
-       "In truth, I was just another paladin."))
+  (say knpc "他の者が褒め称えるその名にはうんざりしていた。"
+       "本当のことを言えば、私は大勢の聖騎士の中の一人に過ぎなかったのだ。"))
 
 (define (warr-evid knpc kpc)
-  (say knpc "The wrogues are masters of finding what others try to hide, "
-       "and the MAN is master of all wrogues.")
+  (say knpc "ならず者は他が隠そうとしたものを探すことに長けている。"
+       "そしてその全てのならず者の頂点がにんげんだ。")
        (quest-wise-subinit 'questentry-the-man)
        (quest-data-update 'questentry-the-man 'common 1)
        )
 
 (define (warr-wise knpc kpc)
-  (say knpc "The Wise are deceived and divided in their opinions. "
-       "The Accursed have done their work well."))
+  (say knpc "賢者は惑わされ分断された。"
+       "呪われた者はよくやったものだ。"))
 
 (define (warr-bye knpc kpc)
   (if (warr-must-go? (gob knpc))
       (begin
-        (say knpc "We will not meet again, Wanderer.")
-        (kern-log-msg "The spirit vanishes.")
+        (say knpc "もう会うことはないだろう。迷い人よ。")
+        (kern-log-msg "霊は消え去った。")
         (kern-obj-remove knpc))
       (begin
-        (say knpc "Have you asked me all you need to know?")
+        (say knpc "聞きたいことは全て聞いたか？")
         (if (yes? kpc)
-            (say knpc "Know that I must go soon, I am called to the Void.")
-            (say knpc "Then I will try to remain a bit longer.")
+            (say knpc "もうすぐ行かねばならぬ。虚空へと呼ばれているのだ。")
+            (say knpc "ならばもう少しここに留まっていよう。")
             )
         (warr-end-conv (gob knpc)))))
 
 ;; Quest-related
 (define (warr-rune knpc kpc)
-  (say knpc "You may keep the Rune. I know not its purpose. I have carried it "
-       "all these years in honour of King Clovis, my godfather, "
-       "who gave it to me."))
+  (say knpc "おまえは石版を集めているのだな。その目的はわからぬが。"
+       "ここ何年かの間は名高きクロービス王、私の名づけの親から授かった石版を持ち歩いていた。"))
 
 (define (warr-clov knpc kpc)
-  (say knpc "King Clovis carried a Rune of his own. He fell in battle during the "
-       "Goblin Wars and the Rune was lost. Do you wish to find it?")
+  (say knpc "クロービス王は石版を持ち歩いていた。"
+       "彼はゴブリン戦争での戦いで命を落とした。その石版を探しているか？")
   (if (yes? kpc)
   		(begin
-      (say knpc "If anyone knows where it is, it would be the goblins. "
-           "Go to Green Tower and seek out Gen. Ask him of ^c+mClovis^c-.")
+      (say knpc "もしどこにあるか知っている者がいるとすれば、それはゴブリンだ。"
+           "緑の塔へ行きジェンを探し、彼に^c+mクロービス^c-のことを尋ねなさい。")
        	(quest-data-update 'questentry-rune-f 'gen 1)
         (quest-data-assign-once 'questentry-rune-f)
            )
-      (say knpc "If you do, ask me now, for like all who are dead I am pulled "
-           "to the Void, and cannot resist for long."
+      (say knpc "もし探すつもりなら、今私に尋ねなさい。"
+           "全ての死んだ者と同じように虚空へと引き寄せられている。長い間ここにはいられない。"
            ))
   )
 
 (define (warr-just knpc kpc)
-  (say knpc "Justice is the only ideal which needs no theory "
-       "or philosophy or deity to uphold it. It is the undeniable, "
-       "irresistible ideal."))
+  (say knpc "正義は単なる目標に過ぎず、それを支える理論も、思想も、信仰も必要としない。"
+       "それは否定できない目標だ。"))
 
 (define (warr-absa knpc kpc)
-  (say knpc "The Stewardess ordered the destruction of Absalot under the "
-       "pretense that it spread Accursed practices. "
-       "But is not the lust for power a true sign of one Accursed?")
+  (say knpc "統治者はそこが呪われた者の習慣を広めていることを口実に"
+       "私にアブサロットを破壊するよう命じた。"
+       "だが、力への執着は正に呪われた者の証ではないのか？")
   (yes? kpc)
-  (say knpc "Indeed it is.")
+  (say knpc "そうなのであろうな。")
   )
 
 (define (warr-void knpc kpc)
-  (say knpc "All spirits are Wanderers in the Void."))
+  (say knpc "全ての霊は虚空の迷い人である。"))
 
 (define (warr-assa knpc kpc)
-  (say knpc "They were expecting us, although no one knew we were here "
-       "except the Stewardess of Glasdrin and Commander Jeffries."))
+  (say knpc "彼らは私たちを待ち伏せていた。"
+       "ここに来ることを知っているのは、グラスドリンの統治者と司令官のジェフリーズ以外はいないにも関わらずだ。"))
 
 (define (warr-jeff knpc kpc)
-  (say knpc "The silver deeds of noble youth are tarnished by the guilt of "
-       "age. Better is one who striving, dies, than a hero ruined "
-       "by success."))
+  (say knpc "銀のような若い頃の高貴な行いは、歳をとってからの過ちで輝きを失った。"
+       "英雄が勝利によって腐敗するならば、奮闘し死ぬほうがまだよい。"))
 
 (define (warr-powe knpc kpc)
   (say knpc 
-       "Those who see an enemy in every face can never have enough power, "
-       "but the fearless hold it in contempt."))
+       "あらゆるものを敵とみなす者たちは決して十分な力を得ることはできない。"
+       "だが、恐れを知らぬ者は軽蔑の中でそれを掴み取るのだ。"))
 
 (define warr-conv
   (ifc basic-conv
@@ -170,7 +165,7 @@
   (bind 
    (kern-mk-char 
     'ch_warr           ; tag
-    "Warritrix"        ; name
+    "闘士"             ; name
     warr-species         ; species
     warr-occ              ; occ
     s_ghost     ; sprite

@@ -35,7 +35,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place 
  'p_merciful_death ; tag
- "Wreck of the Merciful Death (abovedecks)"   ; name
+ "»üÈá¿¼¤¤»à¹æ¤Î»Ä³¼ (¹ÃÈÄ¤Î¾å)"   ; name
  s_ship              ; sprite
  m_merciful_death  ; map
  #f               ; wraps
@@ -102,7 +102,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place 
  'p_merciful_death_l2 ; tag
- "Wreck of the Merciful Death (belowdecks)"   ; name
+ "»üÈá¿¼¤¤»à¹æ¤Î»Ä³¼ (¹ÃÈÄ¤Î²¼)"   ; name
  nil              ; sprite
  m_merciful_death_l2  ; map
  #f               ; wraps

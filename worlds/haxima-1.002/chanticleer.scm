@@ -5,7 +5,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;;
-;; The schedule below is for the place "Trigrave"
+;; トリグレイブ
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_chant
                (list 0  0  trigrave-east-west-road   "drunk")
@@ -31,105 +31,105 @@
                                                    1)))
 
 ;; ----------------------------------------------------------------------------
-;; Chanticleer
+;; オンドリ
 ;;
-;; Chanticleer is a roaming bard who spends most of his time in Trigrave. He's
-;; a confident, easy-going fellow who is also an unstoppable showman. He
-;; possesses a great deal of knowledge about the region, loves rumours and
-;; gossip, has friends in low and high places (uncluding the reclusive
-;; Enchanter) and is probably a spy for *somebody* but it isn't clear who.
-;;
+;; オンドリは旅の吟遊詩人で多くの時間をトリグレイブで過ごしている。彼はおおらか
+;; な自信家で、制止できない芸人でもある。彼には多くの地理の知識があり、うわさと
+;; 醜聞を愛していて、様々な身分の友人(人前に現れない魔道師を含む)がいる。そして
+;; もしかすると「誰かの」スパイかもしれないが、それはわからない。
 ;; ----------------------------------------------------------------------------
 (define (chant-song knpc kpc)
   (if (isdrunk? knpc)
-      (say knpc "All together now! Row, row, row your boat! [Hee hee hee!]")
+      (say knpc "さあみんなで！♪か〜も〜め〜の水兵さん！［ヒッヒッヒ］")
       (begin
-        (say knpc "A thousand songs wait caged behind the bars of my dry "
-             "throat! Perhaps a little coin to whet the pipes? [He looks at "
-             "you expectantly. Do you give him some gold?]")
+        (say knpc "千の歌が僕の乾いた喉という檻の向こうで待っている！"
+             "もしかすると少しの金貨で檻を壊せるかも？"
+             "［彼は期待するようにあなたを見ている。彼にいくらかの金貨を与える？］")
         (if (kern-conv-get-yes-no? kpc)
             ;; yes - give chant some gold
             (let ((amount (kern-conv-get-amount)))
               (display "amount=")(display amount)(newline)
               (cond ((= 0 amount) 
-                     (say knpc "An imaginary song then, for your imaginary "
-                          "gold! [He pretends to play his lute]"))
+                     (say knpc "見えない金貨には聞こえない歌を！"
+                          "［彼はリュートを弾くまねをした。］"))
                     ((< amount 2)
-                     (say knpc "Yes... I see. Here goes:\n"
-                          "There was a Wanderer oh so cheap\n"
-                          "He wanted all his gold to keep\n"
-                          "And when he mocked poor Chanticleer\n"
-                          "The sound of discord filled his ear!\n"
-                          " [He strikes a loud, brash, chord and bows]"))
+                     (say knpc "ああ…わかりました。いきますよ。\n"
+                          "\n"
+                          "　♪ とってもケチな迷い人\n"
+                          "　お金をいっぱい貯めときたい\n"
+                          "　哀れなオンドリをあざ笑ったので\n"
+                          "　ひどい音で耳をいっぱいにしてやる！\n"
+                          "\n"
+                          "［彼は荒々しく大声で歌い、おじぎをした。］"))
                     (else
-                     (say knpc "That will fill my yearning mug! "
-                          "Now, of what would you hear? Of Fen, Forest "
-                          "or Forgotten places?")
+                     (say knpc "僕の心は満たされた！"
+                          "さあ、どこがいい？沼、森、"
+                          "それとも忘れられた場所？")
                      (chant-set-gold! knpc amount))))
             ;; no -- don't give him some gold
-            (say knpc "A sober bard doesn't do anybody any good!")))))
+            (say knpc "シラフの詩人は誰にも何もしないのさ！")))))
 
 (define (chant-fen knpc kpc)
   (if (isdrunk? knpc)
-      (say knpc "Nazzty place! [Hic]")
+      (say knpc "汚ねえところ！［ヒック］")
       (if (not (chant-has-gold? knpc))
           (chant-song knpc kpc)
           (begin
             (chant-dec-gold! knpc)
             (say knpc 
-                 "THE FENS\n"
+                 "湿地帯\n"
                  "\n"
-                 "  If you like...\n"
-                 "  biting flies, and farting bogs,\n"
-                 "  dismal skies, man-sized frogs,\n"
-                 "  evil altars, muck-filled boots,\n"
-                 "  mislaid rangers (wary of strangers),\n"
-                 "  trackless wastes,\n"
-                 "  lichs, wraiths,\n"
-                 "  and skeletal warriors, too...\n"
-                 "  then, my friend,\n"
-                 "  to the northern Fen!\n"
-                 "  For that's the place for you.\n")))))
+                 "　♪ もしもあなたがお好きなら\n"
+                 "　血を吸う虫が　臭い沼が\n"
+                 "　憂鬱な空が　人ぐらいのカエルが\n"
+                 "　悪魔の祭壇が　泥が詰まった靴が\n"
+                 "　忘れられた警備隊が(よそ者を警戒している)\n"
+                 "　道なき荒地が\n"
+                 "　リッチが　幽霊が\n"
+                 "　骸骨の戦士が…\n"
+                 "　そうならば　友よ\n"
+                 "　北の沼地へ行くがいい！\n"
+                 "　そこはあなたの場所だ")))))
 
 (define (chant-forest knpc kpc)
   (if (isdrunk? knpc)
-      (say knpc "Run, Forest, run! [Hee-hee]")
+      (say knpc "走れ〜、森を〜、走れ〜［ヒッヒッヒ］")
       (if (not (chant-has-gold? knpc))
           (chant-song knpc kpc)
           (begin
             (chant-dec-gold! knpc)
             (say knpc 
-                 "THE EASTERN WOODS\n"
+                 "東の森\n"
                  "\n"
-                 "The woods are lovely, dark and deep\n"
-                 "and always hungry, too!\n"
-                 "They've eaten many travelers\n"
-                 "and gulped a king or two.\n"
+                 "　♪ 森は素敵なところ　暗くて深くて\n"
+                 "　いつでも飢えている！\n"
+                 "　旅人をたくさん食べて\n"
+                 "　そして王様も飲み込んだ\n"
                  "\n"
-                 "There goblins lurk and bandits hide\n"
-                 "and giant spiders drool,\n"
-                 "So if you go there don't forget\n"
-                 "to bring a slower fool!\n"
+                 "　ゴブリンの住み家と盗賊の隠れ家\n"
+                 "　そして巨大クモの巣\n"
+                 "　森に行くときは忘れるな\n"
+                 "　ノロマなバカを連れて行くのを！\n"
                  )))))
 
 (define (chant-forgotten knpc kpc)
   (if (isdrunk? knpc)
-      (say knpc "I don't remember! [he weeps with laughter]")
+      (say knpc "忘れた！［彼は泣きながら笑った。］")
       (if (not (chant-has-gold? knpc))
           (chant-song knpc kpc)
           (begin
             (chant-dec-gold! knpc)
             (say knpc 
-                 "LOST HALLS\n"
-                 "\n"
-                 "Delving ever deeper,\n"
-                 "They woke the ancient sleeper,\n"
-                 "You know the tale\n"
-                 "(The moral's stale)\n"
-                 "So I won't bore you with detail!\n"
-                 "\n"
-                 "[stops playing] If you simply MUST go investigate, "
-                 "search the southern coast.")
+                 "失われた殿堂 \n"
+                 "\n "
+                 "　♪ 深く深いところで\n"
+                 "　古き者が目を覚ます\n"
+                 "　この物語を知ってるか\n"
+                 "　(物語は語られなかった。)\n"
+                 "　飽きもせず僕は語る！\n"
+                 "\n "
+                 "［演奏を止めた。］調べに行かなければならなくなったら、"
+                 "南の沿岸へ行けばいい。")
 		 (if (null? (quest-data-getvalue 'questentry-rune-l 'know-hall))
 			(quest-data-update-with 'questentry-rune-l 'approx-hall 1 (quest-notify nil))
 		)
@@ -138,29 +138,29 @@
 (define (chant-thie knpc kpc)
   (if (isdrunk? knpc)
       (say knpc 
-           "Hey diddle riddle,\n"
-           "You're in the middle!\n"
-           "When Kalcifax jumped through moon\n"
-           "The Necromage laughed to see such sport\n"
-           "And the Thief ran away with the Rune!")
-      (say knpc "So Enchy has you looking too? The thief must have avoided this "
-           "town, but travelers may have crossed his path. Ask Gwen.")))
+           "　ヘイ、むずいなぞなぞ\n"
+           "　君はまんなかにいる！\n"
+           "　カルシファクスが月に向かって飛び跳ねる\n"
+           "　それ見て死霊術師が笑う\n"
+           "　そして泥棒は石版を盗んで走り出す！")
+      (say knpc "まーちゃんは君に探させた？泥棒はこの町を避けていったはずだ。"
+           "でも、旅人は見たかもしれない。グベンに聞いてみなよ。")))
 
 (define (chant-man knpc kpc)
   (if (isdrunk? knpc)
       (begin
-        (say knpc "HEY! Can you keep a zecret?")
+        (say knpc "なあ！秘密を守れるかぁ？")
         (if (yes? knpc)
             (begin
-              (say knpc "The MAN haz a zecret cave. You know where it iz?")
+              (say knpc "にんげんは秘密の洞窟にいる。どこか知ってるかぁ？")
               (if (yes? kpc)
-                  (say knpc "Me too! [Hee-hee!]")
-                  (say knpc "The mountain at [" 
-                       (loc-x the-mans-hideout-loc) " " 
+                  (say knpc "俺様もだぁ！［ヒッヒッヒ！］")
+                  (say knpc "[" 
+                       (loc-x the-mans-hideout-loc) "," 
                        (loc-y the-mans-hideout-loc) 
-                       "] izn't really a mountain! Go zurprize him!")))
-            (say knpc "Me neither! [He snorts]")))
-      (say knpc "The MAN? I don't know anything about the MAN. Why are you asking me?")))
+                       "]の山は本当の山じゃねえ！行ってびびらせてやれ！")))
+            (say knpc "俺様もできねぇ！［彼は鼻を鳴らした。］")))
+      (say knpc "にんげん？にんげんのことは知らないなあ。なぜ僕に聞くの？")))
 
 (define chant-conv
   (ifc basic-conv
@@ -171,134 +171,134 @@
        (method 'default 
                (lambda (knpc kpc) 
                  (if (isdrunk? knpc)
-                     (say knpc "I's drunk... [hic]")
-                     (say knpc "I am at a loss."))))
+                     (say knpc "酔っているんだぁ…［ヒック］")
+                     (say knpc "困ったなあ。"))))
        (method 'hail 
                (lambda (knpc kpc)
                  (if (isdrunk? knpc)
-                     (say knpc "[Saluting drunkenly] Hail to the cheese!")
-                     (say knpc "Well met, my fine fellow!"))))
+                     (say knpc "［酔っぱらいながら］笑って、チ〜ズ！")
+                     (say knpc "ようこそ、わが友よ！"))))
        (method 'bye 
                (lambda (knpc kpc) 
                  (if (isdrunk? knpc)
-                 (say knpc "Buhhhh-bye [snicker]")
-                 (say knpc "May the road kiss your feet!"))))
+                 (say knpc "ババババイバイ［笑いながら］")
+                 (say knpc "道が君の足にキスしますように！"))))
        (method 'job 
                (lambda (knpc kpc) 
                  (if (isdrunk? knpc)
-                     (say knpc "[Overdramatically, he points to his eyes, "
-                          "then his ears, then makes a zipping motion on his "
-                          "mouth, nods sagely and winks]")
-                     (say knpc "I am a very vessel of wit and song!"))))
+                     (say knpc "［おおげさな身振りで、彼は自分の目を指差し、"
+                          "耳を指差し、そして口を塞ぐ動作をして、"
+                          "すまし顔でうなずき、ウィンクした。］")
+                     (say knpc "知恵と歌の運び手さ！"))))
        (method 'name 
                (lambda (knpc kpc)
                  (if (isdrunk? knpc)
-                     (say knpc "Chantibard! [He tries to bow but falls down]")
-                     (say knpc "Chanticleer the Bard, at your service "
-                          "[He bows and flourishes]"))))
+                     (say knpc "オンドリ！［おじぎをしようとして倒れた。］")
+                     (say knpc "吟遊詩人のオンドリ、なんでもどうぞ。"
+                          "［おじぎをしたあと舞った。］"))))
        (method 'join 
                (lambda (knpc kpc) 
                  (if (isdrunk? knpc)
-                     (say knpc "Join you for a drink? "
-                          "I thought you'd never azzk!")
-                     (say knpc "Some bards adventure, others are wise. "
-                          "I am among the latter."))))
+                     (say knpc "飲み仲間かぁ？"
+                          "待ってましたぁ！")
+                     (say knpc "旅をする詩人がいれば、博学な者もいる。"
+                          "僕は後の方なのさ。"))))
 
        (method 'chan
                (lambda (knpc kpc)
                  (if (isdrunk? knpc)
-                     (say knpc "[Hic!] Whooze that maudlin, drunken fool,\n"
-                          "Who plaize the tung like beast made man...")
+                     (say knpc "［ヒック！］♪泣きじょうごの、飲んだくれの、バカ野郎はだあれだぁ\n"
+                          "誰が獣の子を褒めるものか…")
                      (say knpc "\n"
                           "\n"
-                          " Who is that wise, enchanting bard,\n"
-                          " Who plays the lute like song made flesh\n"
-                          " And tells tales Fate herself would tell\n"
-                          " If Fate could only lie so well?"))))
+                          "　♪ かしこい、すてきな詩人はだあれ？\n"
+                          "　歌うよにリュートを弾くのはだあれ？\n"
+                          "　彼女の運命のお話を話すだろうか、\n"
+                          "　死すべき運命が上手な嘘なら？"))))
        (method 'earl
                (lambda (knpc kpc)
                  (if (isdrunk? knpc)
-                     (say knpc "e's furgotten mor' 'an I'll ever know!")
+                     (say knpc "あんなボケた奴は見たことねぇ！")
                      (say knpc 
-                          "Our distinguished shopkeeper...\n"
+                          "僕らのすばらしい店主…\n"
                           "\n"
-                          " There once was a master of flame\n"
-                          " As a warmage he gathered great fame\n"
-                          " But as you can tell\n"
-                          " He tried a bad spell\n"
-                          " And now can't remember his name!\n"
+                          "　♪ 昔は炎の主だった \n"
+                          "　戦で名を上げた \n"
+                          "　でも、見ての通り \n"
+                          "　悪い魔法に手を出して \n"
+                          "　今じゃ名前も思い出せない！"
                           ))))
 
        (method 'ench
                (lambda (knpc kpc)
                  (if (isdrunk? knpc)
-                     (say knpc "Enchy! Sits in his comfy tower, giving "
-                          "orders, while Chant has to make the rounds!")
+                     (say knpc "まーちゃん！塔の中で座って、"
+                          "魔法陣を描きながら命令していたなぁ！")
                      (say knpc 
-                          "My travels sometimes take me to the "
-                          "Enchanter's Tower."))))
+                          "魔道師の塔に旅することもありますよ。"))))
        (method 'gwen
                (lambda (knpc kpc)
                  (if (isdrunk? knpc)
-                     (say knpc "[He leans in close and whispers loudly] "
-                          "Ever seen a witch carry a sword?")
+                     (say knpc "［彼はあなたにもたれかかり、大声で言った。］"
+                          "何で魔女は剣を持ってるんだろうねぇ？")
                      (say knpc
-                          "Ah, our mysterious innkeeper...\n"
+                          "ああ、謎多き宿屋の女主人…\n"
                           "\n"
-                          " When the gray dove is weeping\n"
-                          " And the whole world is sleeping\n"
-                          " When ghosts rise like mist from the sea\n"
-                          " The owl in the moonlight\n"
-                          " Inquires of the still night\n"
-                          " The question we all ask of she!\n"))))
+                          "　♪ 灰色の鳩が涙を流すとき\n"
+                          "　世界がみな眠る\n"
+                          "　海から霧のように亡霊が現れるとき\n"
+                          "　フクロウは月明かりの中\n"
+                          "　静かな夜に尋ねよ\n"
+                          "　答えは彼女が知っている！"))))
        (method 'fen chant-fen)
        (method 'fore chant-forest)
+       (method 'wood chant-forest)
        (method 'forg chant-forgotten)
        (method 'jim
                (lambda (knpc kpc)
                  (if (isdrunk? knpc)
-                     (say knpc "A knight turned inside out! [Burp!]")
+                     (say knpc "騎士の裏返しさぁ！［ゲップ！］")
                      (say knpc
-                          "Ha! Here's a bit of gossip!\n"
+                          "おっと！こんなうわさもありますよ！\n"
                           "\n"
-                          " Full fell and grim\n"
-                          " the righteous Jim,\n"
-                          " His armour slicked in gore,\n"
-                          " Slew his master on the field,\n"
-                          " Scratched the emblem from his shield\n"
-                          " And fled that cursed shore."
+                          "　♪ 残虐と獰猛\n"
+                          "　それがすばらしきジム\n"
+                          "　鎧は血で濡れている\n"
+                          "　己が主を打ち倒し\n"
+                          "　盾の紋章をかき消す\n"
+                          "　そして呪われた店に消えうせる\n"
                           ))))
        (method 'roun
                (lambda (knpc kpc)
                  (if (isdrunk? knpc)
-                     (say knpc "Azzright! I watches the roads, "
-                          "watching for them...")
-                     (say knpc "What a strange thing to inquire about!"))))
+                     (say knpc "そう！俺様は見張っていた。"
+                          "あいつらに気をつけろ…")
+                     (say knpc "何でそんなことを聞くの！？"))))
        (method 'song chant-song)
        (method 'them
                (lambda (knpc kpc)
                  (if (isdrunk? knpc)
-                     (say knpc "[Hissing] THEM! The Enemy of the Wise! Shhh!")
-                     (say knpc "[Looking at you with mock suspicion] "
-                          "Are you sure you're not paranoid?"))))
+                     (say knpc "［ささやき］あいつら！賢者の敵さぁ！シーッ！")
+                     (say knpc "［疑うようにあなたを見た。］"
+                          "だいじょうぶかい？"))))
        (method 'thie chant-thie)
        
        (method 'towe
                (lambda (knpc kpc)
                  (if (isdrunk? knpc)
-                     (say knpc "Deprezzing place!")
+                     (say knpc "憂うつなところさぁ！")
                      (say knpc
-                          "It watches the Fen to the north, "
-                          "but if you're thinking of going there, "
-                          "know that the Enchanter does not like visitors!"))))
+                          "北の湿地帯で見られますよ。"
+                          "でもそこへ行きたいのなら、"
+                          "魔道師は来客を好まないことを覚えておいてください！"))))
 
        (method 'wit
                (lambda (knpc kpc)
-                 (say knpc "Well, gossip really. Give me a name, I'll give "
-                      "you the dirt.")))
+                 (say knpc "うーん、本当はただのうわさ話さ。"
+                      "名前を言えば、その人のうわさを聞かせますよ。")))
        (method 'lost
                (lambda (knpc kpc)
-                 (say knpc "Well, I wouldn't be a bard if I didn't know a song about the fabled Lost Halls!")))
+                 (say knpc "ええ、この伝説的な失われた殿堂の歌を知らなければ、僕は吟遊詩人にはならなかったでしょうね！")))
        (method 'man chant-man)
        (method 'wrog chant-man)
        ))

@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Old Absalot.
+;; 古アブサロット
 ;;----------------------------------------------------------------------------
 (define dennis-bed oa-bed2)
 (define dennis-mealplace oa-tbl1)
@@ -33,59 +33,59 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Dennis is an acolyte of the Accursed, who lives in Old Absalot.
-;; He is somewhat naive, but not yet wholly corrupt.
+;; デニスは呪われた者の信奉者で、古アブサロットに住んでいる。
+;; 彼は信じやすいが、まだ完全には染まっていない。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (dennis-hail knpc kpc)
-  (say knpc "Hello."))
+  (say knpc "こんにちは。"))
 
 (define (dennis-default knpc kpc)
-  (say knpc "I don't know about that sort of thing."))
+  (say knpc "そのあたりのことはわかりません。"))
 
 (define (dennis-name knpc kpc)
-  (say knpc "I'm Dennis."))
+  (say knpc "デニスです。"))
 
 (define (dennis-join knpc kpc)
-  (say knpc "[He scoffs] I don't think so, wayfarer."))
+  (say knpc "［彼はあざ笑った。］そうは思いません。旅の人。"))
 
 (define (dennis-job knpc kpc)
-  (say knpc "I am a student of Master Silas."))
+  (say knpc "サイラス師の生徒です。"))
 
 (define (dennis-bye knpc kpc)
-  (say knpc "Goodbye."))
+  (say knpc "さようなら。"))
 
 ;; Tier 2
 (define (dennis-stud knpc kpc)
-  (say knpc "Master Silas teaches that by focusing my will, and by sacrificing things which impede my progess, I can achieve anything I desire. Or, at least, I will be able to once I have mastered the ways of the Accursed."))
+  (say knpc "サイラス師から、自分の意思に集中すること、そして私の前進の妨げになるものを犠牲にすることを教わっています。私は自分の欲望に到達できることでしょう。そうでなくても、少なくとも呪われた者の生き方を極めることができるでしょう。"))
 
 (define (dennis-accu knpc kpc)
-  (say knpc "The Accursed are misunderstood. It is not evil to pursue one's desires, it is good! Why can't our enemies see that?"))
+  (say knpc "呪われた者は誤解されています。己の欲望を追い求めるのは、悪ではなく善なのです！なぜ我々の敵はそれがわからないのでしょうか？"))
 
 (define (dennis-enem knpc kpc)
-  (say knpc "The butchers of Glasdrin and that old fool the Enchanter have more blood on their hands than anyone!"))
+  (say knpc "グラスドリンの虐殺者と愚かな年寄りの魔道師はさらなる血を求めているのです！"))
 
 (define (dennis-ways knpc kpc)
-  (say knpc "The ways of the Accursed are revealed to students in phases. At each phase, an acolyte gains more power. To advance to the next phase the student must master the rites and perform a suitable sacrifice."))
+  (say knpc "呪われた者の生き方は段階的に生徒に明かされていきます。それぞれの段階で信奉者は力を得ていきます。次の段階に達するためには、生徒はふさわしい犠牲をささげる儀式を行わなければなりません。"))
 
 (define (dennis-sacr knpc kpc)
-  (say knpc "The sacrificial rites are secret. I cannot speak of them with an uninitiate like yourself."))
+  (say knpc "犠牲の儀式は秘密にされています。あなたのような何も知らない人には話せません。"))
 
 (define (dennis-powe knpc kpc)
-  (say knpc "Power unimaginable awaits those who have the will to grasp it."))
+  (say knpc "想像もできないような力が、それをつかみ取る意志のある者を待っています。"))
 
 (define (dennis-sila knpc kpc)
-  (say knpc "Master Silas is a powerful wizard and a wise teacher."))
+  (say knpc "サイラス師は力のある魔術師、そして賢明な先生です。"))
 
 (define (dennis-absa knpc kpc)
-  (say knpc "Those fools destroyed Absalot, thinking we were there! But they didn't know about Old Absalot, a city beneath the city."))
+  (say knpc "あの愚か者たちは、我々がそこにいると考えてアブサロットを破壊しました！しかし彼らは町の真下にあるこの古いアブサロットのことを知りませんでした。"))
 
 (define (dennis-old knpc kpc)
-  (say knpc "I can't help but feel awed when I walk among these ruins. But they are a bit creepy. The ancients had some strange beliefs!"))
+  (say knpc "この遺跡を歩いていると、畏敬の念に駆られます。少し不気味ですが。古代の人々は奇妙な信仰を持っていたのですね！"))
 
 (define (dennis-sele knpc kpc)
-  (say knpc "[He blushes] If you know what's good for you, you will stay away from her!")
+  (say knpc "［彼は顔を赤くした。］悪いことは言いません。彼女には近づかないほうがいいですよ！")
   (kern-conv-end)
   )
 
@@ -117,7 +117,7 @@
   (bind 
    (kern-mk-char 
     'ch_dennis           ; tag
-    "Dennis"             ; name
+    "デニス"             ; name
     dennis-species         ; species
     dennis-occ              ; occ
     s_townsman     ; sprite

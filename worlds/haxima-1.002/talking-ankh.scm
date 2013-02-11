@@ -51,17 +51,17 @@
   (let ((gob (kobj-gob-data knpc)))
     (if (not (ankh-done? gob))
         (begin
-          (say knpc "[A vibrating voice fills your head] "
-               "At the dawn of the next age, how will the world be made?")
-          (let ((resp (kern-conv-get-reply kpc)))
-            (if (not (eq? resp 'anew))
-                (say knpc "Then the new age has not yet come.")
+          (say knpc "［頭の中で震える声が響いた。］"
+               "次の時代の夜明けに、世界はどのようになるか？")
+          (let ((resp (kern-conv-get-string kpc)))
+            (if (not (string=? resp "サイセイ"))
+                (say knpc "ならば新しい時代はまだ訪れないであろう。")
                 (begin
-                  (say knpc "THEN THE NEW AGE HAS BEGUN!")
+                  (say knpc "ならば新しい時代が始まる！")
                   (shake-map 15)
                   (kern-map-flash 500)
                   (shake-map 15)
-                  (kern-map-flash 500)          
+                  (kern-map-flash 500)
                   (shake-map 15)
                   (ankh-done! gob)
                   (blit-map (loc-place (kern-obj-get-location knpc))
@@ -82,7 +82,7 @@
   (bind 
    (kern-mk-char 
     'ch_ankh           ; tag
-    "Ankh"             ; name
+    "アンク"           ; name
     ankh-species         ; species
     ankh-occ              ; occ
     s_ankh     ; sprite

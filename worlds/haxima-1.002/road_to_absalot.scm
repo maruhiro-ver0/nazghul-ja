@@ -2,7 +2,7 @@
 (kern-load "r2a_mech.scm")
 
 (mk-dungeon-room
- 'p_road_to_absalot_1 "Passage to Absalot"
+ 'p_road_to_absalot_1 "アブサロットへの道"
 	(list
 		"rn rn rn r4 !! r2 rn rc ,, ,, ,, ra r8 r8 r4 !! r2 rn rn "
 		"rn rn rn rc !! ra rc {{ ,, .. ,, {{ {{ {{ re !! ra rn rn "
@@ -36,7 +36,7 @@
 (mk-place-music p_road_to_absalot_1 'ml-dungeon-adventure)
 
 (mk-dungeon-room
- 'p_fire_bridge "Fire Bridge"
+ 'p_fire_bridge "火の橋"
 	(list
 		"xx xx xx rr rr xx xx xx ,, ,, ,, xx xx xx xx xx xx xx xx "
 		"xx ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, rr "
@@ -85,7 +85,7 @@
 (mk-place-music p_fire_bridge 'ml-dungeon-adventure)
 
 (mk-dungeon-room
- 'p_road_to_absalot_3 "Passage to Absalot"
+ 'p_road_to_absalot_3 "アブサロットへの道"
 	(list
 		"rn rn rn r8 r8 r8 r8 r8 r8 r8 r8 r8 r8 r8 r8 r8 rn rn rn "
 		"rn rn rc {C !! !! !c {{ {{ {{ {{ {{ !a !! !! {A ra rn rn "
@@ -124,7 +124,7 @@
   (bind 
    (kern-mk-char 
     'ch_r2a_statue           ; tag
-    "Statue"             ; name
+    "像"             ; name
     sp_statue         ; species
     nil              ; occ
     s_statue     ; sprite
@@ -148,7 +148,7 @@
 
 (kern-mk-place 
  'p_absalot_passage     ; tag
- "Secret Passage"      ; name
+ "隠し通路"      ; name
   nil          ; sprite
 	(kern-mk-map nil 19 40 pal_expanded
 		(list
@@ -228,7 +228,7 @@
  )
 
 (mk-tower
- 'p_gate_to_absalot "Gate To Absalot"
+ 'p_gate_to_absalot "アブサロットの門"
 	(list
 		"^^ ^^ ^^ ^^ ^^ ^^ ^^ xx xx xx xx xx ^^ ^^ ^^ ^^ ^^ ^^ ^^ "
 		"^^ ^^ ^^ xx xx xx xx xx ,, ,, ,, xx xx xx xx rr ^^ ^^ ^^ "
@@ -263,7 +263,7 @@
 (mk-place-music p_gate_to_absalot 'ml-small-town)
 
 (mk-tower
- 'p_tower_of_absalot "Tower of Absalot"
+ 'p_tower_of_absalot "アブサロットの塔"
 	(list
 		"^^ tt tt tc %% te bb %% .. .. ta tc bb ta tc %% %% %c ^^ "
 		"^^ ta tt %b ~f %% %% %% %% =| %d bb %b %% %% %% ~f ^3 ^^ "

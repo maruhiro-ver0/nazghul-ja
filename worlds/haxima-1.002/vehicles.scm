@@ -101,7 +101,7 @@
 		))	
 	))
 
-(mk-obj-type 't_shipswheel "ship's wheel" s_shipswheel layer-mechanism shipwheel-ifc)     
+(mk-obj-type 't_shipswheel "¬…Œÿ" s_shipswheel layer-mechanism shipwheel-ifc)     
          
 (define  (vehicle-mk-wheel facing)
 	(let ((kwheel (kern-mk-obj t_shipswheel 1)))
@@ -272,7 +272,7 @@
 		
   
 (kern-mk-vehicle-type 't_ship   ; tag
-                      "ship"    ; name
+                      "¡•"      ; name
                       s_ship    ; sprite
                       m_ship_n    ; map
                       t_cannon  ; ordnance
@@ -389,14 +389,14 @@
 			(list
 				(list (vehicle-mk-wheel facing) 4 6)
 				(list (arms-mk-cannon (facing-turn-90right facing)) 7 6)
-				(list (arms-mk-cannon (facing-turn-90left facing)) 1 6)				
+				(list (arms-mk-cannon (facing-turn-90left facing)) 1 6)
 				(list (kern-mk-obj t_onramp 1) 0 8)
 				(list (kern-mk-obj t_onramp 1) 8 8)
 			)))	
 	)))
   
 (kern-mk-vehicle-type 't_voidship   ; tag
-                      "voidship"    ; name
+                      "µı∂ı¡•"    ; name
                       s_void_ship   ; sprite
                       m_voidship_n    ; map
                       t_cannon  ; ordnance

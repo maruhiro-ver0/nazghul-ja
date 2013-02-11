@@ -29,144 +29,139 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Kathryn is a female mercenary wizard, currently in Bole on a mission
-;; to retrieve the Rune of Knowledge from the thief (Mouse) contracted to 
-;; purloin it from the Enchanter...and ensure he tells no tales.
-;; She is manipulative and ruthless.
+;; キャスリンは強欲な女性の魔術師で、魔道師から力の石版を盗むことを契約した泥
+;; 棒(ネズミ)からそれを取り戻すためボレにいる。…確実に魔道師は何も話していな
+;; い。
+;; 彼女は口がうまく、冷酷である。
 ;; 
-;; Kathryn is a potential party member (and an eventual betrayer).
-;; She is accompanied by the brute Thud, who will join the party if she does.
+;; キャスリンは仲間になる(そして最後には裏切る)。
+;; 彼女には荒々しいドンがついていて、彼女が仲間になれば彼も仲間になる。
 ;;----------------------------------------------------------------------------
 (define (kathryn-hail knpc kpc)
-  (say knpc "[You meet a lovely woman who regards you with contempt]. Yes?"))
+  (say knpc "［あなたを軽蔑の目で見るきれいな女性と会った。］はい？"))
 
 (define (kathryn-default knpc kpc)
-  (say knpc "[She studiously ignores you]"))
+  (say knpc "［彼女はあなたをわざと無視した。］"))
 
 (define (kathryn-name knpc kpc)
-  (say knpc "I don't give my name to vagabonds. Say, why don't you go PUMP "
-       "one of the locals for information? I saw some farm animals on the "
-       "way in..."))
+  (say knpc "よそ者には名前を言わないようにしているの。"
+       "それより、知りたいことがあれば別の奴にききなさいよ。"
+       "家畜がたくさんいる辺りの…。"))
 
 (define (kathryn-join knpc kpc)
-  (say knpc "[She chokes with laughter]"))
+  (say knpc "［彼女はむせるほど笑った。］"))
 
 (define (kathryn-job knpc kpc)
-  (say knpc "[Sneering] I'm a nun. Blowjobs are 500 gold."))
+  (say knpc "［あざ笑いながら］修道女よ。金貨500枚でご奉仕しましょうか？"))
 
 
 (define (kathryn-blowjob knpc kpc)
-  (say knpc "It's called SARCASM. Beat it, creep."))
+  (say knpc "嫌味よ。さっさと消えなさい。"))
 
 (define (kathryn-clients knpc kpc)
-  (say knpc "My clients prefer to remain anonymous. All you need to know is "
-       "that you don't want to piss them off."))
+  (say knpc "私の客は名前を明かさないものよ。"
+       "ただ一つ知っておくべきなのは、彼らを怒らせてはならないということよ。"))
 
 (define (kathryn-things knpc kpc)
-  (say knpc "I'm afraid a thug like you wouldn't understand."))
+  (say knpc "あなたのような人にはわからないモノよ。"))
 
 (define (kathryn-thief knpc kpc)
-  (say knpc "[She gives you a cunning look] You know, perhaps we can help "
-       "each other. I came here on behalf of my clients to purchase an item "
-       "in good faith from an anonymous seller."))
+  (say knpc "［彼女は狡猾な目であなたを見た。］なるほどね。もしかすると協力し合えるかもしれない。"
+       "ここへは客の代わりに名前を明かさない売人からモノを仕入れるために来たの。"))
 
 (define (kathryn-seller knpc kpc)
-  (say knpc "Imagine my shock when I discovered the item was stolen! "
-       "Of course, I demanded that he hand over the item immediately so I "
-       "could return it to its rightful owner. No sooner did I make my "
-       "intentions clear when he vanished before my eyes!"))
+  (say knpc "モノが盗まれたとわかったときのショックを想像してみて！"
+        "金と引き換えにモノを要求したら、すぐに目の前から消えたのよ！"))
 
 (define (kathryn-vanish knpc kpc)
-  (say knpc "Poof! Gone! The villian must have a ring of invisibility. "
-       "Thud and I have been searching for him everywhere."))
+  (say knpc "パッと！いなくなった！透明の指輪を持っていたに違いない。"
+       "ドンと一緒にそこらじゅうを探したわ。"))
 
 (define (kathryn-search knpc kpc)
   (define (do-join)
-    (say knpc "Excellent! Let's see if anyone around here knows about a thief.")
+    (say knpc "すばらしい！このあたりで泥棒について何か知っているか聞いてみましょう。")
     (if (in-inventory? knpc t_wis_quas_scroll)
         (begin
-          (say knpc "Oh, this scroll may come in handy. "
-               "You take it, I really don't understand these magical "
-               "thingies very well.")    
+          (say knpc "ああ、この巻物はきっと役に立つわ。"
+               "持っておいて。この魔法の奴はよくわからないけど。")
           (kern-obj-remove-from-inventory knpc t_wis_quas_scroll 1)
           (kern-obj-add-to-inventory kpc t_wis_quas_scroll 1)))
     (kern-char-join-player knpc)
     (if (and (defined? 'ch_thud)
              (is-alive? ch_thud))
         (begin
-          (say knpc "You won't mind if my cousin Thud joins us. "
-               "He's really such a child, and quite helpless without me.")
+          (say knpc "親戚のドンも加わっていいかしら。"
+               "こいつはガキみたいなもので、私がいないとどうしようもないから。")
           (kern-char-join-player ch_thud)))
     (kern-conv-end))
-  (say knpc "It seems we have a common goal. Join us, and when we catch the "
-       "villian we'll all return the item. You can keep any reward. "
-       "Knowing that we have done the right thing will "
-       "be enough for me and Thud. What do you say, tough guy, will you join "
-       "us?")
+  (say knpc "私たちの目的は同じようね。手を組んで悪党を捕まえてモノを取り返しましょう。"
+       "報酬は出すわ。"
+       "もしモノを取り戻せれば、私とドンには十分な額になるの。"
+       "どう？タフな方。仲間に加わらない？")
   (if (kern-conv-get-yes-no? kpc)
       (do-join)
       (begin
-        (say knpc "[She becomes distressed] Oh, please won't you help me! "
-             "My masters are powerful and cruel! If I don't return with the "
-             "item they seek there will be nowhere I can hide in this life "
-             "or the next! Won't you please join me?")
+        (say knpc "［彼女は動揺した。］ああ、どうか助けて！"
+             "私のボスは強くて乱暴なの！"
+             "もし探しているモノが取り返せなければ、一生隠れて生きていかなければならない！"
+             "どうか仲間に加わって？")
         (if (kern-conv-get-yes-no? kpc)
             (do-join)
             (begin
-              (say knpc "[She leans close with parted lips and lidded eyes] "
-                   "Okay, tough guy, you win. I don't want the silly item. "
-                   "I just find you irresistible. Let me come with you, "
-                   "pretty-please? I can be oh... so... grateful...")
+              (say knpc "［彼女は唇とまつげを近づけた。］"
+                   "ええ、タフな方。あなたの勝ちよ。くだらないモノはどうでもいい。"
+                   "あなた以外にはいないのよ。一緒に探しましょう。"
+                   "どうかお願い。お願いします…。")
               (if (kern-conv-get-yes-no? kpc)
                   (do-join)
-                  (say knpc "[She turns red and shrieks with rage] Fool! "
-                       "You have no idea who you are dealing with! What you "
-                       "seek draws the gaze of the darkest wizards in the "
-                       "land! That thief will know eternal torment when we "
-                       "catch him! And YOU HAD BETTER STAY OUT OF OUR WAY!")
+                  (say knpc "［彼女は怒りで顔を赤くし、金切り声を上げた。］バカ！"
+                       "解決する方法がないくせに！"
+                       "あなたが探しているのは、この地で最も暗き魔術師が睨んでいる物なのよ！"
+                       "泥棒を捕まえて永遠の苦痛を与えてやるわ！"
+                       "あなたは関わらないほうが身のためよ！")
                   (kern-conv-end)))))))
 
 (define (kathryn-tavern knpc kpc)
-  (say knpc "Nice place. If you're a cockroach."))
+  (say knpc "いい所よ。あなたがゴキブリならね。"))
 
 (define (kathryn-companion knpc kpc)
-  (say knpc "Thud? He's my... cousin."))
+  (say knpc "ドン？私の…親戚よ。"))
 
 (define (kathryn-cousin knpc kpc)
-  (say knpc "A DISTANT cousin."))
+  (say knpc "遠い親戚。"))
 
 (define (kathryn-bill knpc kpc)
-  (say knpc "The village idiot? He's probably out using his tool in the "
-       "forest. Why don't you go give him a hand?"))
+  (say knpc "あの村のバカ？きっと森で道具を使うために出て行ったのでしょう。"
+       "一緒に行ってきたら？"))
 
 (define (kathryn-hackle knpc kpc)
-  (say knpc "Crazy bitch? Lives across the creek? I'm afraid she can't cure "
-       "ugly. Sorry."))
+  (say knpc "あのイカレた雌狐？小川が交差する所にいる？"
+       "あの醜さは治らないでしょうね。残念だけど。"))
 
 (define (kathryn-may knpc kpc)
-  (say knpc "The innkeeper? Nosy old crone. Obviously you don't have money, "
-       "but if you did I'd warn you to sleep with it under your pillow."))
+  (say knpc "宿屋の？詮索好きのババアよ。あなたは金を持ってなさそうだけど、"
+       "もし持っていれば、寝るときは枕の下に隠しておくことね。"))
 
 (define (kathryn-melvin knpc kpc)
-  (say knpc "The cook? A dirty old man and a drunk."))
+  (say knpc "料理人の？汚い飲んだくれの年寄りよ。"))
 
 (define (kathryn-sorceress knpc kpc)
-  (say knpc "[She covers her mouth in mock fright] Ooh! You guessed my dirty "
-       "little secret! Now beat it or I'll use you as a torch."))
+  (say knpc "［彼女は驚いたふりをして手で口を覆った。］ああ！私の小さな汚れた秘密に気づいたわね！"
+       "消えうせなさい。さもないと松明のように燃やすわよ。"))
 
 (define (kathryn-scro knpc kpc)
   (if (is-player-party-member? knpc)
-      (say knpc "But I already gave you the only one I had. "
-           "I don't even know where I got it!")
-      (say knpc "A scroll? [She laughs] Shall I turn out my pockets for you? "
-           "Mind your own business.")))
+      (say knpc "持っているのはあなたにあげた一枚だけよ。"
+           "どこで手に入るのかもわからないわ！")
+      (say knpc "巻物？［彼女は笑った。］私のポケットに手を入れてみる？"
+           "自分の心配をしなさいよ。")))
 
 
 (define kathryn-conv
   (ifc nil
        (method 'default kathryn-default)
        (method 'hail kathryn-hail)
-       (method 'bye  (lambda (knpc kpc) (say knpc "Good riddance.")))
+       (method 'bye  (lambda (knpc kpc) (say knpc "清々したわ。")))
        (method 'job  kathryn-job)
        (method 'name kathryn-name)
        (method 'join kathryn-join)
@@ -188,6 +183,7 @@
        (method 'sear kathryn-search)
        (method 'sell kathryn-seller)
        (method 'sorc kathryn-sorceress)
+       (method 'witc kathryn-sorceress)
        (method 'tave kathryn-tavern)
        (method 'thud kathryn-companion)
        (method 'thie kathryn-thief)
@@ -205,7 +201,7 @@
     (kern-char-arm-self
      (kern-mk-char 
       'ch_kathryn ;;..tag
-      "Kathryn" ;;....name
+      "キャスリン" ;;....name
       sp_human ;;.....species
       oc_wizard ;;....occupation
       s_wizard ;;.....sprite

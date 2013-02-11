@@ -72,7 +72,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place 
  'p_bole     ; tag
- "Bole"      ; name
+ "ボレ"      ; name
  s_hamlet           ; sprite
  m_bole             ; map
  #f                 ; wraps
@@ -166,7 +166,7 @@
  )
 (kern-mk-place 
  'p_dryad_grove ; tag
- "Dryad Grove"   ; name
+ "木の精の林"   ; name
  nil     ; sprite
  m_dryad_grove  ; map
  #f               ; wraps

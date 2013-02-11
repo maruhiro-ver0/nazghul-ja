@@ -208,7 +208,7 @@
                		(if (and setfire (terrain-ok-for-field? loc))
               				(kern-obj-put-at (kern-mk-field F_fire (kern-dice-roll "1d5")) loc))
               			(if (not havemana)
-              					(kern-log-msg "Attack fizzles!"))
+              					(kern-log-msg "¹¶·â¤Ï¾Ã¤¨µî¤Ã¤¿¡ª"))
               			(on-hit-target ktarget dam 
               				(lambda (obj) (generic-burn obj targdamage))
               			)
@@ -305,7 +305,7 @@
            							nil nil))
                			)))
               			(if (not havemana)
-              					(kern-log-msg "Attack fizzles!")
+              					(kern-log-msg "¹¶·â¤Ï¾Ã¤¨µî¤Ã¤¿¡ª")
               					(begin
               						(if (not (null? (car proclist)))
               							((car proclist) loc))
@@ -382,7 +382,7 @@
 		(method 'hit-loc 
 			(lambda (kmissile kuser ktarget kplace x y dam)
 				(kern-fire-missile (eval 't_returning_axe_p) (mk-loc kplace x y) (kern-obj-get-location kuser))
-				(kern-log-msg "Magic axe returns!")
+				(kern-log-msg "ËâË¡¤ÎÉà¤¬Ìá¤Ã¤Æ¤­¤¿¡ª")
 			)
  	))
 )
@@ -393,42 +393,42 @@
    ;;    ==================================================================================================
    ;;    tag                 | name          | sprite          | gifc              | movement_mode | beam
    ;;    ====================================================================================================
-   (list 't_slingstone        "sling stone"    s_sling_stone     obj-ifc             mmode-missile  	#f)
-   (list 't_arrow_p           "arrow"          s_arrow           (mk-drop-proj-ifc 't_arrow 5)
+   (list 't_slingstone        "ÀÐ"             s_sling_stone     obj-ifc             mmode-missile  	#f)
+   (list 't_arrow_p           "Ìð"             s_arrow           (mk-drop-proj-ifc 't_arrow 5)
                                                                                      mmode-missile  	#f  )
-   (list 't_bolt_p            "bolt"           s_bolt            (mk-drop-proj-ifc 't_bolt 5)             
+   (list 't_bolt_p            "¥¯¥í¥¹¥Ü¥¦¤ÎÌð" s_bolt            (mk-drop-proj-ifc 't_bolt 5)             
                                                                                      mmode-missile  	#f  )
-   (list 't_warhead_p         "warhead"        s_warhead         warhead-ifc         mmode-missile  	#f  )
-   (list 't_cannonball_p      "cannonball"     s_cannonball      obj-ifc             mmode-missile  	#f  )
+   (list 't_warhead_p         "ÃÆÆ¬"           s_warhead         warhead-ifc         mmode-missile  	#f  )
+   (list 't_cannonball_p      "Ë¤ÃÆ"           s_cannonball      obj-ifc             mmode-missile  	#f  )
 
    
-   (list 't_poison_bolt       "poison bolt"    s_poison_bolt     poison-bolt-ifc     mmode-missile  	#f  )
-   (list 't_acid_bolt         "acid bolt"      s_acid_bolt       acid-bolt-ifc       mmode-missile  	#f  )
-   (list 't_fireball          "fireball"       s_fireball        fireball-ifc        mmode-missile  	#f  )
-   (list 't_deathball         "deathball"      s_deathball       deathball-ifc       mmode-missile  	#f  )
-   (list 't_slimeglob         "slime glob"     s_acid_bolt       obj-ifc             mmode-missile  	#f  )
-   (list 't_mfireball         "fireball"       s_fireball        temp-ifc            mmode-missile  	#f  )
-   (list 't_mpoison_bolt      "poison bolt"    s_poison_bolt     temp-ifc            mmode-missile  	#f  )
-   (list 't_prismatic_bolt    "prismatic bolt" s_prismatic_bolt  prismatic-bolt-ifc  mmode-missile  	#f  )
-   (list 't_stunball   			"stun ball" 	  s_lightning    stunball-ifc		 mmode-missile  	#f  )
-   (list 't_lightning_bolt  	"lightning bolt"	s_lightning      lightningbolt-ifc   mmode-missile  	#t  )  
-   (list 't_magicarrow_p      "arrow"          s_arrow           obj-ifc             mmode-missile  	#f  )
+   (list 't_poison_bolt       "ÆÇ±Õ"           s_poison_bolt     poison-bolt-ifc     mmode-missile  	#f  )
+   (list 't_acid_bolt         "»À"             s_acid_bolt       acid-bolt-ifc       mmode-missile  	#f  )
+   (list 't_fireball          "²Ð¤Î¶Ì"         s_fireball        fireball-ifc        mmode-missile  	#f  )
+   (list 't_deathball         "»à¤Î¶Ì"         s_deathball       deathball-ifc       mmode-missile  	#f  )
+   (list 't_slimeglob         "Ç´±Õ¤Î²ô"       s_acid_bolt       obj-ifc             mmode-missile  	#f  )
+   (list 't_mfireball         "²Ð¤Î¶Ì"         s_fireball        temp-ifc            mmode-missile  	#f  )
+   (list 't_mpoison_bolt      "ÆÇ±Õ"           s_poison_bolt     temp-ifc            mmode-missile  	#f  )
+   (list 't_prismatic_bolt    "¼·¿§¤ÎÁ®¸÷"     s_prismatic_bolt  prismatic-bolt-ifc  mmode-missile  	#f  )
+   (list 't_stunball          "¾×·â¤Î¶Ì"       s_lightning       stunball-ifc        mmode-missile  	#f  )
+   (list 't_lightning_bolt    "Íë·â"           s_lightning       lightningbolt-ifc   mmode-missile  	#t  )  
+   (list 't_magicarrow_p      "ËâË¡¤ÎÌð"       s_arrow           obj-ifc             mmode-missile  	#f  )
  
    
    
-   (list 't_mweb              "web"            s_thrownweb       temp-ifc            mmode-missile  	#f  )
-   (list 't_oil_p             "flaming oil"    s_flaming_oil     flaming-oil-ifc     mmode-missile  	#f  )
-   (list 't_smoke_bomb_p      "smoke bomb"     s_smoke_bomb      smoke-bomb-ifc      mmode-missile  	#f  )
-   (list 't_spear_p           "spear"          s_spear           (mk-drop-proj-ifc 't_spear 25)             
+   (list 't_mweb              "ÌÖ"             s_thrownweb       temp-ifc            mmode-missile  	#f  )
+   (list 't_oil_p             "²Ð±ê¥Ó¥ó"       s_flaming_oil     flaming-oil-ifc     mmode-missile  	#f  )
+   (list 't_smoke_bomb_p      "±ìËëÃÆ"         s_smoke_bomb      smoke-bomb-ifc      mmode-missile  	#f  )
+   (list 't_spear_p           "ÅêÁä"           s_spear           (mk-drop-proj-ifc 't_spear 25)             
                                                                                      mmode-missile  	#f  )
-   (list 't_thrown_axe_p      "thrown axe"     s_thrown_axe      magicaxe-ifc        mmode-missile  	#f  )
-   (list 't_returning_axe_p   "thrown axe"     s_thrown_axe      obj-ifc              mmode-return  	#f  )
-   (list 't_thrown_rock_p     "thrown rock"    s_cannonball      (mk-drop-proj-ifc 't_thrown_rock 80)             
+   (list 't_thrown_axe_p      "¼êÅê¤²Éà"       s_thrown_axe      magicaxe-ifc        mmode-missile  	#f  )
+   (list 't_returning_axe_p   "¼êÅê¤²Éà"       s_thrown_axe      obj-ifc              mmode-return  	#f  )
+   (list 't_thrown_rock_p     "Åê¤²¤é¤ì¤¿´ä"   s_cannonball      (mk-drop-proj-ifc 't_thrown_rock 80)             
                                                                                      mmode-missile  	#f  )
-   (list 't_thrown_boulder_p  "hurled boulder" s_thrown_boulder  (mk-drop-proj-ifc 't_thrown_boulder 80)             
+   (list 't_thrown_boulder_p  "Åê¤²¤é¤ì¤¿ÀÐ"   s_thrown_boulder  (mk-drop-proj-ifc 't_thrown_boulder 80)             
                                                                                      mmode-missile  	#f  )
 
-   (list 't_slime_vial_p      "vial of slime"  s_thrown_green_potion vial-of-slime-ifc  mmode-missile  	#f  )
+   (list 't_slime_vial_p      "Ç´±Õ¤ÎÆþ¤Ã¤¿¥Ó¥ó" s_thrown_green_potion vial-of-slime-ifc  mmode-missile  	#f  )
 
    ))
 
@@ -441,10 +441,10 @@
    ;;    tag                 | name          | sprite          | gifc              | movement_mode 
    ;;    ===========================================================================================
 
-   (list 't_arrow             "arrow"          s_arrowobj        obj-ifc             mmode-smallobj )
-   (list 't_bolt              "bolt"           s_boltobj         obj-ifc             mmode-smallobj )
-   (list 't_warhead           "warhead"        s_warhead         warhead-ifc         mmode-smallobj )
-   (list 't_cannonball        "cannonball"     s_cannonball      obj-ifc             mmode-smallobj )
+   (list 't_arrow             "Ìð"             s_arrowobj        obj-ifc             mmode-smallobj )
+   (list 't_bolt              "¥¯¥í¥¹¥Ü¥¦¤ÎÌð" s_boltobj         obj-ifc             mmode-smallobj )
+   (list 't_warhead           "ÃÆÆ¬"           s_warhead         warhead-ifc         mmode-smallobj )
+   (list 't_cannonball        "Ë¤ÃÆ"           s_cannonball      obj-ifc             mmode-smallobj )
    ))
    
    
@@ -479,25 +479,25 @@
    ;;     =========================================================================================================================================================================================
    ;;     tag            | name           |  sprite     | to-hit | damage | to-def | AP_cost | AP_mod       | slots       | hnds | rng | missile        | ammo  | ubiq | weight | stratt | dexatt | dammod | avoid | ifc
    ;;     =========================================================================================================================================================================================
-   (list 't_sling          "sling"           s_sling      "1d2-2"  "1d4"    "-1"      (weap-ap 1) 0   slot-weapon   1      4     t_slingstone     nil     #t     0        10       60       30       0.9	proj-ifc)
-   (list 't_sling_4        "+4 sling"        s_sling      "+3"     "1d4+4"  "+0"      (weap-ap 1) 0   slot-weapon   1      6     t_slingstone     nil     #t     0        10       60       30       0.9	proj-ifc)
+   (list 't_sling          "ÅêÀÐÉ³"          s_sling      "1d2-2"  "1d4"    "-1"      (weap-ap 1) 0   slot-weapon   1      4     t_slingstone     nil     #t     0        10       60       30       0.9	proj-ifc)
+   (list 't_sling_4        "+4 ÅêÀÐÉ³"       s_sling      "+3"     "1d4+4"  "+0"      (weap-ap 1) 0   slot-weapon   1      6     t_slingstone     nil     #t     0        10       60       30       0.9	proj-ifc)
 
-   (list 't_self_bow       "self bow"        s_bow        "+1"     "1d6"    "-2"      (weap-ap 0.8) 0   slot-weapon   2      4     t_arrow_p        t_arrow #f     2        10       70       20       0.9  proj-ifc)
-   (list 't_bow            "bow"             s_bow        "1d3-2"  "2d4"    "-2"     (weap-ap 1) 0   slot-weapon   2      5     t_arrow_p        t_arrow #f     2        10       70       20       0.9  proj-ifc)
-   (list 't_long_bow       "longbow"         s_bow        "1d3-2"  "2d6+1"  "-2"     (weap-ap 1.2) 0   slot-weapon   2      6     t_arrow_p        t_arrow #f     2        10       70       20       0.9  proj-ifc)
-   (list 't_great_bow      "great bow"       s_bow        "1d3-2"  "2d6+3"  "-2"     (weap-ap 1.34) 0   slot-weapon   2      7     t_arrow_p        t_arrow #f     2        10       70       20       0.9  proj-ifc)
+   (list 't_self_bow       "Ã»µÝ"            s_bow        "+1"     "1d6"    "-2"      (weap-ap 0.8) 0   slot-weapon   2      4     t_arrow_p        t_arrow #f     2        10       70       20       0.9  proj-ifc)
+   (list 't_bow            "µÝ"              s_bow        "1d3-2"  "2d4"    "-2"      (weap-ap 1) 0   slot-weapon   2      5     t_arrow_p        t_arrow #f     2        10       70       20       0.9  proj-ifc)
+   (list 't_long_bow       "Ä¹µÝ"            s_bow        "1d3-2"  "2d6+1"  "-2"      (weap-ap 1.2) 0   slot-weapon   2      6     t_arrow_p        t_arrow #f     2        10       70       20       0.9  proj-ifc)
+   (list 't_great_bow      "µðÂç¤ÊµÝ"        s_bow        "1d3-2"  "2d6+3"  "-2"      (weap-ap 1.34) 0   slot-weapon   2      7     t_arrow_p        t_arrow #f     2        10       70       20       0.9  proj-ifc)
 
-   (list 't_lt_crossbow    "light crossbow"  s_crossbow   "1d4-2"  "2d5"    "-1"     (weap-ap 1) 0   slot-weapon   2      5     t_bolt_p         t_bolt  #f     3         0       80        0       0.95 proj-ifc)
-   (list 't_crossbow       "crossbow"        s_crossbow   "1d4-2"  "4d4"    "-1"     (weap-ap 1) 0   slot-weapon   2      6     t_bolt_p         t_bolt  #f     3         0       80        0       0.95 proj-ifc)
-   (list 't_hvy_crossbow   "heavy crossbow"  s_crossbow   "1d4-2"  "4d6+2"  "-1"     (weap-ap 2) 0   slot-weapon   2      7     t_bolt_p         t_bolt  #f     3         0       80        0       0.95 proj-ifc)
-   (list 't_trpl_crossbow  "triple crossbow" s_crossbow   "1d4-2"  "2d5"    "-1"      (weap-ap 0.67) 0   slot-weapon   2      5     t_bolt_p         t_bolt  #f     3         0       80        0       0.95 proj-ifc)
+   (list 't_lt_crossbow    "·Ú¥¯¥í¥¹¥Ü¥¦"    s_crossbow   "1d4-2"  "2d5"    "-1"      (weap-ap 1) 0   slot-weapon   2      5     t_bolt_p         t_bolt  #f     3         0       80        0       0.95 proj-ifc)
+   (list 't_crossbow       "¥¯¥í¥¹¥Ü¥¦"      s_crossbow   "1d4-2"  "4d4"    "-1"      (weap-ap 1) 0   slot-weapon   2      6     t_bolt_p         t_bolt  #f     3         0       80        0       0.95 proj-ifc)
+   (list 't_hvy_crossbow   "½Å¥¯¥í¥¹¥Ü¥¦"    s_crossbow   "1d4-2"  "4d6+2"  "-1"      (weap-ap 2) 0   slot-weapon   2      7     t_bolt_p         t_bolt  #f     3         0       80        0       0.95 proj-ifc)
+   (list 't_trpl_crossbow  "»°Ï¢¥¯¥í¥¹¥Ü¥¦"  s_crossbow   "1d4-2"  "2d5"    "-1"      (weap-ap 0.67) 0   slot-weapon   2      5     t_bolt_p         t_bolt  #f     3         0       80        0       0.95 proj-ifc)
 
-   (list 't_doom_staff     "doom staff"      s_doom_staff "1d4"    "1d2"    "+2"     (weap-ap 1) 0    slot-weapon   2      5     t_fireball       nil     #t     2         0       50        0       1.0  proj-ifc)
-   (list 't_acid_spray     "acid spray"      nil          "-7"     "1d6"    "+0"     (weap-ap 1) 0    slot-nil      2      2     t_slimeglob      nil     #t     0        10       50       20       1.0  proj-ifc)
-   (list 't_fire_glob      "fire glob"       nil          "-8"     "1d6"    "+0"     (weap-ap 1) 0    slot-nil      2      2     t_fireball       nil     #t     0        10       50       20       1.0  proj-ifc)
-   (list 't_stun_wand      "stun wand"       s_stun_wand  "-2"     "1d4"    "-1"     (weap-ap 1) 0    slot-weapon   1      6     t_stunball       nil     #t     2         0       80        0       1.0  proj-ifc)
-   (list 't_acid_wand      "acid wand"       s_stun_wand  "-2"     "1d4"    "-1"     (weap-ap 1) 0    slot-weapon   1      6     t_acid_bolt      nil     #t     2         0       80        0       1.0  proj-ifc)
-   (list 't_prismatic_gaze "prismatic gaze"  nil          "1d4"    "0"      "+0"     (weap-ap 1) 0    slot-nil      1      3     t_prismatic_bolt nil     #t     0         0        0        0       0.85 proj-ifc)
+   (list 't_doom_staff     "ÇËÌÇ¤Î¾ó"        s_doom_staff "1d4"    "1d2"    "+2"     (weap-ap 1) 0    slot-weapon   2      5     t_fireball       nil     #t     2         0       50        0       1.0  proj-ifc)
+   (list 't_acid_spray     "»À"              nil          "-7"     "1d6"    "+0"     (weap-ap 1) 0    slot-nil      2      2     t_slimeglob      nil     #t     0        10       50       20       1.0  proj-ifc)
+   (list 't_fire_glob      "±ê¤Î²ô"          nil          "-8"     "1d6"    "+0"     (weap-ap 1) 0    slot-nil      2      2     t_fireball       nil     #t     0        10       50       20       1.0  proj-ifc)
+   (list 't_stun_wand      "¾×·â¤ÎËÀ"        s_stun_wand  "-2"     "1d4"    "-1"     (weap-ap 1) 0    slot-weapon   1      6     t_stunball       nil     #t     2         0       80        0       1.0  proj-ifc)
+   (list 't_acid_wand      "»À¤ÎËÀ"          s_stun_wand  "-2"     "1d4"    "-1"     (weap-ap 1) 0    slot-weapon   1      6     t_acid_bolt      nil     #t     2         0       80        0       1.0  proj-ifc)
+   (list 't_prismatic_gaze "¼·¿§¤Î´ã¸÷"      nil          "1d4"    "0"      "+0"     (weap-ap 1) 0    slot-nil      1      3     t_prismatic_bolt nil     #t     0         0        0        0       0.85 proj-ifc)
    ))
 
 ;; ============================================================================
@@ -510,15 +510,15 @@
    ;;     =================================================================================================================================================================================================================
    ;;     tag              | name          | sprite                   | to-hit | dmg | to-def | AP_cost | AP_mod        | slots       | hnds | rng | missile          | ubiq | ifc              | weight | stratt | dexatt | dammod | avoid
    ;;     =================================================================================================================================================================================================================
-   (list  't_thrown_rock    "small rock"    s_cannonball                "-2"     "1d2"    "-2"   (weap-ap 1.33) 0  slot-weapon   1      4     t_thrown_rock_p    #t     obj-ifc             1       20       20         0      0.9 )
-   (list  't_thrown_boulder "loose boulder" s_thrown_boulder            "-2"     "3d4+1"  "-2"  (weap-ap 2) 0  slot-weapon   2      5     t_thrown_boulder_p #f     obj-ifc            10       40       20        60      0.9 )
+   (list  't_thrown_rock    "¾®¤µ¤Ê´ä"      s_cannonball                "-2"     "1d2"    "-2"   (weap-ap 1.33) 0  slot-weapon   1      4     t_thrown_rock_p    #t     obj-ifc             1       20       20         0      0.9 )
+   (list  't_thrown_boulder "±Ô¤¤ÀÐ"        s_thrown_boulder            "-2"     "3d4+1"  "-2"  (weap-ap 2) 0  slot-weapon   2      5     t_thrown_boulder_p #f     obj-ifc            10       40       20        60      0.9 )
 
-   (list  't_spear          "spear"         s_spearobj                  "+1"     "1d8+1"  "+1"  (weap-ap 1) 0  slot-weapon   1      4     t_spear_p          #f     obj-ifc             2       30       60        40      1.0 )
-   (list  't_magic_axe      "magical axe"   s_throwing_axe              "+2"     "2d4+2"  "+0"  (weap-ap 1) 0  slot-weapon   1      4     t_thrown_axe_p     #t     obj-ifc             2       30       60        40      1.0 )
+   (list  't_spear          "ÅêÁä"          s_spearobj                  "+1"     "1d8+1"  "+1"  (weap-ap 1) 0  slot-weapon   1      4     t_spear_p          #f     obj-ifc             2       30       60        40      1.0 )
+   (list  't_magic_axe      "ËâË¡¤ÎÉà"      s_throwing_axe              "+2"     "2d4+2"  "+0"  (weap-ap 1) 0  slot-weapon   1      4     t_thrown_axe_p     #t     obj-ifc             2       30       60        40      1.0 )
 
-   (list  't_oil            "flaming oil"   s_oil_potion                "-1"     "1d6"    "-2"  (weap-ap 1.2) 0  slot-weapon   1      4     t_oil_p            #f     flaming-oil-ifc     1       20       30         0      0.9 )
-   (list  't_slime_vial     "vial of slime" s_squat_bubbly_green_potion "-1"     "1d2"    "-2"  (weap-ap 1.2) 0  slot-weapon   1      4     t_slime_vial_p     #f     vial-of-slime-ifc   1       20       30         0      1.0 )
-   (list  't_smoke_bomb     "smoke bomb"    s_smoke_potion                "-1"     "1"      "-2"  (weap-ap 1.2) 0  slot-weapon   1      6     t_smoke_bomb_p     #f     smoke-bomb-ifc      1       20       30         0      0.9 )
+   (list  't_oil            "²Ð±ê¥Ó¥ó"      s_oil_potion                "-1"     "1d6"    "-2"  (weap-ap 1.2) 0  slot-weapon   1      4     t_oil_p            #f     flaming-oil-ifc     1       20       30         0      0.9 )
+   (list  't_slime_vial     "Ç´±Õ¤ÎÆþ¤Ã¤¿¥Ó¥ó" s_squat_bubbly_green_potion "-1"  "1d2"    "-2"  (weap-ap 1.2) 0  slot-weapon   1      4     t_slime_vial_p     #f     vial-of-slime-ifc   1       20       30         0      1.0 )
+   (list  't_smoke_bomb     "±ìËëÃÆ"        s_smoke_potion              "-1"     "1"      "-2"  (weap-ap 1.2) 0  slot-weapon   1      6     t_smoke_bomb_p     #f     smoke-bomb-ifc      1       20       30         0      0.9 )
    ))
 
 (map (lambda (type) (apply mk-thrown-arms-type type)) thrown-arms-types)  
@@ -550,31 +550,31 @@
    ;;     ===================================================================================================================================================
    ;;     tag          |    name           | sprite         | to-hit | damage | to-def | AP_cost | AP_mod | slots | hnds | rng | weight | dxmod | stmod | dammod | avoid
    ;;     ===================================================================================================================================================
-   (list  't_hands          "bare hands"     nil              "1d2"    "1d2"    "1d2"    (weap-ap 0.67) 0 slot-nil      1      1     0        50      20       10      1.0  )
-   (list  't_F_fangs        "fangs"          nil              "1d2"    "1d4"    "+0"     (weap-ap 0.67) 0 slot-nil      1      1     0        50      20       30      1.0  )
-   (list  't_fangs          "fangs"          nil              "1d2"    "1d6"    "+0"      (weap-ap 1)   0 slot-nil      1      1     0        50      20       30      1.0  )
-   (list  't_G_fangs        "great fangs"    nil              "1d2"    "1d10"   "+0"     (weap-ap 1.34) 0 slot-nil      1      1     0        50      20       30      1.0  )
-   (list  't_horns          "horns"          nil              "1d2"    "1d8"    "1d2"    (weap-ap 0.67) 0 slot-nil      1      1     0        30      40       60      1.0  )
-   (list  't_stinger        "stinger"        nil              "1d2"    "1d2"    "+0"     (weap-ap 0.67) 0 slot-nil      1      1     0        50      20       10      1.0  )
-   (list  't_tentacles      "tentacles"      nil              "1d3"    "4d4"    "4d2"     (weap-ap 1)   0 slot-nil      1      1     0        70      20       60      1.0  )
-   (list  't_beak           "beak"           nil              "+0"     "2d4"    "+0"      (weap-ap 1)   0 slot-nil      1      1     0        50      30       30      1.0  )
-   (list  't_pincers        "pincers"        nil              "-1"     "4d4"    "4d2"     (weap-ap 1.2) 0 slot-nil      1      1     0        50      30       30      1.0  )
+   (list  't_hands          "ÁÇ¼ê"           nil              "1d2"    "1d2"    "1d2"    (weap-ap 0.67) 0 slot-nil      1      1     0        50      20       10      1.0  )
+   (list  't_F_fangs        "²ç"             nil              "1d2"    "1d4"    "+0"     (weap-ap 0.67) 0 slot-nil      1      1     0        50      20       30      1.0  )
+   (list  't_fangs          "²ç"             nil              "1d2"    "1d6"    "+0"      (weap-ap 1)   0 slot-nil      1      1     0        50      20       30      1.0  )
+   (list  't_G_fangs        "µðÂç¤Ê²ç"       nil              "1d2"    "1d10"   "+0"     (weap-ap 1.34) 0 slot-nil      1      1     0        50      20       30      1.0  )
+   (list  't_horns          "³Ñ"             nil              "1d2"    "1d8"    "1d2"    (weap-ap 0.67) 0 slot-nil      1      1     0        30      40       60      1.0  )
+   (list  't_stinger        "¿Ë"             nil              "1d2"    "1d2"    "+0"     (weap-ap 0.67) 0 slot-nil      1      1     0        50      20       10      1.0  )
+   (list  't_tentacles      "¿¨¼ê"           nil              "1d3"    "4d4"    "4d2"     (weap-ap 1)   0 slot-nil      1      1     0        70      20       60      1.0  )
+   (list  't_beak           "¤¯¤Á¤Ð¤·"       nil              "+0"     "2d4"    "+0"      (weap-ap 1)   0 slot-nil      1      1     0        50      30       30      1.0  )
+   (list  't_pincers        "¥Ï¥µ¥ß"         nil              "-1"     "4d4"    "4d2"     (weap-ap 1.2) 0 slot-nil      1      1     0        50      30       30      1.0  )
 
-   (list  't_dagger         "dagger"         s_dagger         "1d4"    "1d4"    "1d2"     (weap-ap 0.8) 0 slot-weapon   1      1     0        80      10       10      1.0  )
-   (list  't_dagger_4       "+4 dagger"      s_dagger         "1d4+4"  "1d4+4"  "1d2+4"   (weap-ap 0.8) 0 slot-weapon   1      1     0        80      10       10      1.0  )
-   (list  't_mace           "mace"           s_mace           "1d4"    "1d6+2"  "+0"      (weap-ap 1)   0 slot-weapon   1      1     3        20      60       80      0.95 )
-   (list  't_axe            "axe"            s_axe            "1d2"    "2d4+2"  "+0"      (weap-ap 1.2) 0 slot-weapon   1      1     3        30      50       90      0.95 )
-   (list  't_sword          "sword"          s_sword          "1d2"    "1d8+1"  "1d2"     (weap-ap 1)   0 slot-weapon   1      1     2        50      20       70      1.0  )
-   (list  't_sword_2        "+2 sword"       s_sword          "1d2+2"  "1d8+3"  "1d2+2"   (weap-ap 1)   0 slot-weapon   1      1     2        50      20       70      1.0  )
-   (list  't_sword_4        "+4 sword"       s_sword          "1d2+4"  "1d8+5"  "1d2+4"   (weap-ap 1)   0 slot-weapon   1      1     2        50      20       70      1.0  )
-   (list  't_2H_axe         "2H axe"         s_2h_axe         "+0"     "4d4+4"  "-2"     (weap-ap 1.34) 0 slot-weapon   2      1     4        20      60      100      0.9  )
-   (list  't_2H_sword       "2H sword"       s_2h_sword       "+0"     "2d8+2"  "+1"      (weap-ap 1.2) 0 slot-weapon   2      1     4        40      40       90      0.95 )
-   (list  't_morning_star   "morning star"   s_morning_star   "1d2+2"  "1d6+1"  "-1"      (weap-ap 1)   0 slot-weapon   1      2     3        20      40       70      0.9  )
-   (list  't_morning_star_2 "+2 morning star" s_morning_star  "1d2+4"  "1d6+3"  "+2"      (weap-ap 1)   0 slot-weapon   1      2     3        20      40       70      0.9  )
-   (list  't_halberd        "halberd"        s_halberd        "1d3+1"  "2d8-2"  "1d2"     (weap-ap 1)   0 slot-weapon   2      2     4        30      30      100      0.9  )
-   (list  't_staff          "staff"          s_staff          "1d3"    "1d4"    "1d3"     (weap-ap 0.8) 0 slot-weapon   2      2     2        60      30       40      1.0  )
-   (list  't_eldritch_blade "eldritch blade" s_eldritch_blade "+2"     "3d7+5"  "+0"     (weap-ap 1.34) 0 slot-weapon   2      1     2        50      20       70      1.0  )
-   (list  't_mystic_sword   "mystic sword"   s_mystic_sword   "+3"     "1d10+5" "+2"      (weap-ap 1)   0 slot-weapon   1      1     1        60      20       70      1.0  )
+   (list  't_dagger         "Ã»·õ"           s_dagger         "1d4"    "1d4"    "1d2"     (weap-ap 0.8) 0 slot-weapon   1      1     0        80      10       10      1.0  )
+   (list  't_dagger_4       "+4 Ã»·õ"        s_dagger         "1d4+4"  "1d4+4"  "1d2+4"   (weap-ap 0.8) 0 slot-weapon   1      1     0        80      10       10      1.0  )
+   (list  't_mace           "ÄÊÌ·"           s_mace           "1d4"    "1d6+2"  "+0"      (weap-ap 1)   0 slot-weapon   1      1     3        20      60       80      0.95 )
+   (list  't_axe            "Éà"             s_axe            "1d2"    "2d4+2"  "+0"      (weap-ap 1.2) 0 slot-weapon   1      1     3        30      50       90      0.95 )
+   (list  't_sword          "·õ"             s_sword          "1d2"    "1d8+1"  "1d2"     (weap-ap 1)   0 slot-weapon   1      1     2        50      20       70      1.0  )
+   (list  't_sword_2        "+2 ·õ"          s_sword          "1d2+2"  "1d8+3"  "1d2+2"   (weap-ap 1)   0 slot-weapon   1      1     2        50      20       70      1.0  )
+   (list  't_sword_4        "+4 ·õ"          s_sword          "1d2+4"  "1d8+5"  "1d2+4"   (weap-ap 1)   0 slot-weapon   1      1     2        50      20       70      1.0  )
+   (list  't_2H_axe         "Î¾¼êÉà"         s_2h_axe         "+0"     "4d4+4"  "-2"     (weap-ap 1.34) 0 slot-weapon   2      1     4        20      60      100      0.9  )
+   (list  't_2H_sword       "Î¾¼ê·õ"         s_2h_sword       "+0"     "2d8+2"  "+1"      (weap-ap 1.2) 0 slot-weapon   2      1     4        40      40       90      0.95 )
+   (list  't_morning_star   "»ÉÉÕ¤­Å´µå"     s_morning_star   "1d2+2"  "1d6+1"  "-1"      (weap-ap 1)   0 slot-weapon   1      2     3        20      40       70      0.9  )
+   (list  't_morning_star_2 "+2 »ÉÉÕ¤­Å´µå"  s_morning_star   "1d2+4"  "1d6+3"  "+2"      (weap-ap 1)   0 slot-weapon   1      2     3        20      40       70      0.9  )
+   (list  't_halberd        "ÉàÁä"           s_halberd        "1d3+1"  "2d8-2"  "1d2"     (weap-ap 1)   0 slot-weapon   2      2     4        30      30      100      0.9  )
+   (list  't_staff          "¾ó"             s_staff          "1d3"    "1d4"    "1d3"     (weap-ap 0.8) 0 slot-weapon   2      2     2        60      30       40      1.0  )
+   (list  't_eldritch_blade "ÉÔµ¤Ì£¤Ê¿Ï"     s_eldritch_blade "+2"     "3d7+5"  "+0"     (weap-ap 1.34) 0 slot-weapon   2      1     2        50      20       70      1.0  )
+   (list  't_mystic_sword   "¿ÀÈë¤Î·õ"       s_mystic_sword   "+3"     "1d10+5" "+2"      (weap-ap 1)   0 slot-weapon   1      1     1        60      20       70      1.0  )
    ))
    
 (kern-mk-sprite 's_leather_helm  ss_arms 1 48 #f 0)
@@ -589,25 +589,25 @@
    ;;     ===============================================================================================================
    ;;     tag               | name            |  sprite        |  to-hit | armor  | slots     | equip_AP | AP_mod | weight | avoid 
    ;;     ===============================================================================================================
-   (list   't_leather_helm    "leather helm"     s_leather_helm   "-1"     "1d2"    slot-helm    (weap-ap 1) -0  0  1.0  )
-   (list   't_leather_helm_2  "+2 leather helm"  s_leather_helm   "+0"     "1d2+2"  slot-helm    (weap-ap 1) -0  0  1.0  )
-   (list   't_leather_helm_4  "+4 leather helm"  s_leather_helm   "+0"     "1d2+4"  slot-helm    (weap-ap 1) -0  0  1.0  )
+   (list   't_leather_helm    "Èé³õ"             s_leather_helm   "-1"     "1d2"    slot-helm    (weap-ap 1) -0  0  1.0  )
+   (list   't_leather_helm_2  "+2 Èé³õ"          s_leather_helm   "+0"     "1d2+2"  slot-helm    (weap-ap 1) -0  0  1.0  )
+   (list   't_leather_helm_4  "+4 Èé³õ"          s_leather_helm   "+0"     "1d2+4"  slot-helm    (weap-ap 1) -0  0  1.0  )
 
-   (list   't_chain_coif      "chain coif"       s_chain_coif     "-1"     "1d3"    slot-helm    (weap-ap 1) (armour-ap -1)  1  0.9  )
-   (list   't_chain_coif_4    "+4 chain coif"    s_chain_coif     "+0"     "1d3+4"  slot-helm    (weap-ap 1) (armour-ap -1)  1  0.9  )
+   (list   't_chain_coif      "º¿Æ¬¶Ò"           s_chain_coif     "-1"     "1d3"    slot-helm    (weap-ap 1) (armour-ap -1)  1  0.9  )
+   (list   't_chain_coif_4    "+4 º¿Æ¬¶Ò"        s_chain_coif     "+0"     "1d3+4"  slot-helm    (weap-ap 1) (armour-ap -1)  1  0.9  )
 
-   (list   't_iron_helm       "iron helm"        s_iron_helm      "-1"     "1d4"    slot-helm    (weap-ap 1) (armour-ap -2)  2  0.9  )
-   (list   't_iron_helm_4     "+4 iron helm"     s_iron_helm      "+0"     "1d4+4"  slot-helm    (weap-ap 1) (armour-ap -2)  2  0.9  )
+   (list   't_iron_helm       "Å´³õ"             s_iron_helm      "-1"     "1d4"    slot-helm    (weap-ap 1) (armour-ap -2)  2  0.9  )
+   (list   't_iron_helm_4     "+4 Å´³õ"          s_iron_helm      "+0"     "1d4+4"  slot-helm    (weap-ap 1) (armour-ap -2)  2  0.9  )
 
-   (list   't_armor_leather   "leather armor"    s_leather_armor  "-1"     "1d4"    slot-armor   (weap-ap 2) (armour-ap -1)  2  0.85 )
-   (list   't_armor_leather_2 "+2 leather armor" s_leather_armor  "+0"     "1d4+2"  slot-armor   (weap-ap 2) (armour-ap -1)  2  0.85 )
-   (list   't_armor_leather_4 "+4 leather armor" s_leather_armor  "+0"     "1d4+4"  slot-armor   (weap-ap 2) (armour-ap -1)  2  0.9  )
+   (list   't_armor_leather   "Èé³»"             s_leather_armor  "-1"     "1d4"    slot-armor   (weap-ap 2) (armour-ap -1)  2  0.85 )
+   (list   't_armor_leather_2 "+2 Èé³»"          s_leather_armor  "+0"     "1d4+2"  slot-armor   (weap-ap 2) (armour-ap -1)  2  0.85 )
+   (list   't_armor_leather_4 "+4 Èé³»"          s_leather_armor  "+0"     "1d4+4"  slot-armor   (weap-ap 2) (armour-ap -1)  2  0.9  )
 
-   (list   't_armor_chain     "chain armor"      s_chain_armor    "-2"     "2d4"    slot-armor   (weap-ap 2) (armour-ap -5)  4  0.7  )
-   (list   't_armor_chain_4   "+4 chain armor"   s_chain_armor    "+0"     "2d4+4"  slot-armor   (weap-ap 2) (armour-ap -5)  4  0.8  )
+   (list   't_armor_chain     "º¿¤«¤é¤Ó¤é"       s_chain_armor    "-2"     "2d4"    slot-armor   (weap-ap 2) (armour-ap -5)  4  0.7  )
+   (list   't_armor_chain_4   "+4 º¿¤«¤é¤Ó¤é"    s_chain_armor    "+0"     "2d4+4"  slot-armor   (weap-ap 2) (armour-ap -5)  4  0.8  )
 
-   (list   't_armor_plate     "plate armor"      s_plate_armor    "-4"     "4d4"    slot-armor   (weap-ap 5) (armour-ap -10) 8  0.6  )
-   (list   't_armor_plate_4   "+4 plate armor"   s_plate_armor    "+0"     "4d4+4"  slot-armor   (weap-ap 5) (armour-ap -10) 8  0.7  )
+   (list   't_armor_plate     "¹ÃÑÉ"             s_plate_armor    "-4"     "4d4"    slot-armor   (weap-ap 5) (armour-ap -10) 8  0.6  )
+   (list   't_armor_plate_4   "+4 ¹ÃÑÉ"          s_plate_armor    "+0"     "4d4+4"  slot-armor   (weap-ap 5) (armour-ap -10) 8  0.7  )
    ))	
 
 (kern-mk-sprite 's_shield            ss_arms 1 54 #f 0)
@@ -618,9 +618,9 @@
    ;;     ============================================================================================================
    ;;     tag                 | name             | sprite           | to-hit | deflect | AP_mod | slots      | weight | avoid  
    ;;     ============================================================================================================
-   (list   't_shield           "small shield"     s_shield            "-1"     "5"    -0  slot-shield  2         0.9  )
-   (list   't_shield_4         "+4 small shield"  s_shield            "+0"     "9"    -0  slot-shield  2         0.95 )
-   (list   't_scratched_shield "scratched shield" s_scratched_shield  "+0"     "7"    -0  slot-shield  2         0.9  )
+   (list   't_shield           "¾®·¿¤Î½â"         s_shield            "-1"     "5"    -0  slot-shield  2         0.9  )
+   (list   't_shield_4         "+4 ¾®·¿¤Î½â"      s_shield            "+0"     "9"    -0  slot-shield  2         0.95 )
+   (list   't_scratched_shield "½ý¤Î¤¢¤ë½â"       s_scratched_shield  "+0"     "7"    -0  slot-shield  2         0.9  )
    ))
 
 
@@ -635,7 +635,7 @@
 (kern-mk-sprite 's_spiked_helm    ss_arms 1 46 #f 0)
 (kern-mk-sprite 's_spiked_shield  ss_arms 1 47 #f 0)
 
-(kern-mk-arms-type 't_spiked_helm "spiked helm" s_spiked_helm
+(kern-mk-arms-type 't_spiked_helm "»ÉÉÕ¤­³õ" s_spiked_helm
                    "0" "1d4" "3" "0"
                    slot-helm 1 1 (weap-ap 2) -0
                    nil nil #f #f
@@ -643,7 +643,7 @@
                    nil obj-ifc-cap obj-ifc
 				   30 10 20 0.9 mmode-smallobj)
 
-(kern-mk-arms-type 't_spiked_shield "spiked shield" s_spiked_shield
+(kern-mk-arms-type 't_spiked_shield "»ÉÉÕ¤­½â" s_spiked_shield
                    "0" "1d5" "0" "5"
                    slot-shield 1 1 (weap-ap 2) -0
                    nil nil #f #f
@@ -668,12 +668,12 @@
                	))
          )))          
 							
-(kern-mk-arms-type 't_flaming_sword "flaming sword" s_flaming_sword "1d2" "1d8+2" "0" "1d2" slot-weapon 1 1 (weap-ap 1) 0 nil nil #f #f 2 nil
+(kern-mk-arms-type 't_flaming_sword "±ê¤Î·õ" s_flaming_sword "1d2" "1d8+2" "0" "1d2" slot-weapon 1 1 (weap-ap 1) 0 nil nil #f #f 2 nil
 					 (ifc-cap flaming-sword-ifc) flaming-sword-ifc 50 20 70 1.0 mmode-smallobj)
 
 
 (kern-mk-arms-type 't_cannon         ; tag
-                   "cannon"          ; name
+                   "ÂçË¤"            ; name
                    nil               ; sprite
                    "+1"              ;;       to-hit : to-hit attack bonus (dice expr)
                    "1d10+4"          ;;       damage : attack damage (dice expr)
@@ -766,26 +766,26 @@
 					(if (not (null? ktarget))
 						(
 							begin
-							(kern-log-msg (kern-obj-get-name ktarget) " hit by cannonball!")
-							(kern-obj-apply-damage ktarget "cannon" (kern-dice-roll "1d10+4"))
+							(kern-log-msg "Ë¤ÃÆ¤Ï" (kern-obj-get-name ktarget) "¤ËÌ¿Ãæ¤·¤¿¡£")
+							(kern-obj-apply-damage ktarget "ÂçË¤" (kern-dice-roll "1d10+4"))
 						)
 					)
 				))
 		)))
 				
-(mk-missile-arms-type 't_localcannonball "cannonball" s_cannonball localcannonball-ifc mmode-cannon #f)
+(mk-missile-arms-type 't_localcannonball "Ë¤ÃÆ" s_cannonball localcannonball-ifc mmode-cannon #f)
 		
 (define cannon-ifc
 	(ifc '()
 		(method 'xamine 
 			(lambda (kcannon kuser)
 				(let ((ready (cadr (gob kcannon))))
-					(kern-log-msg "The cannon is "
+					(kern-log-msg "ÂçË¤¤Ï"
 						(cond ((equal? ready 2) 
-							 "ready to fire")
+							 "È¯¼Í½àÈ÷¤¬¤Ç¤­¤Æ¤¤¤ë¡£")
 							 ((equal? ready 1) 
-							 "loaded but unready")
-							 (else "unloaded")))
+							 "ÃÆ¤ÏÆþ¤Ã¤Æ¤¤¤ë¤¬¡¢È¯¼Í½àÈ÷¤¬¤Ç¤­¤Æ¤¤¤Ê¤¤¡£")
+							 (else "ÃÆ¤¬Æþ¤Ã¤Æ¤¤¤Ê¤¤¡£")))
 					result-ok
 			))
 		)
@@ -802,15 +802,15 @@
 									(cadr loc) (caddr loc)
 									(car aimdir) (cadr aimdir))))
 								(kern-sound-play sound-cannon-fire)
-								(kern-log-msg "BOOOM")
+								(kern-log-msg "¥É¡¼¡¼¡¼¥ó¡ª")
 								(kern-fire-missile t_localcannonball loc (mk-loc (car loc) (car targetloc) (cadr targetloc)))
 								)
 							(bind kcannon (list facing 0)))
 						((equal? ready 1)
-							(kern-log-msg "Cannon ready to fire")
+							(kern-log-msg "ÂçË¤¤ÏÈ¯¼Í¤Ç¤­¤ë¤è¤¦¤Ë¤Ê¤Ã¤¿¡£")
 							(bind kcannon (list facing 2)))
 						(else
-							(kern-log-msg "Cannon loaded")
+							(kern-log-msg "ÂçË¤¤ËÃÆ¤ò¹þ¤á¤¿¡£")
 							(bind kcannon (list facing 1)))
 					)
 			))
@@ -822,7 +822,7 @@
 		))	
 	))
 
-(mk-obj-type 't_cannonobj "cannon" s_cannon layer-mechanism cannon-ifc)     
+(mk-obj-type 't_cannonobj "ÂçË¤" s_cannon layer-mechanism cannon-ifc)     
          
 (define  (arms-mk-cannon facing)
 	(let ((kcannon (kern-mk-obj t_cannonobj 1)))

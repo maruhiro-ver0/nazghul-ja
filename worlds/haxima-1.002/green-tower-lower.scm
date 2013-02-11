@@ -42,7 +42,7 @@
   ))
 
 (kern-mk-place 
- 'p_green_tower_lower "Beneath Green Tower" nil 
+ 'p_green_tower_lower "恦及顯及譁票" nil 
  m_green_tower_lower 
  #f ;; is-wrapping?
  #t ;; is-underground?

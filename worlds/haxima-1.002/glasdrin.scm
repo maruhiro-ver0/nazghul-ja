@@ -57,7 +57,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place 
  'p_glasdrin     ; tag
- "Glasdrin"      ; name
+ "グラスドリン"  ; name
  s_keep          ; sprite
  m_glasdrin      ; map
  #f              ; wraps

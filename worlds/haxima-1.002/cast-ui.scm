@@ -15,7 +15,7 @@
 (define (ui-get-adjacent origin pred)
   (define (select-from seq)
     (cond ((null? seq) 
-           (kern-print "Nothing!\n") 
+           (kern-print "何もない！\n") 
            nil)
           (else
            (car seq))))
@@ -56,8 +56,8 @@
 
 (define (cast-teleport-spell caster dir)
   (let ((coords (loc-offset (kern-obj-get-location caster) dir)))
-    (cond ((null? coords) (kern-print "You sense nothing there!\n"))
-          ((not (passable? coords caster)) (kern-print "You sense it is impassable!\n"))
+    (cond ((null? coords) (kern-print "何もない！\n"))
+          ((not (passable? coords caster)) (kern-print "不可能だ！\n"))
           (else (kern-obj-relocate caster coords nil)))))
 
 (define (cast-signal-spell caster signal target)
@@ -119,7 +119,7 @@
          ;; a result-* codee)
          (effect caster target power))
         (else
-         (kern-log-msg "Not in LOS!")
+         (kern-log-msg "見えない！")
          result-no-target)))
 
 
@@ -128,7 +128,7 @@
 		((kern-in-los? (kern-obj-get-location caster) target)
 			(effect caster target power))
 		(else
-			(kern-log-msg "Not in LOS!")
+			(kern-log-msg "見えない！")
 			result-no-target)))
 
 (define (cast-ui-dospell-nolos target effect caster power)
@@ -175,16 +175,16 @@
 				(effect caster target power)
 				result-ok)
 			(else 
-				(kern-log-msg "Not in LOS!")
+				(kern-log-msg "見えない！")
 				result-no-target))))	
 
 (define (cast-ui-wall effect caster range power)
 	(let ((target (kern-ui-target (kern-obj-get-location caster) range)))
 		(cond ((null? target) result-no-target)
-			((not (kern-in-los? (kern-obj-get-location caster) target)) (kern-log-msg "Not in LOS!") result-no-target)
+			((not (kern-in-los? (kern-obj-get-location caster) target)) (kern-log-msg "見えない！") result-no-target)
 			(else 
 				(let ((targetb (kern-ui-target (kern-obj-get-location caster) range)))
-					(cond ((and (not (null? targetb)) (not (kern-in-los? (kern-obj-get-location caster) target))) (kern-log-msg "Not in LOS!") result-no-target)
+					(cond ((and (not (null? targetb)) (not (kern-in-los? (kern-obj-get-location caster) target))) (kern-log-msg "見えない！") result-no-target)
 						(else
 							(effect caster target (if (null? targetb) target targetb) power)
 							result-ok

@@ -21,7 +21,7 @@
        (method 'rm-traps mimic-rm-traps)
        ))
 
-(mk-obj-type 't_mimic "chest" s_chest layer-mechanism mimic-ifc)
+(mk-obj-type 't_mimic " ı»¢" s_chest layer-mechanism mimic-ifc)
 
 (define (mk-mimic)
   (kern-mk-obj t_mimic 1))

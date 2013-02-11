@@ -10,8 +10,8 @@
 
 (define (r2a-statue-hail knpc kpc)
         (begin
-          (let ((resp (kern-conv-get-reply kpc)))
-            (if (eq? resp 'onus) 
+          (let ((resp (kern-conv-get-string kpc)))
+            (if (string=? resp "セキニン") 
                 (begin
 					(shake-map 15)
 					(blit-map p_absalot_passage 5 15 1 5 m_lava_bridge)

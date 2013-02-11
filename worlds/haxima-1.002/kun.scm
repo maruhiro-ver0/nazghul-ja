@@ -5,7 +5,7 @@
 (kern-load "tetzl.scm")
 
 (kern-mk-place
- 'p_kun "Kun" s_town
+ 'p_kun "¥¯¡¼¥ó" s_town
  (kern-mk-map 
   nil 19 19 pal_expanded
 	(list

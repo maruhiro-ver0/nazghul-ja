@@ -7,7 +7,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Bole.
+;; ボレ
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_may
                (list 0  0  bole-bed-may "sleeping")
@@ -24,93 +24,85 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; May is a female innkeeper, who lives in Bole.
-;; Melvin is her (seventh) husband.
+;; メイは宿屋の主人の女性で、ボレに住んでいる。
+;; メルヴィンは彼女の(7番目の)夫である。
 ;;----------------------------------------------------------------------------
 (define (may-trade knpc kpc)
-  (say knpc "Talk to my husband Melvin in the kitchen."))
+  (say knpc "厨房にいる旦那のメルヴィンに言っとくれ。"))
 
 (define (may-hail knpc kpc)
-  (say knpc "[You meet a stout older woman who looks at you keenly] "
-       "I know you are trouble, but I welcome thee."))
+  (say knpc "［あなたは太った高齢の女性と会った。鋭い目でこちらを見ている。］"
+       "やっかいそうなのが来たね。でもいらっしゃい。"))
 
 (define (may-job knpc kpc)
-  (say knpc "I run the tavern with my husband here in the Bole"))
+  (say knpc "ボレのこの酒場を旦那と切り盛りしてるのよ。"))
 
 (define (may-husband knpc kpc)
-  (say knpc "My husband Melvin is a worthless drunk and a coward "
-       "but he is a good enough cook. I have outlived six other husbands. "
-       "I married him because I needed help running the inn, that is all."))
+  (say knpc "旦那のメルヴィンは大酒のみのロクデナシだけど、料理の腕はたいしたものよ。"
+       "他に六人の旦那がいたけど。"
+       "この宿をやってくために必要だった。結婚した理由はそれだけよ。"))
 
 (define (may-other-husbands knpc kpc)
-  (say knpc "My other husbands were all fools! A few, indeed, I loved. "
-       "But they were fools and each met his own foolish death. "
-       "I see that you are a fool, too, and will meet your own foolish "
-       "death some day."))
+  (say knpc "ほかの旦那はそろってバカだった！確かに何人かは好きだったさ。"
+       "でもみんな自分のバカさのせいで死んじまった。"
+       "あんたもバカみたいだね。いつかそのバカのせいで死ぬよ。"))
 
 (define (may-tavern knpc kpc)
-  (say knpc "Melvin is the cook and I serve the guests. "
-       "Perhaps you would care to buy a drink or some supper, "
-       "or a room where you may rest."))
+  (say knpc "メルヴィンが料理してあたしが客に出す。"
+       "何か飲み物や食事がいるの？それとも休む部屋？"))
 
 (define (may-guests knpc kpc)
-  (say knpc "[She gives you a canny look] Aye, even now we have a strange "
-       "woman and her... companion. But perhaps you were looking for "
-       "someone else, eh?")
+  (say knpc "［彼女はあなたを鋭い目で見た。］そう、今いるおかしな女とその…連れ。"
+       "でも、たぶん別の奴を探してるんじゃない、ねえ？")
   (if (kern-conv-get-yes-no? kpc)
       (begin
-        (say knpc "Yes, I thought so. And perhaps this other person had "
-             "something of interest to you?")
+        (say knpc "やっぱりねえ。で、そいつは何か面白いものを持ってるんだろ？")
         (if (kern-conv-get-yes-no? kpc)
             (begin
-              (say knpc "How odd, because that item was also of interest to "
-                   "our current guests. Not that it is any of my business, "
-                   "but one suspects that the woman and he whom you seek "
-                   "arranged to meet here. Perhaps to make an... "
-                   "exchange."))
-            (say knpc "Well, there was another man here briefly. But he "
-                 "left shortly before you arrived.")))
-      (say knpc "Perhaps you are just out admiring the countryside then.")))
+              (say knpc "おかしいねえ。今いる客も何か探してるんだよ。"
+                   "あたしには関係ないけど、"
+                   "もしかすると、あの女とあんたが探してる奴は会ってるんじゃないかね。"
+                   "多分、何かを…交換してた。"))
+            (say knpc "うーん、ちょっと前まで別の男がいたんだけど。"
+                 "でもあんたが来る前にすぐに行ってしまったよ。")))
+      (say knpc "もしかして田舎を出たばっかりなのかい？")))
 
 (define (may-woman knpc kpc)
-  (say knpc "Yes, we don't often get such beautiful people in these parts. "
-       "Poor Bill is quite smitten. And my fool of a husband ogles here "
-       "whenever he gets a chance. [She leans in close and whispers] But "
-       "if she isn't a sorceress, or one in training, then I'm a goose!"))
+  (say knpc "そうさ。このあたりではあんなきれいな人とはほとんど会わない。"
+       "かわいそうなビルは惚れこんでたよ。"
+       "そしてうちのバカ旦那はことあるごとにいやらしい目で見ている。"
+       "［彼女は近くによってささやいた。］でも、あの女は魔女か、魔女の修行中だよ！"))
 
 (define (may-companion knpc kpc)
-  (say knpc "This woman travels with a great brute. I suspect he has ogre "
-       "blood in his veins. Obviously he is her protector, though what bind "
-       "she has over him I know not."))
+  (say knpc "あの女は野蛮な奴を引き連れてる。オーガの血を引いてるんじゃないかね。"
+       "多分あの女の用心棒だ。でも何で言うことを聞いているのかはわからないね。"))
 
 (define (may-bill knpc kpc)
-  (say knpc "Aye, Bill is a local boy. Not too bright, but he makes an "
-       "honest living as a woodcutter. He eats here, and sometimes talks "
-       "to the guests."))
+  (say knpc "ああ。ビルはこのあたりの青年だ。頭はよくないが正直で、木こりをやっている。"
+       "よくここで食ってるよ。そして時々客としゃべってる。"))
 
 (define (may-hackle knpc kpc)
-  (say knpc "Hackle is a crazy but harmless old hedge-witch who lives across "
-       "the stream. She has a knack for the healing arts but hasn't the wits "
-       "for much else."))
+  (say knpc "ハックルはおかしいが危険ではない魔女よ。川が分かれる所に住んでる。"
+       "治療の技があるけと、他は何もできない。"))
 
 (define (may-room knpc kpc)
   (if (not (string=? "working" (kern-obj-get-activity knpc)))
-      (say knpc "The Inn is closed. Come back in the morning at 0600.")
+      (say knpc "宿はもう閉じたよ。明日の6時にまた来とくれ。")
       (let ((door (eval 'bole-inn-room-door)))
         ;; is the room still open?
         (if (not (door-locked? (kobj-gob door)))
             ;; yes - remind player
-            (say knpc "Your room is still open.")
+            (say knpc "部屋はもう開いてるよ。")
             ;; no - ask if player needs a room
             (begin
-              (say knpc "Would ye like a room?")
+              (say knpc "部屋がいるかい？")
               (if (kern-conv-get-yes-no? kpc)
                   ;; yes - player wants a room
                   (begin
                     (say knpc 
-                         "It will be " inn-room-price " gold, "
-                         "and you may use the room as "
-                         "long as you are in town. Agreed?")
+                         "金貨" inn-room-price "枚ね。"
+                         "この町にいる限り何度でも出入りできる。"
+                         "いいかい？")
                     (if (kern-conv-get-yes-no? kpc)
                         ;; yes - player agrees to the price
                         (let ((gold (kern-player-get-gold)))
@@ -121,36 +113,35 @@
                                 (kern-player-set-gold 
                                  (- gold 
                                     inn-room-price))
-                                (say knpc "Good. Your room is down the hall "
-                                     "on the left.")
+                                (say knpc "どうも。部屋は奥の左よ。")
                                 (send-signal knpc door 'unlock)
                                 (kern-conv-end)
                                 )
                               ;; no - player does not have enouvh gold)
-                              (say knpc "Ye have not the gold!")))
+                              (say knpc "金が足りないよ！")))
                         ;; no - player does not agree to the price
                         (say knpc 
-                             "Sleep on the ground then. Mind the wolves.")))
+                             "ならそこらで寝ればいいさ。狼に気を付けな。")))
                   ;; no - player does not want a room
-                  (say knpc "Even one such as you must sometimes rest!")))))))
+                  (say knpc "あんたのような奴もいつかは休むんだよ！")))))))
   
 (define (may-thief knpc kpc)
-  (say knpc "Ah... thou playest the thief-catcher. I suspected something of "
-       "the kind. We HAVE had some odd guests here lately."))
+  (say knpc "おや…あんた捕り物かい。"
+       "それっぽい奴がいたよ。最近怪しい客が来たんだ。"))
 
 (define (may-trouble knpc kpc)
-  (say knpc "Ye have the hard, pitiless visage like the men of the Old Era. "
-       "But I sense that thou art not unjust."))
+  (say knpc "あんた、昔の奴みたいな険しく情け容赦ない顔つきをしてる。"
+       "でも、あんたは悪者じゃないだろうね。"))
 
 (define may-conv
   (ifc nil
-       (method 'default (lambda (knpc kpc) (say knpc "I can't help thee.")))
+       (method 'default (lambda (knpc kpc) (say knpc "どうしようもないね。")))
        (method 'hail may-hail)
-       (method 'bye  (lambda (knpc kpc) (say knpc "Begone then for now.")))
+       (method 'bye  (lambda (knpc kpc) (say knpc "さあ、出ていった出ていった。")))
        (method 'job  may-job)
-       (method 'name (lambda (knpc kpc) (say knpc "I am called May.")))
+       (method 'name (lambda (knpc kpc) (say knpc "メイと呼ばれてる。")))
        (method 'join (lambda (knpc kpc)
-                       (say knpc "Don't flatter me with your foolishness.")))
+                       (say knpc "あんたのバカに巻き込まないでおくれ。")))
 
        (method 'buy   may-trade)
        (method 'food  may-trade)
@@ -160,7 +151,9 @@
 
        (method 'bill  may-bill)
        (method 'comp  may-companion)
+       (method 'thin  may-companion) ;; 連れ
        (method 'gues  may-guests)
+       (method 'clie  may-guests) ;; 客
        (method 'hack  may-hackle)
        (method 'husb  may-husband)
        (method 'inn   may-tavern)
@@ -184,7 +177,7 @@
    (kern-char-arm-self
     (kern-mk-char 
      'ch_may ;;......tag
-     "May" ;;.......name
+     "メイ" ;;.......name
      sp_human ;;.....species
      nil ;;..........occupation
      s_townswoman ;;...sprite

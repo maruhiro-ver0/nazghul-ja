@@ -55,7 +55,7 @@ static void ztats_spells_paint_item(struct inv_entry *ie, SDL_Rect *rect)
 	/* Print info only available in the spell struct. */
 	if (spell) {
 		screenPrint(rect, 0, 
-			"^c+GLvl:^c+y%d^c- MP:^c+b%d^c- AP:^c+r%d^c-^c-",
+			"^c+Gレベル:^c+y%d^c- 魔力:^c+b%d^c- 行動:^c+r%d^c-^c-",
 			spell->level, 
 			spell->cost, spell->action_points);
 	}
@@ -82,6 +82,6 @@ void ztats_spells_init(void)
                 NULL
         };
 
-        ztats_container_pane_init(&pane, "Spells", &filter, &ops);
+        ztats_container_pane_init(&pane, "呪文", &filter, &ops);
         ztats_add_pane(&pane.base);
 }

@@ -7,7 +7,7 @@
 ;; ----------------------------------------------------------------------------
 
 (mk-obj-type 't_bed    ;; tag
-             "bed"     ;; name
+             "¥Ù¥Ã¥É"  ;; name
              s_bed     ;; sprite
              layer-bed ;; layer
              nil       ;; interface

@@ -1,7 +1,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;;
-;; The schedule below is for the place "Trigrave"
+;; トリグレイブ
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_earl
                (list 0  0  trigrave-earls-bed        "sleeping")
@@ -25,42 +25,41 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;;
-;; Earl is a merchant, and will trade with the player if he's at work. 
-;; ...(removed some text which seems to have come from Jim.scm)...
+;; イアルは店主で、仕事をしている時間ならば取り引きできる。
 ;;----------------------------------------------------------------------------
 (define earl-merch-msgs
-  (list "Come by my shop when I'm open. It's the Dry Goods store in the southwest corner, open from 6:00AM to 6:00PM."
-        "Here's what I have in stock right now."
-        "Well, ok, let me see what you have to offer."
-        "Step right up to the counter."
-        "Tell 'em you got it at Earl's."
-        "Just window-shopping? All right."
-        "I'll put this in the back and clean it up later."
-        "Come back later when you've got something else to offer, then."
-        "Finished already? Suit yourself."
-        "Let me know if there's anything else."
+  (list "開いてるときに店に来とくれ。俺の小間物屋は南西の角にあって、午前6時から午後6時までやってる。"
+        "置いてる物を見せてやろう。"
+        "えー、ああ、売りたい物を見せとくれ。"
+        "こっちに来て見てくれ。"
+        "イアルの店で買ったものだと友達に言っといてくれ。"
+        "見るだけかい？まあいいや。"
+        "置いといて後できれいにするよ。"
+        "売りたい物があったらまた来とくれ。"
+        "もういいのかい？まあ好きにしなよ。"
+        "まだ何かあったら言っとくれ。"
    ))
 
 (define earl-catalog
   (list
-   (list t_torch               5 "You don't want to run out of torches at the bottom of a dungeon.")
-   (list t_sling              50 "The sling is just the thing for cheapskates who don't want to buy ammo.")
-   (list t_staff              25 "A mage without a staff is like a dog without a bark.")
+   (list t_torch               5 "迷宮の奥で松明を切らせたくないだろう？")
+   (list t_sling              50 "投石紐は弾を買いたくないケチな奴にぴったりだ。")
+   (list t_staff              25 "杖のない魔法使いは吠えない犬みたいなもんだ。")
    
-   (list t_heal_potion        22 "You want to keep plenty of these in your emergency kit.")
-   (list t_cure_potion        22 "Headed north? You'll want some of these when travelling the Fens.")
-   (list t_mana_potion        22 "This is just the thing when you're in a spot where you can't camp and your mages are exhausted.")
+   (list t_heal_potion        22 "応急用としてたくさんいるはずだ。")
+   (list t_cure_potion        22 "北へ向かう？湿地帯に行くときはいくつか持っておいたほうがいい。")
+   (list t_mana_potion        22 "魔力を使い果たして休憩もできないときはこれだ。")
    
-   (list t_arrow               1 "If you've got a bow then you can't have too many arrows.")
-   (list t_bolt                1 "I've got the least expensive bolts anywhere around.")
-   (list t_smoke_bomb          3 "Just throw these smoke bombs at enemy archers and they won't be able to see you.")
+   (list t_arrow               1 "弓を持っていれば、矢が多すぎるということはない。")
+   (list t_bolt                1 "このあたりで一番安いクロスボウの矢だ。")
+   (list t_smoke_bomb          3 "この煙幕弾を敵の射手に投げれば、相手はこちらが見えなくなるだろう。")
    
-   (list t_shovel             50 "When you find that buried treasure you'll want a shovel to dig it up.")
-   (list t_pick               50 "A pick is essential for busting up boulders that block your path.")
+   (list t_shovel             50 "埋もれた宝を見つけたらこのシャベルがいるだろう。")
+   (list t_pick               50 "つるはしは道を塞ぐ岩を壊すためには絶対に必要だ。")
    
-   (list t_sextant           500 "You can figure your location anywhere in the wilderness with one of these without wasting any reagents or scrolls.")
-   (list t_chrono            300 "This little timepiece is invaluable when there aren't any clocks around.")
-   (list t_grease             23 "Wrogues seem to like this stuff. I'm afraid to ask why.")
+   (list t_sextant           500 "秘薬や巻物なしで荒野での居場所がわかる。")
+   (list t_chrono            300 "この小さな時計があれば、柱時計がない所でも時刻がわかる。")
+   (list t_grease             23 "ならず者はこれが好きだ。なぜかは聞くな。")
    ))
 
 (define (earl-trade knpc kpc) (conv-trade knpc kpc "trade" earl-merch-msgs earl-catalog))
@@ -71,41 +70,40 @@
        ;; 4 characters. The 4-char limit arises from the kernel's practice of
        ;; truncating all player queries to the first four characters. Default,
        ;; on the other hand, is a feature of the ifc mechanism (see ifc.scm).
-       (method 'default (lambda (knpc kpc) (say knpc "I forgot.")))
-       (method 'hail (lambda (knpc kpc) (say knpc "Welcome, stranger.")))
-       (method 'bye (lambda (knpc kpc) (say knpc "Oh, were we talking? Bye.")))
-       (method 'job (lambda (knpc kpc) (say knpc "I keep the store. Need something?")
+       (method 'default (lambda (knpc kpc) (say knpc "忘れたなあ。")))
+       (method 'hail (lambda (knpc kpc) (say knpc "いらっしゃい、見知らぬ方。")))
+       (method 'bye (lambda (knpc kpc) (say knpc "ああ、あんたと話してたんだっけ？")))
+       (method 'job (lambda (knpc kpc) (say knpc "この店をやってる。何かいるかい？")
                             (if (kern-conv-get-yes-no? kpc)
                                 (earl-trade knpc kpc)
-                                (say knpc "Okay."))))
-       (method 'name (lambda (knpc kpc) (say knpc "[He thinks for a minute] Earl! That's it!")))
+                                (say knpc "そう。"))))
+       (method 'name (lambda (knpc kpc) (say knpc "［彼はしばらく考え込んだ。］イアル！そう！")))
        (method 'buy (lambda (knpc kpc) (conv-trade knpc kpc "buy"  earl-merch-msgs earl-catalog)))
        (method 'sell (lambda (knpc kpc) (conv-trade knpc kpc "sell"  earl-merch-msgs earl-catalog)))
        (method 'trad earl-trade)
-       (method 'join (lambda (knpc kpc) (say knpc "You're too late! I forgot all my spells.")))
+       (method 'join (lambda (knpc kpc) (say knpc "遅すぎるよ！呪文はみんな忘れちまった。")))
 
        (method 'batt
                (lambda (knpc kpc)
-                 (say knpc "Yep. I fought with Lord Calvin against the "
-                      "Goblin Horde!")))
+                 (say knpc "そうだ。オレはカルヴィン王と一緒にゴブリンどもの群れと戦ったのさ！")))
        (method 'calv
                (lambda (knpc kpc)
-                 (say knpc "Now there was a warlord! Calvin conquered "
-                      "everything from the Gray Sea to the Northern Rim!")))
+                 (say knpc "かつての武将！"
+                      "カルヴィンは灰色の海から北の端まで全てを征服したんだ！")))
        (method 'hord
                (lambda (knpc kpc)
-                 (say knpc "In those days the Goblins were united under one "
-                      "chieftain, and threatened the whole Peninsula! By the "
-                      "time Lord Calvin was done with them they were scattered "
-                      "and hiding in the hills. They've never recovered!")))
+                 (say knpc "あのころゴブリンどもは一人の首長の下で結束していた。"
+                      "そして、この半島で暴れていた！"
+                      "カルヴィン王がヤツらを倒してからはバラバラになり、丘に隠れるようになった。"
+                      "歴史には残ってないがな！")))
        (method 'mage
                (lambda (knpc kpc)
-                 (say knpc "I've forgotten all my magic. I even lost my wand! "
-                      "I once knew spells that would slay whole armies.")))
+                 (say knpc "魔法はみんな忘れた。杖もなくした！"
+                      "昔は軍隊を丸ごと倒せる呪文を知ってたさ。")))
        (method 'spel
                (lambda (knpc kpc) 
-                 (say knpc "I was a battle mage once. Long ago.")))
+                 (say knpc "魔法使いとして戦ってたんだよ。大昔さ。")))
        (method 'thie
                (lambda (knpc kpc)
-                 (say knpc "I saw a stranger fleeing west! No, south! No... Oh, drat, I can't remember.")))
+                 (say knpc "怪しいヤツが西へ逃げてった！いや、南だ！いや…、ああ、クソッ、思い出せねえ。")))
        ))

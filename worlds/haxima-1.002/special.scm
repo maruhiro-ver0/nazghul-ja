@@ -18,7 +18,7 @@
   (if (eqv? kbeing 
             (kern-get-player))
       (begin
-        (kern-log-msg "You stumble upon a hidden forest glade.\nKnavish figures skulk about with drawn blades!")
+        (kern-log-msg "木々で隠された空き地を見つけた。抜き身の刃を持った怪しい人影がうろついている！")
         (kern-place-set-subplace p_bandit_hideout_l1
                                  (eval-loc bandit-hideout-loc))
         (kern-map-set-dirty)
@@ -36,7 +36,7 @@
   (if (eqv? kbeing 
             (kern-get-player))
       (begin
-        (kern-log-msg "The forest grows wild...\nThe trees here are choked with webbing, and horrid wrapped HUSKS dangle.\nYou have found the entrance to Angriss's Lair!")
+        (kern-log-msg "木々が乱雑に生えている…\n木には網がかけられており、恐ろしい「残骸」が包まれぶら下がっている。\nここがアングリスの住み家の入り口かもしれない！")
         (kern-place-set-subplace p_angriss_lair 
                                  (eval-loc angriss-lair-loc))
         (kern-map-set-dirty)
@@ -54,7 +54,7 @@
   (if (eqv? kbeing 
             (kern-get-player))
       (begin
-        (kern-log-msg "You find a hidden entrance to a secure, undisclosed location!")
+        (kern-log-msg "安全な場所に隠された入り口を見つけた！")
         (kern-place-set-subplace p_mans_hideout
                                  (eval-loc the-mans-hideout-loc))
         (kern-map-set-dirty)
@@ -72,7 +72,7 @@
   (if (eqv? kbeing 
             (kern-get-player))
       (begin
-        (kern-log-msg "Through a hidden track, you find a strange forested nook in the mountainside!")
+        (kern-log-msg "隠された小道をたどると、山の中腹の木々で覆われた奇妙な場所にたどり着いた！")
         (kern-place-set-subplace p_brundegardt
                                  (eval-loc brundegardt-loc))
         (kern-map-set-dirty)
@@ -84,23 +84,22 @@
 ;; The Warritrix's note
 ;; ----------------------------------------------------------------------------
 (mk-reusable-item 
- 't_warritrix_orders "Military Orders" s_lexicon norm
+ 't_warritrix_orders "作戦命令書" s_lexicon norm
  (lambda (klexicon kuser)
    (kern-ui-page-text
-   "Orders to the Warritrix"
-   "Ever faithful servant of Glasdrin,"
-   "we suspect a coven of the Accursed are hiding"
-   "in the deeps of the Lost Halls. Proceed at"
-   "once to investigate. Leave no cavern"
-   "unexplored.\n"
-   "--Commander Jeffries\n"
-   "P.S. These orders are to be destroyed."
-   )))
+   "闘士への命令書"
+   "グラスドリンで最も忠実な奉仕者、"
+   "失われた殿堂の奥深くで呪われた者が集まっている"
+   "疑いがある。"
+   "すぐに調査を開始せよ。洞窟を全て探索するまでは"
+   "離れてはならない。"
+   "−司令官ジェフリーズ"
+   "追記　この命令書はただちに破棄すること。")))
 
 
 ;; Kraken lakes kraken trigger
 (define (spawn-kraken-lakes-sea-serpent kbeing)
-  (kern-log-msg "Your disturb something in the water...")
+  (kern-log-msg "水の中に何かがいる…")
   (kern-obj-put-at (spawn-npc 'kraken 8) (mk-loc p_deepness 31 34))
   (kern-obj-put-at (spawn-npc 'kraken 8) (mk-loc p_deepness 32 35))
   (kern-obj-put-at (spawn-npc 'kraken 8) (mk-loc p_deepness 30 29))
@@ -110,11 +109,11 @@
 (define lost-halls-loc (list 'p_shard 39 75))
 
 ;; Power core for voidship
-(mk-quest-obj-type 't_power_core "ancient power core" s_power_core layer-item obj-ifc)
+(mk-quest-obj-type 't_power_core "古代の炉心" s_power_core layer-item obj-ifc)
 
 ;; Luximene begins the game as a Lich King, when defeated he drops his skull,
 ;; which can be used with the Necromancer to summon his shade.
-(mk-quest-obj-type 't_lich_skull "King Luximenes skull" s_gold_skull layer-item obj-ifc)
+(mk-quest-obj-type 't_lich_skull "ラクシマニ王の頭蓋骨" s_gold_skull layer-item obj-ifc)
 
 ;; grow -- trigger hook fx to create items (eg, growing reagents, hence the name)
 (define (grow-trig ktrig ktype-tag dice)

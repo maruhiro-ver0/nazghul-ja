@@ -654,9 +654,13 @@ void screenPrint(SDL_Rect * rect, int flags, const char *fmt, ...)
 
         /* Paint the characters until we run out or hit the end of the
          * region. */
-	for (i = 0; i < slen && x < stop; i++) {
+	for (i = 0; i < slen && x < stop; i += (screen_buf[i] & 0x80 ? 2: 1)) {
 
-                if (asciiPaint(screen_buf[i], x, y, Screen)) {
+                if ((screen_buf[i] & 0x80) && kanjiPaint((int )((unsigned char )screen_buf[i]) << 8 | (unsigned char )screen_buf[i + 1], x, y, Screen)) { /* if Kanji */
+
+                        /* Move right twice. */
+                        x += ASCII_W * 2;
+                } else if (asciiPaint(screen_buf[i], x, y, Screen)) {
 
                         /* Move right. */
                         x += ASCII_W;

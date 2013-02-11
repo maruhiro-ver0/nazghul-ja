@@ -394,25 +394,25 @@ static int yes_no_ignore(struct KeyHandler * kh, int key, int keymod)
 void Character::taskPromptToAbort()
 {
     cmdwin_clear();
-    log_continue("^c+y%s damaged - abort task?^c-\n", getName());
+    log_continue("^c+y%sは負傷した - 作業を中断するか？^c-\n", getName());
     log_flush();
-    cmdwin_spush("Abort");
-    cmdwin_spush("(Y/N/Ignore)");
+    cmdwin_spush("中断");
+    cmdwin_spush("(Y/N/I:無視)");
     int key;
     getkey(&key, yes_no_ignore);
     cmdwin_pop();
     switch (key) {
     case 'y':
         taskAbort();
-        cmdwin_spush("abort!");
+        cmdwin_spush("中断！");
         break;
     case 'i':
         taskInterruptOnDamage = false;
-        cmdwin_spush("ignore");
+        cmdwin_spush("無視");
         break;
     case 'n':
     default:
-        cmdwin_spush("no");
+        cmdwin_spush("いいえ");
         break;
     }
 }
@@ -581,18 +581,18 @@ bool Character::unready(class ArmsType * arms)
 const char *Character::getWoundDescription()
 {
 	static const char *desc[] = {
-		"Critical",
-		"Heavily wounded",
-		"Moderately wounded",
-		"Barely wounded",
-		"Unscathed"
+		"瀕死の状態だ",
+		"重傷を負っている",
+		"負傷している",
+		"軽傷を負っている",
+		"無傷だ"
 	};
 
 	if (isDead())
-		return "Killed";
+		return "とどめを刺した";
 
 	if (isFleeing())
-		return "Fleeing";
+		return "逃げ出した";
 
 	return desc[(getHp() * 4) / getMaxHp()];
 	return desc[(getHp() * 4) / getMaxHp()];
@@ -1168,7 +1168,7 @@ void Character::awaken(void)
             && ! isResting()
             && ! isDead()) {
                 changeSleep(false);
-                log_msg("%s wakes up!", getName());
+                log_msg("%sは目が覚めた！", getName());
         }
 }
 
@@ -1460,7 +1460,7 @@ void Character::kill()
         }
 
         if (isPlayerControlled()) {
-                log_msg("%s has fallen!!", getName());
+                log_msg("%sは倒れた！！", getName());
         }
 
 	hp = 0;
@@ -1493,7 +1493,7 @@ void Character::useAmmo(class ArmsType *weapon)
                         assert(ie->ref <= ie->count);
                         if (ie->ref == ie->count) {
                                 unready(weapon);
-                                log_msg("%s : %s now out of ammo\n", 
+                                log_msg("%s : %sは弾切れ\n", 
                                         getName(), weapon->getName());
                         }
 			takeOut(weapon, 1);
@@ -1697,7 +1697,7 @@ void Character::addExperience(int amount)
 	xp += amount;
 	if (xp >= getXpForLevel(getLevel()+1)) {
 		lvl++;
-                log_banner("^c+b%s^c- gains level ^c+g%d^c-!", getName(), lvl);
+                log_banner("^c+b%s^c-のレベルが^c+g%d^c-に上がった！", getName(), lvl);
                 if (isPlayerControlled()) {
                         mapFlash(1000);
                 }
@@ -1784,29 +1784,26 @@ void Character::describe()
 {
     if (Session->subject) {
         const char *diplstr = diplomacy_string(this, Session->subject);
-        if (isvowel(diplstr[0]))
-            log_continue("an");
-        else
-            log_continue("a");
-        log_continue(" %s", diplstr);
-    } else {
-        log_continue("an");
+        log_continue("%sな", diplstr);
     }
-    log_continue(" L%d", getLevel());
+    log_continue("レベル%dの", getLevel());
     if (isKnown()) {
-        log_continue(" %s", getName());
+        log_continue("%s", getName());
     } else {
         if (species && species->name) {
-            log_continue(" %s", species->name);
+            log_continue("%s", species->name);
+            if (occ && occ->name) {
+                log_continue("の");
+            }
         }
         if (occ && occ->name) {
-            log_continue(" %s", occ->name);
+            log_continue("%s", occ->name);
         }
     }
     if (!isVisible())
-        log_continue(" (invisible)");
+        log_continue("(不可視)");
     if (isSubmerged()) {
-        log_continue(" (submerged)");
+        log_continue("(隠蔽)");
     }
 }
 
@@ -1816,32 +1813,35 @@ void Character::examine()
         int n = 0;
 	const char *diplstr = diplomacy_string(this, Session->subject);
 
-        log_continue("%s level %d", diplstr, getLevel());
+        log_continue("%sなレベル%dの", diplstr, getLevel());
 
         if (isKnown()) {
-                log_continue(" %s,", getName());
+                log_continue("%s", getName());
         } else {
                 if (species && species->name) {
-                        log_continue(" %s", species->name);
+                        log_continue("%s", species->name);
+                        if (occ && occ->name) {
+                                log_continue("の");
+                        }
                 }
                 if (occ && occ->name) {
-                        log_continue(" %s", occ->name);
+                        log_continue("%s", occ->name);
                 }
         }
 
-        log_continue(" %s [", getWoundDescription());
+        log_continue("、%s。[", getWoundDescription());
 
         for (ArmsType *arms = enumerateArms(&i); arms; 
              arms = getNextArms(&i)) {
                 if (n > 0) {
-                        log_continue(", ");
+                        log_continue("、");
                 }
                 log_continue("%s", arms->getName());
                 n++;
         }
 
         if (!n) {
-                log_continue("no arms");
+                log_continue("武装していない");
         }
 
         log_continue("]");
@@ -2192,7 +2192,7 @@ class Party *Character::getParty()
 void Character::burn()
 {
         damage(DAMAGE_FIRE);
-        log_msg("%s burning-%s!", getName(), getWoundDescription());
+        log_msg("%sは炎に包まれている-%s!", getName(), getWoundDescription());
 }
 
 void Character::sleep()
@@ -2201,7 +2201,7 @@ void Character::sleep()
                 return;
 
         changeSleep(true);
-        log_msg("%s sleeping!", getName());
+        log_msg("%sは眠っている！", getName());
 }
 
 bool Character::canSee(class Object *obj)
@@ -2267,7 +2267,7 @@ void Character::kickPlayerOutOfMyBed()
 {
         struct appt *curAppt = &sched->appts[appt];
 
-        log_msg("Kicked out of bed!");
+        log_msg("たたき起こされた！");
         player_party->throw_out_of_bed();
 
         // now switch places with whoever is in bed
@@ -2517,7 +2517,7 @@ void Character::exec()
                                 endResting();
                         } else {
                                 log_begin_group();
-                                log_msg("Done resting...");
+                                log_msg("休息を終えた…");
                                 endResting();
 
                                 if (player_party->isCamping())
@@ -2551,9 +2551,9 @@ void Character::exec()
                                         vehicle->getMaxHp() / 
                                         10);
                                 foogodRepaint();
-                                log_begin("%s repairs ", getName());
+                                log_begin("%sは", getName());
                                 vehicle->describe();
-                                log_end(".");
+                                log_end("を修理した。");
                         }
                         clock_alarm_set(&rest_alarm, 60);
                 }
@@ -2578,7 +2578,7 @@ void Character::exec()
                                 endLoitering();
                         } else {
                                 log_begin_group();
-                                log_msg("Done loitering...");
+                                log_msg("うろつくのを止めた…");
                                 endLoitering();
 
                                 if (player_party->isLoitering())
@@ -2656,7 +2656,7 @@ void Character::exec()
 
                 // Update name in foogod window
                 if (PARTY_CONTROL_ROUND_ROBIN == player_party->getPartyControlMode()) {
-                    foogod_set_title("Round Robin: %s", getName());
+                    foogod_set_title("%s: %s", "順番", getName());
                     foogodRepaint();
                 }
 
@@ -2752,7 +2752,7 @@ void Character::exec()
         case CONTROL_MODE_TASK:
             assert(taskproc);
             if (isPlayerControlled()) {
-                log_msg("%s continues %s...", getName(), getTaskName());
+                log_msg("%sは%sを続けている…", getName(), getTaskName());
             }
             closure_exec(taskproc, "pl", this, taskgob->p);
             break;
@@ -2778,7 +2778,7 @@ void Character::setSolo(bool val)
             solo = val;
             attachCamera(true);
             setControlMode(CONTROL_MODE_PLAYER);
-            log_msg("%s goes solo.", getName());
+            log_msg("%sは単独で行動する。", getName());
             mapCenterCamera(getX(), getY());
             mapSetDirty();
         } else {
@@ -3159,7 +3159,7 @@ void Character::leavePlayer(void)
         unreadyAll();
 
         player_party->removeMember(this);
-        log_msg("%s leaves the party", getName());
+        log_msg("%sは仲間から離れた。", getName());
         if (wasLeader) {
                 player_party->enableFollowMode();
         }
@@ -3399,7 +3399,7 @@ bool Character::tryToRelocateToNewPlace(struct place *newplace,
         }
 
         if (player_party->getPartyControlMode() != PARTY_CONTROL_FOLLOW) {
-                log_msg("Exit - must be in follow mode!");
+                log_msg("脱出 - 追跡中でなければならない！");
                 return false;
         }
 
@@ -3407,7 +3407,7 @@ bool Character::tryToRelocateToNewPlace(struct place *newplace,
                 return false;
 
         if (!player_party->rendezvous(getPlace(), getX(), getY())) {
-                log_msg("Exit - party can't rendezvous!");
+                log_msg("脱出 - 仲間と集合していない！");
                 return false;
         }
 
@@ -3610,7 +3610,7 @@ void Character::taskCleanup()
 
 void Character::taskAbort()
 {
-    log_msg("%s aborts %s!", getName(), getTaskName());
+    log_msg("%sは%sを中断した！", getName(), getTaskName());
     taskCleanup();
 }
 
@@ -3657,14 +3657,14 @@ void Character::taskSetup(char *name_arg, struct closure *proc_arg, struct gob *
 void Character::taskBegin(char *name_arg, struct closure *proc_arg, struct gob *gob_arg)
 {
     taskSetup(name_arg, proc_arg, gob_arg);
-    log_msg("%s begins %s.", getName(), getTaskName());
+    log_msg("%sは%sを始めた。", getName(), getTaskName());
     endTurn();
 }
 
 void Character::taskContinue(char *name_arg, struct closure *proc_arg, struct gob *gob_arg)
 {
     if (isPlayerControlled()) {
-        log_msg("%s continues %s.", getName(), getTaskName());
+        log_msg("%sは%sを続けている。", getName(), getTaskName());
     }
 
     taskSetup(name_arg, proc_arg, gob_arg);
@@ -3672,7 +3672,7 @@ void Character::taskContinue(char *name_arg, struct closure *proc_arg, struct go
 
 void Character::taskEnd()
 {
-    log_msg("%s completes %s!", getName(), getTaskName());
+    log_msg("%sは%sを終えた！", getName(), getTaskName());
     taskCleanup();
 }
 

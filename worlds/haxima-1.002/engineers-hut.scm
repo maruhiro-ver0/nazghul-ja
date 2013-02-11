@@ -36,7 +36,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place
  'p_engineers_hut     ; tag
- "Engineers Hut"      ; name
+ "技師の小屋"         ; name
  s_hamlet      ; sprite
  m_engineers_hut      ; map
  #f              ; wraps
@@ -62,7 +62,7 @@
   (put (mk-door) 9 5)
   (put (mk-windowed-door) 2 12)
   (put (mk-clock) 5 9)
-  (put (mk-broken-clock s_clock_stopped s_clock_stopped "The internals of this clock are spread across the table") 8 7)
+  (put (mk-broken-clock s_clock_stopped s_clock_stopped "この時計の部品は向こうの机の上に散らばっている。") 8 7)
 
   (put (kern-mk-obj t_voidship_plans 1) 16 7)
   )

@@ -10,7 +10,7 @@
 
 ;; Setup progress bar for loading. I arrived at the number by printing the
 ;; current number of steps in src/foogod.c:foogod_progress_bar_finish().
-(kern-progress-bar-start "Loading" 205)
+(kern-progress-bar-start "読み込み中" 205)
 
 ;; Wrap the original definition of (load ...) with one that advances the
 ;; progress bar.

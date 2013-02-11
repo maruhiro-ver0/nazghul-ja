@@ -68,12 +68,13 @@
 	)
 	
 (questadd (qst-mk 
-	"Character Creation"
+	"あなた自身の作成"
 	'questentry-charcreate
 	(kern-ui-paginate-text
-		"Move to the moongate at the north side of the room to begin the game."
+		"部屋の北にある月の門をくぐると冒険が始まる。 "
 		""
-		"Along the way you will be prompted for your characters name. You may also customize your attributes by talking to the statues in the room."
+		"途中であなたの名前を入力する。像に話しかけると"
+		"能力を調整することもできる。 "
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -81,14 +82,15 @@
 	0
 ))
 
-(questadd (qst-mk "Where am I?"
+(questadd (qst-mk "ここはどこ？"
 	'questentry-whereami
 	(kern-ui-paginate-text
-		"You have found yourself in a world you have no knowledge of, with barest impressions of what might have gone before."
+		"気がつくと、あなたは過去の記憶もなく見知らぬ世"
+		"界にいた。 "
 		""
-		"Where are you?"
-		"How and why are you here?"
-		"And what are you going to do now?"
+		"ここはどこなのか？ "
+		"どのように、そしてなぜここに来たのか？ "
+		"何をすべきなのか？ "
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -101,12 +103,14 @@
 	;; 'nossifer- pc knows about N's summoning(3)
 ))
 
-(questadd (qst-mk "A Call to Arms"
+(questadd (qst-mk "魔道師の招待状"
 	'questentry-calltoarms
 	(kern-ui-paginate-text
-		"You have recieved an urgent message to contact someone called the Enchanter as soon as possible."
+		"あなたは魔道師と呼ばれる者から、できるだけ早く"
+		"会いに来るように、との言葉を受け取った。"
 		""
-		"The message suggests that you ask the caretaker of the clearing that you arrived in for directions."
+		"たどり着くまでの道のりは祭壇を管理している者に"
+		"尋ねるとよいようだ。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -121,12 +125,14 @@
 	;; 'done- pc has been enlisted
 ))
 	
-(questadd (qst-mk "To Catch a Thief"
+(questadd (qst-mk "泥棒を追え"
 	'questentry-thiefrune
 	(kern-ui-paginate-text
-		"The Enchanter has asked you to investigate a theft from his tower."
+		"魔道師は塔から盗み出した者を調査するようにあな"
+		"たに頼んだ。"
 		""
-		"The ^c+mthief^c- has been tracked as far as Trigrave. The townsfolk there may be able to give you further information."
+		"^c+m泥棒^c-はトリグレイブへと向かったようだ。"
+		"町の人たちが何か知っているかもしれない。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -141,12 +147,15 @@
 	;; 'done- pc has been enlisted
 ))
 
-(questadd (qst-mk "The Secret of the Runes"
+(questadd (qst-mk "石版の秘密"
 	'questentry-runeinfo
 	(kern-ui-paginate-text
-		"The stolen rune that you recovered must have great significance to prompt it's theft. The Enchanter has given you the task of seeking out this reason."
+		"盗まれた石版は、泥棒の話からすると重大な意味が"
+		"あるようだ。魔道師はあなたにその意味を調査する"
+		"ように命じた。"
 		""
-		"He suggests that you start with the ^c+mAlchemist^c-, who may be found at Oparine."
+		"彼は始めにオパーリンの^c+m錬金術師^c-に会うと"
+		"よいかもしれないと言った。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -160,10 +169,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; runes questgroup
 
-(questadd (qst-mk "The Search for the Runes"
+(questadd (qst-mk "石版を探せ"
 	'questentry-allrunes
 	(kern-ui-paginate-text
-		"The Enchanter believes that the Accursed are seeking the runes for nefarious purposes. It is up to you to collect them first."
+		"魔道師は呪われた者が恐ろしい目的のために石版を"
+		"集めていると確信した。先に見つけられるかはあな"
+		"たしだいだ。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -175,10 +186,11 @@
 ))
 
 ;; TODO- alternate path in which the rune is lost?
-(questadd (qst-mk "A Rune in Hand"
+(questadd (qst-mk "手の中の石版"
 	'questentry-rune-k
 	(kern-ui-paginate-text
-		"The Rune of Knowledge belongs to the Enchanter. You may be able to convince him to turn it over to you."
+		"知識の石版は魔道師のものだ。それを取り戻せば"
+		"魔道師の信頼を得られるだろう。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -192,10 +204,11 @@
 		)
 ))
 
-(questadd (qst-mk "A Rune in the Deeps"
+(questadd (qst-mk "深淵の石版"
 	'questentry-rune-p
 	(kern-ui-paginate-text
-		"The Alchemist provided you with information on a rune buried in the deeps of Kurpolis."
+		"錬金術師からクロポリスの奥に埋もれた石版の話"
+		"を聞いた。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -206,10 +219,10 @@
 		)
 ))
 
-(questadd (qst-mk "A Soldier's Rune"
+(questadd (qst-mk "戦士の石版"
 	'questentry-rune-l
 	(kern-ui-paginate-text
-		"One of the Runes is carried by the Warritrix."
+		"石版の一つは闘士が身につけている。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -223,10 +236,11 @@
 		)
 ))
 
-(questadd (qst-mk "A Lost Rune"
+(questadd (qst-mk "失われた石版"
 	'questentry-rune-f
 	(kern-ui-paginate-text
-		"King Clovis once possessed a rune, but he fell during the Goblin Wars."
+		"クロービス王はかつて石版を持っていた。しかし"
+		"それはゴブリン戦争のとき失われた。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -237,10 +251,11 @@
 		)
 ))
 
-(questadd (qst-mk "A Rune in the Void"
+(questadd (qst-mk "虚空の中の石版"
 	'questentry-rune-d
 	(kern-ui-paginate-text
-		"Legends tell of a temple in the void, which housed a rune."
+		"言い伝えでは虚空の中に寺院があり、そこに石版"
+		"が祭られているそうだ。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -251,10 +266,11 @@
 		)
 ))
 
-(questadd (qst-mk "A Rune in Fire"
+(questadd (qst-mk "火の中の石版"
 	'questentry-rune-w
 	(kern-ui-paginate-text
-		"A rune was found amongst the hoard of a dragon lairing in the Fire Sea."
+		"火の海にある竜のねぐらの宝物庫で石版を見つけ"
+		"た。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -264,24 +280,25 @@
 		)
 ))
 
-(questadd (qst-mk "A Rune in the Ruins"
+(questadd (qst-mk "廃墟の中の石版"
 	'questentry-rune-s
 	(kern-ui-paginate-text
-		"A rune can be found in Old Absalot, beneath the ruins."
+		"石版は廃墟の真下の古アブサロットにあるだろ"
+		"う。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
 	's_runestone_r
 	(tbl-build
-		;;'on-update 'quest-allrunes-update
+		'on-update 'quest-rune-s-update
 		'bonus-xp 0
 		)
 ))
 
-(questadd (qst-mk "A Rune in the Sea"
+(questadd (qst-mk "海の中の石版"
 	'questentry-rune-c
 	(kern-ui-paginate-text
-		"A rune once belonged to the pirate Ghertie."
+		"石版はかつて海賊のガーティーが持っていた。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -295,10 +312,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; wise questgroup
 
-(questadd (qst-mk "The Wise"
+(questadd (qst-mk "賢者たち"
 	'questentry-wise
 	(kern-ui-paginate-text
-		"The Wise have great influence over affairs in the Shard. Seeking them out may be critical to your success."
+		"賢者はシャルドの地で大きな影響力を持つ者達だ。"
+		"勝利のためには彼らを見つけ出すことが不可欠だ。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -308,10 +326,11 @@
 		)
 ))
 
-(questadd (qst-mk "The Enchanter"
+(questadd (qst-mk "魔道師"
 	'questentry-enchanter
 	(kern-ui-paginate-text
-		"The Enchanter is a great and knowledgable Wizard, one of the Wise of the present age."
+		"魔道師は偉大で知識のある魔術師で、現在の賢者の"
+		"一人だ。"
 	)
 	'quest-assign-subquest
 	'quest-status-inprogress
@@ -322,10 +341,10 @@
 		)
 ))
 
-(questadd (qst-mk "The Alchemist"
+(questadd (qst-mk "錬金術師"
 	'questentry-alchemist
 	(kern-ui-paginate-text
-		"The Alchemist is one of the wise."
+		"錬金術師は賢者の一人だ。"
 	)
 	'quest-assign-subquest
 	'quest-status-inprogress
@@ -336,10 +355,10 @@
 		)
 ))
 
-(questadd (qst-mk "The MAN"
+(questadd (qst-mk "にんげん"
 	'questentry-the-man
 	(kern-ui-paginate-text
-		"The MAN is one of the wise."
+		"にんげんは賢者の一人だ。"
 	)
 	'quest-assign-subquest
 	'quest-status-inprogress
@@ -350,10 +369,10 @@
 		)
 ))
 
-(questadd (qst-mk "The Engineer"
+(questadd (qst-mk "技師"
 	'questentry-engineer
 	(kern-ui-paginate-text
-		"The Alchemist is one of the wise."
+		"技師は賢者の一人だ。"
 	)
 	'quest-assign-subquest
 	'quest-status-inprogress
@@ -364,10 +383,10 @@
 		)
 ))
 
-(questadd (qst-mk "The Necromancer"
+(questadd (qst-mk "死霊術師"
 	'questentry-necromancer
 	(kern-ui-paginate-text
-		"The Necromancer is one of the wise."
+		"死霊術師は賢者の一人だ。"
 	)
 	'quest-assign-subquest
 	'quest-status-inprogress
@@ -378,10 +397,10 @@
 		)
 ))
 
-(questadd (qst-mk "The Warritrix"
+(questadd (qst-mk "闘士"
 	'questentry-warritrix
 	(kern-ui-paginate-text
-		"The Warritrix is one of the wise."
+		"闘士は賢者の一人だ。"
 	)
 	'quest-assign-subquest
 	'quest-status-inprogress
@@ -404,10 +423,11 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(questadd (qst-mk "A Haunted Inn"
+(questadd (qst-mk "宿屋の亡霊"
 	'questentry-ghertie
 	(kern-ui-paginate-text
-		"A ghost haunts the inn at Oparine. Why does it linger in undeath?"
+		"オパーリンの宿には幽霊がいる。なぜ死んでもそこ"
+		"に居座っているのか？"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress
@@ -430,10 +450,11 @@
 		)
 ))
 
-(questadd (qst-mk "Blood Price: Dragon"
+(questadd (qst-mk "価値ある竜の血"
 	'questentry-dragon
 	(kern-ui-paginate-text
-		"The Alchemist has offered to trade you information on the wherabouts of a Rune, in exchange for the blood of a dragon."
+		"錬金術師は竜の血を持ってくれば交換で石版のあり"
+		"かを教えると言った。"
 	)
 	'quest-assign-notify
 	'quest-dragon-update
@@ -442,10 +463,11 @@
 		)
 ))
 
-(questadd (qst-mk "A Soldiers Justice"
+(questadd (qst-mk "戦士たちの正義"
 	'questentry-warrjustice
 	(kern-ui-paginate-text
-		"The Warritrix has been slain by treachery. Will this crime go unpunished?"
+		"闘士は裏切りにより殺された。この罪が裁かれるこ"
+		"とはないのか？"
 	)
 	'quest-assign-subquest
 	'quest-status-inprogress
@@ -459,12 +481,14 @@
 		;;'avenged - completed justice quest
 ))
 
-(questadd (qst-mk "Bandit Troubles"
+(questadd (qst-mk "盗賊の問題"
 	'questentry-bandits
 	(kern-ui-paginate-text
-		"Gregor, an old charcoal burner, has asked for your help in dealing with some troublesome bandits that have been plaguing the great forest."
+		"炭焼きの老人グレゴールに、森の厄介事である盗賊"
+		"から助けて欲しいと頼まれた。"
 		""
-		"He suggests that the Rangers at Green Tower will be able to assist in this task."
+		"緑の塔の警備隊がこの問題の手助けになるかもしれ"
+		"ないと言われた。"
 	)
 	'quest-assign-notify
 	'quest-status-inprogress

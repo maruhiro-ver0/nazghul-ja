@@ -63,7 +63,7 @@ void windSetDirection(int dir, int dur)
     }
 
     if (dir != windDirection) {
-        log_msg("The wind shifts to the %s", directionToString(dir));
+        log_msg("風向きが%sに変わった。", directionToString(dir));
     }
 
     windDirection = dir;
@@ -79,7 +79,7 @@ int windGetDirection(void)
 void windRepaint(void)
 {
 	screenErase(&windRect);
-	screenPrint(&windRect, SP_CENTERED, "Wind:%s",
+	screenPrint(&windRect, SP_CENTERED, "風向き:%s",
 		    directionToString(windDirection));
 	screenUpdate(&windRect);
 }

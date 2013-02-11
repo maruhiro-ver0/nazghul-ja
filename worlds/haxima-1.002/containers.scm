@@ -42,7 +42,7 @@
   (ifc nil
        (method 'search corpse-search)))
 
-(mk-obj-type 't_corpse "corpse" s_corpse layer-item corpse-ifc)
+(mk-obj-type 't_corpse "遺体" s_corpse layer-item corpse-ifc)
 
 (define (mk-corpse) 
   (bind (kern-mk-obj t_corpse 1)
@@ -156,10 +156,10 @@
 
     (cond 
      ((container-magic-locked? container)
-      (kern-log-msg "Magically locked!\n")
+      (kern-log-msg "魔法で封印されている！\n")
       #f)
      ((container-locked? container)
-      (kern-log-msg "Locked!\n")
+      (kern-log-msg "施錠されている！\n")
       #f)
      (else
 
@@ -213,7 +213,7 @@
   ;; Searching can trigger traps, which can destroy both kobj and kchar
   (kern-obj-inc-ref kobj)
   (kern-obj-inc-ref kchar)
-  (kern-log-begin "Searching chest...")
+  (kern-log-begin "宝箱を調べた…")
   (let ((container (gob kobj)))
     (if (foldr (lambda (detected? trap)
                  (trap-search trap kobj kchar)
@@ -225,8 +225,8 @@
                  (or detected? (trap-detected? trap)))
                #f
                (container-traps container))
-        (kern-log-end "Trap detected!")
-        (kern-log-end "No traps detected!")
+        (kern-log-end "罠が仕掛けられている！")
+        (kern-log-end "罠はないようだ！")
         ))
   ;; Done with references
   (kern-obj-dec-ref kobj)
@@ -235,31 +235,31 @@
 
 (define (kcontainer-describe kcontainer count)
   (let ((container (gob kcontainer)))
-    (kern-log-continue "a ")
+    (kern-log-continue "")
     (if (container-magic-locked? container)
-        (kern-log-continue "magically locked, "))
+        (kern-log-continue "魔法で封印された"))
     (if (container-locked? container)
         (if (container-needs-key? container)
-            (kern-log-continue "locked (with a key), ")
-            (kern-log-continue "padlocked, ")))
+            (kern-log-continue "施錠された")
+            (kern-log-continue "南京錠の掛けられた")))
     (if (container-open? container)
-        (kern-log-continue "open container ")
-        (kern-log-continue "closed container "))
+        (kern-log-continue "開いた箱")
+        (kern-log-continue "閉じた箱"))
     (kern-log-continue "(")
     (if (foldr (lambda (described? trap)
                  (cond ((trap-detected? trap)
                         (if described?
-                            (kern-log-continue ", "))
+                            (kern-log-continue "、"))
                         (kern-log-continue (trap-name trap))
                         (if (trap-tripped? trap)
-                            (kern-log-continue "[disarmed]"))
+                            (kern-log-continue "[解除済]"))
                         #t)
                        (else 
                         described?)))
                #f
                (container-traps container))
-        (kern-log-continue " trap(s) detected")
-        (kern-log-continue "no traps detected")
+        (kern-log-continue "罠がある")
+        (kern-log-continue "罠はないようだ")
         )
     (kern-log-continue ")")
     ))
@@ -285,8 +285,8 @@
 (define (kcontainer-lock kcontainer khandler)
   (let ((container (gob kcontainer)))
     (println "container-lock: " container)
-    (cond ((container-open? container) (kern-log-msg "Not closed!\n") #f)
-          ((container-locked? container) (kern-log-msg "Already locked!\n") #f)
+    (cond ((container-open? container) (kern-log-msg "閉じていない！\n") #f)
+          ((container-locked? container) (kern-log-msg "既に施錠されている！\n") #f)
           (else
            (container-set-locked! container #t)
            (kcontainer-update-sprite kcontainer)
@@ -294,9 +294,9 @@
 
 (define (kcontainer-unlock kcontainer khandler)
   (let ((container (gob kcontainer)))
-    (cond ((container-open? container) (kern-log-msg "Not closed!\n") #f)
-          ((not (container-locked? container)) (kern-log-msg "Not locked!\n") #f)
-          ((container-needs-key? container) (kern-log-msg "Needs the key!\n") #f)
+    (cond ((container-open? container) (kern-log-msg "閉じていない！\n") #f)
+          ((not (container-locked? container)) (kern-log-msg "施錠されていない！\n") #f)
+          ((container-needs-key? container) (kern-log-msg "鍵が必要だ！\n") #f)
           (else
            (container-set-locked! container #f)
            (kcontainer-update-sprite kcontainer)
@@ -304,9 +304,9 @@
 
 (define (kcontainer-magic-lock kcontainer khandler)
   (let ((container (gob kcontainer)))
-    (cond ((container-open? container) (kern-log-msg "Not closed!\n") #f)
+    (cond ((container-open? container) (kern-log-msg "閉じていない！\n") #f)
           ((container-magic-locked? container) 
-           (kern-log-msg "Already magically locked!\n") #f)
+           (kern-log-msg "既に魔法で封印されている！\n") #f)
           (else
            (container-set-magic-locked! container #t)
            (kcontainer-update-sprite kcontainer)
@@ -315,9 +315,9 @@
 (define (kcontainer-magic-unlock kcontainer khandler)
   (let ((container (gob kcontainer)))
     (println "container-magic-unlock: " container)
-    (cond ((container-open? container) (kern-log-msg "Not closed!\n") #f)
+    (cond ((container-open? container) (kern-log-msg "閉じていない！\n") #f)
           ((not (container-magic-locked? container)) 
-           (kern-log-msg "Not magically locked!\n") #f)
+           (kern-log-msg "魔法で封印されていない！\n") #f)
           (else
            (container-set-magic-locked! container #f)
            (kcontainer-update-sprite kcontainer)
@@ -326,8 +326,8 @@
 (define (kcontainer-use-key kcontainer key-type)
   (let ((container (gob kcontainer)))
     (println "container-use-key: " container)
-    (cond ((container-open? container) (kern-log-msg "Not closed!"))
-          ((not (container-key-fits? container key-type)) (kern-log-msg "Key won't fit!"))
+    (cond ((container-open? container) (kern-log-msg "閉じていない！"))
+          ((not (container-key-fits? container key-type)) (kern-log-msg "この鍵は合わない！"))
           ((container-locked? container)
            (container-set-locked! container #f)
            (kcontainer-update-sprite kcontainer)
@@ -340,8 +340,8 @@
 (define (kcontainer-lock-with-key kcontainer ktype)
   (let ((container (gob kcontainer)))
     (println "container-lock-with-key: " container " " ktype)
-    (cond ((container-open? container) (kern-log-msg "Not closed!"))
-          ((container-locked? container) (kern-log-msg "Already locked!"))
+    (cond ((container-open? container) (kern-log-msg "閉じていない！"))
+          ((container-locked? container) (kern-log-msg "既に施錠されている！"))
           (else
            (container-set-key! container ktype)
            (container-set-locked! container #t)
@@ -390,7 +390,7 @@
   (mk-obj-type tag name sprite layer-mechanism container-ifc))
 
 ;; Test it out. First, make a new chest type.
-(mk-container-type 't_chest "chest" s_chest)
+(mk-container-type 't_chest "宝箱" s_chest)
 
 ;; Define a constructor for an object of the new chest type. Example usage:
 ;;
@@ -443,4 +443,4 @@
        (method 'butcher animal-corpse-butcher)
        ))
 
-(mk-obj-type 't_animal_corpse "animal corpse" s_corpse layer-item animal-corpse-ifc)
+(mk-obj-type 't_animal_corpse "動物の死体" s_corpse layer-item animal-corpse-ifc)

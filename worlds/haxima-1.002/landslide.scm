@@ -4,7 +4,7 @@
   (cond ((and (not (can-fly? kbeing))
               (not (can-phase? kbeing)))
          (kern-log-msg (kern-obj-get-name kbeing)
-                       " hit by falling rock!")
+                       "は落ちてきた岩に当たった！")
          (kern-obj-apply-damage kbeing 
                                 "hit"
                                 (kern-dice-roll "1d10")))
@@ -17,7 +17,7 @@
          )))
 
 (define (landslide kbeing x y w h)
-  (kern-log-msg "LANDSLIDE!")
+  (kern-log-msg "地すべりだ！")
   (shake-map 10)
   (foldr-rect (loc-place (kern-obj-get-location kbeing))
              x

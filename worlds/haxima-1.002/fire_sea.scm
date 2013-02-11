@@ -1,5 +1,5 @@
 (mk-dungeon-room
- 'p_fire_sea "Fire Sea"
+ 'p_fire_sea "²Ğ¤Î³¤"
 	(list
 		"rn r8 r8 r8 r8 r8 r8 r8 r8 r8 r8 r8 r8 r8 r8 r8 rn rn rn "
 		"r4 !_ !_ !! {A {{ {{ {{ {{ {{ {{ {{ {{ {{ {{ {{ ra rn rn "
@@ -47,7 +47,7 @@
 (mk-place-music p_fire_sea 'ml-dungeon-adventure)
 
 (mk-dungeon-room
- 'p_smoldering_cave "Smoldering Cave"
+ 'p_smoldering_cave "¤¯¤¹¤Ö¤ëÆ¶·¢"
 	(list
 		"rn rn rn rn rn rn rn r4 .. .. .. r2 rn rn rn rn rn rn rn "
 		"rn rn rn rn rn r8 r8 r4 {8 .. {8 r2 r8 r8 rn rn rn rn rn "

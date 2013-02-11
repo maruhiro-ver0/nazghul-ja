@@ -13,8 +13,8 @@
 
 (define roland-greetings
   (list
-   "Well met!"
-   "Hail, Wanderer!"
+   "こんにちは！"
+   "もし、迷い人殿！"
    ))
 
 ;;----------------------------------------------------------------------------
@@ -66,16 +66,16 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;;
-;; Roland is a knight errant, serving Lord Froederick.
-;; He is currently imprisoned by bandits in a cell in the slimy cave.
-;; Roland is a potential party member.
+;; ローランドは旅の騎士で、クロービス王に仕えていた。
+;; 彼は今では粘菌の洞窟の牢に捕らえられている。
+;; ローランドは仲間になる。
 ;;----------------------------------------------------------------------------
 (define (roland-join knpc kpc)
   (if (is-player-party-member? knpc)
-      (say knpc "Yes, I am still with you. Lead on!")
+      (say knpc "そう。既に仲間になっている。お導きくだされ！")
       (if (roland-joined? knpc)
           (begin
-            (say knpc "I am honored to rejoin you.")
+            (say knpc "再び仲間に加わったことを名誉に思う。")
             (join-player knpc)
             (kern-conv-end)
             )
@@ -83,16 +83,16 @@
               ;; yes - will the player accept his continued allegiance to
               ;; Froederick?
               (begin
-                (say knpc "I thank you for freeing me! I owe you my life, and will gladly join you. What say you?")
+                (say knpc "解放してくれたことに感謝する！あなたは命の恩人だ。あなたの仲間に加わりたい。どうだろうか？")
                 (if (yes? kpc)
                     (begin
-                      (say knpc "I am honored! Those vile rogues took my "
-                           "iron chest which contains my equipment. It should be "
-                           "around here somewhere.")
+                      (say knpc "光栄に思う！"
+                           "ならず者たちは私の鎧や持ち物を奪った。"
+                           "このあたりにあるはずだ。")
                       (roland-join-player knpc))
-                    (say knpc "[sadly] As you will.")))
-              (say knpc "I am locked in this cell! Free me from this dishonour, "
-                   "and you will gain an ally.")
+                    (say knpc "［悲しそうに］そう望むなら。")))
+              (say knpc "牢に閉じ込められてしまったのだ！ここから出して、"
+                   "仲間にしてくだされ。")
               ))))
   
 (define roland-conv
@@ -103,49 +103,48 @@
        ;; on the other hand, is a feature of the ifc mechanism (see ifc.scm).
        (method 'default 
                (lambda (knpc kpc) 
-                 (say knpc "I'm afraid I can't help you with that.")))
+                 (say knpc "残念ながら、それは手助けできそうにない。")))
        (method 'hail 
                (lambda (knpc kpc) 
                  (if (roland-joined? knpc)
-                     (say knpc "I will aid thee any way I can.")
+                     (say knpc "できるならあなたのお手伝いがしたい。")
                      (roland-join knpc kpc))))
 
-       (method 'bye (lambda (knpc kpc) (say knpc "Farewell.")))
+       (method 'bye (lambda (knpc kpc) (say knpc "さようなら。")))
        (method 'job 
                (lambda (knpc kpc) 
-                 (say knpc "I am a knight errant.")))
-       (method 'name (lambda (knpc kpc) (say knpc "I am Roland.")))
+                 (say knpc "旅の騎士だ。")))
+       (method 'name (lambda (knpc kpc) (say knpc "私はローランドだ。")))
        (method 'join roland-join)
 
        (method 'cell
                (lambda (knpc kpc)
-                 (say knpc "Use picklocks on a locked door to open it. Or, cast "
-                      "an unlock spell.")))
+                 (say knpc "鍵開け道具があれば扉を開けられる。"
+                      "そうでなければ、扉を開ける呪文を唱えてくだされ。")))
        (method 'clov
                (lambda (knpc kpc)
-                 (say knpc "I was with him the day he fell in battle. "
-                      "The enemy ambushed us, and I was knocked senseless. "
-                      "I dreamt that a hideous beast dragged the King down into Tartos. "
-                      "When I awoke I was in a camp hospital.")))
+                 (say knpc "私は王が倒れた日、共に戦っていたのだ。"
+                      "王と私は敵の待ち伏せに会い、気を失った。"
+                      "その時、隠れていた獣が王を地獄に引きずり込む夢を見た。"
+                      "目が覚めると、私は野戦病院にいたのだ。")))
        (method 'free
                (lambda (knpc kpc)
-                 (say knpc "I was waylaid and kidnapped by the bandits in this "
-                      "cave. They've locked me in this cell to hold me for "
-                      "ransom.")))
+                 (say knpc "待ち伏せにあい、この洞窟に誘拐されてしまったのだ。"
+                      "奴らは私をこの牢に閉じ込め、身代金を要求している。")))
        (method 'pick
                (lambda (knpc kpc)
-                 (say knpc "Bandits and thieves usually carry picklocks.")))
+                 (say knpc "盗賊は常に鍵開け道具を持っている。")))
        (method 'spel
                (lambda (knpc kpc)
-                 (say knpc "You should ask a Wizard about spells.")))
+                 (say knpc "呪文は魔術師に聞いてくだされ。")))
        (method 'trig 
                (lambda (knpc kpc) 
-                 (say knpc "I know Trigave is a small town, a crossroad of "
-                      "the north, with much history.")))
+                 (say knpc "トリグレイブは北の道が交差するところにある小さな町だ。"
+                      "そこには長い歴史がある。")))
        (method 'knig 
                (lambda (knpc kpc)
-                 (say knpc "I was a squire of King Clovis in the Goblin Wars. "
-                      "When the wars ended, I took to wandering.")
+                 (say knpc "私はゴブリン戦争のころクロービス王に仕えていた。"
+                      "戦争が終わり、放浪するようになった。")
                  ))
        ))
 
@@ -156,7 +155,7 @@
   (bind 
     (kern-mk-char 
      'ch_roland          ; tag
-     "Roland"            ; name
+     "ローランド"        ; name
      sp_human            ; species
      oc_warrior          ; occ
      s_knight            ; sprite

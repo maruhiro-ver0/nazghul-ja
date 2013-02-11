@@ -6,7 +6,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Bole
+;; ボレ
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_thud
                (list 0  0  bole-bedroom-thud "idle")
@@ -26,50 +26,49 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Thud is the bodyguard of Kathryn, and currently abides in Bole,
-;; where they seek a certain thief.  Various other NPCs suggest
-;; that Thud is at best half human, perhaps having ogre blood,
-;; or a sorcerous (summoned or vat-born) origin...
+;; ドンはキャスリンの用心棒で、今はこのあたりに泥棒がいると思い、ボレに留まっ
+;; ている。多くの他の登場人物はドンは半分は人間でオーガの血が流れている、また
+;; は魔術(召還された、または作られた)と考えている…。
 ;; 
-;; Thud is a potential party member (and an eventual betrayer).
-;; He accompanies Kathrun, and joins the party when and if she does.
+;; ドンは仲間になる(そして裏切る)。
+;; 彼はキャスリンの仲間で、彼女が仲間に加わると彼も加わる。
 ;;----------------------------------------------------------------------------
 (define (thud-hail knpc kpc)
-  (say knpc "[You are certain that the figure before you is part ogre. "
-       "Three meters tall and smoldering with menace, he regards you with "
-       "half-lidded eyes.]"))
+  (say knpc "［あなたの前にあるのは確かにオーガの一部だ。"
+       "身長は3メートル程あり、威圧的だ。"
+       "彼は目を細めてあなたをにらんだ。］"))
 
 (define (thud-default knpc kpc)
-  (say knpc "[His threatening gaze does not waver]"))
+  (say knpc "［彼の威圧的な目は動かなかった。］"))
 
 (define (thud-name knpc kpc)
-  (say knpc "Thud no like you."))
+  (say knpc "ドンは　お前が　嫌い。"))
 
 (define (thud-join knpc kpc)
   (if (is-player-party-member? ch_kathryn)
       (begin
-        (say knpc "[Seeing Kathryn with you, he grunts his assent]")
+        (say knpc "［キャスリンとあなたを見ると、彼は不満げに同意した。］")
         (kern-char-join-player knpc)
         (kern-conv-end))
-      (say knpc "[He sneers]")))
+      (say knpc "［彼はあざ笑った。］")))
 
 (define (thud-job knpc kpc)
-  (say knpc "Thud love kill."))
+  (say knpc "ドンは　殺すのが　大好き。"))
 
 (define (thud-kathryn knpc kpc)
-  (say knpc "Thud no kill"))
+  (say knpc "ドンは　殺さない。"))
 
 (define (thud-thud knpc kpc)
-  (say knpc "You talk me? YOU TALK ME?! THUD PICK TEETH WITH YOU BONES!!"))
+  (say knpc "俺のことか？　俺　の　こ　と　か　？　ドンは　お前の　骨で　歯を　ほじるぞ！！"))
 
 (define (thud-thief knpc kpc)
-  (say knpc "[He becomes enraged] THIEF TRICK THUD! THUD FIND THIEF! THUD KILL THIEF!"))
+  (say knpc "［彼は怒り出した］泥棒は　ドンを　だました！ドンは　泥棒を　見つける！ドンは　泥棒を　殺す！"))
 
 (define (thud-find knpc kpc)
-  (say knpc "[He calms down a bit] Red Lady find thief. He no can hide."))
+  (say knpc "［彼は少し落ち着いた］赤い　淑女が　泥棒を　見つける。　泥棒は　隠れ　られない。"))
 
 (define (thud-red-lady knpc kpc)
-  (say knpc "[He gives you a murderous look] You stay away Red Lady."))
+  (say knpc "［彼は恐ろしい目つきであなたを見た］赤い　淑女から　離れろ。"))
 
 (define thud-conv
   (ifc nil
@@ -77,7 +76,7 @@
        (method 'hail thud-hail)
        (method 'bye 
                (lambda (knpc kpc) 
-                 (say knpc "[His eyes bore into your back as you walk away]")))
+                 (say knpc "［彼はうんざりした目であなたが去るのを見ていた。］")))
        (method 'job  thud-job)
        (method 'name thud-name)
        (method 'join thud-join)
@@ -100,7 +99,7 @@
     (kern-char-arm-self
      (kern-mk-char 
       'ch_thud ;;.....tag
-      "Thud" ;;.......name
+      "ドン" ;;.......name
       sp_troll ;;.....species
       oc_warrior ;;...occupation
       s_troll ;;......sprite

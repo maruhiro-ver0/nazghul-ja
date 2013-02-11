@@ -105,7 +105,7 @@
   (let ((gate (kobj-gob-data kgate)))
     (if (moongate-open? gate)
         (let ((kdest (moongate-kdest gate)))
-          (cond ((null? kdest) (kern-print "Leads nowhere!\n"))
+          (cond ((null? kdest) (kern-print "どこへも行けない！\n"))
                 (else
                  (kern-obj-relocate kstepper 
                                     (kern-obj-get-location kdest)
@@ -195,7 +195,7 @@
        (method 'exec moongate-exec)
        ))
 
-(mk-obj-type 't_moongate "moongate" '() layer-mechanism moongate-ifc)
+(mk-obj-type 't_moongate "月の門" '() layer-mechanism moongate-ifc)
 
 (define (mk-moongate moontag)
   (bind (kern-mk-obj t_moongate 1)

@@ -1,8 +1,8 @@
 (kern-load "gregor.scm")
 
 ;;-----------------------------------------------------------------------------
-;; Make some chests containing items to get the player started. 
-;; These will be placed on the map in the shrine room in the SW.
+;; プレイヤーの最初の持ち物が入っている箱がある。
+;; それは南西の祭壇にある。
 ;;-----------------------------------------------------------------------------
 (define supplies_chest
   (mk-chest
@@ -53,11 +53,11 @@
 
 
 ;;----------------------------------------------------------------------------
-;; Moongate Clearing
+;; 月の門の祭壇
 ;;
-;; This is where the player starts out.
+;; ここが始まりの場所である。
 ;;----------------------------------------------------------------------------
-(kern-mk-place 'p_moongate_clearing "Moongate Clearing"
+(kern-mk-place 'p_moongate_clearing "月の門の祭壇"
   s_shrine ;; sprite
   (kern-mk-map 'm_moongate_clearing 23 28 pal_expanded
     (list

@@ -31,12 +31,12 @@ static struct KeyHandler esc_key_hndlr;
 
 static void esc_help(void)
 {
-    log_begin("F)ollow mode\n");
-    log_continue("Q)uit\n");
-    log_continue("[1-9] Solo mode\n");
-    log_continue("CTRL-R)eload\n");
-    log_continue("CTRL-S)ave\n");
-    log_end("ESC to continue game\n");
+    log_begin("F)追跡\n");
+    log_continue("Q)終了\n");
+    log_continue("1-9)単独\n");
+    log_continue("CTRL-R)読込\n");
+    log_continue("CTRL-S)保存\n");
+    log_end("ESCで続ける\n");
 }
 
 static int esc_menu_key_fx(struct KeyHandler *kh, int key, int keymod)
@@ -69,7 +69,7 @@ static int esc_menu_key_fx(struct KeyHandler *kh, int key, int keymod)
         cmdSettings();
         break;
     case SDLK_ESCAPE:
-        log_msg("Continue");
+        log_msg("続ける。");
         return 1;
     case '?':
         esc_help();
@@ -89,7 +89,7 @@ static int esc_key_fx(struct KeyHandler *esckh, int key, int keymod)
         return 0;
     }
 
-    log_banner("ESC mode - press '?' for help");
+    log_banner("ESC状態 - '?'で説明を表示する。");
 
     kh.fx = esc_menu_key_fx;
     eventPushKeyHandler(&kh);

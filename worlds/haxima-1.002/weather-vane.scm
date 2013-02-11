@@ -10,7 +10,7 @@
        ))
 
 ;; Make a kernel portcullis type
-(mk-obj-type 't_weather_vane "weather vane" s_weather_vane layer-mechanism
+(mk-obj-type 't_weather_vane "É÷¸«" s_weather_vane layer-mechanism
              weather-vane-ifc)
 
 ;; Define a constructor

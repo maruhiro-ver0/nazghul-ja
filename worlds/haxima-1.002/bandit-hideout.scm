@@ -1,7 +1,7 @@
 (kern-load "nate.scm")
 
 (mk-19x19-town
- 'p_bandit_hideout_l1 "Bandit Stockade" s_ruin
+ 'p_bandit_hideout_l1 "ÅğÂ±¤Î±£¤ì²È" s_ruin
  (list
 		"tt tt tt tt t5 t3 tt tt tt tt tt tt tt tt tc rr rr rr rr "
 		"tt tt tt tt tt tt tt tt tt tt tt tt tc rr rr rr ~7 rr rr "
@@ -62,7 +62,7 @@
 (mk-place-music p_bandit_hideout_l1 'ml-outdoor-adventure)
 
 (mk-dungeon-room
- 'p_bandit_hideout_l2a "Stockade Barracks"
+ 'p_bandit_hideout_l2a "±£¤ì²È¤ÎÃÏ²¼"
  (list
   "rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr rr "
   "rr rr bb dd dd dd dd dd dd dd dd dd dd dd dd dd dd rr rr "

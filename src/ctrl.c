@@ -183,7 +183,7 @@ static int ctrl_party_key_handler(struct KeyHandler *kh, int key, int keymod)
                 break;
         case ' ':
                 party->endTurn();
-                log_msg("Pass");
+                log_msg("何もしない。");
                 break;
         case '>':
                 // This key was chosen to be a cognate for '>' in
@@ -221,7 +221,7 @@ static int ctrl_party_key_handler(struct KeyHandler *kh, int key, int keymod)
 
         /* Return true when done processing commands. */
 		if(!party->isTurnEnded())
-				cmdwin_push("Party [%d ap]:",party->getActionPoints());
+			cmdwin_push("全員 [行動%d]:",party->getActionPoints());
                 
         return party->isTurnEnded();
 
@@ -354,7 +354,7 @@ static int ctrl_calc_to_hit(class Character *character,
         int attackBonus = character->getAttackBonus(weapon);
         int val         = base + weaponBonus + attackBonus + penalty;
 
-        log_continue("to-hit: %d=%d+%d+%d", val, base, weaponBonus, 
+        log_continue("命中: %d=%d+%d+%d", val, base, weaponBonus, 
                      attackBonus);
         if (penalty >= 0) {
                 log_continue("+");
@@ -370,7 +370,7 @@ static int ctrl_calc_to_defend(class Character *target)
         int bonus = target->getAvoidBonus();
         int val   = base + bonus;
 
-        log_continue("to-def: %d=%d+%d\n", val, base, bonus);
+        log_continue("回避: %d=%d+%d\n", val, base, bonus);
         
         return val;
 }
@@ -394,7 +394,7 @@ static int ctrl_calc_damage(class Character *character,
 
         int val = weaponDamage + characterBonus + criticalBonus + memberBonus;
 
-        log_continue("damage: %d=%d+%d", val, weaponDamage, characterBonus);
+        log_continue("打撃: %d=%d+%d", val, weaponDamage, characterBonus);
         if (memberBonus) {
                 log_continue("+%d", memberBonus);
         }
@@ -414,7 +414,7 @@ static int ctrl_calc_armor(class Character *target, int critical)
                 armor = target->getArmor();
         }
 
-        log_continue(" armor: %d\n", armor);
+        log_continue("防御: %d\n", armor);
         
         return armor;
 }
@@ -442,12 +442,12 @@ void ctrl_do_attack(class Character *character, class ArmsType *weapon,
          * factions */
         harm_relations(character, target);
 
-        log_begin("^c%c%s^cw attacks ^c%c%s^cw with %s: "
+        log_begin("^c%c%s^cwは%sで^c%c%s^cwを攻撃:"
                   , (are_hostile(character, player_party)?'r':'g')
                   , character->getName()
+                  , weapon->getName()
                   , (are_hostile(target, player_party)?'r':'g')
                   , target->getName()
-                  , weapon->getName()
                 );
 
         if (weapon->canOnAttack())
@@ -460,7 +460,7 @@ void ctrl_do_attack(class Character *character, class ArmsType *weapon,
 
         if (miss)
         {
-				log_end("obstructed!");
+				log_end("他に当たった！");
 				weapon->fireHitLoc(character, NULL, character->getPlace(),misx,misy,-1);
 				return;
         }
@@ -471,7 +471,7 @@ void ctrl_do_attack(class Character *character, class ArmsType *weapon,
         def = ctrl_calc_to_defend(target);
         if (hit < def)
         {
-				log_end("evaded!");
+				log_end("命中しなかった！");
 				weapon->fireHitLoc(character, NULL, character->getPlace(),misx,misy,-1);
 				return;
         }
@@ -480,7 +480,7 @@ void ctrl_do_attack(class Character *character, class ArmsType *weapon,
         if (20 <= (dice_roll("1d20") 
                    + logBase2(character->getBaseAttackBonus(weapon)))) {
                 critical = 1;
-                log_continue("^c+yCritical hit!^c-\n");
+                log_continue("^c+y急所に命中した！^c-\n");
         }
 
         /* roll for damage */
@@ -491,7 +491,7 @@ void ctrl_do_attack(class Character *character, class ArmsType *weapon,
         
         if (damage <= 0)
         {
-				log_end("blocked!");
+				log_end("防御した！");
 				weapon->fireHitLoc(character, target, character->getPlace(),misx,misy,0);
 				return;
         }
@@ -623,7 +623,7 @@ static void ctrl_attack_ui(class Character *character)
         // turn-based mode.
         if (player_party->getPartyControlMode() == PARTY_CONTROL_FOLLOW &&
             player_party->getSize() > 1) {
-                log_msg("Switching from Follow to Round Robin Mode.\n");
+                log_msg("「追跡」から「順番」に切り替わった。\n");
                 player_party->enableRoundRobinMode();
         }
 
@@ -637,7 +637,7 @@ static void ctrl_attack_ui(class Character *character)
                 				
                 // prompt the user
                 cmdwin_clear();
-                cmdwin_spush("Attack");
+                cmdwin_spush("攻撃する");
 
 		// Determine AP for this (potential) attack,
 		// as a discount may be applied for dual weapon attacks and such,
@@ -663,7 +663,7 @@ static void ctrl_attack_ui(class Character *character)
 
                 if (weapon->isMissileWeapon()) {
                         // SAM: It would be nice to get ammo name, too...
-                        cmdwin_spush("%s (%d AP, range %d, %d ammo)", 
+                        cmdwin_spush("%s(行動%d, 射程%d, 残%d)", 
                                      weapon->getName(), 
 				     this_wpn_AP,
 				     weapon->getRange(), 
@@ -671,14 +671,14 @@ static void ctrl_attack_ui(class Character *character)
                 }
                 else if (weapon->isThrownWeapon()) {
                         // SAM: It would be nice to get ammo name, too...
-                        cmdwin_spush("%s (%d AP, range %d, %d left)",
+                        cmdwin_spush("%s(行動%d, 射程%d, 残%d)",
                                      weapon->getName(), 
 				     this_wpn_AP,
 				     weapon->getRange(), 
                                      character->hasAmmo(weapon));
                 }
                 else {
-                        cmdwin_spush("%s (%d AP, reach %d)", 
+                        cmdwin_spush("%s(行動%d, 射程%d)", 
                                      weapon->getName(), 
 				     this_wpn_AP,
 				     weapon->getRange() );
@@ -687,8 +687,8 @@ static void ctrl_attack_ui(class Character *character)
 
                 // Check ammo
                 if (!character->hasAmmo(weapon)) {
-                        cmdwin_spush("no ammo!");
-                        log_msg("%s: %s - no ammo!\n",
+                        cmdwin_spush("弾がない！");
+                        log_msg("%s: %s - 弾がない！\n",
                                      character->getName(),
                                      weapon->getName());
                         continue;
@@ -700,8 +700,8 @@ static void ctrl_attack_ui(class Character *character)
                         class Character *near;
                         near = ctrl_get_interfering_hostile(character);
                         if (near) {
-                                cmdwin_spush("blocked!");
-                                log_msg("%s: %s - blocked by %s!\n",
+                                cmdwin_spush("妨害！");
+                                log_msg("%s: %s - %sに妨害された！\n",
                                              character->getName(),
                                              weapon->getName(),
                                              near->getName());
@@ -750,7 +750,7 @@ static void ctrl_attack_ui(class Character *character)
                                         &x, &y,
                                         weapon->getRange(),
                                         &info.suggest)) {
-                        cmdwin_spush("abort!");
+                        cmdwin_spush("中断！");
                         continue;
                 }
 
@@ -792,7 +792,7 @@ static void ctrl_attack_ui(class Character *character)
 
                         if (miss)
                         {
-	                        log_end("obstructed!");
+                                log_end("防御！");
                         }
                                      
                         weapon->fireHitLoc(character, NULL, character->getPlace(),misx,misy,-1);
@@ -805,10 +805,10 @@ static void ctrl_attack_ui(class Character *character)
 	                        mech = place_get_object(character->getPlace(), x, y, 
 	                                                mech_layer);
 	                        if (mech && mech->getName()) {
-	                                log_end("%s hit!", mech->getName());
+                                        log_end("%sに命中した！", mech->getName());
 	                                mech->attack(character);
 	                        } else {
-	                                log_end("%s hit!", terrain->name);
+                                        log_end("%sに命中した！", terrain->name);
 	                        }
                         }
 							
@@ -818,7 +818,7 @@ static void ctrl_attack_ui(class Character *character)
                          * next weapon". This allows players to quickly jump to
                          * the next weapon if no target is in range and they
                          * aren't interested in attacking the ground. */
-                        cmdwin_spush("skip weapon!");
+                        cmdwin_spush("次の武器へ！");
 			// no attack made, so don't increment this_is_nth_attack
                         continue;
                 } else {
@@ -835,15 +835,15 @@ static void ctrl_attack_ui(class Character *character)
                         // If the npc is not hostile then get player confirmation.
                         if (! are_hostile(character, target)) {
                                 int yesno;
-                                cmdwin_spush("attack non-hostile");
+                                cmdwin_spush("敵でない者を攻撃する");
                                 cmdwin_spush("<y/n>");
                                 getkey(&yesno, yesnokey);
                                 cmdwin_pop();
                                 if (yesno == 'n') {
-                                        cmdwin_spush("no");
+                                        cmdwin_spush("いいえ");
                                         continue;
                                 }
-                                cmdwin_spush("yes");
+                                cmdwin_spush("はい");
                         }
 
                         // Strike the target
@@ -861,7 +861,7 @@ static void ctrl_attack_ui(class Character *character)
                  * still be okay now that getToHitPenalty() is outside of this
                  * loop, but not sure why it' would be preferred. */
                 if (! character->hasAmmo(weapon))
-                        log_msg("%s : %s now out of ammo\n", 
+                        log_msg("%s : %sは弾切れ\n", 
                                      character->getName(), weapon->getName());
                                 
 		character->decActionPoints(this_wpn_AP);
@@ -899,17 +899,17 @@ static void ctrl_move_character(class Character *character, int dir)
 
         switch (move_result) {
         case OffMap:
-                result = "no place to go!";
+                result = "行ける場所がない！";
                 break;
         case ExitedMap:
-                result = "exit!";
+                result = "脱出！";
                 character->endTurn();
                 break;
         case EngagedEnemy:
-                cmdwin_spush("enter combat!");
+                cmdwin_spush("戦闘状態！");
                 break;
         case WasOccupied:
-                result = "occupied!";
+                result = "進めない！";
                 break;
         case WasImpassable:
         {
@@ -932,7 +932,7 @@ static void ctrl_move_character(class Character *character, int dir)
 					mech->getObjectType()->handle(mech, character);
 					character->decActionPoints(kern_intvar_get("AP_COST:handle_mechanism"));
 					mapSetDirty();
-					result = "handled!";
+					result = "操作した！";
 				} 
 				else if (mech && mech->getObjectType()->canBump())
 				{
@@ -942,24 +942,24 @@ static void ctrl_move_character(class Character *character, int dir)
 				}
 				else
 				{                
-					result = "impassable!";
+					result = "通れない！";
 				}
         }
                 break;
         case SlowProgress:
-                result = "slow progress!";
+                result = "遅い！";
                 break;
         case SwitchedOccupants:
-                result = "switch!";
+                result = "入れ替わった!";
                 break;
         case NotFollowMode:
-                result = "must be in follow mode!";
+                result = "追跡中でなければならない！";
                 break;
         case CantRendezvous:
-                result = "party can't rendezvous!";
+                result = "仲間と集合していない！";
                 break;
         case CouldNotSwitchOccupants:
-                result = "can't switch places!";
+                result = "入れ替われない！";
                 break;
         default:
                 break;
@@ -1029,7 +1029,7 @@ static int ctrl_character_key_handler(struct KeyHandler *kh, int key,
                     character->endTurn();
                 }
             } else {
-                foogod_set_title("Round Robin: %s", character->getName());
+                foogod_set_title("%s: %s", "順番", character->getName());
                 foogodRepaint();
             }
             break;
@@ -1201,7 +1201,7 @@ static int ctrl_character_key_handler(struct KeyHandler *kh, int key,
                 cmdAT(character);
                 break;
         case ' ':
-                log_msg("Pass");
+                log_msg("何もしない。");
                 character->endTurn();
                 break;
         case '?':
@@ -1224,7 +1224,7 @@ static int ctrl_character_key_handler(struct KeyHandler *kh, int key,
 		    // log_msg("");
 		    break;
                 }
-		log_msg("To exit this combat map, use '<', \nor walk off the edge of the map.");
+		log_msg("'<'を押すか、この地図の外に移動すると戦闘から抜けられる。");
 		break;
 
         case '<':
@@ -1237,14 +1237,14 @@ static int ctrl_character_key_handler(struct KeyHandler *kh, int key,
 
                 if (!place_is_wilderness_combat(character->getPlace()))
                 {
-                        log_msg("Must use an exit!");
+                        log_msg("戦闘中でない！");
                         break;
                 }
 
                 if (place_contains_hostiles(character->getPlace(), 
                                             character))
                 {
-                        log_msg("Not while foes remain!");
+                        log_msg("敵がまだいる！");
                         break;
                 }
 
@@ -1694,7 +1694,7 @@ void ctrl_party_ui(class PlayerParty *party)
 
         /* ready the cmdwin prompt */
         cmdwin_clear();
-		  cmdwin_push("Party [%d ap]:",party->getActionPoints());
+	cmdwin_push("全員 [行動%d]:",party->getActionPoints());
 				
         kh.fx = &ctrl_party_key_handler;
         kh.data = party;

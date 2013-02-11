@@ -60,7 +60,7 @@
     
     (define (change-corpse-to-skeleton loc)
       ;;(display "change-corpse-to-skeleton")(newline)
-      (kern-log-msg "You have disturbed the dead!")
+      (kern-log-msg "死人たちが目覚めた！")
       (remove-corpse loc)
       (put-skeleton loc))
     

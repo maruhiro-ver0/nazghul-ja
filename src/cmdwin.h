@@ -64,4 +64,13 @@ extern void cmdwin_push_mark();
  * does not pop the mark itself (use cmdwin_pop for that). */
 extern void cmdwin_pop_to_mark();
 
+struct dictionary {
+	char *kana;
+	char *english;
+	char *kanji;
+};
+extern struct dictionary *dictionary;
+extern int alpha_to_kana(int, char *);
+extern int kana_to_english(char *, char *, char *);
+
 #endif

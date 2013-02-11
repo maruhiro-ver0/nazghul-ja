@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Old Absalot.
+;; 古アブサロット
 ;;----------------------------------------------------------------------------
 (define selene-bed oa-bed3)
 (define selene-mealplace oa-tbl2)
@@ -33,55 +33,55 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Selene is a female cult member of the Accursed.
-;; She is unstable, wicked, and depraved.
+;; セレネは呪われた者の教えに従う女性である。
+;; 彼女は不安定で、不道徳で、堕落している。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (selene-hail knpc kpc)
-  (say knpc "[This wild-eyed young woman stares at you impishly]"))
+  (say knpc "［この若い女性はあなたをいたずらっぽい目で見ている。］"))
 
 (define (selene-default knpc kpc)
-  (say knpc "[She giggles. It is an evil sound]"))
+  (say knpc "［彼女は不快な音を立てて笑った。］"))
 
 (define (selene-name knpc kpc)
-  (say knpc "Selene."))
+  (say knpc "セレネ。"))
 
 (define (selene-join knpc kpc)
-  (say knpc "[She shakes here head emphatically]"))
+  (say knpc "［彼女は頭を振り、はっきりと断った。］"))
 
 (define (selene-job knpc kpc)
-  (say knpc "[She shrugs] I play with things."))
+  (say knpc "［彼女は肩をすくめた。］物で遊んでいるの。"))
 
 (define (selene-bye knpc kpc)
-  (say knpc "[She calls out after your back] Be seeing you, hero!"))
+  (say knpc "［彼女はあなたが去った後、大声で言った。］また会いましょう、英雄さん！"))
 
 (define (selene-play knpc kpc)
-  (say knpc "Things... people..."))
+  (say knpc "物…人…。"))
 
 (define (selene-peop knpc kpc)
-  (say knpc "I like to make them do what I want."))
+  (say knpc "人をしたいようにするのが好きなの。"))
 
 (define (selene-want knpc kpc)
-  (say knpc "Whatever I want. I don't care. I just like to make people do it. "
-       "If they don't do it... [she shrugs and giggles]"))
+  (say knpc "したいこと何でも。他はどうでもいいの。ただ人をしたいようにするのが好き。"
+       "もし人がそうしなかったら…［彼女は肩をすくめ、クスクスと笑った。］"))
 
 (define (selene-accu knpc kpc)
-  (say knpc "It's not so bad, hero. It's kind of fun."))
+  (say knpc "そんなに悪くないの、英雄さん。どちらかと言うと楽しいの。"))
 
 (define (selene-fun knpc kpc)
-  (say knpc "Being Accursed? Sure it is! My favorite part is the sacrifices."))
+  (say knpc "呪われた者になりたい？もちろんいいよ！私は犠牲の間が好き。"))
 
 (define (selene-sacr knpc kpc)
-  (say knpc "You'll find out, silly!"))
+  (say knpc "自分で探しなさい、バカ！"))
 
 (define (selene-denn knpc kpc)
-  (say knpc "It's easy to make him do what I want. He's afraid of me. "
-       "And he wants me."))
+  (say knpc "彼をしたいようにするのは簡単なの。彼は私を怖がってる。"
+       "そして私を欲しがっている。"))
 
 (define (selene-sila knpc kpc)
-  (say knpc "[She suddenly looks afraid, and becomes vicious] "
-       "Why are you bothering me? Go away!")
+  (say knpc "［彼女は突然おびえたように見えた。そして凶暴になった。］"
+       "何で私を困らせるの？あっち行って！")
   (kern-conv-end))
 
 (define selene-conv
@@ -97,6 +97,7 @@
 
        (method 'play selene-play)
        (method 'peop selene-peop)
+       (method 'men  selene-peop)
        (method 'want selene-want)
        (method 'accu selene-accu)
        (method 'fun  selene-fun)
@@ -109,7 +110,7 @@
   (bind 
    (kern-mk-char 
     'ch_selene           ; tag
-    "Selene"             ; name
+    "セレネ"             ; name
     selene-species         ; species
     selene-occ              ; occ
     s_townswoman     ; sprite

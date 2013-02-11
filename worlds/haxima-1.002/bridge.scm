@@ -12,14 +12,14 @@
 
 ;; Make an object type. This is like a "class" in OO languages.
 (mk-obj-type 'TF_ew_bridge  ;; tag
-             "bridge"       ;; name
+             "¶¶"           ;; name
              s_ew_bridge    ;; sprite
              layer-tfeat    ;; stacking layer
              bridge-ifc     ;; interface
              )
 
 (mk-obj-type 'TF_ns_bridge  ;; tag
-             "bridge"       ;; name
+             "¶¶"           ;; name
              s_ns_bridge    ;; sprite
              layer-tfeat    ;; stacking layer
              bridge-ifc     ;; interface

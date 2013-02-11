@@ -2,7 +2,7 @@
 
 (kern-mk-sprite 's_skull_ring ss_jewelry 1 0 #f 0)
 
-(mk-quest-obj-type 't_skull_ring "skull ring" s_skull_ring layer-item obj-ifc)
+(mk-quest-obj-type 't_skull_ring "ドクロの指輪" s_skull_ring layer-item obj-ifc)
 
 
 (define (skullring-basic-receive kchar questtag)
@@ -23,7 +23,7 @@
 (define skullring-m-ifc
   (ifc obj-ifc
        (method 'get skullring-m-get)))
-(mk-quest-obj-type 't_skull_ring_m "skull ring" s_skull_ring layer-item skullring-m-ifc)
+(mk-quest-obj-type 't_skull_ring_m "ドクロの指輪" s_skull_ring layer-item skullring-m-ifc)
 
 (define (skullring-j-get kobj kchar)
 	(skullring-basic-get kobj kchar 'ring-jorn)
@@ -31,7 +31,7 @@
 (define skullring-j-ifc
   (ifc obj-ifc
        (method 'get skullring-j-get)))
-(mk-quest-obj-type 't_skull_ring_j "skull ring" s_skull_ring layer-item skullring-j-ifc)
+(mk-quest-obj-type 't_skull_ring_j "ドクロの指輪" s_skull_ring layer-item skullring-j-ifc)
 
 (define (skullring-g-get kobj kchar)
 	(skullring-basic-get kobj kchar 'ring-gholet)
@@ -44,5 +44,5 @@
   (ifc obj-ifc
        (method 'get skullring-g-get)
        (method 'receive skullring-g-receive)))
-(mk-quest-obj-type 't_skull_ring_g "skull ring" s_skull_ring layer-item skullring-g-ifc)
+(mk-quest-obj-type 't_skull_ring_g "ドクロの指輪" s_skull_ring layer-item skullring-g-ifc)
 

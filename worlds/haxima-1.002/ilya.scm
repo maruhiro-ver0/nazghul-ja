@@ -1,7 +1,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;;
-;; The schedule below is for the place "Gregor's Hut".
+;; グレゴールの小屋
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_ilya
                (list 0  0  gh-ilyas-bed   "sleeping")
@@ -17,9 +17,8 @@
 ;;----------------------------------------------------------------------------
 ;; Gob
 ;;
-;; Ilya's quest is to find her stuffed horse, which she left behind at the
-;; homestead when she fled the trolls that killed her family. The quest flags
-;; are stored in her gob.
+;; イリアに関する冒険は、彼女の家族を殺したトロルから逃げたとき、家に置き忘れ
+;; た馬のぬいぐるみを探すことである。冒険のフラグは彼女のgobに格納される。
 ;;----------------------------------------------------------------------------
 (define (ilya-mk gave-quest? finished-quest?) 
   (list gave-quest? finished-quest?))
@@ -29,7 +28,7 @@
 (define (ilya-finish-quest ilya) (set-car! (cdr ilya) #t))
 
 ;;----------------------------------------------------------------------------
-;; Puska
+;; パスカ
 ;;
 ;; Puska -- ilya's stuffed horse toy -- is a quest item. Nothing special about
 ;; it really but it is unique and needs its own object type. The object itself
@@ -39,10 +38,10 @@
 (define puska-ifc
   (ifc '()
        (method 'get (lambda (kobj getter)
-                      (kern-log-msg "Some child probably misses this toy!")
+                      (kern-log-msg "子供がなくしたものに違いない！")
                       (kobj-get kobj getter)))))
 
-(mk-obj-type 't_puska "stuffed toy horse" s_toy_horse layer-item puska-ifc)
+(mk-obj-type 't_puska "馬のぬいぐるみ" s_toy_horse layer-item puska-ifc)
 
 ;;----------------------------------------------------------------------------
 ;; Quest
@@ -57,14 +56,14 @@
 
         ;; yes - gave quest already
         (if (ilya-quest-done? ilya)
-            (say knpc "Puska is happy now!")
+            (say knpc "パスカは今とっても幸せ！")
             (begin
-              (say knpc "Did you find Puska yet?")
+              (say knpc "パスカは見つかった？")
               (if (kern-conv-get-yes-no? kpc)
 
                   ;; yes - puska found
                   (begin 
-                    (say knpc "May I have her please?")
+                    (say knpc "返してくれる？")
                     (if (kern-conv-get-yes-no? kpc)
 
                         ;; yes - ilya may have puska
@@ -73,50 +72,50 @@
                             ;; yes - player has puska
                             (begin
                               (kern-obj-remove-from-inventory kpc t_puska 1)
-                              (say knpc "There, there, puska. "
-                                   "You're safe with me. [She turns to you] Thank you so much! I wish I could pay you. "
-                                   "Wait, take these, Mommy said wizards use them, so I pick them whenever I can.")
+                              (say knpc "ここ、ここよ、パスカ。"
+                                   "もう安心よ。［彼女は振り返った。］ありがとう！お礼ができればいいけれど。"
+                                   "待って、これを持っていって。魔法使いが使うものだって、お母さんが言ってた。見つけたときはいつも取っていたの。")
                               (ilya-finish-quest ilya)
                               (kern-obj-add-to-inventory kpc nightshade 23)
                               )
 
                             ;; no - puska not in player inventory
                             (begin
-                              (say knpc "[Sob] You don't have her!")
+                              (say knpc "［泣きながら］いないじゃない！")
                               (kern-conv-end)))
 
                         ;; no - ilya can't have puska
                         (begin
-                          (say knpc "When I grow up I'll be a sorceress! "
-                               "And I'LL BURN YOU TO A CRISP!")
+                          (say knpc "大人になったら魔法使いになる！"
+                               "そしてあなたを消し炭にしてやるの！")
                           (kern-conv-end))))
 
                   ;; no - didn't find her yet
                   (begin
-                    (say knpc "Do you remember where our farm was?")
+                    (say knpc "農場の場所はおぼえてる？")
                     (if (kern-conv-get-yes-no? kpc)
-                        (say knpc "She must be there somewhere!")
-                        (say knpc "West through the pass, then north against the hills."))))))
+                        (say knpc "きっとそこにいるの！")
+                        (say knpc "西へ行って山道を通り、北に丘に行けばあるの。"))))))
 
         ;; no - didn't give quest yet
         (begin
-          (say knpc "Puska is my stuffed horse. But I lost her! "
-               "If you find her will you tell me?")
+          (say knpc "パスカは私の馬のぬいぐるみなの。でもなくしてしまった！"
+               "見つけたら教えてくれる？")
           (if (kern-conv-get-yes-no? kpc)
               (begin
-                (say knpc "Our farm was west through the pass, then north against the hills. "
-                     "Watch out for the trolls!")
+                (say knpc "農場は西側への道の北の丘にあるわ。"
+                     "トロルに気をつけて！")
                 (ilya-give-quest ilya))
               (begin
-                (say knpc "If you keep her I will find you when I grow up.")
+                (say knpc "パスカを取ったりしたら、大人になったとき、あなたを見つけるわ。")
                 (kern-conv-end)))))))
 
 (define (ilya-join knpc kpc)
-  (say knpc "I'm just a little girl, silly!")
+  (say knpc "私子供なのに。変なの！")
   )
 
 ;;----------------------------------------------------------------------------
-;; Animals
+;; 動物
 ;;
 ;; Ilya has an odd relationship with spiders. She'll teach the player a spell
 ;; to ward off spiders if he plays along. Spiders will dominate the woods
@@ -127,40 +126,46 @@
 ;; child - I'm not sure how I want to play that one out yet.
 ;;----------------------------------------------------------------------------
 (define (ilya-animals knpc kpc)
-  (say knpc "We have some sheep, and Charm the cat, and some chickens. "
-       "Do you like animals?")
+  (say knpc "羊と、猫のチャームと、鶏を飼っているの。"
+       "動物は好き？")
   (if (kern-conv-get-yes-no? kpc)
 
       ;; yes - the player likes animals
       (begin
-        (say knpc "What's your favorite animal?")
-        (let ((fav (kern-conv-get-reply kpc)))
-          (if (eq? fav 'spid)
+        (say knpc "どの動物が好き？")
+        (let ((fav (kern-conv-get-string kpc)))
+          (if (or (string=? fav "spider") (string=? fav "クモ"))
 
               ;; yes - the player's favorite animal is spiders
               (begin
-                (say knpc "Mine too! I know how to make them harmless. "
-                     "Want me to teach you?")
+                (say knpc "私も！どうすれば襲われないか知っているの。"
+                     "教えて欲しい？")
                 (if (kern-conv-get-yes-no? kpc)
 
                     ;; yes - the player wants to learn the spider ward
-                    (say knpc "It's easy! Mix spider silk and garlic, "
-                         "and chant An Xen Bet.")
+                    (say knpc "簡単！蜘蛛の糸と大蒜を混ぜて、"
+                         "アン・ゼン・ベット<An Xen Bet>と唱えるの。")
 
                     ;; no - the player does not want to learn the spider ward
-                    (say knpc "Ok, but they sometimes attack people.")))
+                    (say knpc "そう。でも時々人を襲うこともあるのよ。")))
                     
 
               ;; no - the player's favorite animal is NOT spiders
-              (say knpc "Spiders are my favorite!"))))
+              (say knpc "私はクモが好き！"))))
 
       ;; no - the player does not like animals
-      (say knpc "Well don't hurt them!")))
+      (say knpc "怖くないよ！")))
 
 (define (ilya-fire knpc kpc)
-  (say knpc "Making fire is easy. Just mix black pearl and sulphos..."
-       "surephous... that ashy stuff you know? "
-       "And say Vas Flam!"))
+  (say knpc "火をおこすのは簡単なの。黒真珠と硫黄を混ぜて…"
+       "硫黄…灰はどこ？"
+       "そしてヴァス・フラム<Vas Flam>と言うの！"))
+
+(define (ilya-died knpc kpc)
+  (say knpc "トロルが農場を襲ったの！"
+       "お母さんは私を地下室に隠した。"
+       "そしてトロルが寝ている間に抜け出した。"
+       "でも、パスカを忘れてしまった…。"))
 
 ;;----------------------------------------------------------------------------
 ;; Conv
@@ -171,38 +176,37 @@
        ;; 4 characters. The 4-char limit arises from the kernel's practice of
        ;; truncating all player queries to the first four characters. Default,
        ;; on the other hand, is a feature of the ifc mechanism (see ifc.scm).
-       (method 'default (lambda (knpc kpc) (say knpc "I don't know.")))
-       (method 'hail (lambda (knpc kpc) (say knpc "Hi.")))
-       (method 'bye (lambda (knpc kpc) (say knpc "Bye-bye.")))
-       (method 'job (lambda (knpc kpc) (say knpc "I help Grandpa with chores.")))
-       (method 'name (lambda (knpc kpc) (say knpc "I'm Ilya.")))
-       (method 'age (lambda (knpc kpc) (say knpc "I'm eight.")))
-       (method 'chor (lambda (knpc kpc) (say knpc "I feed the animals, and keep the fire, and help cook.")))
+       (method 'default (lambda (knpc kpc) (say knpc "知らない。")))
+       (method 'hail (lambda (knpc kpc) (say knpc "こんにちは。")))
+       (method 'bye (lambda (knpc kpc) (say knpc "バイバイ。")))
+       (method 'job (lambda (knpc kpc) (say knpc "おじいさんの手伝いをしているの。")))
+       (method 'name (lambda (knpc kpc) (say knpc "イリア。")))
+       (method 'age (lambda (knpc kpc) (say knpc "8歳。")))
+       (method 'chor (lambda (knpc kpc) (say knpc "動物の世話をしたり、火をおこしたり、料理したりするの。")))
        (method 'anim ilya-animals)
-       (method 'gran (lambda (knpc kpc) (say knpc "I live with Grandpa now because Mommy and Daddy died.")))
-       (method 'died (lambda (knpc kpc) (say knpc "Trolls attacked our farm! "
-                                                "Mommy hid me in the cellar, "
-                                                "and I snuck out when the trolls were sleeping. "
-                                                "But I lost my Puska...")))
-       (method 'trol (lambda (knpc kpc) (say knpc "I hate them! When I grow up I want to kill them all.")))
-       (method 'hate (lambda (knpc kpc) (say knpc "I will be a sorceress some day and I will kill anyone I hate! "
-                                              "I won't be afraid of anything ever again!")))
-       (method 'afra (lambda (knpc kpc) (say knpc "I was afraid in the cellar. "
-                                                "I heard Mommy and Daddy crying when the trolls ate them... "
-                                                "[sniffling] I thought they would find me and eat me too...")))
-       (method 'momm (lambda (knpc kpc) (say knpc "I miss my Mommy. She taught me to make fire with my mind. "
-                                               "She burned up one of the trolls when they attacked!")))
-       (method 'dadd (lambda (knpc kpc) (say knpc "I miss daddy. He tried to fight the trolls but "
-                                               "he was just a farmer.")))
+       (method 'gran (lambda (knpc kpc) (say knpc "お父さんとお母さんが死んでしまったから、おじいさんと住んでいるの。")))
+       (method 'died ilya-died)
+       (method 'dead ilya-died)
+       (method 'trol (lambda (knpc kpc) (say knpc "トロルは大嫌い！大人になったらみんな殺してしまいたい。")))
+       (method 'hate (lambda (knpc kpc) (say knpc "いつか魔法使いになって、大嫌いなあいつらを殺してしまいたい！"
+                                              "また同じことが起こっても怖がらないわ！")))
+       (method 'afra (lambda (knpc kpc) (say knpc "地下室にいるとき怖かった。"
+                                                "お父さんとお母さんがトロルに食べられたとき、叫び声が聞こえた…"
+                                                "［涙ぐんで］もし見つかってたら、きっと同じように食べられていた…。")))
+       (method 'momm (lambda (knpc kpc) (say knpc "お母さんはもういない。火のおこし方を教えてくれたことを思い出す。"
+                                               "トロルが襲ってきたとき、一匹を燃やしていたわ！")))
+       (method 'dadd (lambda (knpc kpc) (say knpc "お父さんはもういない。"
+                                               "トロルと戦ったけど、どうすることもできなかった。")))
        (method 'pusk ilya-quest)
-       (method 'home (lambda (knpc kpc) (say knpc "Our farm was north and south through the woods.")))
-       (method 'spid (lambda (knpc kpc) (say knpc "There are lots of spiders in the woods around here.")))
-       (method 'wood (lambda (knpc kpc) (say knpc "Grandpa says to stay out of the woods.")))
+       (method 'home (lambda (knpc kpc) (say knpc "私達の農場の北と南には森があったの。")))
+       (method 'spid (lambda (knpc kpc) (say knpc "このあたりの森にはクモがたくさんいるって、おじいさんが言ってた。")))
+       (method 'wood (lambda (knpc kpc) (say knpc "森に入るなって、おじいさんが言ってた。")))
        
        (method 'fire ilya-fire)
+       (method 'hi ilya-fire)
        (method 'vas ilya-fire)
        (method 'flam ilya-fire)
-       (method 'greg (lambda (knpc kpc) (say knpc "He's my grandpa.")))
+       (method 'greg (lambda (knpc kpc) (say knpc "私のおじいさんよ。")))
        (method 'join ilya-join)
        ))
 

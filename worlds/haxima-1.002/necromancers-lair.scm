@@ -36,7 +36,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place
  'p_necromancers_lair     ; tag
- "Necromancers Lair" ; name
+ "ª‡ŒÓΩ—ª’§ŒΩª§ﬂ≤»" ; name
  nil      ; sprite
  m_necromancers_lair      ; map
  #f              ; wraps

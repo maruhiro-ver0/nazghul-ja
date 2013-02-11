@@ -136,7 +136,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place 
  'p_enchanters_tower ; tag
- "Enchanters Tower" ; name
+ "呺し閣及顯" ; name
  s_tower             ; sprite
  m_enchanters_tower ; map
  #f                 ; wraps
@@ -230,7 +230,7 @@
 
 (kern-mk-place 
  'p_enchanters_tower_l2 ; tag
- "Enchanters Tower" ; name
+ "呺し閣及顯" ; name
  s_keep             ; sprite
  m_enchanters_tower_l2 ; map
  #f                 ; wraps
@@ -397,7 +397,7 @@
  
 (kern-mk-place 
  'p_enchanters_tower_l3 ; tag
- "Enchanters Tower Roof" ; name
+ "呺し閣及顯及盒曉" ; name
  s_keep             ; sprite
  m_enchanters_tower_l3 ; map
  #f                 ; wraps

@@ -1,0 +1,2425 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="ja-JP">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<!-- Note: The manual currently expects to find haxima data files is ./haxima,
+	and documentation specific files in ./doc -->
+<title>Nazghul説明書</title>
+<style>
+	.example
+	{
+		color:#333;
+		background-color:#eee;
+		padding-left:60px;
+	}
+	.key, .ph
+	{
+		background-color:#ddd;
+		font-family: monospace;
+		padding-left:2px;
+		padding-right:2px;
+	}
+	.hk
+	{
+		background-color:#ddd;
+		font-weight:bold;
+		color:#114;
+	}
+	table
+	{
+		border:1px outset grey
+	}
+	td
+	{
+		padding:5px;3px;
+		border:1px inset grey;
+	}
+	tr.header td
+	{
+		border:1px outset grey;
+		font-weight:bold;
+	}
+	td.break
+	{
+		border:1px outset grey;
+		height:3px;
+		background color:#999;
+	}
+	td.break span
+	{
+		width:2px;
+	}	
+	img.icon
+	{
+		top:50%;
+		border:1px solid grey; 
+		width:9px;
+		height:16px;
+	}
+	tr.breaker td
+	{
+		border:none;
+		text-align:center;
+	}
+	tr.breaker td span:before
+	{
+		content: "\002192   "
+	}
+	tr.breaker td span:after
+	{
+		content: "   \002190"
+	}
+</style>
+</head>
+<body>
+<a name="toc1"></a>
+<h1>
+	NAZGHUL説明書
+</h1>
+<p>
+Nazghul(ナズグル)は昔懐かしい、全盛期には数多く採用された、トップダウン、2DタイルグラフィックのRPGのクローンである。
+具体的にはUltima Vのシステムを採用していて、このゲームで遊んだことがあれば親しみやすいものになっている。
+</p>
+
+<a name="toc2"></a>
+<h2>
+	目次
+</h2>
+<ul>
+	<li>
+		<a href="#toc3">ゲームのインストール</a>
+	</li>
+	<li>
+		<a href="#toc4">ゲーム開始</a>
+	</li>
+	<li>
+		<a href="#toc5">ゲームの保存</a>
+	</li>
+	<li>
+		<a href="#toc6">ゲーム終了</a>
+	</li>
+	<li>
+		<a href="#toc7">操作</a>
+		<ul>
+			<li>
+				<a href="#toc8">探索する</a>
+			</li>
+			<li>
+				<a href="#toc9">会話する</a>
+			</li>
+			<li>
+				<a href="#toc10">物を取る</a>
+			</li>
+			<li>
+				<a href="#toc11">装備する</a>
+			</li>
+			<li>
+				<a href="#toc12">呪文を調合する</a>
+			</li>
+			<li>
+				<a href="#toc13">町に出入りする</a>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<a href="#toc14">画面</a>
+		<ul>
+			<li>
+				<a href="#toc15">天体</a>
+			</li>
+			<li>
+				<a href="#toc16">風向き</a>
+			</li>
+			<li>
+				<a href="#toc17">命令プロンプト</a>
+			</li>
+			<li>
+				<a href="#toc18">状態</a>
+			</li>
+			<li>
+				<a href="#toc19">食料/金</a>
+			</li>
+			<li>
+				<a href="#toc20">履歴</a>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<a href="#toc21">プレイヤーの命令</a>
+		<ul>
+			<li>
+				<a href="#toc22">概要</a>
+			</li>
+			<li>
+				<a href="#toc23">通常の命令</a>
+			</li>
+			<li>
+				<a href="#toc24">荒野のみの命令</a>
+			</li>
+			<li>
+				<a href="#toc25">町/迷宮/戦闘のみの命令</a>
+			</li>
+			<li>
+				<a href="#toc26">特殊な命令</a>
+			</li>
+			<li>
+				<a href="#toc27">短縮</a>
+			</li>
+			<li>
+				<a href="#toc28">デバッグ命令</a>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<a href="#toc29">移動</a>
+		<ul>
+			<li>
+				<a href="#toc30">全員(荒野)</a>
+			</li>
+			<li>
+				<a href="#toc31">追跡(町/戦闘/迷宮)</a>
+			</li>
+			<li>
+				<a href="#toc32">単独(町/戦闘/迷宮)</a>
+			</li>
+			<li>
+				<a href="#toc33">順番(町/戦闘/迷宮)</a>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<a href="#toc34">場所</a>
+		<ul>
+			<li>
+				<a href="#toc35">荒野</a>
+			</li>
+			<li>
+				<a href="#toc36">荒野での戦闘</a>
+			</li>
+			<li>
+				<a href="#toc37">町/迷宮</a>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<a href="#toc38">戦闘</a>
+	</li>
+	<li>
+		<a href="#toc39">レベル上昇</a>
+		<ul>
+			<li>
+				<a href="#toc40">レベル上昇に必要な経験</a>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<a href="#toc41">特質</a>
+		<ul>
+			<li>
+				<a href="#toc42">腕力</a>
+			</li>
+			<li>
+				<a href="#toc43">敏捷さ</a>
+			</li>
+			<li>
+				<a href="#toc44">知能</a>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<a href="#toc45">魔法</a>
+		<ul>
+			<li>
+				<a href="#toc46">表1: 秘薬</a>
+			</li>
+			<li>
+				<a href="#toc47">表2: 呪文</a>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<a href="#toc48">効果</a>
+	</li>
+	<li>
+		<a href="#toc49">会話</a>
+	</li>
+	<li>
+		<a href="#toc50">その他</a>
+	</li>
+	<li>
+		<a href="#toc51">付録A: 地図の作成</a>
+	</li>
+	<li>
+		<a href="#toc52">付録B: ネタバレ</a>
+		<ul>
+			<li>
+				<a href="#toc53">飛び道具</a>
+			</li>
+			<li>
+				<a href="#toc54">投擲武器</a>
+			</li>
+			<li>
+				<a href="#toc55">接近戦用武器</a>
+			</li>
+			<li>
+				<a href="#toc56">防具</a>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<a href="#toc57">注釈</a>
+	</li>
+</ul>
+
+<a name="toc3"></a>
+<h2>
+	ゲームのインストール
+</h2>
+
+<p>
+ソースをダウンロードしたのであれば、INSTALLファイルを読むこと。
+</p>
+<p>
+Windows用バイナリをダウンロードしたなら、Winzip等で展開すること。
+</p>
+
+
+<a name="toc4"></a>
+<h2>
+	ゲーム開始
+</h2>
+
+<p>
+Linux/UNIXならば:
+</p>
+<p class="example">
+	$ haxima.sh
+</p>
+<p>
+Windowsならば:
+</p>
+<p class="example">
+	スタートメニューまたはデスクトップのアイコンから起動する
+</p>
+<p>
+最初にチュートリアルで遊ぶか、飛ばして最初から始めることができる。
+</p>
+
+<a name="toc5"></a>
+<h2>
+	ゲームの保存
+</h2>
+<p>
+ゲーム中はいつでもCTRL-Sキーで保存することができる。
+保存の数は無制限である。
+再開するときは、最初の画面でJ)旅を続けるから保存したファイルを選択する。
+</p>
+<p>
+もし死んでしまったらゲームは終了する。
+再開するときはJ)旅を続けるで最後に保存した選択することになる。
+</p>
+
+<a name="toc6"></a>
+<h2>
+	ゲーム終了
+</h2>
+<p>
+Qを押せばいつでも終了できる。
+終了する前に保存するかの選択がある。
+</p>
+
+<a name="toc7"></a>
+<h2>
+	操作
+</h2>
+<p>
+U5で遊んだことがなければ最初の画面で選択できるT)チュートリアルを勧める。
+そこにはゲームを始めるためのいくつかのヒントがある。
+</p>
+
+<a name="toc8"></a>
+<h3>
+	探索する
+</h3>
+<p>
+ゲームを始めると最初は「迷い人」一人しかいない。
+そのアイコンは左の地図上の中央に見える。
+あたりを探索するためにはテンキーで移動する必要がある。
+下には小さなプロンプトのウィンドウがある。
+そこには選択した命令で次に何を入力しなければならないか表示される。
+例えば、X)あたりを調べる命令ではプロンプトは次のようになる。
+</p>
+<p class="example">
+    調べる-&lt;対象&gt; (ESCで中止)
+</p>
+<p>
+これはテンキーでカーソルを動かすことを要求していることを表している。
+ESCキーを押すと命令は中断される。
+ほとんどの命令はESCで中断できる。
+</p>
+<p>
+どこにいるか、そして何時かを知りたいときは@キーを押す。
+このゲームには時計はない。時刻を知る唯一の方法は太陽の角度から類推することである。
+</p>
+
+<a name="toc9"></a>
+<h3>
+	会話する
+</h3>
+<p>
+南に最初のNPC(プレイヤーでない人物)が見える。
+NPCとはTで話すことができる。
+対象を示すカーソルが現れるので、
+カーソルキーで移動させ、NPCに合わせENTERキーを押すと、NPCまたはあなたから会話が始まる。
+</p>
+<p>
+これが会話の始め方である。
+会話の最中にキーワードを入力すると、NPCがそれに応える。
+例えば、「名前」や「仕事」と入力するとNPCのそれがわかる。
+会話を終えたいなら、「さよなら」または何も入力せずENTERを押す。
+</p>
+
+<a name="toc10"></a>
+<h3>
+	物を取る
+</h3>
+<p>
+あなたはいずれ道をたどって左下の部屋に入ることになるだろう。
+部屋の壁は不可思議な古代文字で飾られている。
+部屋の中には箱がある。
+</p>
+<p>
+箱のとなりへ移動し、Oを押し、宝箱の方向のテンキーを押す。
+すると箱が開き、中の様々な物が床の上に現れる。
+</p>
+<p>
+取るためにはGを押す。
+基本的な武器と鎧、呪文のための秘薬、いくつかの薬と巻物が手に入る。
+</p>
+
+<a name="toc11"></a>
+<h3>
+	装備する
+</h3>
+<p>
+持ち物を見るためには、Zを押してスクロールさせる。
+左右のキーで表示する項目を切り替えられる。
+あなた自身や持ち物を見終えたらESCを押して戻る。
+</p>
+<p>
+Rを押して装備する武器や鎧を選び、ENTERで装備する。
+装備し終わったらESCで戻る。
+</p>
+
+<a name="toc12"></a>
+<h3>
+	呪文を調合する
+</h3>
+<p>
+回復の呪文を合成する。
+まずMを押す。
+次に呪文の名称を入力する。
+この場合は"Mani"の先頭のMを押し、ENTERを押す。
+次に人参と蜘蛛の糸を秘薬の一覧から選ぶ。
+そしてMを押す。
+最後に一度に調合する呪文の数を入力できるので、必要なManiの呪文の数を入力する。
+ここで1を入力すると、1つのMani、回復の呪文が作られる。
+呪文は後でより詳しく説明する。
+</p>
+<a name="toc13"></a>
+<h3>
+	町に出入りする
+</h3>
+<p>
+広い世界に出て行く準備ができたなら、地図の端へ行き、勇気を出して踏み出す。
+広域地図の荒野になり、全員が中央の1つの(あなたの)アイコンで表示される。
+再び入るためには、南へ1進み(あなたがいた場所に祭壇のアイコンが見えるだろう)、再び北に1進む。
+これで町への出入りの方法ががわかったはずだ。
+</p>
+<p>
+町に入ったときは、敵がそこにいない限り、「追跡」状態になっている。
+この状態ではあなたは仲間たちの先頭となり、他の者たちはあなたについて行こうとする。
+しかし、もし町に敵がいれば、「順番」状態になる。
+この状態ではあなたは仲間のそれぞれを順番に操作することになる。
+2つの状態はFキーで切り替えられる。
+このことは仲間が加わったときにわかるだろう。
+</p>
+<p>
+重要:
+仲間が加わったら、追跡(Fキー)にすることを忘れてはならない。
+常に個々を操作するより、主人公を全員が追うようにする方が簡単である。
+</p>
+
+<a name="toc14"></a>
+<h2>
+	画面
+</h2>
+<a name="toc15"></a>
+<h3>
+天体
+</h3>
+<p>
+地図の上に枠に埋め込まれた小さなウィンドウがあり、太陽と2つの月の位置が表示されている。
+月の相も表示されている。
+これは月の門による移動で重要な意味を持つ。
+</p>
+<a name="toc16"></a>
+<h3>
+風向き
+</h3>
+<p>
+地図の下の枠に埋め込まれた部分には風向きが表示されている。
+風は現在では船による移動のみに影響がある。
+風を横切る場合が最も効率がよく、次が風を後ろから受ける場合である。
+そして風に向かう場合が最も効率が悪い。
+風向きは風がどの方向「から」吹いているかを表していることに注意すること。
+</p>
+<a name="toc17"></a>
+<h3>
+命令プロンプト
+</h3>
+<p>
+U4/U5/U6とは違い、命令プロンプトも独自のウィンドウが風向きの下にある。
+命令の入力が表示される。
+会話でのプレイヤーの入力も同様にここに表示される。
+</p>
+<a name="toc18"></a>
+<h3>
+状態
+</h3>
+<p>
+右上には持ち物を見る、または選択するウィンドウがある。
+通常は仲間の基本的な情報が表示されているが、その内容は命令によって変わる。
+例えばRを押すと一覧からの選択になる。
+</p>
+<p>
+通常、このウィンドウには仲間全員の現在の体力と状態の一覧が表示されている。
+状態は1つまたは複数の小さなアイコンで表される。
+例えば毒に犯されると小さな緑色のドクロと交差する骨のアイコンが表示される。
+Zキーを押すと仲間の個々の詳しい状態を表示することができる。
+</p>
+<a name="toc19"></a>
+<h3>
+食料/金
+</h3>
+<p>
+(原文のfoogodは)不道徳な響きだが、単に食料/金ウィンドウの頭文字を並べただけである。
+この状態ウィンドウの下にある小さなウィンドウには回数、食料、そして所持金が、現在の戦闘状態や継続中の状態と共に表示されている。
+状態は暗号のような小さな文字で表示されている。
+例えば"N"は沈黙を表している。
+乗り物に乗っているときは、さらに乗り物の耐久力も表示される。
+文字の意味は以下の通りである。
+</p>
+
+<dl>
+
+<dt><img src="doc/null.gif" class="icon" style="background: black url('haxima/effects.png') -39px -16px;">
+	沈黙
+</dt>
+	<dd>魔法を使うことができない。</dd>
+	
+<dt><img src="doc/null.gif" class="icon" style="background: black url('haxima/effects.png') -31px -16px;">
+	高速化
+</dt>
+	<dd>全員が自分の番に複数回行動できる。</dd>
+
+<dt><img src="doc/null.gif" class="icon" style="background: black url('haxima/effects.png') -47px -16px;">
+	可視
+</dt>
+	<dd>見えないものが見える。</dd>
+
+<dt><img src="doc/null.gif" class="icon" style="background: black url('haxima/effects.png') -23px -16px;">
+	時間停止
+</dt>
+	<dd>全員が行動する間、世界中のものが止まる。</dd>
+
+<dt><img src="doc/null.gif" class="icon" style="background: black url('haxima/effects.png') -55px -16px;">
+	透視
+</dt>
+	<dd>全員が壁の向こうを見ることができる。</dd>
+</dl>
+
+<a name="toc20"></a>
+<h3>
+履歴
+</h3>
+<p>
+最後の右下のウィンドウにはゲーム中のメッセージの履歴が表示される。
+</p>
+
+<a name="toc21"></a>
+<h2>
+	プレイヤーの命令
+</h2>
+<p>
+マウスについた汗を拭くにはよい機会だ - 全ての命令はキーボードで入力する。
+これは当然のことである。未来永劫に。アーメン。
+</p>
+<p>
+追記:
+マウス愛好家は対象の選択をマウスで行うこともできる。
+しかしキーボードのほうが早いであろう。
+</p>
+
+<a name="toc22"></a>
+<h3>
+概要
+</h3>
+<dl>
+<dt><span class="key">方向</span></dt>
+	<dd>テンキーの8方向の内の1つ</dd>
+<dt><span class="ph">仲間</span></dt>
+	<dd>仲間を一覧からテンキーで選択し<span class="key">ENTER</span>または<span class="key">SPACE</span>を押す</dd>
+<dt><span class="ph">持ち物</span></dt>
+	<dd>持ち物を一覧から選択する</dd>
+<dt><span class="ph">呪文</span></dt>
+	<dd>呪文を一覧から選択する</dd>
+<dt><span class="key">SPACE</span></dt>
+	<dd>SPACEバー</dd>
+<dt><span class="ph">対象</span></dt>
+	<dd>戦闘の対象をカーソルを動かし
+	<span class="key">ENTER</span>または<span class="key">SPACE</span>を押して選択する (またはマウスの左クリック)</dd>
+<dt><span class="ph">*</span></dt>
+	<dd>文脈によって異なる</dd>
+</dl>
+
+<a name="toc23"></a>
+<h3>
+通常の命令
+</h3>
+<dl>
+<dt><span class="key">方向</span></dt>
+	<dd>命令した方向に移動する</dd>
+<dt>A-<span class="key">方向</span></dt>
+	<dd>戦闘を開始する (Attack)</dd>
+<dt>B</dt>
+	<dd>船や馬のような乗り物に乗る/から降りる (Board)</dd>
+<dt>C-<span class="ph">仲間</span>-<span class="ph">呪文</span>-<span class="ph">*</span></dt>
+	<dd>呪文を唱える(終わりの部分は呪文に依存する) (Cast)</dd>
+<dt>E</dt>
+	<dd>入る。はしごの上り下りも含まれる (Enter)</dd>
+<dt>F-<span class="key">方向</span></dt>
+	<dd>乗り物の武器を発射する(例えば船の大砲) (Fire)</dd>
+<dt>G-<span class="key">方向</span></dt>
+	<dd>置いてある物を取る (Get)</dd>
+<dt>H-<span class="ph">仲間</span>-<span class="key">方向</span></dt>
+	<dd>スイッチやレバーを操作する (Handle)</dd>
+<dt>L-<span class="ph">0-9時間</span></dt>
+	<dd>数時間うろつく (Loiter)</dd>
+<dt>N-<span class="ph">仲間</span>-<span class="ph">仲間</span></dt>
+	<dd>仲間の順番を変更する (New-order)</dd>
+<dt>O-<span class="key">方向</span></dt>
+	<dd>入れ物や扉を開ける (Open)</dd>
+<dt>Q</dt>
+	<dd>終了し保存する、またはしない (Quit)</dd>
+<dt>R-<span class="ph">仲間</span>-<span class="ph">持ち物</span></dt>
+	<dd>武器や盾などを装備する (Ready)</dd>
+<dt>S-<span class="key">方向</span></dt>
+	<dd>注意深く見る (Search)</dd>
+<dt>T-<span class="ph">対象</span></dt>
+	<dd>NPCと話す (Talk)</dd>
+<dt>U-<span class="ph">仲間</span>-<span class="ph">持ち物</span></dt>
+	<dd>松明や薬のようなものを使う (Use)</dd>
+<dt>X-<span class="ph">対象</span></dt>
+	<dd>地図上のものを調べる (eXamine)</dd>
+<dt>Z</dt>
+	<dd>仲間の持ち物や装備などを見る (Ztats)</dd>
+<dt>@</dt>
+	<dd>現在どこにいるかなどを表示する (at)</dd>
+<dt><span class="key">SPACE</span></dt>
+	<dd>何もしない</dd>
+<dt>CTRL-S</dt>
+	<dd>ゲームを保存する (Save)</dd>
+<dt>CTRL-R)eload</dt>
+	<dd>ゲームを読み込む (Reload)</dd>
+</dl>
+
+<a name="toc24"></a>
+<h3>
+荒野のみの命令
+</h3>
+<dl>
+<dt>K-<span class="ph">0-9/夜明け</span>-<span class="ph">Y/N</span>-<span class="ph">仲間</span></dt>
+	<dd>荒野で(体力と魔力を回復させるため)、または船の上で(船を修理するため)休息を取る (Kamp)</dd>
+</dl>
+
+<a name="toc25"></a>
+<h3>
+町/迷宮/戦闘のみの命令
+</h3>
+<dl>
+<dt>A-<span class="ph">対象</span></dt>
+	<dd>対象を攻撃する (Attack)</dd>
+<dt>C-<span class="ph">呪文</span>-<span class="ph">*</span></dt>
+	<dd>呪文を唱える (Cast)</dd>
+<dt>F</dt>
+	<dd>「追跡」(仲間たちは先頭の者を自動的に追う)と「順番」(順番が回ってきたとき仲間を個々に操作する)を切り替える (Follow)</dd>
+<dt>1～9</dt>
+	<dd>「単独」にする仲間を選ぶ</dd>
+<dt>0</dt>
+	<dd>「順番」にする</dd>
+<dt>K-<span class="ph">0-9/夜明け</span></dt>
+	<dd>ベッドで眠る (Kamp)</dd> 
+</dl>
+
+<a name="toc26"></a>
+<h3>
+特殊な命令
+</h3>
+<dl>
+<dt><span class="key">ESC</span></dt>
+	<dd>命令を中断する</dd>
+<dt><span class="key">Tab</span></dt>
+	<dd>会話中にローマ字とアルファベットを切り替える (日本語版のみ)</dd>
+</dl>
+
+<a name="toc27"></a>
+<h3>
+短縮
+</h3>
+<dl>
+<dt><span class="key">+/=</span></dt>
+	<dd>攻撃の対象を選択するとき、次の敵対的なNPCを選択する</dd>
+<dt><span class="key">-</span></dt>
+	<dd>攻撃の対象を選択するとき、前の敵対的なNPCを選択する</dd>
+<dt><span class="key">&lt;</span></dt>
+	<dd>荒野での戦闘が終わった後、荒野の地図に戻る</dd>
+</dl>
+
+<a name="toc28"></a>
+<h3>
+デバッグ命令
+</h3>
+<dl>
+<dt>CTRL-T)erraform</dt>
+	<dd>地形を変える<sup><a class="footnote" href="#f1">1</a></sup> (Terraform)</dd>
+<dt>CTRL-Z)oom</dt>
+	<dd>拡大縮小する(宝石と同じことを宝石なしで行う) (Zoom)</dd>
+
+<a name="toc29"></a>
+<h2>
+	移動
+</h2>
+<a name="toc30"></a>
+<h3>
+全員(荒野)
+</h3>
+<p>
+全員は画面の中央の1つのアイコンとして表示される。
+</p>
+
+<a name="toc31"></a>
+<h3>
+追跡(町/戦闘/迷宮)
+</h3>
+<p>
+先頭の者を操作し、他の仲間たちは先頭を追う。
+攻撃すると自動的に「順番」になる。
+先頭になるのは常に地図上にいて生きている一覧の一番上の者である。
+「追跡」から「順番」にするためにはFを押す。
+</p>
+
+<a name="toc32"></a>
+<h3>
+単独(町/戦闘/迷宮)
+</h3>
+<P>
+仲間の内の1人を操作する。
+他の者は何もせず見ている。
+数字キーを押すと、仲間の一覧の対応した者が単独で行動する。
+1が一覧の最も上である。
+</p>
+<p>
+メモ:
+「単独」は仲間の内の1人が他よりも高い能力を持っている場合に便利である。
+例えば、ゲイザーが仲間に加わっていれば、彼を水溜りの向こうへ行かせることができる。
+幽霊が仲間になったらどうか想像してみよう。
+</p>
+
+<a name="toc33"></a>
+<h3>
+順番(町/戦闘/迷宮)
+</h3>
+<p>
+仲間たちを順番に操作する。
+これは戦闘が始まったらこの状態になる。
+「単独」から「順番」にするためには0を押す。
+「追跡」からはFを押す。
+そう、混乱しそうだが2つの方法がある。
+これはいつか修正するつもりだ。
+意見があれば聞かせて欲しい。
+</p>
+
+<a name="toc34"></a>
+<h2>
+	場所
+</h2>
+
+<a name="toc35"></a>
+<h3>
+荒野
+</h3>
+<p>
+町の外や荒野では全員が1つの集団として行動する。
+敵のNPCとぶつかる、または敵が攻撃するのを待つと戦闘になる。
+同様に町、迷宮、月の門には、単にその方向に移動すると入ることができる。
+</p>
+
+<a name="toc36"></a>
+<h3>
+荒野での戦闘
+</h3>
+<p>
+荒野で敵のNPCの集団と会うと、特別な戦闘用の地図に切り替わる。
+ここでは個々を順番に操作する。
+生きている者が全て地図の端から外に出ると荒野に戻れる。
+(メモ: 戦闘が終わったら<span class="key">&lt;キー</span>で素早く戦闘の地図から離れることができる。)
+</p>
+
+<a name="toc37"></a>
+<h3>
+町/迷宮
+</h3>
+<p>
+町や迷宮での移動は戦闘と同じである。
+個々を順番に操作でき、「単独」なら1人であたりを調べることができる。
+または、先頭を操作して他の者を追わせることもできる。
+</p>
+
+<a name="toc38"></a>
+<h2>
+戦闘
+</h2>
+<p>
+何か言うべきことがあるだろうか?
+U5とほとんど同じである。
+火炎ビンを夜中や地下に投げてみよう。
+ああ、ゲイザーに注意しろ。
+彼らはあなたを虜にすることができる。
+すぐに彼らを倒すか、虜にしろ。
+</p>
+
+<a name="toc39"></a>
+<h2>
+レベル上昇
+</h2>
+<p>
+通常、十分な経験値を得るとレベルが上がる。
+レベルに上限はない。
+体力と魔力の最大値の上昇は、職業、種族、個人の特質で決まる。
+レベルが上がると体力と魔力が回復し新しいレベルでの最大値になる。
+</p>
+
+<a name="toc40"></a>
+<h3>
+レベル上昇に必要な経験
+</h3>
+<table>
+<tr class="header">
+	<td>
+		レベル
+	</td><td>
+		経験値
+	</td>
+</tr><tr>
+	<td>
+		1
+	</td><td>
+		0
+	</td>
+</tr><tr>
+	<td>
+		2
+	</td><td>
+		32
+	</td>
+</tr><tr>
+	<td>
+		3
+	</td><td>
+		64
+	</td>
+</tr><tr>
+	<td>      
+		4
+	</td><td>
+		128 
+	</td>
+</tr><tr>
+	<td>    
+		5
+	</td><td>
+		256
+	</td>
+</tr><tr>
+	<td>     
+		6
+	</td><td>
+		512
+	</td>
+</tr><tr>
+	<td>     
+		n
+	</td><td>
+		2^(n+5)
+	</td>
+</tr>
+</table>
+
+<a name="toc41"></a>
+<h2>
+	特性
+</h2>
+<p>
+人物には3つの基本的な特性、腕力、敏捷さ、そして知能がある。
+これらの値は固定で、一度決めるとゲーム中は変化しない。
+</p>
+
+<a name="toc42"></a>
+<h3>
+腕力
+</h3>
+<p>
+腕力は可能な武器と鎧の重量の上限を決める。
+腕力が高いと与えるダメージが増し、重い武器の命中率が上がる。
+クモの巣を破り脱出するときも腕力が使われる(ほとんどのトロルは長い間捕らえることができない…)。
+</p>
+<a name="toc43"></a>
+<h3>
+敏捷さ
+</h3>
+<p>
+敏捷さは飛び道具と軽い武器での攻撃に使われ、敵の攻撃を避ける助けになる。
+錠前をこじ開けるときや、箱の罠を解除するためにも必要である。
+</p>
+<a name="toc44"></a>
+<h3>
+知能
+</h3>
+<P>
+知能は呪文の効果を高め、成功しやすくする。
+</p>
+
+<a name="toc45"></a>
+<h2>
+魔法
+</h2>
+<p>
+このゲームには完全な魔法がある。
+魔法の体系はUltima 5やUltima 6と似ていて、あなたは魔法は呪文の音を入力する。
+呪文の名前は1つから4つの音の組み合わせである。
+</p>
+<p>
+このゲームの音、呪文、そして秘薬の調合は全てUltima 5のものである。
+もしU5の説明書を持っていなければ、以下の表が助けになるだろう。
+</p>
+
+<a name="toc46"></a>
+<h3>
+表1: 秘薬
+</h3>
+<table>
+<tr class="header">
+	<td>
+		名称
+	</td><td>
+		呪文表での略称
+	</td>
+</tr><tr>
+	<td>
+		黒真珠
+	</td><td>
+		黒
+	</td>
+</tr><tr>
+	<td>
+		血の苔
+	</td><td>
+		血
+	</td>
+</tr><tr>
+	<td>
+		大蒜
+	</td><td>
+		大
+	</td>
+</tr><tr>
+	<td>
+		人参
+	</td><td>
+		人
+	</td>
+</tr><tr>
+	<td>
+		マンドレイク
+	</td><td>
+		マ
+	</td>
+</tr><tr>
+	<td>
+		ナイトシェイド
+	</td><td>
+		ナ
+	</td>
+</tr><tr>
+	<td>
+		蜘蛛の糸
+	</td><td>
+		蜘
+	</td>
+</tr><tr>
+	<td>
+		硫黄の灰
+	</td><td>
+		硫
+	</td>
+</tr>
+</table>
+
+<a name="toc47"></a>
+<h3>
+	表2: 呪文
+</h3>
+<table>
+<tr class="header">
+	<td>
+		呪文
+	</td><td>
+		効果
+	</td><td>
+		秘薬
+	</td><td>
+		全員/戦闘
+	</td>
+</tr><tr class="breaker">
+	<td colspan="4">
+		<span>1</span>
+	</td>
+</tr><tr>
+	<td>
+		An Nox
+	</td><td>
+		解毒
+	</td><td>
+		人 大
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		An Zu
+	</td><td>
+		覚醒
+	</td><td>
+		人 大
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		Grav Por
+	</td><td>
+		魔法の矢
+	</td><td>
+		硫 黒
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		In Lor
+	</td><td>
+		光
+	</td><td>
+		硫
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		Mani
+	</td><td>
+		小回復
+	</td><td>
+		人 蜘
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		Wis Sanct
+	</td><td>
+		罠探知
+	</td><td>
+		硫
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		An Sanct Ylem
+	</td><td>
+		罠解除
+	</td><td>
+		血
+	</td><td>
+		全/戦
+	</td>
+</tr><tr class="breaker">
+	<td colspan="4">
+		<span>2</span>
+	</td>
+</tr><tr>
+	<td>
+		An Sanct
+	</td><td>
+		開錠
+	</td><td>
+		硫 血
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		An Xen Corp
+	</td><td>
+		不死還
+	</td><td>
+		大 硫
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		In Wis
+	</td><td>
+		位置
+	</td><td>
+		ナ
+	</td><td>
+		全
+	</td>
+</tr><tr>
+	<td>
+		Rel Hur
+	</td><td>
+		風変化
+	</td><td>
+		硫 血
+	</td><td>
+		全
+	</td>
+</tr><tr>
+	<td>
+		In Nox Por
+	</td><td>
+		毒撃
+	</td><td>
+		ナ 血 黒
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		In Bet Xen
+	</td><td>
+		虫召還
+	</td><td>
+		蜘 血 硫
+	</td><td>
+		戦
+	</td>
+</tr><tr class="breaker">
+	<td colspan="4">
+		<span>3</span>
+	</td>
+</tr><tr>
+	<td>
+		In Flam Grav
+	</td><td>
+		火炎場
+	</td><td>
+		硫 黒 蜘
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		In Zu Grav
+	</td><td>
+		催眠場
+	</td><td>
+		人 黒 蜘
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		In Nox Grav
+	</td><td>
+		毒場
+	</td><td>
+		ナ 黒 蜘
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		Vas Flam
+	</td><td>
+		火球
+	</td><td>
+		黒 硫
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		Vas Lor
+	</td><td>
+		強光
+	</td><td>
+		硫 マ
+	</td><td>
+		全/戦
+	</td>
+</tr><tr class="breaker">
+	<td colspan="4">
+		<span>4</span>
+	</td>
+</tr><tr>
+	<td>
+		An Grav
+	</td><td>
+		脱魔法場
+	</td><td>
+		黒 硫
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		In Sanct Grav
+	</td><td>
+		障壁
+	</td><td>
+		マ 黒 蜘
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		In Sanct
+	</td><td>
+		保護
+	</td><td>
+		硫 人 大
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		Wis Quas
+	</td><td>
+		可視
+	</td><td>
+		ナ 硫
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		Bet Por
+	</td><td>
+		跳躍
+	</td><td>
+		黒 血
+	</td><td>
+		戦
+	</td>
+</tr><tr class="breaker">
+	<td colspan="4">
+		<span>5</span>
+	</td>
+</tr><tr>
+	<td>
+		In Ex Por
+	</td><td>
+		封印解除
+	</td><td>
+		硫 血
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		An Ex Por
+	</td><td>
+		封印
+	</td><td>
+		硫 血 大
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		Kal Xen
+	</td><td>
+		獣召還
+	</td><td>
+		蜘 マ
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		In Zu
+	</td><td>
+		全催眠
+	</td><td>
+		人 黒 蜘
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		Vas Mani
+	</td><td>
+		大回復
+	</td><td>
+		人 蜘 マ
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		Rel Tym
+	</td><td>
+		高速化
+	</td><td>
+		硫 血 マ
+	</td><td>
+		全/戦
+	</td>
+</tr><tr class="breaker">
+	<td colspan="4">
+		<span>6</span>
+	</td>
+</tr><tr>
+	<td>
+		An Xen Ex
+	</td><td>
+		魅了
+	</td><td>
+		黒 ナ 蜘
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		In An
+	</td><td>
+		沈黙
+	</td><td>
+		大 マ 硫
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		In Vas Por Ylem
+	</td><td>
+		地震
+	</td><td>
+		血 マ 硫
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		Quas An Wis
+	</td><td>
+		混乱
+	</td><td>
+		マ ナ
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		Wis An Ylen
+	</td><td>
+		透視
+	</td><td>
+		マ 硫
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		In Rel Por
+	</td><td>
+		念力
+	</td><td>
+		黒 血 蜘
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		Vas Por
+	</td><td>
+		瞬間移動
+	</td><td>
+		マ 黒 血
+	</td><td>
+		全
+	</td>
+</tr><tr class="breaker">
+	<td colspan="4">
+		<span>7</span>
+	</td>
+</tr><tr>
+	<td>
+		In Nox Hur
+	</td><td>
+		毒風
+	</td><td>
+		ナ 硫 血
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		In Quas Corp
+	</td><td>
+		恐怖
+	</td><td>
+		ナ マ 大
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		In Quas Wis
+	</td><td>
+		千里眼
+	</td><td>
+		ナ マ
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		In Quas Xen
+	</td><td>
+		複製
+	</td><td>
+		ナ マ 硫 蜘 血 人
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		Sanct Lor
+	</td><td>
+		不可視
+	</td><td>
+		ナ マ 血
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		Xen Corp
+	</td><td>
+		死
+	</td><td>
+		ナ 黒
+	</td><td>
+		戦
+	</td>
+</tr><tr class="breaker">
+	<td colspan="4">
+		<span>8</span>
+	</td>
+</tr><tr>
+	<td>
+		An Tym
+	</td><td>
+		時間停止
+	</td><td>
+		マ 大 血
+	</td><td>
+		WC
+	</td>
+</tr><tr>
+	<td>
+		In Flam Hur
+	</td><td>
+		炎風
+	</td><td>
+		マ 硫 血
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		In Vas Grav Corp
+	</td><td>
+		死風
+	</td><td>
+		マ 硫 ナ
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		In Mani Corp
+	</td><td>
+		蘇生
+	</td><td>
+		大 人 蜘 硫 血 マ
+	</td><td>
+		全/戦
+	</td>
+</tr><tr>
+	<td>
+		Kal Xen Corp
+	</td><td>
+		不死召還
+	</td><td>
+		蜘 マ ナ
+	</td><td>
+		戦
+	</td>
+</tr><tr>
+	<td>
+		Vas Rel Por
+	</td><td>
+		門
+	</td><td>
+		硫 マ 黒
+	</td><td>
+		全
+	</td>
+</tr>
+</table>
+<p>
+[1]
+町や迷宮での瞬間移動の呪文は、戦闘が終了し「追跡」になっていなければ失敗する。
+</p>
+
+<a name="toc48"></a>
+<h2>
+効果
+</h2>
+<p>
+時には魔法による攻撃、自然災害、または自身の酒の弱さにより小さな問題を抱えるだろう。
+あわてるな。
+多くの効果は致命的ではない。
+だが、いつくかはそうである。
+</p>
+<dl>
+<dt>
+<img src="doc/null.gif" class="icon" style="background: black url('haxima/effects.png') -39px 0;">
+睡眠
+</dt>
+<dd>
+眠っている者はいずれは自分で目覚める。
+もし待てなければAn Zuの呪文を使えばよい。
+</dd>
+<dt>
+<img src="doc/null.gif" class="icon" style="background: black url('haxima/effects.png') -55px 0;">
+魅了
+</dt>
+<dd>
+敵の魔術師に魅了された者は仲間を攻撃する。
+魅了の効果は10分で切れる。
+</dd>
+<dt>
+<img src="doc/null.gif" class="icon" style="background: black url('haxima/effects.png') -23px 0;">
+病気
+</dt>
+<dd>
+いくつかの怪物は仲間を病気にする。
+病気で死ぬことはないが、体力がなくなる寸前まで治ることはない。
+</dd>
+<dt>
+<img src="doc/null.gif" class="icon" style="background: black url('haxima/effects.png') -79px 0;">
+酩酊
+</dt>
+<dd>
+酒を買うか、置いてある酒を取ると酔う。
+酔いは1時間続き、歩いているとき物にぶつかることがある。
+</dd>
+<dt>
+<img src="doc/null.gif" class="icon" style="background: black url('haxima/effects.png') -95px 0;">
+絡まり
+</dt>
+<dd>
+クモの巣に絡まると、巣を破ろうともがくことになる。
+必要な時間は腕力によって決まる。
+</dd>
+<dt>
+<img src="doc/null.gif" class="icon" style="background: black url('haxima/effects.png') -15px -16px;">
+麻痺
+</dt>
+<dd>
+クモは相手を食べるため麻痺の毒を注入する。
+麻痺は短いランダムな時間で回復する。
+</dd>
+<dt>
+<img src="doc/null.gif" class="icon" style="background: black url('haxima/effects.png') -15px 0;">
+毒
+</dt>
+<dd>
+ガスまたは呪文で毒に犯されると、魔法か薬で回復するまで順番が回ってくる度に体力が失われる。
+毒は致命傷になりうる!
+病気のように自然には回復しない。
+</dd>
+</dl>
+
+<a name="toc49"></a>
+<h2>
+会話
+</h2>
+<p>
+NPCとの会話を始めるためにはTを押す。
+会話の最中では、簡単な質問を入力するとNPCがそれに答えるが、相手が質問してくることもある。
+店員とのでは物の売り買いができる。
+ほとんどのNPCは「名前」や「仕事」、住んでいる町や町の他の人物について答える。
+多くの反応には新しい質問の手がかりが含まれている。
+また、「仲間」でNPCがあなたの仲間に加われるかを問うことができる(仲間になる者もいるが、あなたがそう言わない、または彼らを動かすようなことを言わない限り仲間にはならない)。
+</p>
+
+<a name="toc50"></a>
+<h2>
+その他
+</h2>
+<p>
+食料は1日に3回、生きている仲間の分が消費される。
+もし食料がなければ、仲間は食事の時間のたびに体力が減る。
+</p>
+
+<a name="toc51"></a>
+<h2>
+付録A: 地図の作成
+</h2>
+<p>
+多くのゲームと同様に、"nazghul"はゲームエンジン<sup><a class="footnote"href="#f2">2</a></sup>とデータが分離されている。
+データファイルはプログラム言語のSchemeで書かれている。
+最初に実行するファイルは'session.scm'で、そこには読み込まれるSchemeの他のファイルと初期化の様々な定義が書かれている。
+</p>
+<p>
+自分自身のゲームを作成するため、このサンプルファイルの改造し基礎とすることを推奨する。
+サンプルのコードは全てパブリック・ドメインとする。
+画像と音声は様々な所から来たものである。
+COPYINGファイルにはどこから来たのか詳細が書かれている。
+</p>
+<p>
+もしサンプルのコードを使用して(商用ソフト等の)制限のあるゲームを作りたい場合は、自分で画像と音声ファイルを他のオープンソースやフリーウェアプロジェクト、そして著作権者が権利を有するものから用意しなければならないだろう。
+</p>
+
+<a name="toc52"></a>
+<h2>
+付録B: ネタバレ
+</h2>
+<p>
+これらはHaximaに特化していて、他のNazghulで作られたゲームでは必要ない。
+</p>
+
+<a name="toc53"></a>
+<h3>
+飛び道具
+</h3>
+<table>
+<tr class="header">
+	<td>
+		名称
+	</td><td>
+		命中
+	</td><td>
+		打撃
+	</td><td>
+		回避
+	</td><td>
+		手
+	</td><td>
+		射程
+	</td><td>
+		弾
+	</td><td>
+		重量
+	</td>
+</tr><tr>
+	<td>
+		投石紐
+	</td><td>
+		1d2-2
+	</td><td>
+		1d4
+	</td><td>
+		-1
+	</td><td>
+		1
+	</td><td>
+		4
+	</td><td>
+		石 <sup><a href="#misf1">1</a></sup>
+	</td><td>
+		0
+	</td>
+</tr><tr>
+	<td>
+		+4 投石紐
+	</td><td>
+		3
+	</td><td>
+		1d4+4
+	</td><td>
+		0
+	</td><td>
+		1
+	</td><td>
+		6
+	</td><td>
+		石 <sup><a href="#misf1">1</a></sup>
+	</td><td>
+		0
+	</td>
+</tr><tr>
+	<td>
+		弓
+	</td><td>
+		1d3-2
+	</td><td>
+		2d4
+	</td><td>
+		-2
+	</td><td>
+		2
+	</td><td>
+		6
+	</td><td>
+		矢
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		クロスボウ
+	</td><td>
+		1d4-2
+	</td><td>
+		4d4
+	</td><td>
+		-1
+	</td><td>
+		2
+	</td><td>
+		4
+	</td><td>
+		クロスボウの矢
+	</td><td>
+		3
+	</td>
+</tr><tr>
+	<td>
+		破滅の杖 <sup><a href="#misf2">2</a></sup>
+	</td><td>
+		1d4
+	</td><td>
+		1
+	</td><td>
+		+2
+	</td><td>
+		2
+	</td><td>
+		6
+	</td><td>
+		-
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		衝撃の棒 <sup><a href="#misf3">3</a></sup>
+	</td><td>
+		-2
+	</td><td>
+		1d4
+	</td><td>
+		-1
+	</td><td>
+		1
+	</td><td>
+		6
+	</td><td>
+		-
+	</td><td>
+		2
+	</td>
+</tr>
+</table>
+<p>
+<a name="misf1"></a>
+[1] 「どこにでもある」ことに注意 (言い換えると常に十分な弾がある)
+</p>
+<p>
+<a name="misf2"></a>
+[2] 炎によるダメージが追加される
+</p>
+<p>
+<a name="misf3"></a>
+[3] 一時的に対象を麻痺させる
+</p>
+
+<a name="toc54"></a>
+<h3>
+投擲武器
+</h3>
+<table>
+<tr class="header">
+	<td>
+		名称
+	</td><td>
+		命中
+	</td><td>
+		打撃
+	</td><td>
+		回避
+	</td><td>
+		手
+	</td><td>
+		射程
+	</td><td>
+		重量
+	</td>
+</tr><tr>
+	<td>
+		火炎ビン <sup><a href="#throwf1">1</a></sup>
+	</td><td>
+		-1
+	</td><td>
+		1d6
+	</td><td>
+		-2
+	</td><td>
+		1
+	</td><td>
+		4
+	</td><td>
+		1
+	</td>
+</tr><tr>
+	<td>
+		投槍
+	</td><td>
+		0
+	</td><td>
+		1d8
+	</td><td>
+		+1
+	</td><td>
+		1
+	</td><td>
+		4
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		鋭い石
+	</td><td>
+		-2
+	</td><td>
+		3d4+1
+	</td><td>
+		-2
+	</td><td>
+		2
+	</td><td>
+		5
+	</td><td>
+		10
+	</td>
+</tr>
+</table>
+<p>
+<a name="throwf1"></a>
+[1] 一時的に地面に炎を残す
+</p>
+
+<a name="toc55"></a>
+<h3>
+接近戦用武器
+</h3>
+<table>
+<tr class="header">
+	<td>
+		名称
+	</td><td>
+		命中
+	</td><td>
+		打撃
+	</td><td>
+		回避
+	</td><td>
+		手
+	</td><td>
+		射程
+	</td><td>
+		重量
+	</td>
+</tr><tr>
+	<td>
+		短剣
+	</td><td>
+		1d4
+	</td><td>
+		1d4
+	</td><td>
+		1d2
+	</td><td>
+		1
+	</td><td>
+		1
+	</td><td>
+		0
+	</td>
+</tr><tr>
+	<td>
+		+4 短剣
+	</td><td>
+		1d4+4
+	</td><td>
+		1d4+4
+	</td><td>
+		1d2+4
+	</td><td>
+		1
+	</td><td>
+		1
+	</td><td>
+		0
+	</td>
+</tr><tr>
+	<td>
+		槌矛
+	</td><td>
+		1d4
+	</td><td>
+		1d6+2
+	</td><td>
+		+0
+	</td><td>
+		1
+	</td><td>
+		1
+	</td><td>
+		3
+	</td>
+</tr><tr>
+	<td>
+		斧
+	</td><td>
+		1d2
+	</td><td>
+		2d3+2
+	</td><td>
+		+0
+	</td><td>
+		1
+	</td><td>
+		1
+	</td><td>
+		3
+	</td>
+</tr><tr>
+	<td>
+		剣
+	</td><td>
+		1d2
+	</td><td>
+		1d8+1
+	</td><td>
+		1d2
+	</td><td>
+		1
+	</td><td>
+		1
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		+2 剣
+	</td><td>
+		1d2+2
+	</td><td>
+		1d8+3
+	</td><td>
+		1d2+2
+	</td><td>
+		1
+	</td><td>
+		1
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		+4 剣
+	</td><td>
+		1d2+4
+	</td><td>
+		1d8+5
+	</td><td>
+		1d2+4
+	</td><td>
+		1
+	</td><td>
+		1
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		両手斧
+	</td><td>
+		0
+	</td><td>
+		4d3+2
+	</td><td>
+		-2
+	</td><td>
+		2
+	</td><td>
+		1
+	</td><td>
+		4
+	</td>
+</tr><tr>
+	<td>
+		両手剣
+	</td><td>
+		0
+	</td><td>
+		2d8+2
+	</td><td>
+		1
+	</td><td>
+		2
+	</td><td>
+		1
+	</td><td>
+		4
+	</td>
+</tr><tr>
+	<td>
+		刺付き鉄球
+	</td><td>
+		1d2+2
+	</td><td>
+		1d6+1
+	</td><td>
+		-1
+	</td><td>
+		1
+	</td><td>
+		2
+	</td><td>
+		3
+	</td>
+</tr><tr>
+	<td>
+		+2 刺付き鉄球
+	</td><td>
+		1d2+4
+	</td><td>
+		1d6+3
+	</td><td>
+		2
+	</td><td>
+		1
+	</td><td>
+		2
+	</td><td>
+		3
+	</td>
+</tr><tr>
+	<td>
+		斧槍
+	</td><td>
+		1d3+1
+	</td><td>
+		2d8-2
+	</td><td>
+		1d2
+	</td><td>
+		2
+	</td><td>
+		2
+	</td><td>
+		4
+	</td>
+</tr><tr>
+	<td>
+		杖
+	</td><td>
+		1d3
+	</td><td>
+		1d4
+	</td><td>
+		1d3
+	</td><td>
+		2
+	</td><td>
+		2
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		不気味な刃
+	</td><td>
+		2
+	</td><td>
+		2d8+5
+	</td><td>
+		+0
+	</td><td>
+		2
+	</td><td>
+		1
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		神秘の剣
+	</td><td>
+		+3
+	</td><td>
+		1d10+5
+	</td><td>
+		+2
+	</td><td>
+		1
+	</td><td>
+		1
+	</td><td>
+		1
+	</td>
+</tr><tr>
+	<td>
+		炎の剣
+	</td><td>
+		1d2
+	</td><td>
+		1d10+3
+	</td><td>
+		1d2
+	</td><td>
+		1
+	</td><td>
+		1
+	</td><td>
+		2
+	</td>
+</tr>
+</table>
+
+<a name="toc56"></a>
+<h3>
+防具
+</h3>
+<table>
+<tr class="header">
+	<td>
+		名称
+	</td><td>
+		命中
+	</td><td>
+		打撃
+	</td><td>
+		防御
+	</td><td>
+		回避
+	</td><td>
+		重量
+	</td>
+</tr><tr>
+	<td>
+		皮兜
+	</td><td>
+		-1
+	</td><td>
+		-
+	</td><td>
+		1d2
+	</td><td>
+		-
+	</td><td>
+		0
+	</td>
+</tr><tr>
+	<td>
+		+2 皮兜
+	</td><td>
+		0
+	</td><td>
+		-
+	</td><td>
+		1d2+2
+	</td><td>
+		-
+	</td><td>
+		0
+	</td>
+</tr><tr>
+	<td>
+		+4 皮兜
+	</td><td>
+		0
+	</td><td>
+		-
+	</td><td>
+		1d2+4
+	</td><td>
+		-
+	</td><td>
+		0
+	</td>
+</tr><tr>
+	<td>
+		鎖頭巾
+	</td><td>
+		-1
+	</td><td>
+		-
+	</td><td>
+		1d3
+	</td><td>
+		-
+	</td><td>
+		1
+	</td>
+</tr><tr>
+	<td>
+		+4 鎖頭巾
+	</td><td>
+		0
+	</td><td>
+		-
+	</td><td>
+		1d3+4
+	</td><td>
+		-
+	</td><td>
+		1
+	</td>
+</tr><tr>
+	<td>
+		鉄兜
+	</td><td>
+		-1
+	</td><td>
+		-
+	</td><td>
+		1d4
+	</td><td>
+		-
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		+4 鉄兜
+	</td><td>
+		0
+	</td><td>
+		-
+	</td><td>
+		1d4+4
+	</td><td>
+		-
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		皮鎧
+	</td><td>
+		-1
+	</td><td>
+		-
+	</td><td>
+		1d4
+	</td><td>
+		-
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		+2 皮鎧
+	</td><td>
+		0
+	</td><td>
+		-
+	</td><td>
+		1d4+2
+	</td><td>
+		-
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		+4 皮鎧
+	</td><td>
+		0
+	</td><td>
+		-
+	</td><td>
+		1d4+4
+	</td><td>
+		-
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		鎖からびら
+	</td><td>
+		-2
+	</td><td>
+		-
+	</td><td>
+		2d4
+	</td><td>
+		-
+	</td><td>
+		4
+	</td>
+</tr><tr>
+	<td>
+		+4 鎖からびら
+	</td><td>
+		0
+	</td><td>
+		-
+	</td><td>
+		2d4+4
+	</td><td>
+		-
+	</td><td>
+		4
+	</td>
+</tr><tr>
+	<td>
+		甲冑
+	</td><td>
+		-4
+	</td><td>
+		-
+	</td><td>
+		4d4
+	</td><td>
+		-
+	</td><td>
+		8
+	</td>
+</tr><tr>
+	<td>
+		+4 甲冑
+	</td><td>
+		0
+	</td><td>
+		-
+	</td><td>
+		4d4+4
+	</td><td>
+		-
+	</td><td>
+		8
+	</td>
+</tr><tr>
+	<td>
+		小型の盾
+	</td><td>
+		-1
+	</td><td>
+		-
+	</td><td>
+		0
+	</td><td>
+		2
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		+4 小型の盾
+	</td><td>
+		0
+	</td><td>
+		-
+	</td><td>
+		0
+	</td><td>
+		6
+	</td><td>
+		2
+	</td>
+</tr><tr>
+	<td>
+		刺付き盾
+	</td><td>
+		0
+	</td><td>
+		1d5
+	</td><td>
+		0
+	</td><td>
+		1
+	</td><td>
+		3
+	</td>
+</tr><tr>
+	<td>
+		刺付き兜
+	</td><td>
+		0
+	</td><td>
+		1d4
+	</td><td>
+		3
+	</td><td>
+		0
+	</td><td>
+		2
+	</td>
+</tr>	
+</table>
+
+<a name="toc57"></a>
+<h2>
+注釈
+</h2>
+<p>
+<a name="f1"></a>
+[1] ああ、だが、まだ実装されていない。
+</p>
+<a name="f2"></a>
+<p>
+[2] 私は「カーネル」という呼び名を好む。
+こちらの方が格好がよく、リーナス・トーバルスも私も同じ世代で、カーネルを作ったという点で私も負けていない気がする。
+</p>
+<p>
+--gmcnutt (gmcnutt@cableone.net)
+</p>
+</body>
+</html>

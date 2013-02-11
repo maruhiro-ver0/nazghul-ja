@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In the Prison level under Glasdrin
+;; グラスドリンの地下の監獄
 ;;----------------------------------------------------------------------------
 
 ;;----------------------------------------------------------------------------
@@ -19,117 +19,115 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Gholet is a former pirate, now imprisoned in the Prison below Glasdrin.
-;; He is one of the surviving crew of the Merciful Death, 
-;; and is sought for vengeance by the ghost Ghertie.
+;; ゴレットはかつては海賊で、今はグラスドリンの地下の監獄にいる。
+;; 彼は慈悲深い死号の乗組員の生き残りの一人で、亡霊となったガーティ船長に復讐
+;; のため追われている。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (gholet-hail knpc kpc)
-  (say knpc "'Ello, guv'nah"))
+  (say knpc "よーお、旦那あ。"))
 
 (define (gholet-default knpc kpc)
-  (say knpc "Right you are, guv'nah, that's what I like about you!"))
+  (say knpc "そのとおりでさぁ。それが旦那のいい所！"))
 
 (define (gholet-name knpc kpc)
-  (say knpc "Gholet's me 'andle, but take no account o' me, guv'nah")
+  (say knpc "ゴレットでさぁ。でも気にしないでくだせえ、旦那。")
   (quest-data-update 'questentry-ghertie 'gholet-dungeon 1))
 
 (define (gholet-join knpc kpc)
-  (say knpc "And leave behind 'is 'ere life of luxury? Tosh!"))
+  (say knpc "そんでこっから出て贅沢できるって？バカバカしいや！"))
 
 (define (gholet-job knpc kpc)
-  (say knpc "Why, I's a cook. Or I was, at any rate, 'fore I took up the new "
-       "vocation you see me at 'ere."))
+  (say knpc "おっと、俺ぁ料理人だ、いや、だった。"
+       "何にせよ、ここで見ての通りの新しい天職を得たんでさぁ。"))
 
 (define (gholet-bye knpc kpc)
-  (say knpc "Nice chattin' with ya, guv'nah"))
+  (say knpc "面白いお話で、旦那。"))
 
 ;; Tier 2 replies
 (define (gholet-cook knpc kpc)
-  (say knpc "I was a cook on a famous luxury liner! The Merciful Death, "
-       "ever 'ear of her?")
+  (say knpc "有名な豪華客船の料理人だったわけよ！"
+       "慈悲深い死号、聞いたことあるか？")
   (if (yes? kpc)
-      (say knpc "Oh. Well, I told you she was famous!")
-      (say knpc "Oh, she was quite-well known in her time. "
-           "Don't know what became of 'er.")))
+      (say knpc "おお、そりゃあいい。有名だって言ったろ！")
+      (say knpc "おお、昔は本当に有名だった。"
+           "今どうなってるかはわかんねえ。")))
 
 (define (gholet-merc knpc kpc)
-  (say knpc "Oh, yeah, she was captained by a marvelous woman. "
-       "Ghertie was her name."))
+  (say knpc "おお、そうさぁ、お頭はすばらしい女だった。"
+       "ガーティーってんだ。"))
 
 (define (gholet-gher knpc kpc)
-  (say knpc "A real peach. Couldn't ask for a nicer boss."))
+  (say knpc "いい女だった。あれよりいい頭はいねえ。"))
 
 (define (gholet-voca knpc kpc)
-  (say knpc "Aye, this is the easiest job I ever had."))
+  (say knpc "おう、これが今までで一番楽な仕事でさぁ。"))
 
 (define (gholet-mean knpc kpc)
-  (say knpc "'Aven't seen old Meaney in ages. "
-       "Last I 'eard 'e was running a poor 'ouse."))
+  (say knpc "ミーニーのジジイとは長げえこと会ってねえな。"
+       "救貧院をやってると聞いたがなあ。"))
 
 (define (gholet-jorn knpc kpc)
-  (say knpc "Oh, now there's a right dangerous man, now guv'nah. "
-       "Best let sleeping dogs lie, as I like to say. "))
+  (say knpc "おお、あいつは本当にやべえよ、旦那。"
+       "寝た犬はそのままにしておきなよ。"))
 
 (define (gholet-dog knpc kpc)
-  (say knpc "From what I 'ear, that dog lies at the White Stag.")
+  (say knpc "犬は白き牡鹿荘で寝てると聞いたなあ。")
   (quest-data-update 'questentry-ghertie 'jorn-loc 1))
 
 ;; Quest-related
 (define (gholet-ring knpc kpc)
 
   (if (not (in-inventory? knpc t_skull_ring_g))
-      (say knpc "Ring? What ring?")
+      (say knpc "指輪？何の指輪？")
       (begin
 
         (define (take-picklocks)
           (if (< (num-in-inventory kpc t_picklock) 12)
 		(begin
 		(quest-data-update-with 'questentry-ghertie 'gholet-price 1 (quest-notify nil))
-              (say knpc "Mmm. Bit of a problem, guv'nah, "
-                   "you don't have enough picklocks. "
-                   "But I'll keep the ring 'ere on layaway until you do.")
+              (say knpc "うーむ、少し問題があるなあ、旦那。"
+                   "鍵開け道具が足りねえよ。"
+                   "でもこの指輪は取り置きにしておくよ。")
 		   )
               (begin
-                (say knpc "Right you are, 'ere you go, and there I go, "
-                     "right as rain, right as rain! Enjoy your new ring, "
-                     "guv'nah!")
+                (say knpc "そうだ。あんたは持ってく、俺は出ていく、"
+                     "うまくいった、うまくいった！新しい指輪を楽しんでくれ、旦那！")
                 (kern-obj-remove-from-inventory kpc t_picklock 12)
                 (kern-obj-add-to-inventory knpc t_picklock 12)
                 (kern-obj-remove-from-inventory knpc t_skull_ring_g 1)
 		(skullring-g-get nil kpc)
 		)))
 
-        (say knpc "Oh, that old thing? It got to itchin', "
-             "I must be allergic to it. "
-             "So I took it off. 'Ad to take the whole finger, off, actually, "
-             "bit of a mess. Would you like to see it?")
+        (say knpc "おお、この古いブツか？痒くてしょうがねえんだ。"
+             "コイツのせいにちげえねえ。"
+             "コイツは外そう。もちろん指も一緒にだ。"
+             "少しきたねえが、欲しいか？")
         (if (yes? kpc)
             (begin
-              (say knpc "Don't blame you. Not at all. "
-                   "It's quite the curious item! "
-                   "But one good turn deserves another, "
-                   "don't you agree, guv'nah?")
+              (say knpc "気にすんなよ。全然。"
+                   "コイツは本当にすげえ代物だ！"
+                   "でも、いいことをすれば、いいことになって返っている。"
+                   "そうだろ、旦那？")
               (if (yes? kpc)
                   (begin
-                    (say knpc "Of course you do! Youse a fair man, guv'nah! "
-                         "You know tit-for-tat, scratch each other's back! "
-                         "A dozen picklocks. A dozen picklocks and you can have the ring. "
-                         "Agreed?")
+                    (say knpc "もちろんそうするよなぁ、旦那！"
+                         "持ちつ持たれつってヤツよ！"
+                         "鍵開け道具が1ダース。鍵開け道具が1ダースあればコイツはあんたのモンだ。"
+                         "どうよ？")
                     (if (yes? kpc)
                         (take-picklocks)
                         (begin
 			(quest-data-update-with 'questentry-ghertie 'gholet-price 1 (quest-notify nil))
-                          (say knpc "That's my price. "
-                               "Come back when you're ready to pay.")
+                          (say knpc "それがこの指輪の値段だ。"
+                               "払う気になったらまた来てくれ。")
                           (kern-conv-end))))
                   (begin
-                    (say knpc "Piss off, then.")
+                    (say knpc "だったら帰んなよ。")
                     (kern-conv-end))))
-            (say knpc "Don't screw with me. "
-                 "I know you're 'ere for the ring or you wouldn't "
-                 "'ave asked.")))))
+            (say knpc "ごちゃごちゃいいやがって。"
+                 "この指輪のためにここに来たのは知ってるんだ。")))))
       
 (define gholet-conv
   (ifc basic-conv
@@ -159,7 +157,7 @@
    (kern-char-force-drop
    (kern-mk-char 
     'ch_my           ; tag
-    "Gholet"             ; name
+    "ゴレット"             ; name
     gholet-species         ; species
     gholet-occ              ; occ
     s_brigand     ; sprite

@@ -10,7 +10,7 @@
  
 (kern-mk-place 
 	'p_lost_halls_entrance
-	"Gate to the Lost Halls"
+	"失われた殿堂の門"
 	s_dungeon          ; sprite
 	(kern-mk-map nil 21 21 pal_expanded
 	(list
@@ -65,7 +65,7 @@
  
 (kern-mk-place 
 	'p_lost_halls_r1
-	"The Lost halls"
+	"失われた殿堂"
 	 nil          ; sprite
 	(kern-mk-map nil 21 21 pal_expanded
 		(list
@@ -109,7 +109,7 @@
 
 (kern-mk-place 
 	'p_lost_halls_r2
-	"The Lost halls"
+	"失われた殿堂"
 	 nil          ; sprite
 	(kern-mk-map nil 21 21 pal_expanded
 		(list
@@ -153,7 +153,7 @@
 
 (kern-mk-place 
 	'p_lost_halls_r3
-	"The Lost halls"
+	"失われた殿堂"
 	 nil          ; sprite
 	(kern-mk-map nil 21 21 pal_expanded
 		(list
@@ -197,7 +197,7 @@
 
 (kern-mk-place 
 	'p_lost_halls_r4
-	"The Lost halls"
+	"失われた殿堂"
 	 nil          ; sprite
 	(kern-mk-map nil 21 21 pal_expanded
 		(list
@@ -241,7 +241,7 @@
 
 (kern-mk-place 
 	'p_lost_halls_r5
-	"The Lost halls"
+	"失われた殿堂"
 	 nil          ; sprite
 	(kern-mk-map nil 21 21 pal_expanded
 		(list
@@ -285,7 +285,7 @@
 
 (kern-mk-place 
 	'p_lost_halls_staird
-	"The Great Stair"
+	"大階段"
 	 nil          ; sprite
 	(kern-mk-map nil 21 21 pal_expanded
 	(list
@@ -325,9 +325,9 @@
 	 (put (mk-bump-door 'p_lost_halls_stairu 10 18) 9 7)
 	 (put (mk-bump-door 'p_lost_halls_stairu 10 18) 10 7)
 	 (put (mk-bump-door 'p_lost_halls_stairu 10 18) 11 7)
-	 (put (mk-step-trig 'one-off-message "A huge stairway leads down into the darkness" "losthalls_staird") 9 15)
-	 (put (mk-step-trig 'one-off-message "A huge stairway leads down into the darkness" "losthalls_staird") 10 15)
-	 (put (mk-step-trig 'one-off-message "A huge stairway leads down into the darkness" "losthalls_staird") 11 15)
+	 (put (mk-step-trig 'one-off-message "巨大な下りの階段は闇へと向かっている。" "losthalls_staird") 9 15)
+	 (put (mk-step-trig 'one-off-message "巨大な下りの階段は闇へと向かっている。" "losthalls_staird") 10 15)
+	 (put (mk-step-trig 'one-off-message "巨大な下りの階段は闇へと向かっている。" "losthalls_staird") 11 15)
 	  (put (spawn-pt 'giant-spider) 4 11)
 	  (put (spawn-pt 'giant-spider) 5 10)
 	  (put (spawn-pt 'giant-spider) 6 12)
@@ -346,7 +346,7 @@
 
 (kern-mk-place 
 	'p_lost_halls_stairu
-	"The Great Stair"
+	"大階段"
 	 nil          ; sprite
 	(kern-mk-map nil 21 21 pal_expanded
 	(list
@@ -402,7 +402,7 @@
 
 (kern-mk-place 
 	'p_lost_halls_graves
-	"The Graveyard"
+	"墓地"
 	 nil          ; sprite
 	(kern-mk-map nil 21 21 pal_expanded
 	(list
@@ -459,7 +459,7 @@
 
 (kern-mk-place 
 	'p_lost_halls_rshrine
-	"The Broken Sactuary"
+	"破壊された祭壇"
 	 nil          ; sprite
 	(kern-mk-map nil 21 21 pal_expanded
 	(list
@@ -510,7 +510,7 @@
 
 (kern-mk-place 
 	'p_lost_halls_fountains
-	"The Lost Halls"
+	"失われた殿堂"
 	 nil          ; sprite
 	(kern-mk-map nil 21 21 pal_expanded
 	(list
@@ -564,7 +564,7 @@
 
 (kern-mk-place 
 	'p_lost_halls_storage
-	"The Lost Halls"
+	"失われた殿堂"
 	 nil          ; sprite
 	(kern-mk-map nil 21 21 pal_expanded
 	(list

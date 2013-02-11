@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In front of the Gate to Absalot.
+;; アブサロットの門の前
 ;;----------------------------------------------------------------------------
 (define joel-bed (list 'p_gate_to_absalot 8 9 1 1))
 (define joel-mealplace joel-bed)
@@ -33,54 +33,54 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Joel is a simple cowherd, whose stock is grazing in front of
-;; the gates to the destroyed city of Absalot.
+;; ジョエルは素朴な牛飼いで、アブサロットの町の破壊された門の前で放牧をして暮
+;; らしている。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (joel-hail knpc kpc)
-  (kern-log-msg "You meet a laconic herder.")
-  (say knpc "Hi")
+  (kern-log-msg "あなたは素朴な牛飼いと会った。")
+  (say knpc "よお。")
   )
 
 (define (joel-default knpc kpc)
-  (say knpc "Don't know, pardner."))
+  (say knpc "わからんなあ、相棒。"))
 
 (define (joel-name knpc kpc)
-  (say knpc "Joel."))
+  (say knpc "ジョエル。"))
 
 (define (joel-join knpc kpc)
-  (say knpc "Nope."))
+  (say knpc "いんや。"))
 
 (define (joel-job knpc kpc)
-  (say knpc "I herd my cows here. Nice and peaceful."))
+  (say knpc "牛を飼っとる。平和でええこった。"))
 
 (define (joel-peac knpc kpc)
-  (say knpc "Yep. This is the old gate to Absalot."))
+  (say knpc "そうさあ。ここはアブサロットの昔の門だあ。"))
 
 (define (joel-absa knpc kpc)
-  (say knpc "You're not thinking of going in there, are you?")
+  (say knpc "中に入りたいのけ？")
   (if (yes? kpc)
-      (say knpc "Crazy. Theres nasty stuff down there.")
-      (say knpc "Don't blame you.")))
+      (say knpc "やめとけ。下は酷い奴がいっぱいおる。")
+      (say knpc "それがええ。")))
 
 (define (joel-nast knpc kpc)
-  (say knpc "Gazers? Undead? Who knows what else? The place was bad enough before "
-       "the paladins sealed it up and left it to fester."))
+  (say knpc "ゲイザー？不死の者？後はわかんねえ。"
+       "聖騎士たちが膿を残して封印する前から、ここはひでえ所だった。"))
 
 (define (joel-fest knpc kpc)
-  (say knpc "Paladins from Glasdrin destroyed Absalot. And when humans get out of the way, "
-	"monsters move in."))
+  (say knpc "グラスドリンから来た聖騎士たちがアブサロットを破壊した。"
+	"人がいなくなったら怪物どもが入ってきたのさあ。"))
 	
 (define (joel-gaze knpc kpc)
-  (say knpc "Mind-slavers. And whatever they're controlling. "
-       "If you dont watch out you'll wind up their slaves too."))
+  (say knpc "精神の奴隷主。いつでも他の奴を支配できるのさあ。"
+       "気いつけないと、おめえも奴隷になるぞ。"))
 	   
 (define (joel-unde knpc kpc)
-  (say knpc "Ghosts, skeletons, and I'd rather not know what else."))
+  (say knpc "幽霊、骸骨、後は知りたくねえ。"))
 
 (define (joel-bye knpc kpc)
-  (say knpc "So long"))
+  (say knpc "じゃあなあ。"))
 
 (define joel-conv
   (ifc basic-conv
@@ -109,7 +109,7 @@
   (bind 
    (kern-mk-char 
     'ch_joel           ; tag
-    "Joel"             ; name
+    "ジョエル"         ; name
     joel-species         ; species
     joel-occ              ; occ
     s_companion_shepherd     ; sprite

@@ -136,7 +136,7 @@
        (not (species-is-immune-to-paralyze? (kern-char-get-species kobj)))))
 
 (define (paralyze-apply fgob kobj)
-  (kern-log-msg (kern-obj-get-name kobj) " paralyzed!"))
+  (kern-log-msg (kern-obj-get-name kobj) "は麻痺した！"))
 
 (define (paralyze-exec fgob kobj)
   (if (not (obj-is-char? kobj))
@@ -147,13 +147,13 @@
                 (> droll
                    dc-escape-paralyze))
             (begin
-              (kern-log-msg "Paralysis wears off of " (kern-obj-get-name kchar))
+              (kern-log-msg (kern-obj-get-name kchar) "の麻痺はなくなった。")
               (kern-obj-remove-effect kchar ef_paralyze)
               (if (is-player-party-member? kobj)
                   (kern-char-set-player-controlled kobj #t))
               #f)
             (begin
-	      (kern-log-msg "** " (kern-obj-get-name kchar) " remains paralyzed! **")
+	      (kern-log-msg "** " (kern-obj-get-name kchar) "にはまだ麻痺が残っている！ **")
               (kern-obj-set-ap kchar 0)
               #f)))))
 
@@ -179,7 +179,7 @@
               (maxdmg (- (kern-char-get-hp kchar) 
                          (kern-dice-roll "1d10"))))
           (cond ((> dmgroll maxdmg)
-                 (kern-log-msg (kern-obj-get-name kchar) " fights off Disease")
+                 (kern-log-msg (kern-obj-get-name kchar) "は病から回復した。")
                  (kern-obj-apply-damage kchar "disease" maxdmg)
                  (kern-obj-remove-effect kchar ef_disease)
                  )
@@ -198,7 +198,7 @@
        (not (species-is-immune-to-ensnare? (kern-char-get-species kobj)))))
 
 (define (ensnare-apply fgob kobj)
-  (kern-log-msg (kern-obj-get-name kobj) " stuck in web!"))
+  (kern-log-msg (kern-obj-get-name kobj) "は網に捕らわれた！"))
 
 (define (ensnare-exec fgob kobj)
   (println "ensnare-exec")
@@ -213,13 +213,13 @@
                           droll)
                        dc-escape-ensnare))
                 (let ((loc (kern-obj-get-location kobj)))
-                  (kern-log-msg (kern-obj-get-name kchar) " breaks free of web!")
+                  (kern-log-msg (kern-obj-get-name kchar) "は網から抜け出した！")
                   (kern-obj-remove-effect kchar ef_ensnare)
                   (map kern-obj-remove-web (find-object-types-at loc web-type))
                   (map kern-obj-remove-web (find-object-types-at loc F_web_perm))
                   #t)
                 (begin
-                  (kern-log-msg (kern-obj-get-name kchar) " struggles in the web!")
+                  (kern-log-msg (kern-obj-get-name kchar) "は網の中でもがいた！")
                   (kern-obj-set-ap kchar 0)
                   #f))))))
 
@@ -238,16 +238,16 @@
 ;; free. This was added as a risk balance for the wriggle skill.
 ;; ----------------------------------------------------------------------------
 (define (stuck-apply fgob kobj)
-  (kern-log-msg (kern-obj-get-name kobj) " stuck!"))
+  (kern-log-msg (kern-obj-get-name kobj) "は捕まった！"))
 
 (define (stuck-exec fgob kobj)
   (cond ((check-roll dc-escape-stuck (occ-thief-dice-roll kobj))
-         (kern-log-msg (kern-obj-get-name kobj) " wriggles free!")
+         (kern-log-msg (kern-obj-get-name kobj) "は逃れた！")
          (kern-obj-remove-effect kobj ef_stuck)
          #t
          )
         (else
-         (kern-log-msg (kern-obj-get-name kobj) " struggles!")
+         (kern-log-msg (kern-obj-get-name kobj) "はもがいた！")
          (kern-obj-set-ap kobj 0)
          #f
          )))
@@ -306,7 +306,7 @@
 	(set-car! temp-light-power power))
 
 (define (light-rm fgob kobj)
-  (kern-log-msg "Light spell wore off")
+  (kern-log-msg "光の呪文が消え去った。")
   (kern-obj-dec-light kobj (caar fgob))
   (temp-light-power-set (caar fgob)))
 
@@ -362,7 +362,7 @@
 (define torchlight-amount 1024)
 
 (define (torchlight-rm fgob kobj)
-  (kern-log-msg "A torch flickers out!")
+  (kern-log-msg "松明が燃え尽きた！")
   (kern-obj-dec-light kobj torchlight-amount))
 
 (define (torchlight-apply fgob kobj)
@@ -411,12 +411,12 @@
          (kern-being-set-current-faction kchar (kern-being-get-base-faction kchar))
          (if (is-player-party-member? kchar)
              (kern-char-set-player-controlled kchar #t))
-         (kern-log-msg (kern-obj-get-name kchar) " recovers from charm!")
+         (kern-log-msg (kern-obj-get-name kchar) "は我に返った！")
         )))
 
 (define (charm-apply charm kchar)
   (cond ((obj-is-char? kchar)
-         (kern-log-msg (kern-obj-get-name kchar) " is charmed!")
+         (kern-log-msg (kern-obj-get-name kchar) "は魅了された！")
          (kern-char-set-player-controlled kchar #f)
          (kern-being-set-current-faction kchar (charm-faction charm))
          )))
@@ -505,7 +505,7 @@
        stealth-co-effects)
   ;; And treat yuse as a special case
   (kern-obj-remove-effect kobj ef_stealth_yuse)
-  (kern-log-msg (kern-obj-get-name kobj) " goes out of stealth mode!")
+  (kern-log-msg (kern-obj-get-name kobj) "は再び現れた！")
   )
 
 ;; At basic skill levels any movement will undo stealth mode. As the character
@@ -562,7 +562,7 @@
                                    (kern-being-get-base-faction kobj))
 				(if hurtclone
 					(kern-char-set-hp clone orighp))
-                (kern-log-msg (kern-obj-get-name kobj) " divides!")
+                (kern-log-msg (kern-obj-get-name kobj) "は分裂した！")
                 (kern-obj-put-at clone (pick-loc loc clone)))
               )))))
 
@@ -584,12 +584,12 @@
 (define (spider-calm-rm fgob kchar)
   (kern-dtable-dec (kern-being-get-current-faction kchar)
                    faction-spider)
-  (kern-log-msg (kern-obj-get-name kchar) " seems less friendly to spiders"))
+  (kern-log-msg (kern-obj-get-name kchar) "のクモからの襲われにくさは消えた。"))
 
 (define (spider-calm-apply fgob kchar)
   (kern-dtable-inc (kern-being-get-current-faction kchar)
                    faction-spider)
-  (kern-log-msg (kern-obj-get-name kchar) " makes spiders seem friendlier"))
+  (kern-log-msg (kern-obj-get-name kchar) "はクモに襲われにくくなったようだ。"))
 
 ;;----------------------------------------------------------------------------
 ;; Drunk
@@ -603,14 +603,14 @@
   (if (> (kern-dice-roll "1d20") 16)
       (if (stagger kchar)
           (begin
-            (kern-log-msg (kern-obj-get-name kchar) " staggers!")
+            (kern-log-msg (kern-obj-get-name kchar) "は酔っている！")
             (end-turn kchar)))))
 
 (define (drunk-apply fgob kchar)
-  (kern-log-msg (kern-obj-get-name kchar) " feels tipsy!"))
+  (kern-log-msg (kern-obj-get-name kchar) "は酔った！"))
 
 (define (drunk-rm fgob kchar)
-  (kern-log-msg (kern-obj-get-name kchar) " has a hangover!"))
+  (kern-log-msg (kern-obj-get-name kchar) "の酔いはさめた！"))
 
 ;;-----------------------------------------------------------------
 ;; Graphics update
@@ -693,50 +693,50 @@
 ;; ----------------------------------------------------------------------------
 
 ;; Start-of-turn hooks
-(mk-effect 'ef_poison                 "Poison"        s_poison      'poison-exec nil                 nil              nil                 start-of-turn-hook "P" 0   #f  -1)
-(mk-effect 'ef_sleep                  "Sleep"         s_sleep       'sleep-exec  nil                 'sleep-rm        'sleep-reset        start-of-turn-hook "S" 0   #f  60)
-(mk-effect 'ef_light                  "Magical light" s_light       'light-exec  'light-apply        'light-rm        'light-apply        start-of-turn-hook "L" 0   #t  -2)
-(mk-effect 'ef_torchlight             "Torchlight"    s_torchlight  nil          'torchlight-apply   'torchlight-rm   'torchlight-apply   start-of-turn-hook "T" 0   #f  60)
-(mk-effect 'ef_weaklight              "Torchlight"    s_torchlight  nil          'weaklight-apply    'weaklight-rm    'weaklight-apply    start-of-turn-hook "T" 0   #f  60)
-(mk-effect 'ef_protection             "Protection"    s_protect     nil          'protection-apply   'protection-rm   'protection-apply   start-of-turn-hook "p" 0   #f  10)
-(mk-effect 'ef_charm                  "Charm"         s_charm       nil          'charm-apply        'charm-rm        'charm-apply        start-of-turn-hook "C" 0   #f   5)
-(mk-effect 'ef_invisibility           "Invisible"     s_invis       nil          'invisibility-apply 'invisibility-rm 'invisibility-apply start-of-turn-hook "N" 0   #t  10)
-(mk-effect 'ef_permanent_invisibility "Invisible"     s_invis       nil          'invisibility-apply 'invisibility-rm 'invisibility-apply start-of-turn-hook "N" 0   #t  -1)
-(mk-effect 'ef_spider_calm            "Spider calm"   s_spider_calm nil          'spider-calm-apply  'spider-calm-rm   nil                start-of-turn-hook ""  0   #f  60) 
-(mk-effect 'ef_disease                "Diseased"      s_disease    'disease-exec  nil                 nil              nil                start-of-turn-hook "D" 0   #f  -2)
+(mk-effect 'ef_poison                 "毒"            s_poison      'poison-exec nil                 nil              nil                 start-of-turn-hook "P" 0   #f  -1)
+(mk-effect 'ef_sleep                  "睡眠"          s_sleep       'sleep-exec  nil                 'sleep-rm        'sleep-reset        start-of-turn-hook "S" 0   #f  60)
+(mk-effect 'ef_light                  "魔力の光"      s_light       'light-exec  'light-apply        'light-rm        'light-apply        start-of-turn-hook "L" 0   #t  -2)
+(mk-effect 'ef_torchlight             "松明"          s_torchlight  nil          'torchlight-apply   'torchlight-rm   'torchlight-apply   start-of-turn-hook "T" 0   #f  60)
+(mk-effect 'ef_weaklight              "松明"          s_torchlight  nil          'weaklight-apply    'weaklight-rm    'weaklight-apply    start-of-turn-hook "T" 0   #f  60)
+(mk-effect 'ef_protection             "保護"          s_protect     nil          'protection-apply   'protection-rm   'protection-apply   start-of-turn-hook "p" 0   #f  10)
+(mk-effect 'ef_charm                  "魅了"          s_charm       nil          'charm-apply        'charm-rm        'charm-apply        start-of-turn-hook "C" 0   #f   5)
+(mk-effect 'ef_invisibility           "透明"          s_invis       nil          'invisibility-apply 'invisibility-rm 'invisibility-apply start-of-turn-hook "N" 0   #t  10)
+(mk-effect 'ef_permanent_invisibility "透明"          s_invis       nil          'invisibility-apply 'invisibility-rm 'invisibility-apply start-of-turn-hook "N" 0   #t  -1)
+(mk-effect 'ef_spider_calm            "クモ避け"      s_spider_calm nil          'spider-calm-apply  'spider-calm-rm   nil                start-of-turn-hook ""  0   #f  60) 
+(mk-effect 'ef_disease                "病気"          s_disease    'disease-exec  nil                 nil              nil                start-of-turn-hook "D" 0   #f  -2)
 (mk-effect 'ef_graphics_update        nil             nil          'update-graphics nil               nil             'update-graphics    start-of-turn-hook ""  0   #f  -1)
-(mk-effect 'ef_stealth                "Stealth"       nil          'stealth-exec 'stealth-apply      'stealth-rm      'stealth-apply      start-of-turn-hook ""  0   #f  -1)
+(mk-effect 'ef_stealth                "隠密"          nil          'stealth-exec 'stealth-apply      'stealth-rm      'stealth-apply      start-of-turn-hook ""  0   #f  -1)
 
 ;; Add-hook hooks
-(mk-effect 'ef_poison_immunity               "Poison immunity"    s_im_poison   'poison-immunity-exec    nil nil nil add-hook-hook "I" 0   #f  -1)
-(mk-effect 'ef_temporary_poison_immunity     "Poison immunity"    s_im_poison   'poison-immunity-exec    nil nil nil add-hook-hook "I" 0   #f  60)
-(mk-effect 'ef_disease_immunity              "Disease immunity"   s_im_disease  'disease-immunity-exec   nil nil nil add-hook-hook "E" 0   #f  -1)
-(mk-effect 'ef_temporary_disease_immunity    "Disease immunity"   s_im_disease  'disease-immunity-exec   nil nil nil add-hook-hook "E" 0   #f  60)
-(mk-effect 'ef_paralysis_immunity            "Paralysis immunity" s_im_paralyse 'paralysis-immunity-exec nil nil nil add-hook-hook "z" 0   #f  -1)
-(mk-effect 'ef_temporary_paralysis_immunity  "Paralysis immunity" s_im_paralyse 'paralysis-immunity-exec nil nil nil add-hook-hook "z" 0   #f  60)
-(mk-effect 'ef_charm_immunity                "Charm immunity"     s_im_charm    'charm-immunity-exec     nil nil nil add-hook-hook "c" 0   #f  -1)
-(mk-effect 'ef_temporary_charm_immunity      "Charm immunity"     s_im_charm    'charm-immunity-exec     nil nil nil add-hook-hook "c" 0   #f  60)
-(mk-effect 'ef_sleep_immunity                "Sleep immunity"     s_im_sleep    'sleep-immunity-exec     nil nil nil add-hook-hook "s" 0   #f  -1)
-(mk-effect 'ef_temporary_sleep_immunity      "Sleep immunity"     s_im_sleep    'sleep-immunity-exec     nil nil nil add-hook-hook "s" 0   #f  60)
+(mk-effect 'ef_poison_immunity               "毒への耐性"     s_im_poison   'poison-immunity-exec    nil nil nil add-hook-hook "I" 0   #f  -1)
+(mk-effect 'ef_temporary_poison_immunity     "毒への耐性"     s_im_poison   'poison-immunity-exec    nil nil nil add-hook-hook "I" 0   #f  60)
+(mk-effect 'ef_disease_immunity              "病気への耐性"   s_im_disease  'disease-immunity-exec   nil nil nil add-hook-hook "E" 0   #f  -1)
+(mk-effect 'ef_temporary_disease_immunity    "病気への耐性"   s_im_disease  'disease-immunity-exec   nil nil nil add-hook-hook "E" 0   #f  60)
+(mk-effect 'ef_paralysis_immunity            "麻痺への耐性"   s_im_paralyse 'paralysis-immunity-exec nil nil nil add-hook-hook "z" 0   #f  -1)
+(mk-effect 'ef_temporary_paralysis_immunity  "麻痺への耐性"   s_im_paralyse 'paralysis-immunity-exec nil nil nil add-hook-hook "z" 0   #f  60)
+(mk-effect 'ef_charm_immunity                "魅了への耐性"   s_im_charm    'charm-immunity-exec     nil nil nil add-hook-hook "c" 0   #f  -1)
+(mk-effect 'ef_temporary_charm_immunity      "魅了への耐性"   s_im_charm    'charm-immunity-exec     nil nil nil add-hook-hook "c" 0   #f  60)
+(mk-effect 'ef_sleep_immunity                "睡眠への耐性"   s_im_sleep    'sleep-immunity-exec     nil nil nil add-hook-hook "s" 0   #f  -1)
+(mk-effect 'ef_temporary_sleep_immunity      "睡眠への耐性"   s_im_sleep    'sleep-immunity-exec     nil nil nil add-hook-hook "s" 0   #f  60)
 
 ;; Nil hooks
-(mk-effect 'ef_fire_immunity                   "Fire immunity"       s_im_fire  nil nil nil nil nil-hook "F" 0 #f  -1)
-(mk-effect 'ef_temporary_fire_immunity         "Fire immunity"       s_im_fire  nil nil nil nil nil-hook "F" 0 #f  15)
-(mk-effect 'ef_magical_kill_immunity           "Magic kill immunity" s_im_death nil nil nil nil nil-hook "K" 0 #f  -1)
-(mk-effect 'ef_temporary_magical_kill_immunity "Magic kill immunity" s_im_death nil nil nil nil nil-hook "K" 0 #f  15)
-(mk-effect 'ef_fatigue                         "Fatigue"             s_unrest   nil nil nil nil nil-hook "F" 0 #f  1)
-(mk-effect 'ef_unrest_curse                    "Curse of Unrest"     s_unrest   nil 'unrest-curse-apply 'unrest-curse-rm 'unrest-curse-apply nil-hook "P" 0 #f  (* 60 24))
+(mk-effect 'ef_fire_immunity                   "火への耐性"      s_im_fire  nil nil nil nil nil-hook "F" 0 #f  -1)
+(mk-effect 'ef_temporary_fire_immunity         "火への耐性"      s_im_fire  nil nil nil nil nil-hook "F" 0 #f  15)
+(mk-effect 'ef_magical_kill_immunity           "即死魔法への耐性" s_im_death nil nil nil nil nil-hook "K" 0 #f  -1)
+(mk-effect 'ef_temporary_magical_kill_immunity "即死魔法への耐性" s_im_death nil nil nil nil nil-hook "K" 0 #f  15)
+(mk-effect 'ef_fatigue                         "疲労"                s_unrest   nil nil nil nil nil-hook "F" 0 #f  1)
+(mk-effect 'ef_unrest_curse                    "不眠の呪い"          s_unrest   nil 'unrest-curse-apply 'unrest-curse-rm 'unrest-curse-apply nil-hook "P" 0 #f  (* 60 24))
 
 ;; Keystroke hooks
-(mk-effect 'ef_drunk    "Drunk"     s_drunk    'drunk-exec    'drunk-apply    'drunk-rm nil             keystroke-hook "A" 0 #t 60)
-(mk-effect 'ef_paralyze "Paralyzed" s_paralyse 'paralyze-exec 'paralyze-apply nil       'paralyze-apply start-of-turn-hook "Z" 0 #f 15)
-(mk-effect 'ef_ensnare  "Ensnared"  s_tangle   'ensnare-exec  'ensnare-apply  nil       'ensnare-apply  keystroke-hook "E" 0 #f 15)
-(mk-effect 'ef_stuck    "Stuck"     s_tangle   'stuck-exec    'stuck-apply    nil       'stuck-apply    keystroke-hook "E" 0 #f 15)
+(mk-effect 'ef_drunk    "酩酊"      s_drunk    'drunk-exec    'drunk-apply    'drunk-rm nil             keystroke-hook "A" 0 #t 60)
+(mk-effect 'ef_paralyze "麻痺"      s_paralyse 'paralyze-exec 'paralyze-apply nil       'paralyze-apply start-of-turn-hook "Z" 0 #f 15)
+(mk-effect 'ef_ensnare  "絡まり"    s_tangle   'ensnare-exec  'ensnare-apply  nil       'ensnare-apply  keystroke-hook "E" 0 #f 15)
+(mk-effect 'ef_stuck    "硬直"      s_tangle   'stuck-exec    'stuck-apply    nil       'stuck-apply    keystroke-hook "E" 0 #f 15)
 
 ;; On-damage hooks
-(mk-effect 'ef_split               "Split"          nil 'split-exec     nil nil nil             on-damage-hook ""  0 #f  -1)
-(mk-effect 'ef_grow_head           "XP from damage" nil 'grow-head-exec nil nil 'grow-head-exec on-damage-hook "H" 0 #f  -1)
-(mk-effect 'ef_temporary_grow_head "XP from damage" nil 'grow-head-exec nil nil 'grow-head-exec on-damage-hook "H" 0 #f  15)
+(mk-effect 'ef_split               "分裂"           nil 'split-exec     nil nil nil             on-damage-hook ""  0 #f  -1)
+(mk-effect 'ef_grow_head           "成長"           nil 'grow-head-exec nil nil 'grow-head-exec on-damage-hook "H" 0 #f  -1)
+(mk-effect 'ef_temporary_grow_head "成長"           nil 'grow-head-exec nil nil 'grow-head-exec on-damage-hook "H" 0 #f  15)
 
 
 ;; Ready-equip hooks
@@ -832,10 +832,10 @@
 (define (apply-poison obj)
   (if (obj-is-char? obj)
       (cond ((not (has-poison-immunity? obj))
-             (kern-log-msg (kern-obj-get-name obj) " poisoned!")
+             (kern-log-msg (kern-obj-get-name obj) "は毒に犯された！")
              (kern-obj-add-effect obj ef_poison nil))
             (else
-             (kern-log-msg (kern-obj-get-name obj) " immune to poison!"))))
+             (kern-log-msg (kern-obj-get-name obj) "は毒への耐性がある！"))))
   obj)
 
 ;; Used by species that are inherently immune:
@@ -858,13 +858,13 @@
   (if (obj-is-char? kchar)
       (let ((arms (kern-char-get-arms kchar)))
         (if (null? arms)
-            (kern-log-msg "Acid has no effect!")
+            (kern-log-msg "酸は効かなかった！")
             (let ((ktype (random-select arms)))
               (if (in-list? ktype arms-immune-to-acid)
-                  (kern-log-msg "Acid hits " (kern-type-get-name ktype) " but has no effect!")
+                  (kern-log-msg "酸は" (kern-type-get-name ktype) "に命中したが効かなかった！")
                   (begin
-                    (kern-log-msg "Acid dissolves 1 " (kern-type-get-name ktype) 
-                                  " held by " (kern-obj-get-name kchar))
+                    (kern-log-msg "酸は" (kern-obj-get-name kchar) 
+                                  "の持つ" (kern-type-get-name ktype) "を溶かした！")
                     (kern-char-unready kchar ktype)
                     (kern-obj-remove-from-inventory kchar ktype 1))))))))
 
@@ -879,7 +879,7 @@
 			(begin
 				(if (kern-obj-is-being? obj)
 					(begin
-					(kern-log-msg (kern-obj-get-name obj) " burned!")
+					(kern-log-msg (kern-obj-get-name obj) "は炎に包まれた！")
 					(kern-obj-apply-damage obj "burning" damage)
 					)
 			))
@@ -901,7 +901,7 @@
               		(not (kern-obj-is-being? kobj)))
        		  (not (and (obj-is-char? kobj) (kchar-in-vehicle? kobj)))
               (eqv? pclass-space (kern-terrain-get-pclass (kern-place-get-terrain (kern-obj-get-location kobj)))))
-         (kern-log-msg (kern-obj-get-name kobj) " drops into the abyss!")
+         (kern-log-msg (kern-obj-get-name kobj) "は地の底へと転落した！")
          (if (obj-is-char? kobj)
              (kern-char-kill kobj)
              (kern-obj-remove kobj)))))
@@ -921,7 +921,7 @@
                             (= 0 (cadr dir))))
                   (begin
                     (kern-obj-move obj (- (car dir)) (- (cadr dir)))
-                    (kern-log-msg "Slipped!")
+                    (kern-log-msg "滑った！")
                     (kern-obj-apply-damage obj "slipped" (kern-dice-roll "1d4")))))))))
 
 ;; TODO: multiply damage by kern-ticks-per-turn?
@@ -929,7 +929,7 @@
 (define (apply-lightning obj)
   (if (kern-obj-is-being? obj)
   		(begin
-      	(kern-log-msg (kern-obj-get-name obj) " shocked!")
+      	(kern-log-msg (kern-obj-get-name obj) "は感電した！")
   			(kern-obj-apply-damage obj "shocked" (kern-dice-roll "2d8")))
   	))
 
@@ -968,7 +968,7 @@
   (kern-obj-remove-effect ktarg ef_torchlight))
 
 (define (wind-trap ktarg)
-  (kern-log-msg "A gust of wind!")
+  (kern-log-msg "突風が吹いた！")
   (douse ktarg)
   #f ;; prevents removal of trigger
   )

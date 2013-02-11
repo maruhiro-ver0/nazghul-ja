@@ -1,8 +1,7 @@
 ;;----------------------------------------------------------------------------
-;; Slimy Cavern
+;; Ç´¶Ý¤ÎÆ¶·¢
 ;;
-;;  Wherein the player fights some slimes, some bandits, and optionally rescues
-;;  Roland.
+;;  ¤³¤³¤Ç¥×¥ì¥¤¥ä¡¼¤ÏÇ´¶Ý¡¢ÅðÂ±¤ÈÀï¤¦¡£¤½¤·¤Æ¥í¡¼¥é¥ó¥É¤òµß½Ð¤¹¤ë¡£
 ;;----------------------------------------------------------------------------
 
 (kern-load "slimy-cavern-zones.scm")
@@ -77,7 +76,7 @@
   
 
 (kern-mk-place 'p_slimy_cavern    ; tag
-               "Slimy Cavern"     ; name
+               "Ç´¶Ý¤ÎÆ¶·¢"       ; name
                nil                ; sprite
                m_slimy_cavern     ; map
                #f                 ; wraps

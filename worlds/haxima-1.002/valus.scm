@@ -1,15 +1,14 @@
 ;;----------------------------------------------------------------------------
-;; Valus
+;; ヴァルス
 ;;
-;; Initially a prisoner of Glasdrin, he becomes the new Steward after the
-;; trial.
+;; 最初はグラスドリンの囚人だが、後に新しい統治者となる。
 ;;----------------------------------------------------------------------------
 
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; Initially, in a prison cell in the dungeons below Glasdrin.
-;; After the trial of the Stewardess, Valus is assigned Jeffries schedule.
+;; 最初はグラスドリンの地下の独房にいる。
+;; 統治者となった後は、ヴァルスはジェフリーズのスケジュールに従う。
 ;;----------------------------------------------------------------------------
 
 ;;----------------------------------------------------------------------------
@@ -20,99 +19,99 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Valus is an imprisoned nobleman, once in the service of the late 
-;; Steward of Glasdrin, now languishing in the dungeons below Glasdrin.
-;; 
+;; ヴァルスは投獄された貴族で、後にグラスドリンの統治者になるが、今は地下の監
+;; 獄で落胆している。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (valus-hail knpc kpc)
-  (say knpc "Welcome, stranger.")
+  (say knpc "ようこそ、見知らぬ者よ。")
   )
 
 (define (valus-name knpc kpc)
   (if (player-stewardess-trial-done?)
-      (say knpc "I am Valus, Steward of Glasdrin.")
-      (say knpc "I am Valus, lord of all I survey [he gestures around the cell].")
+      (say knpc "私はヴァルス、グラスドリンの統治者だ。")
+      (say knpc "私はヴァルス、見渡す限りのこの世界の王だ。［彼は身振りで独房を示した。］")
   ))
 
 (define (valus-job knpc kpc)
   (cond ((player-stewardess-trial-done?)
-         (say knpc "The people of Glasdrin released me from prison, thanks to the evidence in that diary you found. "
-              "It seems I am in your debt.")
+         (say knpc "グラスドリンの人々が私を牢から解放してくれた。証拠となったあの日記を見つけてくれたことに感謝する。"
+              "君は私の恩人だ。")
          (prompt-for-key)
-         (say knpc "After I was released they elected me their new Steward.")
+         (say knpc "その後、私は新しい統治者に選ばれた。")
          )
         (else
-         (say knpc "I'm just enjoying my retirement.")
+         (say knpc "退役後の人生を楽しんでいる。")
          )))
 
-(define (valus-join kpc kpc)
-  (cond ((player-stewardess-trial-done?) (say knpc "My duties keep me here."))
-        (else (say knpc "On the contrary, why don't you open the door and join me?"))
-        ))
+(define (valus-join knpc kpc)
+  (if (player-stewardess-trial-done?)
+         (say knpc "ここを守るのが私の義務だ。")
+         (say knpc "逆に尋ねるが、なぜ扉を開け仲間に加えぬのだ？")
+         ))
 
 ;; Special
 (define (valus-comm knpc kpc)
   (if (player-stewardess-trial-done?)
-         (say knpc "Janice will make a fine commander. I remember when she was just a squad leader.")
-         (say knpc "Jeffries is the new Commander. He makes a good pet for the Stewardess. I wasn't such a good dog, myself.")
+         (say knpc "ジャニスはよい司令官になるだろう。彼女が単なる分隊長だったころからそう信じている。")
+         (say knpc "ジェフリーズが新しい司令官だ。彼は統治者のよき犬である。わたしはそうなれなかった。")
          ))
 
 (define (valus-pet knpc kpc)
-  (say knpc "After Absalot, she blamed me for the deaths of civilians, "
-       "and accused me of drunkenness and unnatural acts with trolls.")
-  (aside 'ch_ini "I thought the part about the trolls was true.")
+  (say knpc "アブサロットの後、彼女は私に市民の死の責任を負わせた。"
+       "そして、大酒とトロルとの不適切な行為について私を非難した。")
+  (aside kpc 'ch_ini "トロルの部分は本当だったと思うが。")
   )
 
 (define (valus-trol knpc kpc)
-  (say knpc "What can I say? Those trolls know how to party. [He smiles dryly]")
+  (say knpc "何といえばよかったのだろうか？あのトロルたちはお楽しみを知っていたのだ。［彼は冷ややかに笑った。］")
   (prompt-for-key)
-  (say knpc "But seriously, she had me imprisoned for asking too many questions. "
-       "The former Steward went insane under mysterious circumstances. "
-       "For some reason she didn't like me poking into the matter.")
+  (say knpc "しかし、冗談はさておき、彼女は私を投獄し数多くの尋問を行った。"
+       "前任の統治者は奇妙な状況の中でおかしくなった。"
+       "理由はわからないが、彼女は私がその問題に干渉することを嫌っていた。")
   )
 
 (define (valus-absa knpc kpc)
-  (say knpc "War is hell, friend. All of this nonsense about the Accursed aside, "
-       "the mages of Absalot were growing too powerful. "
-       "Every commander knows the legend of Isin.")
+  (say knpc "友よ、戦争は地獄だ。呪われた者に関するたわごとはともかく、"
+       "アブサロットの魔術師たちはあまりにも強力になっていた。"
+       "司令官は皆イシンの言い伝えを知っている。")
   )
 
 (define (valus-isin knpc kpc)
-  (say knpc "According to legend, the sorceress Isin almost single-handedly defeated two armies. "
-       "The army of Tulemane was so utterly vanquished that their city has been forgotten. ")
+  (say knpc "言い伝えでは、そのイシンの女魔術師はほぼ一人で二つの軍を打ち負かしたそうだ。"
+       "トゥーレマンの軍は完全に征服され、彼らの町は忘れられた。")
   (prompt-for-key)
-  (say knpc "Glasdrin's army finally overcame her, but with such heavy losses that it had to abandon its objective. "
-       "We have never forgotten the lesson.")
+  (say knpc "グラスドリンの軍は最後には彼女に勝利した。だが、損失の重大さのため、その目的を破棄せざるをえなかった。"
+       "我々は教訓を忘れてはならない。")
   )
 
 (define (valus-less knpc kpc)
-  (say knpc "The lesson of the Battle of Isin is to never let wizards get too powerful. "
-       "And if they do, don't try to face them in open combat. "
-       "You know, I've always wondered why that battle took place.")
+  (say knpc "イシンとの戦いから得た教訓は、魔術師たちに力を与えすぎてはならないということだ。"
+       "そして、もしそうなっても正面から戦いを挑んではならない。"
+       "なぜあの場所で戦わなければならなかったのか、私は常に疑問に思っている。")
   )
 
 ;; new....
 (define (valus-stew knpc kpc)
   (if (player-stewardess-trial-done?)
-      (say knpc "Now that I am steward there will be some changes around here.")
-      (say knpc "That mad-woman's policies will be the ruin of Glasdrin.")
+      (say knpc "私が統治者となった今、この周辺も変わるだろう。")
+      (say knpc "あの狂った女の統治でグラスドリンは崩壊するだろう。")
       ))
 
 (define (valus-poli knpc kpc)
-  (say knpc "The goal of the Stewardess is to increase her own power at the expense of all else. ")
+  (say knpc "統治者の目的は他の全てを犠牲にしてでも自身の権力を増すことだ。")
   )
 
 (define (valus-chan knpc kpc)
-  (say knpc "My first concern is the security, stability and dominance of Glasdrin.")
+  (say knpc "私の一番の関心事は安全、安定、そしてグラスドリンによる支配だ。")
   )
 
 (define (valus-domi knpc kpc)
-  (if (ask? knpc kpc "The only way a city or state can ensure its own security is to dominate others, don't you agree?")
-      (say knpc "Yes, all wise statesmen know this, and strive to make their own state the strongest.")
-      (say knpc "If we permit other states to surpass us in strength, then they will dominate us. "
-           "As Steward, I am responsible for taking action to prevent that.")
+  (if (ask? knpc kpc "町や国が自らの安全を保障する唯一の道は、他を支配することである。君は同意するか？")
+      (say knpc "そうだ。優れた指導者なら誰でも知っている。そして自らの国を最も強力なものにするため戦うのだ。")
+      (say knpc "もし他の町が我々より強力になれば我々は支配されるだろう。"
+           "統治者として、私にはそれを阻止するため行動する責任があるのだ。")
       ))
 
 (define valus-conv
@@ -122,6 +121,7 @@
        (method 'hail valus-hail)
        (method 'job  valus-job)
        (method 'name valus-name)
+       (method 'valu valus-name)
        (method 'join valus-join)
 
        (method 'absa valus-absa)
@@ -136,7 +136,7 @@
        (method 'less valus-less)
        (method 'pet  valus-pet)
        (method 'poli valus-poli)
-       (method 'reti (lambda (knpc kpc) (say knpc "Formerly, I was the Commander of Glasdrin.")))
+       (method 'reti (lambda (knpc kpc) (say knpc "かつて私はグラスドリンの司令官だった。")))
        (method 'ruin valus-poli)
        (method 'secu valus-domi)
        (method 'stab valus-domi)
@@ -148,7 +148,7 @@
 (define (mk-valus)
   (bind 
    (kern-mk-char 'ch_valus       ; tag
-                 "Valus"          ; name
+                 "ヴァルス"          ; name
                  sp_human            ; species
                  oc_warrior          ; occ
                  s_fallen_paladin ; sprite

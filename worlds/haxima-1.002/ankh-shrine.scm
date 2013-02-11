@@ -34,7 +34,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place
  'p_ankh_shrine     ; tag
- "Ankh Shrine"      ; name
+ "失件弁及儈情"     ; name
  s_shrine      ; sprite
  m_ankh_shrine      ; map
  #f              ; wraps
@@ -86,7 +86,7 @@
 
 (kern-mk-place 
  'p_demon_gate  ; tag
- "Demon Gate"   ; name
+ "鬼呺及杹"   ; name
  nil     ; sprite
  m_demon_gate  ; map
  #f               ; wraps

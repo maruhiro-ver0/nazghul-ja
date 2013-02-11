@@ -1,6 +1,6 @@
-;; Aka, reagent cave -- generate rare reagents here
+;; ÊÌÌ¾: ÈëÌô¤ÎÆ¶·¢ - ÄÁ¤·¤¤ÈëÌô¤¬¼«À¸¤·¤Æ¤¤¤ë
 (mk-dungeon-room
- 'p_dank_cave "Dank Cave"
+ 'p_dank_cave "°Å¤¤Æ¶·¢"
 	(list
 		"rn rn rn rn rn rn rn rn r8 r8 r8 rn rn rn rn rn rn rn rn "
 		"rn rn rn rn r8 rn rn r4 .. .. .. r2 rn rn r8 rn rn rn rn "

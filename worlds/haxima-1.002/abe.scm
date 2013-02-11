@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Green Tower
+;; 緑の塔
 ;;----------------------------------------------------------------------------
 (define abe-bed gt-abe-bed)
 (define abe-mealplace gt-ws-tbl2)
@@ -35,162 +35,162 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Abe is a scholar who knows much of the runes.
-;; He fled from Absalot with the Alchemist, and now lives in Green Tower.
+;; エイブは石版のことをよく知る学者である。
+;; 彼は錬金術師とともにアブサロットから逃れ、今は緑の塔に住んでいる。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (abe-hail knpc kpc)
-  (kern-print "You meet a young, bookish-looking fellow.\n")
+  (kern-print "あなたは若い学者風の男と会った。\n")
   (if (abe-met? (gob knpc))
-      (say knpc "Hello again.")
+      (say knpc "また会いましたね。")
       (begin
         (abe-met! (gob knpc))
-        (say knpc "Hello. Say, aren't you a Wanderer?")
+        (say knpc "こんにちは。あの、もしかして迷い人？")
         (if (yes? kpc)
-            (say knpc "I am most honored! I can't believe my good fortune. "
-                 "I have so many questions for you. When you get the time. "
-                 "If you don't mind.")
-            (say knpc "Oh, of course not. Sorry. I just thought... never mind.")))))
+            (say knpc "あえて光栄です！自分の幸運が信じられない！"
+                 "たくさん聞きたいことがあるんです。"
+                 "もしよかったら時間があるときに聞かせてください。")
+            (say knpc "ああ、それはそうだ。すみません。つい…気にしないでください。")))))
 
 (define (abe-default knpc kpc)
-  (say knpc "I'll look that up in the archives when I get a chance."))
+  (say knpc "機会があったら調べておきます。"))
 
 (define (abe-name knpc kpc)
-  (say knpc "Oh. Yes. I'm Abe."))
+  (say knpc "ああ、そう、僕はエイブ。"))
 
 (define (abe-join knpc kpc)
-  (say knpc "Oh, no, I couldn't possibly... I'm not really that sort of person."))
+  (say knpc "あ、いや、それはできません…僕はそういう人ではないので。"))
 
 (define (abe-job knpc kpc)
-  (say knpc "I'm a scholar. I'm studying the ruins here in Green Tower. Have you examined them?")
+  (say knpc "僕は学者です。緑の塔にある遺跡を調べています。もう見ましたか？")
   (if (no? kpc)
-      (say knpc "They're in the southwest corner of town. Fascinating.")
+      (say knpc "遺跡は町の南西にあります。興味深いものです。")
       (begin
-        (say knpc "Did you know there are more below the surface?")
+        (say knpc "地下にはもっとあることを知っていますか？")
         (yes? kpc)
-        (say knpc "Yes, just like Absalot!"))))
+        (say knpc "そう、アブサロットのように！"))))
 
 (define (abe-absa knpc kpc)
-  (say knpc "Not many know that beneath Absalot is an older city. "
-       "The ruins beneath Absalot are very similar to the ruins here in Green Tower. "
-       "I am certain they were built by the same civilization!"))
+  (say knpc "多くの人はアブサロットの下に古い町があることを知りません。"
+       "アブサロットの地下の遺跡は、この緑の塔の遺跡ととてもよく似ています。"
+       "僕は同じ文明の人々が建てたに違いないと確信しています！"))
 
 (define (abe-rune knpc kpc)
   (if (any-in-inventory? kpc rune-types)
       (begin
-	 (say knpc "\n[He whistles softly]\n"
-	     "You have some of the Eight Keys to the Demon Gate?\n"
-	     "I shall examine them for you!")
+	 (say knpc "［彼は静かにささやいた。］"
+	     "悪魔の門の八つの鍵を持っているのですか？"
+	     "調べさせてください！")
 		(quest-data-update 'questentry-runeinfo 'abe 1)
 	 (quest-data-update-with 'questentry-runeinfo 'keys 1 (quest-notify (grant-party-xp-fn 20)))
 	(if (any-in-inventory? kpc (list t_rune_k))
-	    (say knpc "[He examines a rune] This is the Rune of Knowledge!")
+	    (say knpc "［彼は石版を調べた。］これは知識の石版です！")
 	    )
 	(if (any-in-inventory? kpc (list t_rune_p))
-	    (say knpc "[He examines a rune] This is the Rune of Power!")
+	    (say knpc "［彼は石版を調べた。］これは力の石版です！")
 	    )
 	(if (any-in-inventory? kpc (list t_rune_s))
-	    (say knpc "[He examines a rune] This is the Rune of Skill!")
+	    (say knpc "［彼は石版を調べた。］これは技能の石版です！")
 	    )
 	(if (any-in-inventory? kpc (list t_rune_c))
-	    (say knpc "[He examines a rune] This is the Rune of Curiousity!")
+	    (say knpc "［彼は石版を調べた。］これは思慮の石版です！")
 	    )
 	(if (any-in-inventory? kpc (list t_rune_f))
-	    (say knpc "[He examines a rune] This is the Rune of Freedom!")
+	    (say knpc "［彼は石版を調べた。］これは自由の石版です！")
 	    )
 	(if (any-in-inventory? kpc (list t_rune_w))
-	    (say knpc "[He examines a rune] This is the Rune of Wisdom!")
+	    (say knpc "［彼は石版を調べた。］これは理性の石版です！")
 	    )
 	(if (any-in-inventory? kpc (list t_rune_d))
-	    (say knpc "[He examines a rune] This is the Rune of Discretion!")
+	    (say knpc "［彼は石版を調べた。］これは分別の石版です！")
 	    )
 	(if (any-in-inventory? kpc (list t_rune_l))
-	    (say knpc "[He examines a rune] This is the Rune of Leadership!")
+	    (say knpc "［彼は石版を調べた。］これは統制の石版です！")
 	    )
 	(if (has-all-runes? kpc) 
-	    (say knpc "This is incredible!\n"
-		 "You have all of the Eight Keys to the Demon Gate!!!\n"
-		 "What do you intend to do with them?")
+	    (say knpc "信じられない！"
+	         "八つの悪魔の門の鍵が全て揃っています！"
+	         "これを一体どうするつもりですか？")
 	    )
 	)
-      (say knpc "There are many runes. Perhaps if you brought me an example...?")))
+      (say knpc "たくさんの石版があるそうです。実際に見ることができれば…。")))
 
 (define (abe-demo knpc kpc)
-  (say knpc "The Demon Gate was sealed shut by the Wise long ago. "
-       "Its location was blotted from all records, but legend puts it somewhere to the north. ")
+  (say knpc "悪魔の門は遠い昔、賢者によって封印されました。"
+       "その場所はあらゆる記録から消されました。しかし、言い伝えではどこか北のほうにあるそうです。")
 		(quest-data-update 'questentry-runeinfo 'abe 1)
 	     (quest-data-update 'questentry-runeinfo 'keys 1)
   		(quest-data-update-with 'questentry-runeinfo 'gate 1 (quest-notify (grant-party-xp-fn 30)))
        )
 
 (define (abe-keys knpc kpc)
-  (say knpc "Yes, the Demon Gate was locked with eight locks and the keys separated. "
-       "Each takes the form of a powerful rune. "
-       "They've been lost or hidden since then."))
+  (say knpc "はい。悪魔の門は封印され、鍵は八つに分けられました。"
+       "それぞれが力を秘めた石版です。"
+       "その後それらは失われたか、隠されました。"))
        
 (define (abe-eigh knpc kpc)
-	(say knpc "Legend says that there are eight runes in all, are you seeking the others?")
+	(say knpc "言い伝えでは石版は八つあるそうです。他の石版も探しているのですか？")
 	(if (yes? kpc)
-		(say knpc "The old stories speak of some, such as King Clovis' charm, or the void temple.")
-		(say knpc "Just idle curiosity? Believe me, I understand.")))
+		(say knpc "古い話では、クロービス王の護符であっただとか、虚空の寺院にあるなどと言われています。")
+		(say knpc "好奇心はないのですか？信じてください。私は知っています。")))
 
 (define (abe-clov knpc kpc)
-     (say knpc "There's a legend that King Clovis carried one as a charm. "
-           "He fell in battle during the goblin wars, but it was never found on his body. "
-           "Perhaps someone (perhaps a ^c+mgoblin^c-!) looted his corpse and took it.")
+     (say knpc "伝説ではクロービス王が護符として持っていたそうです。"
+           "彼はゴブリンとの戦争で命を落としました。しかし、その亡骸からは見つかりませんでした。"
+           "誰かが(もしかすると^c+mゴブリンが^c-！)奪ったのかもしれません。")
            (quest-data-assign-once 'questentry-rune-f)
            )
            
 (define (abe-temp knpc kpc)
-	(say knpc "Northwest of Oparine, there is a temple floating in the void. No one can reach it,"
-			" but legends say that a rune was sealed up there by the ancients.")
+	(say knpc "オパーリンの北西でその寺院は虚空の中に浮かんでいます。誰もたどり着くことができませんが、"
+			"伝説ではずっと昔、石版が封印されたとされています。")
 			(quest-data-assign-once 'questentry-rune-d)
 			)
       
 (define (abe-void knpc kpc)
-  (say knpc "The Shard, the moons and the stars all habitate a great void. "
-       "The ancients could sail across the void in ships, the way we sail across a sea!")
+  (say knpc "このシャルド、月、星々は全て広大な虚空の中にあるのです。"
+       "かつて虚空を航行する船があり、海を渡るように虚空を渡ったそうです！")
        (quest-data-update 'questentry-whereami 'shard 2)
        )
 
 (define (abe-ship knpc kpc)
-  (say knpc "I know of the void ships, but not how they worked. "
-       "Even the Master Wrights have lost the technique for making them."
+  (say knpc "虚空船のことは聞いたことがあります。しかし、詳しいことはわかりません。"
+       "職人の頂点ならその失われた造り方がわかるかもしれません。")
        (quest-data-update 'questentry-whereami 'shard 2)
-       ))
+       )
 
 (define (abe-wrig knpc kpc)
-  (say knpc "Wrights specialize in the making of things. "
-       "The Engineer is the greatest living Wright."))
+  (say knpc "職人は物を作ることに長けた者たちです。"
+       "技師は今日で最も偉大な職人です。"))
 
 (define (abe-quee knpc kpc)
-  (say knpc "I'm not sure what you're insinuating."))
+  (say knpc "何のことかよくわかりません。"))
 
 (define (abe-civi knpc kpc)
-  (say knpc "I don't know much about the civilization that built the ruins, but clues indicate it was quite wicked by our standards! Do you know what I mean?")
+  (say knpc "この遺跡を建てた文明のことはよくわかりません。でもその手がかりは、それが私たちの基準で見てとても醜いことにあります。何を意味するかわかりますか？")
   (if (yes? kpc)
-      (say knpc "Then I won't mention it!")
-      (say knpc "Human sacrifice, cannibalism, demon worship. Accursed practices!")))
+      (say knpc "ならば言わないでおきましょう！")
+      (say knpc "人の生贄、人肉食い、悪しき者への崇拝。呪われた者の習慣です！")))
 
 (define (abe-accu knpc kpc)
-  (say knpc "Yes, the Accursed have a long history. They may be a convenient political bogeyman, "
-       "but there is enough evidence to suggest they do, or did, exist."))
+  (say knpc "はい。呪われた者には長い歴史があります。彼らは便利な政治的な悪役かもしれません。"
+       "しかし、彼らが行いや行ったこと、あるいは存在の証拠は十分にあります。"))
 
 (define (abe-bye knpc kpc)
-  (say knpc "Let me know if you find any more ruins!"))
+  (say knpc "遺跡について何かわかったら教えてください！"))
 
 (define (abe-alch knpc kpc)
-  (say knpc "Ah, how is the secretive old rascal? I haven't seen him since we were neighbors."))
+  (say knpc "ああ、あの古ダヌキですか？隣人同士でしたが最近は会っていません。"))
 
 (define (abe-neig knpc kpc)
-  (say knpc "In Absalot. Before we had to flee."))
+  (say knpc "アブサロットで。逃げる前はそこにいました。"))
 
 (define (abe-flee knpc kpc)
-  (say knpc "[He sighs] It's a long story. Ask around. It doesn't matter anymore."))
+  (say knpc "［ため息］話すと長くなります。周りの人に聞いてみてください。もうどうでもいいことです。"))
 
 (define (abe-gobl knpc kpc)
-  (say knpc "Ask Deric or Gen about goblins, they have a lot of experience with them."))
+  (say knpc "デリック隊長かジェンに聞いてみてください。彼らは多くのことを知っています。"))
 
 (define abe-conv
   (ifc green-tower-conv
@@ -228,6 +228,7 @@
        (method 'alch abe-alch)
        (method 'neig abe-neig)
        (method 'flee abe-flee)
+       (method 'esca abe-flee)
        (method 'gobl abe-gobl)
        ))
 
@@ -235,7 +236,7 @@
   (bind 
    (kern-mk-char 
     'ch_abe           ; tag
-    "Abe"             ; name
+    "エイブ"          ; name
     abe-species         ; species
     abe-occ              ; occ
     s_companion_wizard ; sprite

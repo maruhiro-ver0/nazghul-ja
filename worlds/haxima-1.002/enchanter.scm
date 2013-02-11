@@ -6,11 +6,10 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;;
-;; The schedule below is for the place "Enchanter's Tower Ground Floor"
+;; 魔道師の塔の1階
 ;; 
-;; (The fact that he never visits the second floor of his own tower
-;; should serve as an incentive for us to eventually get multi-place
-;; schedules working  :-)
+;; (彼は自分の塔の2階を訪れることはないが、それは私たちに複数の場所のスケジュ
+;; ールをいずれは作らなければならないと思わせる動機付けになっている :-)
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_enchanter
                (list 0  0  enchtwr-ench-bed        "sleeping")
@@ -43,44 +42,41 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;;
-;; The Enchanter is a powerful Mage, and one of the Wise.
-;; He lives in the Enchanter's Tower.
-;; He plays an important role in multiple stages of the main quest.
+;; 魔道師は力のある魔術師で、賢者の一人である。
+;; 彼は魔道師の塔に住んでいる。
+;; 彼は主要な冒険の多くで重要な役割を演じる。
 ;;----------------------------------------------------------------------------
 (define (ench-hail knpc kpc)
   (let ((ench (gob knpc)))
 
     ;; Fourth Quest -- open the demon gate
     (define (check-fourth-quest)
-      (say knpc "Have you found the location of the Demon Gate?")
+      (say knpc "悪魔の門の場所はわかったか？")
       (if (yes? kpc)
           (begin
-            (say knpc "And have you found the locks which the Rune-keys will open?")
+            (say knpc "ならば石版の鍵で開ける錠は見つかったか？")
             (if (yes? kpc)
-                (say knpc "So you are just fooling around, wasting time. I see.")
-                (say knpc "I would expect them to appear as altars in a shrine. "
-                     "The shrine may be hidden, perhaps revealing itself with a "
-                     "password. Find and search the Accursed, "
-                     "they must have had a clue.")))
-          (say knpc "Search well the library at Absalot.")))
+                (say knpc "なのにこのあたりをうろついて時間を無駄にしているのか。")
+                (say knpc "それは恐らく寺院の祭壇のようなものであろう。"
+                     "寺院は隠され、もしかすると暗号で姿を現すかもしれない。"
+                     "呪われた者を探し調べよ。彼らは手がかりを知っているに違いない。")))
+          (say knpc "アブサロットの図書館をよく探すのだ。")))
 
     ;; Third Quest -- find all the Runes
     (define (finish-third-quest)
-      (say knpc "You have found all the Runes! "
-           "Well, it couldn't have been all that hard. ")
+      (say knpc "石版を全て見つけたのだな！"
+           "うむ、この上なく困難だったであろう。")
       (prompt-for-key)
-      (say knpc "I have one last task for you. "
-           "You must find the Demon Gate and re-open it. "
-           "Do you know where to find it?")
+      (say knpc "最後の任務だ。"
+           "悪魔の門を探し出し、それを再び開かねばならない。"
+           "場所はわかっているか？")
       (if (yes? kpc)
-          (say knpc
-               "I don't know what you will face, "
-               "so prepare yourself well, "
-               "and take anyone foolish enough to join you. "
-               )
-          (say knpc "The Accursed must have some idea, "
-               "and the library of Absalot may yet hold some clue. "
-               "Search well.")
+          (say knpc "汝が何と直面するかはわからぬ。"
+               "自身でよく備えよ。"
+               "そして汝の仲間になるほどの愚か者を連れてゆけ。")
+          (say knpc "呪われた者が何か知っていたに違いない。"
+               "アブサロットの図書館にはまだ手がかりが残っているかも知れぬ。"
+               "よく調べるのだ。")
           )
       (quest-done! (ench-quest ench 3) #t)
       (kern-char-add-experience kpc 100)
@@ -94,31 +90,35 @@
                                    (not (eqv? ktype t_rune_s)))
                                  rune-types)))
 	(cond			 
-		((missing-only-s-rune?)
-			(say knpc "You appear to have found most of the Runes now.")
+		((has-all-runes? kpc)
+		(finish-third-quest)
+		)
+		
+		((missing-only-s-rune? kpc)
+		(say knpc "ほとんどの石版を見つけたようだな。")
 		(prompt-for-key)
-		(say knpc "Hmmm.")
+		(say knpc "うむ…。")
 		(prompt-for-key)
-		(say knpc "I hesitated to raise this before, but it may be within your abilities after all.")
+		(say knpc "このことを言うのは躊躇していた。だが、汝の能力ならできるであろう。")
 		(prompt-for-key)
-		(say knpc "We know that the Accursed also seek the runes. We should consider ourselves fortunate if only one has fallen into their clutches.")
+		(say knpc "呪われた者たちもまた石版を探している。彼らの手の中にはたった一つしかないことを幸運に思わねばなるまい。")
 		(prompt-for-key)
-		(say knpc "You will need to seek it in the very lair of our enemies: the ruins of Absalot.")
+		(say knpc "我らの敵の中心地、アブサロットの廃墟を調べねばならぬであろう。")
 		(quest-data-assign-once 'questentry-rune-s)
 		)
 		
-		((has-all-runes? kpc)
-          (finish-third-quest)
-          (say knpc "Return when you have found all the Runes. "
-               "Consult with the other Wise, they may have clues about where to find the Runes.")
-	       ))
-	       )
+		(else
+		(say knpc "全ての石版を見つけたら戻って来たまえ。"
+		     "他の賢者に助言を求めよ。彼らは石版の場所の手がかりを持っているかも知れぬ。")
+		)
+	)
+    )
 
     ;; Second Quest -- find out what the Runes are for
     (define (second-quest-spurned)
-      (say knpc "It is the duty of all good men to stand up to evil. I "
-           "don't have time for sluggards or cynics. Now give me my rune, "
-           "take your reward and get out!")
+      (say knpc "これは悪と立ち向かう善なる者の義務である。"
+           "怠惰と冷笑に費やす時間はない。私の石版を渡しなさい。"
+           "報酬を受け取ったら出て行きたまえ！")
       (kern-obj-remove-from-inventory kpc t_rune_k 1)
       (kern-obj-add-to-inventory knpc t_rune_k 1)
       (quest-accepted! (ench-second-quest ench) #f)
@@ -126,13 +126,13 @@
 
     (define (start-second-quest)
       (quest-accepted! (ench-second-quest ench) #t)
-      (say knpc "Good! First, keep my rune, and guard it well. ")
+      (say knpc "よろしい！第一に私の石版を持ち、そして守るのだ。")
       (quest-data-update 'questentry-rune-k 'entrusted-with-rune 1)
       (prompt-for-key)
-      (say knpc "Second, find the other Wise and ask them of the RUNE. "
-           "You might start with the Alchemist near Oparine. "
-           "Although obscenely greedy, "
-           "he has devoted his life to the acquisition of secrets.")
+      (say knpc "第二に、他の賢者たちと会い、石版について尋ねるのだ。"
+           "オパーリンにいる錬金術師から始めるのがよいだろう。"
+           "真に貪欲な者だが、"
+           "謎を解き明かすことに人生を費やしている。")
       (quest-data-assign-once 'questentry-runeinfo)
       (quest-wise-subinit 'questentry-alchemist)
       (quest-wise-init)
@@ -140,28 +140,28 @@
       )
 
     (define (offer-second-quest-again)
-      (say knpc "You're back. Perhaps you've had an attack of conscience. "
-           "It happens to the worst of us. "
-           "Now, are you ready to help me thwart the Accursed?")
+      (say knpc "戻ってきたな。良心の呵責を感じたのかもしれぬな。"
+           "それは我々にとって最も悪いことだ。"
+           "さて、呪われた者から私を助ける準備はできたか？")
       (if (kern-conv-get-yes-no? kpc)
           (begin
             (kern-obj-remove-from-inventory knpc t_rune_k 1)
             (kern-obj-add-to-inventory kpc t_rune_k 1)
             (start-second-quest))
           (begin
-            (say knpc "Like a pig to the trough, "
-                 "a fool returns to his own folly. "
-                 "Go back to filling your belly!")
+            (say knpc "まるで餌に向かう豚のようだ。"
+                 "愚者は自らの愚かさに帰る。"
+                 "自らの欲を満たしに帰るがよい！")
             (kern-conv-end)))
       )
     
     (define (finish-second-quest)
-      (say knpc "[He looks very grave] "
-           "So my Rune is one of eight keys to the Demon Gate. "
-           "Very well, you must find the rest. "
-           "The Accursed have a head start on us. "
-           "No doubt they already have some of the Runes. "
-           "When you have found all the Runes return to me.")
+      (say knpc "［彼は重々しい様子だ。］"
+           "つまり私の石版は悪魔の門を封印する八つの鍵の一つなのだな。"
+           "よろしい。汝は残りを探さねばならぬ。"
+           "呪われた者は我々の先を行っている。"
+           "いくつかの石版を手に入れているのは疑いの余地もない。"
+           "全ての石版を見つけたら、私の元に戻ってきて欲しい。")
       (quest-done! (ench-second-quest ench) #t)
       (quest-data-update 'questentry-runeinfo 'abe 1)
       (quest-data-update 'questentry-runeinfo 'keys 1)
@@ -185,32 +185,32 @@
       )
 
     (define (check-second-quest)
-      (say knpc "Have you learned what the Rune is for?")
+      (say knpc "石版のことはわかったかね？")
       (if (yes? kpc)
           (begin
-            (say knpc "Well, what?")
-            (let ((reply (kern-conv-get-reply kpc)))
-              (if (or (equal? reply 'demo) (equal? reply 'gate) (equal? reply 'key))
+            (say knpc "うむ、それは何か？")
+            (let ((reply (kern-conv-get-string kpc)))
+              (if (or (string=? reply "demon") (string=? reply "gate") (string=? reply "key") (string=? reply "アクマ") (string=? reply "モン") (string=? reply "カギ"))
                   (finish-second-quest)
                   (begin
-                    (say knpc "I don't think so. Have you asked all of the Wise about the ^c+mrune^c-?")
+                    (say knpc "私はそうは思わぬ。全ての賢者に^c+m石版^c-について尋ねたか？")
                     (if (yes? kpc)
-                        (say knpc "Surely one of them must have given you some clue!")
-                        (say knpc "Seek them all."))))))
-          (say knpc "Ask all the Wise about the ^c+mrune^c-.")))
+                        (say knpc "ならばそのうちの一人が手がかりを与えたはずだ！")
+                        (say knpc "彼ら全てを探すのだ。"))))))
+          (say knpc "全ての賢者に^c+m石版^c-のことを尋ねるのだ。")))
 
     ;; First Quest -- find the stolen Rune
     (define (finish-first-quest)
-      (say knpc "Ah, I see you've found my Rune at last!")
+      (say knpc "おお、ついに私の石版を見つけたようだな！")
       (kern-obj-add-gold kpc 200)
 		(quest-data-update-with 'questentry-thiefrune 'done 1 (grant-party-xp-fn 20))
 		(quest-data-complete 'questentry-thiefrune)
-      (say knpc "Perhaps your are not completely useless. "
-           "Did you encounter any... resistance?")      
+      (say knpc "少しは役に立つようだな。"
+           "何かの……抵抗に会ったかな？")
       (kern-conv-get-yes-no? kpc)
-      (say knpc "The Accursed were behind this theft. "
-           "We must find out what the Rune is for. "
-           "Will you help?")
+      (say knpc "泥棒の後ろには呪われた者がいる。"
+           "この石版が何なのか調べねばならぬ。"
+           "手を貸してくれるか？")
       (quest-offered! (ench-second-quest ench) #t)
       (if (kern-conv-get-yes-no? kpc)
           (start-second-quest)
@@ -219,14 +219,14 @@
     (define (check-first-quest)
       (if (in-inventory? kpc t_rune_k)
           (finish-first-quest)
-          (say knpc "Hmph. I see you still haven't found my item yet!"
-               " [He mutters something about Wanderers and Rogues]")
+          (say knpc "むむ。まだものを見つけておらぬようだな！"
+               "［彼は迷い人と仲間を見て不満げにつぶやいた。］")
             ))
     
     ;; Main
     (if (ench-met? ench)
         (if (quest-done? (ench-quest ench 4))
-            (say knpc "Welcome, friend of the Wise")
+            (say knpc "ようこそ。賢者の友よ。")
             (if (quest-accepted? (ench-quest ench 4))
                 (check-fourth-quest)
                 (if (quest-accepted? (ench-quest ench 3))
@@ -237,65 +237,65 @@
                             (offer-second-quest-again))
                         (if (quest-accepted? (ench-first-quest ench))
                             (check-first-quest)
-                            (say knpc "Yes, what is it this time?"))))))
+                            (say knpc "うむ。今度は何か？"))))))
         (begin
           (quest-data-update-with 'questentry-calltoarms 'talked 1 (quest-notify (grant-xp-fn 10)))
-          (kern-log-msg "This ageless mage looks unsurprised to see you.")
-          (say knpc "I was wondering when you would get here. "
-               "It took you long enough!")
+          (kern-log-msg "この年老いることがないかのような魔術師は、あなたを見ても驚かなかった。")
+          (say knpc "よくぞ参られた。"
+               "待っておったぞ！")
           (ench-met! ench #t)))))
 
 (define (ench-name knpc kpc)
-  (say knpc "I am known as the Enchanter."))
+  (say knpc "魔道師として知られている。"))
 
 (define (ench-job knpc kpc)
-  (say knpc "I help as I can in the struggle against evil."))
+  (say knpc "可能な限り悪と戦うことを手助けすることである。"))
 
 (define (ench-default knpc kpc)
-  (say knpc "I cannot help you with that"))
+  (say knpc "それは助けられぬ。"))
 
 (define (ench-bye knpc kpc)
-  (say knpc "Beware the Accursed!"))
+  (say knpc "呪われた者に気をつけよ！"))
 
 (define (ench-join knpc kpc)
-  (say knpc "No, I belong here. Seek the Warritrix if you desire a powerful "
-       "companion."))
+  (say knpc "否。ここが私のいるべき場所である。"
+       "強き仲間を求めるなら、闘士を探すのがよいだろう。"))
 
 
 (define (ench-warr knpc kpc)
-  (say knpc "The Warritrix is Wise and fierce, "
-       "and like yourself prone to Wandering. "
-       "In fact, at the moment I don't know where she is. "
-       "Try Glasdrin.")
+  (say knpc "闘士は荒々しい賢者である。"
+       "そして汝のように放浪している。"
+       "実際のところ、今どこに彼女がいるのかは知らぬ。"
+       "グラスドリンへ聞けばよかろう。")
        (quest-wise-subinit 'questentry-warritrix)
        (quest-data-update 'questentry-warritrix 'general-loc 1)
        )
 
 (define (ench-wand knpc kpc)
-  (say knpc "Yes, I've met your type before. Unpredictable. "
-       "And as to whether you are good or evil, that depends upon you."))
+  (say knpc "然り。かつて会ったことがある。予期せぬことであった。"
+       "汝が善となるか悪となるかは、汝しだいである。"))
 
 (define (ench-offer-first-quest knpc kpc)
-  (say knpc "I do not quibble over definitions of good and evil. "
-       "They are easily recognized when encountered. "
-       "Do you intend to do good while you are here?")
+  (say knpc "善とは、悪とは何か。その定義をごまかしたりはしない。"
+       "それは出会えば容易に区別できる。"
+       "汝はこの地で善き行いをなすつもりか？")
   (if (kern-conv-get-yes-no? kpc)
       ;; yes - player intends to do good
       (begin
-        (say knpc "Then you will find me to be your ally. "
-             "But beware! Many who claim to be good are not, "
-             "or fail when put to the test. Are you ready to be tested?")
+        (say knpc "ならば汝の力となろう。"
+             "だが気をつけよ！多くの善を主張する者は、実際にはそうでない。"
+             "そして試練で脱落する。汝には試練を受ける覚悟があるか？")
         (if (kern-conv-get-yes-no? kpc)
             ;; yes - player is ready to be tested
             (begin
-              (say knpc "Very well. An item was recently stolen from me. "
-                   "I need someone to find the thief, "
-                   "recover the item and return it to me. Are you willing?")
+              (say knpc "よろしい。最近あるものを盗まれた。"
+                   "泥棒を見つけ出し、それを取り戻す者を見つけねばならなかったのだ。"
+                   "引き受けるか？")
               (if (kern-conv-get-yes-no? kpc)
                   ;; yes -- player is willing
                   (begin
-                    (say knpc "Good! Rangers have tracked the thief to "
-                         "Trigrave. Go there and inquire about a ^c+mthief^c-.")
+                    (say knpc "よろしい！警備隊は泥棒を追ってトリグレイブへと向かった。"
+                         "そこへ行き^c+m泥棒^c-について尋ねるとよいだろう。")
 							(quest-data-assign-once 'questentry-thiefrune)
               		(quest-data-complete 'questentry-calltoarms)
                   	;; if you dont read the letter, you might not get the quest till now!
@@ -304,91 +304,85 @@
                     (quest-accepted! (ench-first-quest (gob knpc)) #t)
                     )
                   ;; no -- player is not willing
-                  (say knpc "Perhaps I misjudged you.")))
+                  (say knpc "汝を見誤ったかもしれぬ。")))
             ;; no -- player is not ready
-            (say knpc "It is not enough to speak of doing good, one cannot "
-                 "BE good without DOING good.")))
+            (say knpc "善をなすことについて話すだけでは不十分である。"
+                 "善をなすことなしに、善になることはできぬ。")))
       ;; no -- player does not intend to do good
-      (say knpc "We shall see. Evil men can do good without meaning to, "
-           "and men who would be callous find they can't ignore their "
-           "conscience.")))
+      (say knpc "わかった。悪しき者は善をその意味をわからずなすことができる。"
+           "そして冷淡な者はその良心を無視できぬことに気づくだろう。")))
 
 (define (ench-good knpc kpc)
   (if (quest-accepted? (ench-first-quest (gob knpc)))
-      (say knpc "The wicked flee when no one pursues, but the righteous are "
-           "bold as dragons.")
+      (say knpc "悪は追う者がいなければ逃げるものである。"
+           "だが、善は竜のごとく強い。")
       (ench-offer-first-quest knpc kpc)))
 
 (define (ench-gate knpc kpc)
-  (say knpc "There are many gates in the land which connect to "
-       "one another and appear with the moons. "
-       "But the Shrine Gate is the only one I know of for certain that connects with "
-       "other worlds."))
+  (say knpc "この地には月と共に現れる他方とつながった多数の門がある。"
+       "だが、祭壇の門は一つしかなく、私が知っている確実なことは、別の世界とつながっているということだけだ。"))
 
 (define (ench-wise knpc kpc)
-  (say knpc "The Wise are the most powerful Warriors, Wizards, Wrights and "
-       "Wrogues in the land. Although they function to protect the Shard, "
-       "they are not all good."))
+  (say knpc "賢者はこの地で最も力のある戦士、魔術師、職人、そしてならず者である。"
+       "その役目はシャルドを守ることであるにもかかわらず、全てが善き者であるわけではない。"))
 
 (define (ench-accu knpc kpc)
-  (say knpc "The Accursed are an evil secret society, responsible for many "
-       "crimes and atrocities. With the destruction of Absalot I thought "
-       "they were finished. I was wrong. I fear now their number and "
-       "strength is greater than ever before."))
+  (say knpc "呪われた者は悪の集団で、数多くの犯罪と残虐行為に関わっている。"
+       "アブサロットの崩壊で彼らは終焉したはずだった。"
+       "だが違った。"
+       "私は彼らの力がより強大になっていることを恐れている。"))
 
 (define (ench-moon knpc kpc)
-  (say knpc "Ask Kalcifax the Traveler of moongates. "
-       "She is quite the expert."))
+  (say knpc "月の門のことはカルシファクスに尋ねよ。"
+       "彼女はよく知っている。"))
 
 (define (ench-shri knpc kpc)
-  (say knpc "The Shrine Gate opens unpredictably, and only for a short time. "
-       "Those who enter never return, "
-       "and those who emerge are strangers and Wanderers like yourself."))
+  (say knpc "祭壇の門はいつ開くのか、それは予測できない。そして開くのは少しの間だけだ。"
+       "そこに入ったものは決して戻ってこない。"
+       "そして汝のような迷い人が姿を現すことがある。"))
 
 (define (ench-rune knpc kpc)
-  (say knpc "The rune was passed to me by my master long ago. "
-       "He did not know what it was for, and for all my research I never "
-       "found its purpose, either. I decided it was an unimportant old relic. "
-       "Why else would it not be mentioned in any of the arcane tomes or "
-       "histories?"))
+  (say knpc "この石版は遠い昔師匠から受け取った物だ。"
+       "師匠はこれが何のためにあるか知らなかった。私も調べたがその目的は全くわからなかった。"
+       "これは重要ではない遺物と思っていた。"
+       "なぜ本や歴史にはこれに関する記述が全くないのだろうか？"))
 
 (define (ench-wiza knpc kpc)
-  (say knpc "The Warrior, Wright and Wrogue all derive some power from their "
-       "knowledge of the physical world. But a Wizard's power comes from his "
-       "knowledge of the magical world."))
+  (say knpc "戦士、職人、ならず者の力はみな身体世界の知識から来るものである。"
+       "だが、魔術師の力は魔術世界から来るものである。"))
 
 (define (ench-know knpc kpc)
-  (say knpc "Just as a blind man cannot perceive colors, those without the "
-       "Inner Eye cannot perceive the forces of magic. But those who have "
-       "opened the Eye perceive causes and effects invisible to others."))
+  (say knpc "目の見えぬ者は色を理解することはできないように、"
+       "内なる目のなき者は魔術の力を理解することはできぬ。"
+       "だが、その目を開いた者は、目に見えぬ原因と結果を理解することができよう。"))
 
 (define (ench-wrog knpc kpc)
-  (say knpc "The Wisest of Wrogues is The MAN, who comes and goes as if on "
-       "the wind. If the MAN has a home, it is well-hidden. Ask around, "
-       "perhaps your inquiries will prompt a meeting.")
+  (say knpc "最も賢きならず者はにんげんで、風に吹かれて行き帰りしている。"
+       "にんげんに帰るべき場所があるとすれば、それは巧妙に隠されているだろう。"
+       "周りの者に尋ねよ。欲する者とは既に会っているかも知れぬ。")
        (quest-wise-subinit 'questentry-the-man)
        (quest-data-update 'questentry-the-man 'common 1)
        )
 
 (define (ench-wrig knpc kpc)
-  (say knpc "The Wisest Wright prefers to work in isolation. You may find him "
-       "if you are persistent, but not in any city. "
-       "Seek the mage Kalcifax, I think she knows the Engineer well.")
+  (say knpc "最も賢き職人は孤独を好む。"
+       "いずれ彼を見つけることができようが、それは町の中ではないだろう。"
+       "魔術師のカルシファクスを探せ。彼女は技師のことをよく知っている。")
        (quest-wise-subinit 'questentry-engineer)
        (quest-data-update 'questentry-engineer 'kalcifax 1)
        )
 
 (define (ench-necr knpc kpc)
-  (say knpc "The most depraved and wicked of all the Wise, "
-       "my nemesis the Necromancer abides somewhere in the underworld. "
-       "He is powerful, deceitful and corrupt beyond redemption.")
+  (say knpc "全ての賢者の中で最も堕落した邪悪な者だ。"
+       "わが宿敵、死霊術師は地下の世界に潜んでいる。"
+       "彼は強大で、偽りと腐敗を受け入れた者だ。")
        (quest-wise-subinit 'questentry-necromancer)
        (quest-data-update 'questentry-necromancer 'general-loc 1)
       )
 
 (define (ench-alch knpc kpc)
-  (say knpc "The Alchemist keeps a lab near Oparine. "
-       "He is greedy and very cunning, so be wary of him.")
+  (say knpc "錬金術師はオパーリンにいる。"
+       "彼は欲深く、とても狡猾だ。彼には気をつけねばならぬ。")
        (quest-wise-subinit 'questentry-alchemist)
        (quest-data-update 'questentry-alchemist 'oparine 1)
        )
@@ -397,22 +391,22 @@
 	;;in case quest generated once in progress
 	(quest-data-assign-once 'questentry-thiefrune)
   (if (quest-done? (ench-first-quest (gob knpc)))
-      (say knpc "Although a nuisance, he was only a middleman. "
-           "I hope you did not treat him too harshly.")
-      (say knpc "The thief who stole my item must be very clever. The rangers "
-           "lost his trail in Trigrave. Inquire among everyone there if they "
-           "have seen the ^c+mthief^c-.")))
+      (say knpc "迷惑なものだが、彼は単なる仲介者であろう。"
+           "彼をあまりに厳しく扱わないことを望む。")
+      (say knpc "ものを盗んだその泥棒は非常に巧みであろう。"
+           "警備隊員はトリグレイブで見失った。"
+           "会った者に^c+m泥棒^c-について尋ねよ。")))
 
 (define (ench-kalc knpc kpc)
-  (say knpc "Kalcifax? She's rather hard to keep track of I'm afraid."))
+  (say knpc "カルシファクス？残念だが彼女の居場所はわからない。"))
 
 (define (ench-demo knpc kpc)
-  (say knpc "The Demon Gate is a legendary gate that wizards of old used to cross into other worlds. "
-       "Then, for reasons that vary in the telling, it was lost or sealed or forgotten or destroyed. "
-       "I always thought it a fiction."))
+  (say knpc "悪魔の門は古き魔術師が別の世界へと渡るために使ったとされる伝説上の門だ。"
+       "その後は様々な言い伝えがある。それは失われた、封印された、忘れられた、破壊されたなどだ。"
+       "私はずっと作り話だと考えていた。"))
 
 (define (ench-ench knpc kpc)
-  (say knpc "Yes?"))
+  (say knpc "何か？"))
 
 (define enchanter-conv
   (ifc basic-conv
@@ -454,7 +448,7 @@
    (kern-char-arm-self
     (kern-mk-char 
      tag ;;..........tag
-     "Enchanter" ;;.......name
+     "魔道師" ;;.......name
      sp_human ;;.....species
      oc_wizard ;;.. .occupation
      s_old_mage ;;..sprite

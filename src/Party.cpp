@@ -739,17 +739,11 @@ void Party::describe()
 {
         assert(Session->subject);
         const char *diplstr = diplomacy_string(this, Session->subject);
-        if (isvowel(diplstr[0]))
-                log_continue("an ");
-        else
-                log_continue("a ");
-
-        log_continue("%s %s", diplstr, getName());
-
         if (vehicle) {
-                log_continue(" in ");
                 vehicle->describe();
+                log_continue("に乗った。");
         }
+        log_continue("%sな%s", diplstr, getName());
 }
 
 static bool member_examine(class Character *member, void *data)
@@ -1080,7 +1074,7 @@ Object *Party::getSpeaker()
         }
 
         // The player has to choose. Poke the list into the status state.
-        statusSetGenericList("Choose Speaker", list_sz, statlist);
+        statusSetGenericList("話す相手", list_sz, statlist);
 
         // Switch the status mode over to list selection.
         statusSetMode(GenericList);
@@ -1093,7 +1087,7 @@ Object *Party::getSpeaker()
 
         // Push the handler and wait for the player to make a selection.
 	eventPushKeyHandler(&kh);
-	cmdwin_spush("<select>");
+	cmdwin_spush("<選択>");
 	eventHandle();
 	cmdwin_pop();
 	eventPopKeyHandler();

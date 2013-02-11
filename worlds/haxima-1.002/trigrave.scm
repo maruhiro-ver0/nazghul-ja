@@ -131,7 +131,7 @@
 (kern-load "jim.scm")
 (bind 
  (kern-mk-char 'ch_jim ; tag
-               "Jim"                ; name
+               "ジム"              ; name
                sp_human            ; species
                nil                 ; occ
                s_townsman          ; sprite
@@ -153,7 +153,7 @@
 (kern-load "gwen.scm")
 (bind 
  (kern-mk-char 'ch_gwen ; tag
-               "Gwen"               ; name
+               "グベン"            ; name
                sp_human            ; species
                nil                 ; occ
                s_gwen ; sprite
@@ -174,7 +174,7 @@
 (kern-load "chanticleer.scm")
 (bind 
  (kern-mk-char 'ch_chant ; tag
-               "Chanticleer"          ; name
+               "オンドリ"          ; name
                sp_human            ; species
                nil                 ; occ
                s_chanticleer     ; sprite
@@ -195,7 +195,7 @@
 (kern-load "earl.scm")
 (bind 
  (kern-mk-char 'ch_earl     ;; tag
-               "Earl"       ;; name
+               "イアル"     ;; name
                sp_human     ;; species
                nil          ;; occ
                s_townsman   ;; sprite
@@ -253,7 +253,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place 
  'p_trigrave     ; tag
- "Trigrave"      ; name
+ "トリグレイブ"  ; name
  s_town          ; sprite
 
  ;; Blit the buildings over the basic terrain map.

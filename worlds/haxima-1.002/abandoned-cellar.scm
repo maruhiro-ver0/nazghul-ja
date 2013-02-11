@@ -1,5 +1,5 @@
 ;;----------------------------------------------------------------------------
-;; Cellar of Abandoned Farm
+;; 褂れ蔡てた抢孟の孟布技
 ;;
 ;; This is the root cellar where Ilya his when the trolls attacked her farm.
 ;; She left Puska - a quest item - here in her hiding place. Initially it is
@@ -48,7 +48,7 @@
  )
 
 (kern-mk-place 'p_abandoned_cellar ; tag
-               "Musty Cellar"     ; name
+               "かび江い孟布技"   ; name
                nil                ; sprite
                m_abandoned_cellar ; map
                #f                 ; wraps

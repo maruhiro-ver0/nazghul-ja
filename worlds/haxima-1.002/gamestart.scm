@@ -1,7 +1,7 @@
 (kern-load "gamestart-mech.scm")
 (kern-load "gamestart-statues.scm")
 
-(kern-mk-place 'p_char_setup "the Path"
+(kern-mk-place 'p_char_setup "運命の道"
   s_shrine ;; sprite
   (kern-mk-map 'm_char_setup 19 19 pal_expanded
 	(list
@@ -59,7 +59,7 @@
 (set-roomdata p_char_setup (list 6 6 6 'start-gate))
 
 (obj-line (lambda (unused)
-	(mk-step-trig 'one-off-message "A portal beckons on the far side of the room" "intromes"))
+	(mk-step-trig 'one-off-message "部屋の向こう側の門は、まるであなたを手招きしているようだ。" "intromes"))
 	15 8 10)
 	
 (obj-line (lambda (unused)
@@ -99,9 +99,9 @@
     (kern-char-set-known kchar #t)
     ))
 
-(kern-obj-put-at (mk-start-statue 'str_statue "Statue of Might" s_str_statue 'gs-str-conv) (list p_char_setup 4 10))
-(kern-obj-put-at (mk-start-statue 'dex_statue "Statue of Agility" s_dex_statue 'gs-dex-conv) (list p_char_setup 9 8))
-(kern-obj-put-at (mk-start-statue 'int_statue "Statue of Wisdom" s_int_statue 'gs-int-conv) (list p_char_setup 14 10))
+(kern-obj-put-at (mk-start-statue 'str_statue "腕力の像" s_str_statue 'gs-str-conv) (list p_char_setup 4 10))
+(kern-obj-put-at (mk-start-statue 'dex_statue "敏捷の像" s_dex_statue 'gs-dex-conv) (list p_char_setup 9 8))
+(kern-obj-put-at (mk-start-statue 'int_statue "知能の像" s_int_statue 'gs-int-conv) (list p_char_setup 14 10))
 
 (obj-line (lambda (unused)
 	(mk-step-trig 'gamestart-statue-speak 'str_statue "statspeak"))

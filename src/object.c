@@ -157,21 +157,11 @@ static int endsWith(const char *word, const char *end)
 
 void ObjectType::describeType(int count)
 {
-	if (1 == count) {
-		if (isvowel(name[0]))
-			log_continue("an ");
-		else
-			log_continue("a ");
-		log_continue("%s", getName());
-	} else if (getPluralName()) {
-                log_continue("some %s (%d)", getPluralName(), count);
+        if (1 == count) {
+                log_continue("%s", getName());
         } else {
-                if (endsWith(name, "s")
-                    || endsWith(name, "sh"))
-                        log_continue("some %ses (%d)", getName(), count);
-                else
-                        log_continue("some %ss (%d)", getName(), count);
-	}
+                log_continue("%s(%d)", getName(), count);
+        }
 }
 
 void ObjectType::describe(Object *obj)
@@ -626,10 +616,10 @@ void Object::describe()
         assert(getObjectType()); // else implement this method in subclass
         getObjectType()->describe(this);
         if (!isVisible()) {
-                log_continue(" (invisible)");
+                log_continue("(ÉÔ²Ä»ë)");
         }
         if (isSubmerged()) {
-                log_continue(" (submerged)");
+                log_continue("(±£ÊÃ)");
         }
 }
 

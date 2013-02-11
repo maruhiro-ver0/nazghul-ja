@@ -32,7 +32,7 @@
 
  ;; enter
  (lambda (zqug kparty dir dims)
-   (kern-status-set-title "Quest Log")
+   (kern-status-set-title "ËÁ¸±¤Îµ­Ï¿")
    (zqug-dims! zqug dims)
    (zqug-party! zqug kparty)
    (zqug-store-max-entry! zqug)

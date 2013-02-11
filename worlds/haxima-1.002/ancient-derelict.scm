@@ -28,7 +28,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place 
  'p_ancient_derelict ; tag
- "Ancient Derelict"   ; name
+ "古代の遺棄船"   ; name
  s_void_ship          ; sprite
  m_ancient_derelict  ; map
  #f               ; wraps

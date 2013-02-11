@@ -1,8 +1,8 @@
 ;; ----------------------------------------------------------------------------
-;; Level 2 of the Thief's Ladder
+;; 泥棒のはしご 2階
 ;; ----------------------------------------------------------------------------
 (mk-dungeon-room
- 'p_traps_2 "The Choice"
+ 'p_traps_2 "選択"
  (list
   "xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx "
   "xx ,, ,, ,, ,, ,, ,, ,, xx xx xx ,, ,, ,, ,, ,, ,, ,, xx "
@@ -24,8 +24,8 @@
   "xx xx xx xx xx xx xx !! !! !! !! !! !! xx xx xx xx xx xx "
   "xx xx xx xx xx xx xx .W .I .S .E .L .Y xx xx xx xx xx xx "
   )
- (put (mk-step-clue "Doesn't the other way look better?") 13 15)
- (put (mk-step-clue "Doesn't the other way look better?") 6 15)
+ (put (mk-step-clue "別の道の方がよいのでは？") 13 15)
+ (put (mk-step-clue "別の道の方がよいのでは？") 6 15)
 
  ;; secret path through wall
  (put (mk-secret-path) 9 14)

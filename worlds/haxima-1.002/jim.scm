@@ -1,7 +1,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;;
-;; The schedule below is for the place "Trigrave"
+;; トリグレイブ
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_jim
                (list 0  0  trigrave-jims-bed        "sleeping")
@@ -23,46 +23,45 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;;
-;; Jim is a merchant, and will trade with the player if he's at work. He's a
-;; tall, wiry blacksmith with a very dry wit. If the town has a leader it would
-;; be him because the other townsfolk respect him and look to him in times of
-;; crises. He isn't interested in being a celebrity, however, and doesn't
-;; exercise any real ambition. He's not interested in adventures and considers
-;; (privately) that adventurers are fools. But he's happy to trade with
-;; them. He drinks hard, and probably had a very wild youth.
+;; ジムは店主で、仕事をしている時間ならば取り引きできる。彼は背が高く、鍛冶屋
+;; をしていて、無愛想である。もし町にリーダーがいるとすれば、それは彼である。
+;; なぜなら住民は彼を尊敬し、危機のとき頼れると考えているからである。しかし、
+;; 彼は名声には興味がなく、野心のために行動することはない。彼は冒険者には興味
+;; がなく、(個人的には)冒険者は愚かだと考えている。しかし、彼らと取り引きする
+;; と喜ぶ。彼は大酒のみで、おそらく若いころは荒くれ者だった。
 ;;----------------------------------------------------------------------------
 (define jim-merch-msgs
-  (list "Come by my shop when I'm open. It's the Iron Works in the northeast corner. I'm open for business from 7:00AM til 6:00PM."
-        "Let me know if you see something that interests you."
-        "I'll buy back some items for salvage."
-        "Let me know if you see something that interests you."
-        "Strike hard, first and for the good, friend."
-        "Maybe some other time."
-        "I can melt down or re-use parts of this."
-        "Fine."
-        "Strike hard, first and for the good, friend."
-        "Fine."
+  (list "店が開いてるときに来てくれ。北東の金物屋だ。午前7時から午後6時までやっている。"
+        "欲しい物があれば言ってくれ。"
+        "いらなくなった物があれば買い戻すぞ。"
+        "欲しい物があれば言ってくれ。"
+        "まずは強く打て、よきもののために、友よ。"
+        "またの機会に。"
+        "溶かすか、部品にして使うよ。"
+        "どうも。"
+        "まずは強く打て、よきもののために、友よ。"
+        "どうも。"
    ))
 
 (define jim-catalog
   (list
-   (list t_dagger          40 "This is a good weapon for the non-fighting classes.")
-   (list t_sword           80 "It's not fancy, but note the perfect balance on that sword.")
-   (list t_axe             70 "An axe is necessary if you camp in the wild, but it can be tricky to keep ahold of in a fight.")
-   (list t_mace            75 "The mace is a simple but effective weapon against lightly armoured foes.")
+   (list t_dagger          40 "戦士でない者にはいい武器だ。")
+   (list t_sword           80 "地味だが完璧な均衡の剣だ。")
+   (list t_axe             70 "斧は野外の活動で必要だ。戦いでも使える。")
+   (list t_mace            75 "鎚矛は単純だが軽装の鎧を着た敵には効果のある武器だ。")
    
-   (list t_2H_axe         240 "The battle-axe is made for cleaving armour and shields.")
-   (list t_2H_sword       350 "If you are strong enough to wield it, a two-handed sword is an excellent offensive weapon.")
+   (list t_2H_axe         240 "鎧や盾を切り裂くために作られた戦斧だ。")
+   (list t_2H_sword       350 "持てるだけの力があれば、両手剣はとても強力な武器だ。")
    
-   (list t_chain_coif     110 "The chain coif will protect your neck from decapitating strokes.")
-   (list t_iron_helm      160 "With an iron helm you can survive a direct hit from a mace.")
-   (list t_armor_chain    300 "Chain armor will turn aside most blades and arrows.")
-   (list t_armor_plate    600 "Although heavy, plate armour will protect you from all but the mightiest blows or armour-piercing tips.")
+   (list t_chain_coif     110 "鎖頭巾は頭部への攻撃から首を守るだろう。")
+   (list t_iron_helm      160 "鉄兜があれば頭への鎚矛の直撃も防げるだろう。")
+   (list t_armor_chain    300 "鎖かたびらがあれば大抵の刃や矢を跳ね返せる。")
+   (list t_armor_plate    600 "重いが、甲冑は極めて強力な攻撃や鎧を貫通する攻撃を除けば全てから守るだろう。")
    
-   (list t_shield          45 "A shield is vital for close-in combat.")
+   (list t_shield          45 "盾は接近戦では必要だ。")
    
-   (list t_spiked_helm    150 "The spiked helm is favored by those with a more... direct style.")
-   (list t_spiked_shield  150 "A spiked shield augments the footsoldier's basic thrust-and-push with extra damage.")
+   (list t_spiked_helm    150 "刺付き兜はもっと攻撃力が欲しい者に好まれる。")
+   (list t_spiked_shield  150 "刺付き盾は素早い戦士の基本的な押して突く動作を更なる攻撃にできる。")
    ))
 
 (define (jim-trade knpc kpc) (conv-trade knpc kpc "trade" jim-merch-msgs jim-catalog))
@@ -73,58 +72,53 @@
        ;; 4 characters. The 4-char limit arises from the kernel's practice of
        ;; truncating all player queries to the first four characters. Default,
        ;; on the other hand, is a feature of the ifc mechanism (see ifc.scm).
-       (method 'default (lambda (knpc kpc) (say knpc "I know not.")))
-       (method 'hail (lambda (knpc kpc) (say knpc "Well met.")))
-       (method 'bye (lambda (knpc kpc) (say knpc "Fare well.")))
+       (method 'default (lambda (knpc kpc) (say knpc "わからんな。")))
+       (method 'hail (lambda (knpc kpc) (say knpc "いらっしゃい。")))
+       (method 'bye (lambda (knpc kpc) (say knpc "どうも。")))
        (method 'job 
                (lambda (knpc kpc) 
-                 (say knpc "I'm the blacksmith of Trigrave. Need something?")
+                 (say knpc "トリグレイブの鍛冶屋だ。何かいるか？")
                             (if (kern-conv-get-yes-no? kpc)
                                 (jim-trade knpc kpc)
-                                (say knpc "Look around all you like."))))
-       (method 'name (lambda (knpc kpc) (say knpc "Folks call me Jim.")))
+                                (say knpc "まあ見ていきな。"))))
+       (method 'name (lambda (knpc kpc) (say knpc "皆ジムと呼んでいる。")))
        (method 'buy (lambda (knpc kpc) (conv-trade knpc kpc "buy" jim-merch-msgs jim-catalog)))
        (method 'sell (lambda (knpc kpc) (conv-trade knpc kpc "sell" jim-merch-msgs jim-catalog)))
        (method 'trad jim-trade)
        (method 'join (lambda (knpc kpc) 
-                       (say knpc "Here I make my stand, come what may.")))
+                       (say knpc "何が起ころうとも、ここが俺の場所だ。")))
 
 
        (method 'chan (lambda (knpc kpc)
-                       (say knpc "Chanticleer the bard frequents the Trigrave "
-                            "tavern. He knows much of the region.")))
+                       (say knpc "オンドリはトリグレイブの酒場に出入りしている吟遊詩人だ。"
+                            "このあたりじゃ有名だ。")))
        (method 'char 
                (lambda (knpc kpc)
-                 (say knpc "The charcoal burner who lives in the woods "
-                      "keeps my forges hot.")))
+                 (say knpc "森の炭焼き人のおかげで俺の鍛冶場を熱くできる。")))
        (method 'earl
                (lambda (knpc kpc)
-                 (say knpc "Earl is the shopkeeper for the general store. "
-                      "He claims he was once a battle-mage.")))
+                 (say knpc "イアルは小間物屋の店主だ。"
+                      "昔は魔術師だったと言い張っている。")))
        (method 'gwen
                (lambda (knpc kpc)
-                 (say knpc "Gwen is our innkeeper. She is a beautiful but "
-                      "mysterious woman.")))
+                 (say knpc "グベンは宿屋をやっている。"
+                      "美人だが謎の多い女だ。")))
        (method 'iron (lambda (knpc kpc)
-                       (say knpc "The hills are loaded with ore, yet so many "
-                            "battles have been fought in this valley that one "
-                            "need not visit them to find scrap.")))
+                       (say knpc "丘には原石が豊富にある。谷では多くの戦いがあるが、くず鉄を探しにそこに行く必要はない。")))
        (method 'shie
                (lambda (knpc kpc)
-                 (say knpc "[he gives you a cold look] I have cast away the "
-                      "shield which bears the emblem of Glasdrin. I'll "
-                      "thank you to speak of this no more.")))
-       (method 'thief
+                 (say knpc "［彼は冷たい目であなたを見た。］"
+                      "グラスドリンの紋章の盾はもう捨てた。"
+                      "これ以上話したくないのだが。")))
+       (method 'thie
                (lambda (knpc kpc)
-                 (say knpc "I haven't seen anyone odd. But ask Gwen, she speaks to many travelers.")))
+                 (say knpc "おかしな奴は見なかったな。グベンに聞いてみればいい。宿屋で大勢の旅人と話しているだろうからな。")))
        (method 'trig 
                (lambda (knpc kpc) 
-                 (say knpc "Trigrave is not much to speak of.")))
+                 (say knpc "トリグレイブには話になるものはあまりない。")))
        (method 'wood 
                (lambda (knpc kpc)
-                 (say knpc "The deep wood is home to beasts and bandits. "
-                      "You'll need short arms and light armour there, "
-                      "for the thicket is a hindrance to heavy arms "
-                      "and ranged weapons.")))
+                 (say knpc "森は獣と盗賊のねぐらだ。"
+                      "短い武器と軽い鎧が必要だ。藪の中では長い武器と重い鎧は邪魔になるだけだ。")))
        
        ))

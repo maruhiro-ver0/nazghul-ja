@@ -372,23 +372,19 @@
 ;; Plot type stuff
 
 (mk-reusable-item 
- 't_garrison_log "Garrison Log" s_lexicon v-hard
+ 't_garrison_log "守備隊日誌" s_lexicon v-hard
  (lambda (klexicon kuser)
    (kern-ui-page-text
-   "Garrison Log"
+   "守備隊日誌"
    ""
    (string-append
-	"The log details events at the garrison "
-	"while it was still in operation. Early "
-	"entries detail several attempts to "
-	"clear the surrounding caverns.")
+	"日誌には駐屯地がまだあった頃の出来事が書かれて\n"
+	"いた。最初の方には、周囲の洞窟を掃討するいくつ\n"
+	"かの試みについて詳細に書かれていた。")
    ""
    (string-append
-   "However, the paladins were "
-   "unable to even determine how "
-   "large the dungeon is, and "
-   "eventually settled on a policy "
-   "of containment by fortifying "
-   "this bottleneck position.")
+   "しかし、聖騎士たちは迷宮はあまりにも広く、掃討\n"
+   "は不可能と判断した。そして最終的にこのビン首の\n"
+   "場所に砦を築き閉じ込める方針にしたようだ。")
    )))
 

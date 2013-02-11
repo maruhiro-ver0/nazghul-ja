@@ -23,54 +23,52 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;;
-;; Tim is a maimed, drooling madman, currently trapped outside 
-;; the Tower of Brundegart.
+;; ティムは片腕のない、よだれをたらしたおかしな男で、ブルンデガードの塔の外に
+;; 捕らわれている。
 ;; 
-;; Once a seeker of knowledge (and power), 
-;; his body was ravaged by griffins (and their hungry chicks), 
-;; and his mind broken by contact with the EYE of Brundegart.
-;; (One rather assumes the maiming did not help his mental state, 
-;; for that matter...)
+;; かつては知(と力)の探求者であった。彼の肉体はグリフィン(とその腹を空かせた
+;; 雛)に奪われ、彼の精神はブルヌの目との接触で破壊された。
 ;;----------------------------------------------------------------------------
 (define (tim-hail knpc kpc)
-  (meet "You meet a drooling madman with only one arm.")
-  (say knpc "I have seen the eye!"))
+  (meet "あなたはよだれをたらした片腕のおかしな男と会った。")
+  (say knpc "目を見ていたのだ！"))
 
 (define (tim-eye knpc kpc)
-  (say knpc "So wise I am now, because of the eye. Would you be wise?")
+  (say knpc "目を見ることで私は知力を得たのだ。あなたは知力を求める者か？")
   (cond ((yes? knpc)
-         (say knpc "Alas, my friend, I have lost the key!"))
+         (say knpc "ああ、友よ。鍵をなくしてしまったのだ！"))
         (else
-         (say knpc "Fool!")
+         (say knpc "愚かな！")
          (kern-conv-end))))
 
 (define (tim-key knpc kpc)
-  (say knpc "It was my key! I found it on the dead man. "
-       "First they took my arm, then the lion-birds took my key!"))
+  (say knpc "私の鍵だ！そこの死んだ者が持っていた。"
+       "獅子のような鳥に、最初は腕を奪われ、次に鍵を奪われたのだ！"))
 
 (define (tim-arm knpc kpc)
-  (say knpc "They chose me as I walked among the hills, "
-       "and brought me here to feed their young."))
+  (say knpc "丘を歩いているとき、私が選ばれた。"
+       "そして雛に与えるためここに運ばれたのだ。"))
 
 (define (tim-name knpc kpc)
-  (say knpc "Do not pretend to not know me! "
-       "One who is all-wise is necessarily famous! That's logic!"))
+  (say knpc "知らないふりをするな！"
+       "この全能の者を知らぬ者などいない！これは必然だ！"))
 
 (define (tim-job knpc kpc)
-  (say knpc "I will bring enlightenment to the world!"))
+  (say knpc "この世界に知の光をもたらす者だ！"))
 
 (define (tim-enli knpc kpc)
-  (say knpc "Yes! The eye! The eye... [He curls into a fetal ball and sobs]")
+  (say knpc "その通りである！目だ！目…［彼は胎児のようにうずくまり、泣きながらつぶやいた。］")
   (kern-conv-end))
 
 (define (tim-lion knpc kpc)
-  (say knpc "[He shrieks and cowers] Do you see them?! "
-       "Have they come for my other arm?  The chicks are so hungry! So cruel!"))
+  (say knpc "［彼は悲鳴をあげ縮こまった。］見たのか？！"
+       "もう片方の腕を取りに来たのか？雛はそんなに腹を空かせているのか！恐ろしい！"))
 
 (define tim-conv
   (ifc nil
        (method 'hail tim-hail)
        (method 'eye  tim-eye)
+       (method 'me  tim-eye)
        (method 'key  tim-key)
        (method 'arm  tim-arm)
        (method 'name tim-name)
@@ -88,7 +86,7 @@
    (kern-char-arm-self
     (kern-mk-char 
      'ch_tim ;;..........tag
-     "Tim" ;;.......name
+     "ティム" ;;.......name
      sp_human ;;.....species
      oc_wizard ;;.. .occupation
      s_wizard ;;..sprite

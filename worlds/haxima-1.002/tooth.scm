@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In the monster village of Kun.
+;; 怪物の村クーン
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_tooth
                (list 0 0 campfire-4 "sleeping")
@@ -24,94 +24,93 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Tooth is a nervous ratling, running a black market and pawn shop 
-;; in the monster village of Kun.  It appears that he is suffering from 
-;; the surplus (or lack) of some stimulant.
+;; マエバは神経質なネズミ人間で、怪物の村クーンで闇市と質を営んでいる。
+;; 何かの興奮剤の取りすぎ(または禁断症状)で苦しんでいるように見える。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (tooth-hail knpc kpc)
-  (kern-log-msg "You meet a shifty old rat with one enormous incisor. He shakes and shivers nervously. "
-                "Too much caffeine? Black lotus withdrawal? You aren't sure.")
-  (say knpc "Psst. Looking for a deal? I got deals. All kinds of deals! Good deals! Bad deals! "
-       "You name it, you make it, it's your call! No questions asked. No answers given.")
+  (kern-log-msg "あなたはずる賢そうな年老いた大きな前歯のネズミと会った。彼は神経質そうに震え、体を揺らしている。"
+                "カフェインの取りすぎ？ブラックロータスが出た？あなたには何もわからない。")
+  (say knpc "ちょっと。商売かい？商売はあるよ。どんな商売もあるよ！いい商売！悪い商売！"
+       "言っとくれ、用意するよ、決めとくれ！何も聞いてない、何も言えない。")
   )
 
 (define (tooth-default knpc kpc)
-  (say knpc "Don't know. Don't know about that. Information? Not my game.")
+  (say knpc "知らない。それは知らない。情報？俺には関係ない。")
   )
 
 (define (tooth-name knpc kpc)
-  (say knpc "Tooth. I'm well-known! Well-respected. My customers love me. "
-       "They always come back. Tell their friends about me? No way! "
-       "Deals are too good. They keep it to themselves. I'm a well-kept secret! A well-known secret!")
+  (say knpc "マエバ。有名だよ！評判いいよ。お客はみんな気に入ってる。"
+       "みんなまた来る。お客のお友達は俺のこと話してる？冗談！"
+       "商売はとってもいいよ。お客はみんな秘密にしてる。俺はすごい秘密！有名な秘密！")
   )
 
 (define (tooth-join knpc kpc)
-  (say knpc "Can't, mate. Got my shop to run. Bills to pay. Guards to dodge. Too busy! Need the action!")
+  (say knpc "できない。友よ。店しなきゃ。借金返さなきゃ。衛兵から逃げなきゃ。忙しすぎる！動かなきゃ！")
   )
 
 (define (tooth-job knpc kpc)
-  (say knpc "Deals! Deals! Deals! Deals! Deals! Let's make one. Right now. "
-       "Right here. Let's do it. Ready? Here we go.")
+  (say knpc "商売！商売！商売！商売！商売！商売！さあやろう。すぐやろう。"
+       "ここでやろう。一緒にやろう。準備できた？さあいこう。")
   (tooth-trade knpc kpc)
   )
 
 (define (tooth-bye knpc kpc)
-  (say knpc "Going so soon? Leaving already? I've got more stuff! Lots more! "
-       "Good stuff! But it won't stay! No! It flies off the shelves! Leave at your own risk...!"
-       "[He goes on like this as you walk away]")
+  (say knpc "そんなに早く行くの？もう帰るの？もっとあるよ！たくさんあるよ！"
+       "いいもの！でもここにはない！いいや！棚から飛んでいった！自己責任で…！"
+       "［彼はあなたが去るまでこのようなことを言い続けた。］")
   )
 
 (define tooth-merch-msgs
   (list nil ;; closed
-        "Look here, look at this marvelous stuff! All quality! Rare, valuable, hard-to-find!" ;; buy
-        "Got stuff? I'll take it. Where did you get it? I don't want to know." ;; sell
-        "Everything reasonably priced! How do I stay in business? I don't know! See for yourself!" ;; trade
-        "Is that all? I've got more!" ;; sold-something
-        "Wait! Where you going? Come back, have another look! Did you see my collection of scrolls?" ;; sold-nothing
-        "Come back when you have more! I'm always looking!" ;; bought-something
-        "I need the good stuff! Magical stuff, gems, artifacts!" ;; bought-nothing
-        "Don't forget the basics! Oil, gems, picklocks!" ;; traded-something
-        "Wait! Where you going? Come back, have another look! Did you see my collection of scrolls?" ;; traded-nothing
+        "これ見て、このすごいの見て！全部いい！珍しい、役立つ、他にない！" ;; buy
+        "持ち物？受け取る。どこで見つけた？どうでもいい。" ;; sell
+        "全部お買い得！どうやって儲けてる？わからない！自分で確かめて！" ;; trade
+        "それだけ？まだあるよ！" ;; sold-something
+        "待て！どこ行く？戻って、別の見て！俺の巻物コレクション見た？" ;; sold-nothing
+        "もっとあったらまた来て！いつでも見るよ！" ;; bought-something
+        "もっといいもの！魔法のもの、宝石、芸術品！" ;; bought-nothing
+        "基本を忘れない！火炎ビン、宝石、鍵開け道具！" ;; traded-something
+        "待て！どこ行く？戻って、別の見て！俺の巻物コレクション見た？" ;; traded-nothing
         ))
 
 (define tooth-catalog
   (list
-   (list t_picklock            5 "Unlock doors! Takes a bit of skill!")
-   (list t_gem                20 "Find hidden rooms and passages! Thieves love 'em!")
-   (list t_grease             25 "In a tight squeeze? Grease is the word!")
+   (list t_picklock            5 "扉を開ける！ちょっと技がいる！")
+   (list t_gem                20 "秘密の部屋と道を見つける！泥棒はコレが大好き！")
+   (list t_grease             25 "狭いとこに入る？脂だ！")
 
-   (list t_oil                 5 "Perfect for fighting slimes!")
-   (list t_slime_vial         30 "Kal Xen Nox in a bottle! Great for escaping the guards!")
-   (list t_arrow               3 "Gotta have lots of arrows!")
-   (list t_bolt                3 "Can't have too many bolts!")
-   (list t_smoke_bomb          4 "Make a clean getaway under cover!")
+   (list t_oil                 5 "粘菌と戦うのに一番！")
+   (list t_slime_vial         30 "Kal Xen Noxを瓶詰めした！衛兵から逃げるのにいい！")
+   (list t_arrow               3 "矢はいっぱいいるよ！")
+   (list t_bolt                3 "弾は多すぎることはない！")
+   (list t_smoke_bomb          4 "よく見える逃げ道を作る！")
 
-   (list t_spiked_helm       300 "Use your head in a fight!")
-   (list t_spiked_shield     300 "Rare item! For aggressive fighters!")
+   (list t_spiked_helm       300 "頭で戦え！")
+   (list t_spiked_shield     300 "珍しい物！攻撃が大好きな人に！")
 
-   (list t_dagger_4           (* 4 65) "Very nice! Small, easy to conceal, but with a fierce bite!")
-   (list t_sword_2            (* 2 85) "Better than the average sword! Look at that keen edge!")
-   (list t_sword_4            (* 4 85) "The finest! The very best! A weapon for the true artist of death!")
-   (list t_morning_star_2     (* 2 105) "A truly awesome weapon! Lay waste to whole parties!")
+   (list t_dagger_4           (* 4 65) "とってもいい！小さい、隠せる、でも咬むと怖い！")
+   (list t_sword_2            (* 2 85) "普通の剣よりいい！この切っ先を見て！")
+   (list t_sword_4            (* 4 85) "一番いい！最強！本物の死の芸術家の武器！")
+   (list t_morning_star_2     (* 2 105) "本当にカッコイイ武器！まとめて倒せ！")
 
-   (list t_leather_helm_2     (* 2 100) "For the wrogue who needs that little bit of extra protection!")
-   (list t_chain_coif_4       (* 4 100) "See that tight weave? The banded reinforcement? Turns any blade and softens the blow!")
-   (list t_iron_helm_4        (* 4 150) "Very rare! Blows to the head will feel like pillows!")
+   (list t_leather_helm_2     (* 2 100) "ちょっと余分に防御が要るならず者向け！")
+   (list t_chain_coif_4       (* 4 100) "このきつい網目見て？この強い結びつき？どんな刃も和らげる！")
+   (list t_iron_helm_4        (* 4 150) "とっても珍しい！頭を殴られても枕ぐらいにしか感じない！")
 
-   (list t_armor_leather_2    (* 2 150) "Want to pilfer a Gint armory? Steal gems from trolls? You'll need something light but effective like this!")
-   (list t_armor_leather_4    (* 4 150) "This once belonged to an old wrogue! He died of old age on a bed of gold coins! Now you can, too!")
-   (list t_armor_chain_4      (* 4 330) "This is perfect for the scrapper who likes to be in the thick without getting slowed down!")
-   (list t_armor_plate_4      (* 4 660) "Shrug off the blows of gints and trolls in this amazing plate armour! There's nothing like it anywhere else!")
+   (list t_armor_leather_2    (* 2 150) "巨人の武器庫の泥棒になりたい？トロルから宝石を盗みたい？これみたいな軽くていいやつか要る！")
+   (list t_armor_leather_4    (* 4 150) "昔のならず者が持ってた！金貨のベッドで年取って死んだ！あんたもできる！")
+   (list t_armor_chain_4      (* 4 330) "これは完璧！動きのジャマにならなくて強い！")
+   (list t_armor_plate_4      (* 4 660) "巨人とトロルが殴っても効かないすごい鎧！ここ以外にない！")
 
-   (list t_xen_corp_scroll    (* 7 base-scroll-cost) "The assassin's favorite! Kills instantly!")
-   (list t_sanct_lor_scroll   (* 7 base-scroll-cost) "The wrogue's favorite! Perfect for sneaking in and out unseen!")
-   (list t_an_xen_ex_scroll   (* 6 base-scroll-cost) "If you can't beat them, have them join you with this charm spell!")
-   (list t_in_ex_por_scroll   (* 4 base-scroll-cost) "Magic doors won't stop you when you carry plenty of these!")
-   (list t_wis_quas_scroll    (* 4 base-scroll-cost) "Perfect for finding hidden doors (and invisible foes)!")
-   (list t_in_quas_xen_scroll (* 7 base-scroll-cost) "Ever wish there was two of you? With this scroll there can be!")
-   (list t_an_tym_scroll      (* 8 base-scroll-cost) "For when you really get into trouble this scroll will stop time and let you get out!")
+   (list t_xen_corp_scroll    (* 7 base-scroll-cost) "暗殺者が好き！すぐ殺せる！")
+   (list t_sanct_lor_scroll   (* 7 base-scroll-cost) "ならず者が好き！見えなくなって出入りする！")
+   (list t_an_xen_ex_scroll   (* 6 base-scroll-cost) "倒せないヤツはこの呪文で仲間にしろ！")
+   (list t_in_ex_por_scroll   (* 4 base-scroll-cost) "コイツがいっぱいあれば、魔法の扉も止められない！")
+   (list t_wis_quas_scroll    (* 4 base-scroll-cost) "見えない扉(そして見えない敵)を見つけるのに完璧！")
+   (list t_in_quas_xen_scroll (* 7 base-scroll-cost) "自分が二人欲しい？この巻物を読め！")
+   (list t_an_tym_scroll      (* 8 base-scroll-cost) "本当にヤバイときはこの巻物を読んで時間を止めて逃げろ！")
    ))
 
 (define (tooth-trade knpc kpc) (conv-trade knpc kpc "trade" tooth-merch-msgs tooth-catalog))
@@ -139,7 +138,7 @@
   (bind 
    (kern-mk-char 
     'ch_tooth           ; tag
-    "Tooth"             ; name
+    "マエバ"             ; name
     tooth-species         ; species
     tooth-occ              ; occ
     s_rat     ; sprite

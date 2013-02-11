@@ -5,7 +5,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Oparine.
+;; オパーリン
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_fing
                (list 0  0  sea-witch-bay        "idle")
@@ -22,74 +22,76 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Fing is a male Nixie, who is a Prince among his people.
-;; He dwells in Oparine, to be close to his true love, the human woman Lia.
+;; フィンはニキシーの男性で、一族の王子である。
+;; 彼は、愛する人間の女性リアの近くにいるため、オパーリンに住んでいる。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (fing-hail knpc kpc)
-  (say knpc "[You meet a nixie] Hail, Landman."))
+  (say knpc "［あなたはニキシーと会った。］こんにちは。陸の人。"))
 
 (define (fing-default knpc kpc)
-  (say knpc "Perhaps another Landman would know about that."))
+  (say knpc "もしかすると、別の陸の人なら知っているかもしれません。"))
 
 (define (fing-name knpc kpc)
-  (say knpc "I am Fing."))
+  (say knpc "私はフィンです。"))
 
 (define (fing-join knpc kpc)
-  (say knpc "I cannot stray far from these shores."))
+  (say knpc "この岸から離れることはできないのです。"))
 
 (define (fing-job knpc kpc)
-  (say knpc "I am a prince among the Seamen of this valley... er, bay."))
+  (say knpc "私はこの谷…いえ、海の人の王子です。"))
 
 (define (fing-bye knpc kpc)
-  (say knpc "Farewell, Landman."))
+  (say knpc "さようなら、陸の人。"))
 
 ;; Shores...
 (define (fing-shor knpc kpc)
-  (say knpc "I must stay by the shore so I can be near my love."))
+  (say knpc "私は愛する人の側にいるため、この岸を離れるわけにはいかないのです。"))
 
 (define (fing-love knpc kpc)
-  (say knpc "Although my beloved cannot leave the land, "
-       "she is a princess among the Sea People. "
-       "She is kind and true, and has not despaired even with her curse."))
+  (say knpc "しかしながら、私の愛する人は陸を離れることができないのです。"
+       "彼女は海の人の王女です。"
+       "親切で誠実、そして自身の呪いにもかかわらず希望を捨てていないのです。"))
 
 (define (fing-sea knpc kpc)
-  (say knpc "There are many kingdoms under the sea, many ruins, and caves, "
-       "sunken ships and great treasures. There are magicians, "
-       "and warriors, and mighty beasts! No offense, but the dry land "
-       "must be very dull in comparison."
+  (say knpc "海の下にはたくさんの王国、たくさんの遺跡、洞窟、"
+       "沈んだ船、そしてすばらしい財宝があります。魔法使い、"
+       "兵士と力強い生き物がいます！気分を害するかもしれませんが、"
+       "それに比べると乾いた地はとても退屈でしょうね。"
        ))
 
 (define (fing-curs knpc kpc)
-  (say knpc "It is a matter for the Sea People."))
+  (say knpc "それは海の人の問題です。"))
 
 ;; Townspeople...
 (define (fing-opar knpc kpc)
-  (say knpc "It's okay for you Landman, I suppose."))
+  (say knpc "あなた方のような陸の人にはよい所だと思います。"))
 
 (define (fing-gher knpc kpc)
-  (say knpc "We admired her from below! So quick, so brutal! "
-       "Like a tempest disguised as a woman. Her crew, it seems, came to "
-       "a bad end."))
+  (say knpc "私たちは彼女を下から賞賛していました！"
+       "何と素早く、何と荒々しいか！"
+       "嵐と見まがうような女性でした。"
+       "彼女の手下は、どうやら悲惨な最期を遂げたようです。"))
 
 (define (fing-crew knpc kpc)
-  (say knpc "Ghertie's crew sailed east to an island, went ashore, and never "
-       "returned. Her ship is no more."))
+  (say knpc "ガーティーの手下は東の島へと船を進めました。"
+       "そして上陸し、二度と戻ってくることはありませんでした。"
+       "彼女の船も失われました。"))
 
 (define (fing-alch knpc kpc)
-  (say knpc "He speaks to my love but I am not jealous. "
-       "He is too old and fat for any love potion to decieve her eyes!"))
+  (say knpc "私の愛しい人とよく話していますが、嫉妬はしていません。"
+       "彼はあまりにも歳をとり太っていて、どんなほれ薬も彼女の疑いの目には効かないからです！"))
 
 (define (fing-osca knpc kpc)
-  (say knpc "I know him not."))
+  (say knpc "彼のことは知りません。"))
 
 (define (fing-henr knpc kpc)
-  (say knpc "A brave Landman, from what I hear."))
+  (say knpc "勇敢な陸の人だと聞きました。"))
 
 (define (fing-bart knpc kpc)
-  (say knpc "I have not seen many goblins. I think they fear the sea. "
-       "He is an oddity among them."))
+  (say knpc "ゴブリンはあまり見たことがありません。彼らは海を恐れていると思います。"
+       "彼はゴブリンの間では変わり者でしょう。"))
 
 
 (define fing-conv
@@ -126,7 +128,7 @@
 (define (mk-fing)
   (bind 
    (kern-mk-char 'ch_fing           ; tag
-                 "Fing"             ; name
+                 "フィン"           ; name
                  sp_nixie           ; species
                  oc_warrior         ; occ
                  s_nixie_civilian    ; sprite

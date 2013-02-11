@@ -123,8 +123,8 @@ void clock_advance(int ticks)
 
 char *time_HHMM_as_string(void)
 {
-	static char str[] = "HH:MMPM";
-	static int maxlen = strlen("HH:MMPM") + 1;
+	static char str[] = "午後HH時MM分";
+	static int maxlen = strlen("午前HH時MM分") + 1;
 	int hr = Clock.hour;
 	int min = Clock.min;
 	int n;
@@ -132,50 +132,50 @@ char *time_HHMM_as_string(void)
 	hr = (hr > 12) ? (hr - 12) : hr;
 	hr = (hr == 0) ? 12 : hr;
 
-	n = snprintf(str, maxlen, "%2d:%02d%2s",
-		     hr, min, (Clock.hour >= 12) ? "PM" : "AM");
+	n = snprintf(str, maxlen, "%s%2d時%2d分",
+		     (Clock.hour >= 12) ? "午後": "午前", hr, min);
 	assert(n != -1);
 	return str;
 }				// time_HHMM_as_string()
 
 char *vague_time_as_string(void)
 {
-	static char str[] = "late afternoon";
-	static int maxlen = strlen("late afternoon") + 1;
+	static char str[] = "夕方";
+	static int maxlen = strlen("夕方") + 1;
 	int hr = Clock.hour;
 	int n;
 
 	if (hr < 4)
 	{
-		n = snprintf(str, maxlen, "night");
+		n = snprintf(str, maxlen, "夜");
 	}
 	else if (hr < 7)
 	{
-		n = snprintf(str, maxlen, "early morning");	
+		n = snprintf(str, maxlen, "早朝");
 	}
 	else if (hr < 11)
 	{
-		n = snprintf(str, maxlen, "morning");	
+		n = snprintf(str, maxlen, "朝");
 	}
 	else if (hr < 13)
 	{
-		n = snprintf(str, maxlen, "noon");	
+		n = snprintf(str, maxlen, "午前");
 	}
 	else if (hr < 15)
 	{
-		n = snprintf(str, maxlen, "afternoon");	
+		n = snprintf(str, maxlen, "午後");
 	}
 	else if (hr < 18)
 	{
-		n = snprintf(str, maxlen, "late afternoon");	
+		n = snprintf(str, maxlen, "夕方");
 	}
 	else if (hr < 20)
 	{
-		n = snprintf(str, maxlen, "evening");	
+		n = snprintf(str, maxlen, "晩");
 	}
 	else
 	{
-		n = snprintf(str, maxlen, "night");	
+		n = snprintf(str, maxlen, "夜");
 	}
 	assert(n != -1);
 	return str;
@@ -231,29 +231,29 @@ const char *month_name(void)
 	int month = Clock.month;
 	switch (month) {
 	case 0:
-		return "1st Month";
+		return "1月";
 	case 1:
-		return "2nd Month";
+		return "2月";
 	case 2:
-		return "3rd Month";
+		return "3月";
 	case 3:
-		return "4th Month";
+		return "4月";
 	case 4:
-		return "5th Month";
+		return "5月";
 	case 5:
-		return "6th Month";
+		return "6月";
 	case 6:
-		return "7th Month";
+		return "7月";
 	case 7:
-		return "8th Month";
+		return "8月";
 	case 8:
-		return "9th Month";
+		return "9月";
 	case 9:
-		return "10th Month";
+		return "10月";
 	case 10:
-		return "11th Month";
+		return "11月";
 	case 11:
-		return "12th Month";
+		return "12月";
 	default:
 		assert(0);
 	}
@@ -264,13 +264,13 @@ const char *week_name(void)
 	int week = Clock.week;
 	switch (week) {
 	case 0:
-		return "1st Week";
+		return "第1週";
 	case 1:
-		return "2nd Week";
+		return "第2週";
 	case 2:
-		return "3rd Week";
+		return "第3週";
 	case 3:
-		return "4th Week";
+		return "第4週";
 	default:
 		assert(0);
 	}
@@ -281,19 +281,19 @@ const char *day_name(void)
 	int day = Clock.day;
 	switch (day) {
 	case 0:
-		return "1st Day";
+		return "第1曜日";
 	case 1:
-		return "2nd Day";
+		return "第2曜日";
 	case 2:
-		return "3rd Day";
+		return "第3曜日";
 	case 3:
-		return "4th Day";
+		return "第4曜日";
 	case 4:
-		return "5th Day";
+		return "第5曜日";
 	case 5:
-		return "6th Day";
+		return "第6曜日";
 	case 6:
-		return "7th Day";
+		return "第7曜日";
 	default:
 		assert(0);
 	}

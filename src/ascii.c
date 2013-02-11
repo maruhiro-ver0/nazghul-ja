@@ -268,6 +268,8 @@ static struct ascii {
         Uint32 color; /* active color */
 } Ascii;
 
+static struct ascii Kanji;
+
 static Uint32  asciiDecodeColor(char clr)
 {
         switch (clr) {
@@ -525,6 +527,7 @@ static struct images *ascii_load_fixed_charset(void)
 int asciiInit(void)
 {
         char *fname = cfg_get("ascii-image-filename");
+        char *kanji_fname = cfg_get("kanji-image-filename");
         
         /* This lib might be unitialized twice: once early in startup so that
          * error messages can be displayed, and again later after the
@@ -544,6 +547,17 @@ int asciiInit(void)
         Ascii.state = ASCII_STATE_DEF;
         Ascii.i_color = 0;
         Ascii.color = ASCII_DEF_CLR;
+
+        if (Kanji.images) {
+                images_del(Kanji.images);
+                Kanji.images = 0;
+        }
+        if (kanji_fname) {
+                Kanji.images = images_new(0, 16, 16, 94, 94, 0, 0, kanji_fname);
+        } else {
+                Kanji.images = ascii_load_fixed_charset();
+        }
+        assert(Kanji.images);
         return 0;
 }
 
@@ -620,4 +634,100 @@ int asciiStrlen(char *s)
         }
         
         return len;
+}
+
+static void kanjiPaintColored(int jis, int x, int y,
+                              SDL_Surface *surf, Uint32 color)
+{
+        SDL_Rect dest;
+        SDL_Rect src;
+        int row;
+        int col;
+
+        assert(Kanji.images);
+
+        col = (jis & 0xff) - 0x21;
+        row = (jis >> 8) - 0x21;
+
+        src.x = (col * ASCII_W * 2) + Kanji.images->offx;
+        src.y = (row * ASCII_H) + Kanji.images->offy;
+        src.w = ASCII_W * 2;
+        src.h = ASCII_H;
+
+        dest.x = x;
+        dest.y = y;
+        dest.w = ASCII_W * 2;
+        dest.h = ASCII_H;
+
+        asciiBlitColored(Kanji.images->images, &src,
+                         surf, &dest,
+                         color);
+}
+
+static void kanjiPaintDefault(int jis, int x, int y,
+                              SDL_Surface * surf)
+{
+        SDL_Rect dest;
+        SDL_Rect src;
+        int row;
+        int col;
+
+        assert(Kanji.images);
+
+        col = (jis & 0xff) - 0x21;
+        row = (jis >> 8) - 0x21;
+
+        src.x = (col * ASCII_W * 2) + Kanji.images->offx;
+        src.y = (row * ASCII_H) + Kanji.images->offy;
+        src.w = ASCII_W * 2;
+        src.h = ASCII_H;
+
+        dest.x = x;
+        dest.y = y;
+        dest.w = ASCII_W * 2;
+        dest.h = ASCII_H;
+
+        SDL_BlitSurface(Kanji.images->images, &src, surf, &dest);
+}
+
+int kanjiPaint(int c, int x, int y, SDL_Surface * surf)
+{
+        unsigned int jis;
+        int ret = 0;
+
+        switch (Ascii.state) {
+
+        case ASCII_STATE_CLR:
+                asciiSetColor(c);
+                Ascii.state = ('+'==c?ASCII_STATE_CLRPUSH:ASCII_STATE_DEF);
+                break;
+                
+        case ASCII_STATE_CLRPUSH:
+                asciiSetColor(c);
+                Ascii.state = ASCII_STATE_DEF;
+                break;
+
+        case ASCII_STATE_ESC:
+                if (c == 'c') {
+                        Ascii.state = ASCII_STATE_CLR;
+                }
+                break;
+                
+        case ASCII_STATE_DEF:
+        default:
+                if (c == '^') {
+                        Ascii.state = ASCII_STATE_ESC;
+                } else {
+                        jis = c & 0x7f7f;
+
+                        if(ASCII_DEF_CLR==Ascii.color) {
+                                kanjiPaintDefault(jis, x, y, surf);
+                        } else {
+                                kanjiPaintColored(jis, x, y, surf, Ascii.color);
+                        }
+                        ret = 1;
+                }
+        }
+
+        return ret;
 }

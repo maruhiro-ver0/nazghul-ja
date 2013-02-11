@@ -226,16 +226,16 @@ static void foogodPaintEffects()
 
 static void foogodPaintSessionInfo()
 {
-        screenPrint(&Foogod.turnRect, 0, "Turn: %d", session_get_turn_count());
+        screenPrint(&Foogod.turnRect, 0, "≤ÛøÙ: %d", session_get_turn_count());
         foogodPaintEffects();
 
         if (player_party) {
-                screenPrint(&Foogod.foodRect, 0, "Food: %d", 
+                screenPrint(&Foogod.foodRect, 0, "ø©Œ¡: %d", 
                             player_party->food);
-                screenPrint(&Foogod.goldRect, SP_RIGHTJUSTIFIED, "Gold: %d",  
+                screenPrint(&Foogod.goldRect, SP_RIGHTJUSTIFIED, "∂‚: %d",  
                             player_party->gold);
                 if (player_party->getVehicle()) {
-                        screenPrint(&Foogod.hullRect, 0, "Hull: %d", 
+                        screenPrint(&Foogod.hullRect, 0, "¡•¬Œ: %d", 
                                     player_party->getVehicle()->getHp());
                 }
         }
@@ -291,8 +291,15 @@ void foogodRepaint(void)
                 if (Session) {
                         foogodPaintSessionInfo();
                 }
+                const char *combat_state_jp;
+                switch (combatGetState()) {
+                case 'N': combat_state_jp = "Ãµ"; break;
+                case 'Y': combat_state_jp = "¿Ô"; break;
+                case 'V': combat_state_jp = "æ°"; break;
+                default: combat_state_jp = "";
+                }
                 screenPrint(&Foogod.combatRect, SP_RIGHTJUSTIFIED, 
-                            "Combat: %c", combatGetState());
+                            "¿Ô∆Ææı¬÷: %s", combat_state_jp);
                 break;
 
         case FOOGOD_HINT:

@@ -163,9 +163,9 @@ extern const char *dtable_describe(struct dtable *dtable, int f1, int f2)
         int level = dtable_get(dtable, f1, f2);
         
         if (level <= dtable->hostile)
-                return "hostile";
+                return "敵対的";
         else if (level >= dtable->allies)
-                return "allied";
+                return "友好的";
         else
-                return "neutral";
+                return "中立的";
 }

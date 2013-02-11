@@ -50,7 +50,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place
  'p_old_absalot     ; tag
- "Old Absalot"      ; name
+ "古アブサロット"   ; name
  nil          ; sprite
  m_old_absalot      ; map
  #f              ; wraps

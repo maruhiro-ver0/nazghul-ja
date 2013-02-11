@@ -11,7 +11,7 @@
 
 (kern-mk-place 
 	'p_lost_garrison
-	"Deep Fortress"
+	"深淵の砦"
 	nil          ; sprite
 	(kern-mk-map nil 38 38 pal_expanded
 		(list
@@ -110,7 +110,7 @@
 		(put (mk-bed) 30 24)
 		(put (mk-bed) 32 22)
 		
-		(put (mk-broken-clock s_clock_hand_sw s_clock_hand_se "The clock reads 8:27") 4 22)
+		(put (mk-broken-clock s_clock_hand_sw s_clock_hand_se "時計は8時27分だ。") 4 22)
 		(put (kern-mk-obj t_garrison_log 1) 4 23)
 		(put (kern-mk-obj t_food 21) 33 27)
 		(put (kern-mk-obj t_food 1) 22 29)
@@ -202,7 +202,7 @@
 
 (kern-mk-place 
 	'p_deeps_1
-	"endless deepness"
+	"果てしない深淵"
 	 nil          ; sprite
 	(kern-mk-map nil 19 19 pal_expanded
 		(list
@@ -246,7 +246,7 @@
  
  (kern-mk-place 
 	'p_deeps_2
-	"endless deepness"
+	"果てしない深淵"
 	nil          ; sprite
 	(kern-mk-map nil 19 19 pal_expanded
 		(list
@@ -290,7 +290,7 @@
  
    (kern-mk-place 
 	'p_deeps_3
-	"endless deepness"
+	"果てしない深淵"
 	 nil          ; sprite
 	(kern-mk-map nil 19 19 pal_expanded
 		(list
@@ -334,7 +334,7 @@
  
    (kern-mk-place 
 	'p_deeps_4
-	"endless deepness"
+	"果てしない深淵"
 	 nil          ; sprite
 	(kern-mk-map nil 19 19 pal_expanded
 		(list
@@ -378,7 +378,7 @@
  
  (kern-mk-place 
 	'p_deeps_5
-	"endless deepness"
+	"果てしない深淵"
 	  nil          ; sprite
 	(kern-mk-map nil 19 19 pal_expanded
 		(list

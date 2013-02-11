@@ -45,7 +45,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place 
  'p_thiefs_den ; tag
- "Thief's Den"   ; name
+ "≈•À¿§ŒΩª§ﬂ≤»"   ; name
  nil              ; sprite
  m_thiefs_den  ; map
  #f               ; wraps

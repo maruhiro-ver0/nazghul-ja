@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In the monster town of Kun.
+;; 怪物の村クーン
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_slywan
                (list 0 0 kun-road "working")
@@ -27,30 +27,29 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Slywan is a thief (an accomplished pickpocket) 
-;; living in the monster village of Kun.
+;; スライワンは泥棒(スリの名人である)で、怪物の村クーンに住んでいる。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (slywan-hail knpc kpc)
-  (kern-log-msg "You meet a lithe man.")
-  (say knpc "G'day")
+  (kern-log-msg "あなたは背の低い男と会った。")
+  (say knpc "よお。")
   )
 
 (define (slywan-default knpc kpc)
-  (say knpc "[He shrugs and smiles wanly]")
+  (say knpc "［彼は肩をすくめて忍び笑いをした。］")
   )
 
 (define (slywan-name knpc kpc)
-  (say knpc "Slywan, at your service")
+  (say knpc "スライワン、何でもどうぞ。")
   )
 
 (define (slywan-join knpc kpc)
-  (say knpc "Sorry, mate")
+  (say knpc "悪いな、友よ。")
   )
 
 (define (slywan-job knpc kpc)
-  (say knpc "This and that. You know.")
+  (say knpc "これとあれだ。わかるだろ？")
   )
 
 (define (slywan-bye knpc kpc)
@@ -58,17 +57,17 @@
                 (kern-dice-roll "1d20"))))
     (take-player-gold q)
     (kern-obj-add-to-inventory knpc t_gold_coins q)
-    (say knpc "Seeya")
+    (say knpc "またな。")
     ))
 
 (define (slywan-this knpc kpc)
-  (say knpc "And that"))
+  (say knpc "そしてあれだ。"))
 
 (define (slywan-that knpc kpc)
-  (say knpc "And this"))
+  (say knpc "そしてこれだ。"))
 
 (define (slywan-bust knpc kpc)
-  (say knpc "Oops! Gotta go!")
+  (say knpc "おっと！行かなくては！")
   (kern-obj-add-effect knpc ef_invisibility nil)
   (kern-char-set-fleeing knpc #t)
   (kern-being-set-current-faction knpc faction-outlaw)
@@ -76,14 +75,14 @@
   )
 
 (define (slywan-thie knpc kpc)
-  (say knpc "What? Did somebody steal from gold from you?")
+  (say knpc "なに？オレがオマエからカネを盗んだって？")
   (if (yes? kpc)
       (begin
-        (say knpc "Surely you're not accusing me?")
+        (say knpc "怒ってる？")
         (if (yes? kpc)
             (slywan-bust knpc kpc)
-            (say knpc "Oh... heh. Of course not. Sorry, I didn't see anything.")))
-      (say knpc "You're lucky, this is a rough town. Don't trust anybody!")))
+            (say knpc "おお…へっへ。もちろんそうだよな。悪いな、見つからなかった。")))
+      (say knpc "よかったな。ここはひどい町だ。誰も信じちゃいけない！")))
 
 (define slywan-conv
   (ifc nil
@@ -109,7 +108,7 @@
    (kern-char-force-drop
    (kern-mk-char 
     'ch_slywan           ; tag
-    "Slywan"             ; name
+    "スライワン"         ; name
     slywan-species         ; species
     slywan-occ              ; occ
     s_brigand     ; sprite

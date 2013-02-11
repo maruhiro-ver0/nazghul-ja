@@ -46,6 +46,6 @@ void ztats_items_init(void)
                 NULL
         };
 
-        ztats_container_pane_init(&pane, "Usable Items", &filter, &ops);
+        ztats_container_pane_init(&pane, "使用可能な持ち物", &filter, &ops);
         ztats_add_pane(&pane.base);
 }

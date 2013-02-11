@@ -63,6 +63,7 @@ extern int asciiInit(void);
  * sequence
  */
 extern int asciiPaint(char c, int x, int y, SDL_Surface * surface);
+extern int kanjiPaint(int c, int x, int y, SDL_Surface * surface);
 
 /**
  * Get the length of a string NOT including the font and color control

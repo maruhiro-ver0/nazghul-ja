@@ -8,7 +8,7 @@
       (state-mk 's_portcullis_down #f pclass-bars 0)))
 
 (define (kportcullis-manual kobj khandler)
-  (kern-log-msg "Portcullis won't budge!"))
+  (kern-log-msg "格子戸は動かなかった！"))
 
 (define portcullis-ifc
   (ifc bim-ifc
@@ -21,7 +21,7 @@
        ))
 
 ;; Make a kernel portcullis type
-(mk-obj-type 't_portcullis "portcullis" nil layer-mechanism portcullis-ifc)
+(mk-obj-type 't_portcullis "格子戸" nil layer-mechanism portcullis-ifc)
 
 ;; Define a constructor
 (define (mk-connected-portcullis dest-tag)

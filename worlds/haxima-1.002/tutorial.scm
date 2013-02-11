@@ -9,7 +9,7 @@
 
 ;; Setup progress bar for loading. I arrived at the number by printing the
 ;; current number of steps in src/foogod.c:foogod_progress_bar_finish().
-(kern-progress-bar-start "Loading" 75)
+(kern-progress-bar-start "読み込み中" 75)
 
 ;; Wrap the original definition of (load ...) with one that advances the
 ;; progress bar.
@@ -62,7 +62,7 @@
 ;; Player Character
  (kern-mk-char 
   'ch_wanderer
-  "The Wanderer"        ; name
+  "迷い人"              ; name
   sp_human              ; species
   oc_wanderer           ; occ
   s_wanderer            ; sprite
@@ -121,7 +121,7 @@
 ;; Sun
 (kern-mk-astral-body
  'sun              ; tag
- "Fyer (the sun)"  ; name
+ "フィア(太陽)"  ; name
  1                 ; relative astronomical distance 
  1                 ; minutes per phase (n/a for sun)
  (/ (* 24 60) 360) ; minutes per degree
@@ -137,7 +137,7 @@
 ; ;; The moon Lumis is the source gate, which means it opens the source moongates
 ; ;; on its phases. We designate this by using the source-moon-ifc as its ifc.
 ; (mk-moon 'lumis  ; tag
-;          "Lumis" ; name
+;          "ルミス" ; name
 ;          2       ; hours per phase
 ;          24      ; hours per revolution
 ;          90      ; initial arc
@@ -154,7 +154,7 @@
 ; ;; same order as Lumis. In fact, they don't even need to be the same set of
 ; ;; gates.
 ; (mk-moon 'ord    ; tag
-;          "Ord"   ; name
+;          "オード"   ; name
 ;          1       ; hours per phase
 ;          12      ; hours per revolution
 ;          180     ; initial arc
@@ -206,8 +206,8 @@
 ;; Tutorial
 (define (tutorial kplayer)
   (kern-obj-put-at kplayer (list p_tutorial_town 9 9))
-  (kern-log-msg "Welcome to the tutorial. If you want to go back to the main menu hit the 'q' key for Q)uit.")
-  (kern-log-msg "Your main character appears in the center of the view to the left. See him? Move him by pressing the arrow keys.")
+  (kern-log-msg "チュートリアルへようこそ。最初のメニューに戻りたいときは'q'を押して終了してください。")
+  (kern-log-msg "あなたのキャラクターは左のウィンドウの中央にいます。彼がわかりますか？矢印キーを押すと移動します。")
   )
       
 ;;----------------------------------------------------------------------------

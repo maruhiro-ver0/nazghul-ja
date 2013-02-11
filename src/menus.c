@@ -50,7 +50,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#define LOADSAVE_HINT "\005\006=scroll ENT=select DEL=delete ESC=exit"
+#define LOADSAVE_HINT "\005\006=選択 ENT=決定 DEL=削除 ESC=戻る"
 
 /**
  * Enable this option to have the a "L)oad Game" menu item in addition to the
@@ -107,7 +107,7 @@ static saved_game_t *menu_current_saved_game = 0;
 /**
  * This is what the Save Game menu shows for the new game option.
  */
-static const char *MENU_NEW_GAME_STR = "N)ew Saved Game";
+static const char *MENU_NEW_GAME_STR = "N)新しい保存ファイル";
 
 /**
  * This is a hack added to support demo mode. I'll try to explain, because it's
@@ -280,7 +280,7 @@ static bool main_menu_quit_handler(struct QuitHandler *kh)
 static void show_credits(void)
 {
         struct KeyHandler kh;
-        const char *title = "Credits";
+        const char *title = "制作者";
         const char *text = 
                 "Engine Programming\n"\
                 "...Gordon McNutt\n"\
@@ -309,7 +309,7 @@ static void show_credits(void)
 
         statusSetPageText(title, text);
         statusSetMode(Page);
-        consolePrint("[Hit ESC to continue]\n");
+        consolePrint("[ESCを押すと戻る]\n");
 
         kh.fx = scroller;
         kh.data = NULL;
@@ -326,19 +326,19 @@ static void show_credits(void)
 static int confirm_selection()
 {
         int yesno;
-        log_msg("Existing saved game will be overwritten! Are you sure?");
+        log_msg("今ある保存ファイルを上書きしてよいか？");
         cmdwin_clear();
-        cmdwin_spush("Confirm");
+        cmdwin_spush("確認");
         cmdwin_spush("<y/n>");
         getkey(&yesno, yesnokey);
         cmdwin_pop();
         if (yesno=='y') {
-                cmdwin_spush("yes!");
-                log_msg("Ok!");
+                cmdwin_spush("はい！");
+                log_msg("上書き！");
                 return 1;
         } else {
-                cmdwin_spush("no!");
-                log_msg("Canceled!");
+                cmdwin_spush("いいえ！");
+                log_msg("取り消し！");
                 return 0;
         }
 }
@@ -500,7 +500,7 @@ static saved_game_t *saved_game_lookup(char *fname)
  */
 static void menu_show_screenshot(SDL_Surface *screenshot)
 {
-        static const char *MENU_SCREEN_SHOT_STR = "^c+ySCREEN SHOT^c-";
+        static const char *MENU_SCREEN_SHOT_STR = "^c+y撮られた画面^c-";
         SDL_Rect rect;
 
         mapSetImage(screenshot);
@@ -590,26 +590,26 @@ static void menu_prompt_to_delete(menu_scroll_data_t *data)
                 return;
 
         /* Prompt to confirm. */
-        log_begin("Delete %s?", save->fname);
+        log_begin("%sを削除するか？", save->fname);
         log_flush();
         cmdwin_clear();
-        cmdwin_push("Delete-");
+        cmdwin_push("削除-");
         cmdwin_push("<y/n>");
         getkey(&yesno, yesnokey);
         cmdwin_pop();
 
         /* If confirmation denied then cancel. */
         if (yesno == 'n') {
-                cmdwin_spush("abort!");
-                log_end(" Canceled!");
+                cmdwin_spush("取り消し！");
+                log_end(" 取り消し！");
                 return;
         }
 
         /* Confirmed, try to delete the save file. Abort if it doesn't work. */
-        cmdwin_push("yes!");
+        cmdwin_push("はい！");
         statusFlashSelected(Red);
         if (unlink(save->path)) {
-                log_continue(" WARNING! Failed to delete save file %s: %s", 
+                log_continue(" 警告！保存ファイル%sの削除に失敗した: %s", 
                         save->path, strerror(errno));
         }
 
@@ -618,9 +618,8 @@ static void menu_prompt_to_delete(menu_scroll_data_t *data)
         if (save->screenshot) {
                 char *scr_fname = saved_game_mk_screenshot_fname(save);
                 if (unlink(scr_fname)) {
-                        log_continue(" WARNING! Failed to delete screenshot "\
-                                     "file %s: %s:", scr_fname, 
-                                     strerror(errno));
+                        log_continue(" 警告！スクリーンショット%sの削除に失敗した: %s:",
+                                     scr_fname, strerror(errno));
                 }
                 free(scr_fname);
         }
@@ -655,7 +654,7 @@ static void menu_prompt_to_delete(menu_scroll_data_t *data)
         statusSetSelectedIndex(i1 ? (i1 - 1) : 0);
         /*statusRepaint();*/
 
-        log_end(" Removed!");
+        log_end(" 削除した！");
 }
 
 /**
@@ -869,7 +868,7 @@ char * load_game_menu(void)
         assert(data.hotkeys);
         data.menu = menu;
         data.n_menu = n;
-        data.title = "Load Game";
+        data.title = "読み込み";
 
         /* Add each saved game to the menu list. */
         menubufptr = menubuf;
@@ -935,6 +934,12 @@ char * load_game_menu(void)
  */
 static int menu_fname_filter(int key)
 {
+        if (key == '\t') {
+                return 0;
+        }
+        if (key & 0x80) {
+                return 1;
+        }
         if (isalnum(key)
             || (key=='_')
             || (key=='-')
@@ -953,13 +958,16 @@ static char *prompt_for_fname()
 {
         char buf[32];
 
-        log_msg("Enter the new filename.");
+        log_msg("新しいファイル名は？");
         cmdwin_clear();
-        cmdwin_push("Filename: ");
+        cmdwin_push("ファイル名: ");
 
+        alpha_to_kana(-1, NULL); /* No roman mode. */
         if (ui_getline_filtered(buf, sizeof(buf),  menu_fname_filter)) {
+                alpha_to_kana('\t', NULL); /* Roman mode */
                 return strdup(buf);
         }
+        alpha_to_kana('\t', NULL); /* Roman mode */
         return 0;
 }
 
@@ -997,7 +1005,7 @@ char * save_game_menu(void)
         assert(data.hotkeys);
         data.menu = menu;
         data.n_menu = n;
-        data.title = "Save Game";
+        data.title = "保存";
 
         /* Prepare to fill in the menu list. */
         i = 0;
@@ -1195,14 +1203,14 @@ static bool menus_demo_tick_handler(struct TickHandler *th)
 
 char * main_menu(void)
 {
-        static const char *START_NEW_GAME="S)tart New Game";
-        static const char *JOURNEY_ONWARD="J)ourney Onward";
-        static const char *LOAD_GAME="L)oad Game";
-        static const char *CREDITS="C)redits";
-        static const char *QUIT="Q)uit";
-        static const char *TUTORIAL="T)utorial";
-        static const char *SETTINGS = "S(e)ttings";
-        static const char *DEMO = "Show (I)ntro";
+        static const char *START_NEW_GAME="S)始めから";
+        static const char *JOURNEY_ONWARD="J)旅を続ける";
+        static const char *LOAD_GAME="L)ゲームを読み込む";
+        static const char *CREDITS="C)製作者";
+        static const char *QUIT="Q)終了";
+        static const char *TUTORIAL="T)チュートリアル";
+        static const char *SETTINGS = "E)設定";
+        static const char *DEMO = "I)デモ";
         const char *menu[8];
         char hotkeys[8+1];
         int n_items = 0;
@@ -1322,9 +1330,9 @@ char * main_menu(void)
 
         hotkeys[n_items] = 0;
 
-        foogodSetHintText("\005\006=scroll ENT=select");
+        foogodSetHintText("\005\006=選択 ENT=決定");
         foogodSetMode(FOOGOD_HINT);
-        statusSetStringList("Main Menu", n_items, menu);
+        statusSetStringList("選択", n_items, menu);
         statusSetMode(StringList);
 
         data.hotkeys = hotkeys;
@@ -1495,14 +1503,14 @@ static void option_music(struct option *opt);
     { name, comment, key, 0, 0, 0, handler, ctrl, 0, 0, roo }
 
 static struct option options[OPTION_NUMOPTIONS] = {
-        DECL_OPTION("Screen Size", "Set the dimensions of the game screen.", 
+        DECL_OPTION("画面の大きさ", "画面の大きさを決める。", 
                     "screen-dims", option_screen_dims),
-        DECL_YESNO_OPTION("Sound", "Turn sound on or off.",
+        DECL_YESNO_OPTION("効果音", "効果音を出す/出さない。",
                           "sound-enabled", option_yes_no, sound_enable, 1),
-        DECL_OPTION("Music Volume", "Adjust volume of builtin music.", 
+        DECL_OPTION("音楽の音量", "音楽の音量を調整する。", 
                     "music-volume", option_music),
-        DECL_YESNO_OPTION("Keyword Highlighting", 
-                          "Highlight keywords in conversations with NPC's.",
+        DECL_YESNO_OPTION("キーワードの強調", 
+                          "NPCとの会話でキーワードを強調して表示する。",
                           "keyword-highlighting", option_yes_no,
                           conv_enable_keyword_highlighting, 0),
 };
@@ -1517,12 +1525,12 @@ static void option_screen_dims(struct option *opt)
         struct KeyHandler kh;
 	struct ScrollerContext data;
         
-        log_msg("Choose your screen size");
+        log_msg("画面の大きさは？");
         cmdwin_clear();
-        cmdwin_spush("Screen size");
-        cmdwin_spush("<select>");
+        cmdwin_spush("画面の大きさ");
+        cmdwin_spush("<選択>");
 
-        statusSetStringList("Screen Dimensions", array_sz(menu), menu);
+        statusSetStringList("画面の大きさ", array_sz(menu), menu);
         statusSetMode(StringList);
         data.selection = NULL;
         data.selector  = String;
@@ -1576,13 +1584,13 @@ static void option_music(struct option *opt)
 	struct KeyHandler kh;
 	struct ScrollerContext data;
 	
-	log_msg("Choose music volume");
+	log_msg("音楽の音量は？");
 	cmdwin_clear();
-	cmdwin_spush("Volume");
-	cmdwin_spush("<select>");
+	cmdwin_spush("音楽の音量");
+	cmdwin_spush("<選択>");
 	
 	
-	statusSetStringList("Music Volume", array_sz(menu), menu);
+	statusSetStringList("音量", array_sz(menu), menu);
 	statusSetMode(StringList);
 	data.selection = NULL;
 	data.selector  = String;
@@ -1679,11 +1687,11 @@ void options_menu(void)
                 /* Setup status browser (do this every time through the loop,
                  * as the handler functions might change things) */
                 cmdwin_clear();
-                cmdwin_spush("Settings");
-                cmdwin_push("<select/ESC>");
+                cmdwin_spush("設定");
+                cmdwin_push("<選択/ESC>");
                 foogodSetHintText(SCROLLER_HINT);
                 foogodSetMode(FOOGOD_HINT);
-                statusSetStringList("Settings", OPTION_NUMOPTIONS, 
+                statusSetStringList("設定", OPTION_NUMOPTIONS, 
                                     (const char**)menu);
                 statusSetMode(StringList);
                 data.selection = NULL;
@@ -1717,7 +1725,7 @@ void options_menu(void)
                                  options[i].name,
                                  options[i].val,
                                  options[i].changed ? '*' : ' ',
-                                 options[i].restart ? "(restart)" : ""
+                                 options[i].restart ? "(再起動)" : ""
                                 );
 
                         break;
@@ -1738,8 +1746,8 @@ void options_menu(void)
         }
 
         /* Prompt to save */
-        log_msg("Save settings?");
-        cmdwin_spush("Save");
+        log_msg("設定を保存するか？");
+        cmdwin_spush("保存");
         cmdwin_push("<y/n>");
         getkey(&yesno, yesnokey);
         cmdwin_pop();
@@ -1750,19 +1758,17 @@ void options_menu(void)
                         cfg_set(options[i].key, options[i].val);
                 }
                 if (options_save()) {
-                        log_msg("Error while saving!");
+                        log_msg("保存中に異常が発生した！");
                 } else {
-                        log_msg("Settings saved!");
+                        log_msg("保存した！");
                         if (any_restart) {
-                                log_msg("NOTE: some of your changes won't "
-                                        "take effect until you Quit and "
-                                        "restart the program. Sorry for the "
-                                        "inconvenience.");
+                                log_msg("注意: いくつかの変更は終了し再起動"
+                                        "しないと有効にならない。");
                         }
                 }
         } else {
-                log_msg("Settings unchanged.");
-        }        
+                log_msg("設定は変更されていない。");
+        }
 }
 
 void menu_startup_error(const char *fmt, ...)

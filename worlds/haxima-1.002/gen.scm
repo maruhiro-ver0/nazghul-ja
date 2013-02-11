@@ -1,7 +1,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Green Tower.
+;; 緑の塔
 ;;----------------------------------------------------------------------------
 (define (mk-zone x y w h) (list 'p_green_tower x y w h))
 (kern-mk-sched 'sch_gen
@@ -18,39 +18,39 @@
                )
 
 ;; ----------------------------------------------------------------------------
-;; Gen's Goblin Lexicon
+;; ジェンのゴブリン単語集
 ;; ----------------------------------------------------------------------------
 (mk-reusable-item 
- 't_goblin_lexicon "Goblin Lexicon" s_lexicon norm
+ 't_goblin_lexicon "ゴブリン語単語集" s_lexicon norm
  (lambda (klexicon kuser)
    (kern-ui-page-text
-   "Goblin Lexicon"
-   "I compiled these notes to help others learn the goblin language. "
-   "I hope they are useful."
-   "--Gen"
+   "ゴブリン語単語集"
+   "これはゴブリン語を学ぶ助けとするために書かれた"
+   "ものである。役立つことを望む。"
+   "−ジェン"
    ""
-   "Bo.....My, Myself"
-   "Cho....Mankind"
-   "Da.....Abode, World"
-   "Eh.....'What?'"
-   "Gu.....Spirit, Ancestor"
-   "Ha.....Good, Yes, Skillful"
-   "Hi.....Magic"
-   "Iki....Go, At"
-   "Jo.....Join"
-   "Ka.....Kill, Destroy, End"
-   "Ki.....Health, Life-Force, Power"
-   "Lu.....Change, Metamorphosis, Transformation"
-   "Ma.....Forest, Hidden Ways"
-   "Me.....Duty, Job, Destiny"
-   "Na.....Yours, Yourself"
-   "Nu.....Give Birth, Create, Begin"
-   "No.....Name"
-   "Nin....Stealth"
-   "Ru.....Ancient, Primordal, Deep, Cave"
-   "To.....Individual"
-   "Tu.....No, Bad"
-   "Zu.....Watch, Seek"
+   "ボ……私の、私自身"
+   "チョ…人間"
+   "ダ……家、世界"
+   "エー…「何？」"
+   "グ……魂、祖先"
+   "ハ……良い、はい、巧みな"
+   "ヒ……呪術"
+   "イキ…行く、〜で"
+   "ジョ…加わる"
+   "カ……殺す、壊れる、終わる"
+   "キ……健康、生命力、力"
+   "リュ…交換、変化、変身"
+   "マ……森、隠された道"
+   "メ……役目、仕事、運命"
+   "ナ……あなたの、あなた自身"
+   "ヌ……生む、作る、始まる"
+   "ノ……名前"
+   "ニン…隠された"
+   "ル……古代、原始、深い、洞窟"
+   "ト……者"
+   "ツ……いいえ、悪い"
+   "ズ……見る、探す"
    )))
 
 ;;----------------------------------------------------------------------------
@@ -65,69 +65,68 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Gen is a Ranger who dwells in Green Tower.
-;; He has much knowledge of Goblin kind, and is a friend of Kama.
-;; Gen is a potential party member.
+;; ジェンは警備隊員で緑の塔に住んでいる。
+;; 彼はゴブリンの知識があり、カマの友人でもある。
+;; ジェンは仲間になる。
 ;;----------------------------------------------------------------------------
-(define (gen-hail     gen player) (say gen "Hail, Wanderer"))
-(define (gen-bye      gen player) (say gen "Farewell"))
-(define (gen-default  gen player) (say gen "I can't help you with that"))
-(define (gen-name     gen player) (say gen "I am Gen." ))
-(define (gen-woodsman gen player) (say gen "Yes, some call me the Woodsman." ))
-(define (gen-job      gen player) (say gen "Once I was a Ranger, but my duty now is done. I wander 'midst the woods for my own reasons." ))
-(define (gen-reasons  gen player) (say gen "My reasons are my own." ))
+(define (gen-hail     gen player) (say gen "こんにちは、迷い人さん。"))
+(define (gen-bye      gen player) (say gen "さようなら。"))
+(define (gen-default  gen player) (say gen "それはわかりません。"))
+(define (gen-name     gen player) (say gen "私はジェン。"))
+(define (gen-woodsman gen player) (say gen "そう、私を森人と呼ぶ者もいます。" ))
+(define (gen-job      gen player) (say gen "かつて私は警備隊員でした。しかし、その勤めを終えました。今では自分のために森を歩き回っています。" ))
+(define (gen-reasons  gen player) (say gen "自分のためにです。" ))
 
 (define (gen-captain gen player) 
-  (say gen "Captain Deric commands the Rangers of Green Tower. Have you met him?")
+  (say gen "デリック隊長は緑の塔で警備隊を指揮しています。もう会いましたか？")
   (if (kern-conv-get-yes-no? player)
-      (say gen "A decent man, if somewhat ambitious.")
-      (say gen "You can find him in the Tower. His office is on the second floor.")))
+      (say gen "有能な男ですが、少々野心的です。")
+      (say gen "塔にいます。彼の事務所は二階にあります。")))
 
-(define (gen-ambitious   gen player) (say gen "In peace there's nothing so becomes a man as modest stillness and humility." ))
+(define (gen-ambitious   gen player) (say gen "平和なときには、人はつつましく謙虚にはならないものです。"))
 (define (gen-culture     gen player) 
-  (say gen "Though a culture their own, truly a culture they have, (unlike the trolls and headless)."
-       "The truths of culture can be seen in Shakespeare, truths which hold across the gulfs between different folk."))
+  (say gen "独自の文化ですが、本当の文化を持っています(トロルや首なしとは違って)。"
+       "シェイクスピアの中にあるように、それは異なる人々を超えて存在するものです。"))
 (define (gen-shakespeare gen player)
-  (say gen "You know of him! Very good! Some interesting conversation at last.")
+  (say gen "彼を知っているのですか！すばらしい！")
   (if (in-player-party? 'ch_kama)
-      (say gen player "[He points at Kama] Another who knows of the Bard! You should hear his telling of Hamlet!")
+      (say gen "［彼はカマを見た。］彼はその詩人を知るもう一人です！彼の語るハムレットはぜひ聞くべきです！")
       ))
 
-(define (gen-ranger gen player) (say gen "Rangers fought in these woods during the Goblin Wars. Now they maintain a token presence."))
-(define (gen-wars   gen player) (say gen "Yes, I fought as a Ranger in the goblin wars. That was a generation ago, and people forget. "
-				     "They see the goblins as lesser beings, defeated and worthy of slow extinction."))
-(define (gen-goblin gen player) (say gen "An interesting species. Although they have their own language they have no writing. "
-				     "They are much like men, but more savage, more primal. "
-				     "Their warriors are beserkers, their shamans are ecstatic mystics."))
-(define (gen-primal gen player) (say gen "You can tell I admire them? But in the wars I fought them, not understanding what they were. "
-				     "I have friends among the wild forest goblins, now. The cave goblins, though, they are another story..." ))
-(define (gen-cave   gen player) (say gen "The cave goblins, who are larger and stronger than their forest cousins, prefer to live in the deeps of the world. "
-				     "Their dark god demands living sacrifices. Beware them if you explore the caves, they burn with hatred for humankind." ))
+(define (gen-ranger gen player) (say gen "警備隊はゴブリン戦争の間この森で戦いましたが、今では形式的な存在です。"))
+(define (gen-wars   gen player) (say gen "はい。私は警備隊員としてゴブリン戦争で戦いました。一世代前のことで、人々は忘れています。"
+				     "人々はゴブリンを劣った存在、敗れ去り消えるべき存在とみなしています。"))
+(define (gen-goblin gen player) (say gen "興味深い種族です。彼らは独自の言語を使いますが、文字を持っていません。"
+				     "人と似ていますが、より凶暴で、より原始的です。"
+				     "彼らの兵士は狂戦士で、呪術師は恍惚としています。"))
+(define (gen-primal gen player) (say gen "私は彼らを尊敬しています。しかし、戦争のころは彼らのことを知りませんでした。"
+				     "今では森ゴブリンの友人がいます。洞窟ゴブリンはまた別ですが…" ))
+(define (gen-cave   gen player) (say gen "洞窟ゴブリンは、森の者より大きくて力が強く、この世界の奥深くで生きることを好む者たちです。"
+				     "彼らの闇の神は生贄を求めます。洞窟を探検するときは彼らに気をつけることです。彼らの心は人間への憎しみで燃えています。" ))
 
 (define (gen-language kgen player)
   (let ((gen (kobj-gob-data kgen)))
-    (say kgen "Yes, I can speak a few words of goblin. Would you like to learn?")
+    (say kgen "そうです。私は少しゴブリン語を話せます。知りたいですか？")
     (if (kern-conv-get-yes-no? player)
         (if (gen-gave-notes? gen)
-            (say kgen "Study the notes I gave you, and then practice on me.")
+            (say kgen "私の単語集で学んでください。そして私を相手に練習してください。")
             (begin
-              (say kgen "Here are some notes I have made on their language. You may keep it. Feel free to practice with me.")
+              (say kgen "彼らの言語についてまとめたものです。受け取ってください。私を相手に自由に練習してください。")
               (kern-obj-add-to-inventory player t_goblin_lexicon 1)
               (gen-set-gave-notes! gen #t)))
-        (say kgen "Perhaps another time."))))
+        (say kgen "それでは別の機会に。"))))
 
 
-(define (gen-practice gen player) (say gen "If you want to practice speaking goblin, just ask me something in goblin!" ))
+(define (gen-practice gen player) (say gen "ゴブリンと話す練習をしたいのであれば、私にゴブリン語で話しかけてください！" ))
 
 (define (gen-join gen player)
   (if (gen-will-join? (kobj-gob-data gen))
       (begin
-        (say gen "Yes, I will join you. "
-             "I'll need my equipment from my chest, "
-             "so let's go to my hut in the west part of town. "
-             "Once more unto the breach, dear friends!")
+        (say gen "わかりました。仲間に加わりましょう。"
+             "装備が必要です。この町の西にある私の小屋へ行って、箱の中のものを取りに行きましょう。"
+             "では改めて。友よ！")
              (join-player gen))
-      (say gen "No, for the woods call my name.")))
+      (say gen "いいえ。森の言葉で私の名前を言ってください。")))
 
 ;; SAM: Added a few words from the Lexicon which were not defined as responses.
 ;;      These were (Iki, Lu, Nin)
@@ -135,49 +134,47 @@
 ;; Added responses having to do with the concepts of Wanderer, Warrior, Wizard, Rogue, Wright.
 ;; A bit of organization/tidying may still be wanted, to make sure there are no loose ends .
 
-(define (gen-da  gen player) (say gen "Ha! Da-Ma-To means forest goblin." ))
-(define (gen-gu  gen player) (say gen "Ha! Da-Gu means world." ))
-(define (gen-ru  gen player) (say gen "Ha! Da-Ru-To means cave goblin." ))
-(define (gen-no  gen player) (say gen "Bo-No-Gen. But the goblins call me Ma-Zu-To." ))
-(define (gen-ki  gen player) (say gen "Bo-Ha-Ki! I am healthy." ))
-(define (gen-jo  gen player) (say gen "Very good! If you befriend a goblin he may join you in your adventures."))
-(define (gen-cho gen player) (say gen "Ha! Cho-To means 'a man'." ))
-(define (gen-nu  gen player) (say gen "Ha! Nu-Ki is the goblin word for 'food'" ))
-(define (gen-ha  gen player) (say gen "Yes, Ha is a general affirmative term." ))
-(define (gen-tu  gen player) (say gen "Right, Tu is a general negative term." ))
-(define (gen-bo  gen player) (say gen "Yes, Bo-Gu means your spirit self, which is your altar ego in the spirit world." ))
-(define (gen-na  gen player) (say gen "Yes, Bo-Na means 'us', or 'tribe'. Bo-Na-Ma refers to forest goblins in general." ))
-(define (gen-to  gen player) (say gen "Right, To is a general suffix meaning person." ))
-(define (gen-ma  gen player) (say gen "Yes, and Ka-Ma-To is their term for lumberjack." ))
-(define (gen-eh  gen player) (say gen "Eh?  Ah yes, Eh-Na-Me means what is your job, or duty." ))
-(define (gen-iki gen player) (say gen "Ha! Bo-Iki-Da means 'I go home'."))
+(define (gen-da  gen player) (say gen "ハ！ダ・マ・トは森ゴブリンを意味します。" ))
+(define (gen-gu  gen player) (say gen "ハ！ダ・グは世界という意味です。" ))
+(define (gen-ru  gen player) (say gen "ハ！ダ・ル・トは洞窟ゴブリンを意味します。" ))
+(define (gen-no  gen player) (say gen "ボ・ノ・ジェン。でもゴブリンたちは私をマ・ズ・トと呼びます。" ))
+(define (gen-ki  gen player) (say gen "ボ・ハ・キ！私は元気です。" ))
+(define (gen-jo  gen player) (say gen "とてもすばらしいことです！ゴブリンの助けが必要なら、彼はあなたの冒険に加わるでしょう。"))
+(define (gen-cho gen player) (say gen "ハ！チョ・トは人間を意味します。" ))
+(define (gen-nu  gen player) (say gen "ハ！ヌ・キはゴブリンの言葉で「食べ物」です。" ))
+(define (gen-ha  gen player) (say gen "ええ。ハは肯定を表す言葉です。" ))
+(define (gen-tu  gen player) (say gen "その通り。ツは否定の言葉です。" ))
+(define (gen-bo  gen player) (say gen "そう、ボ・グはあなたの魂、霊的な世界のあなたを意味します。" ))
+(define (gen-na  gen player) (say gen "はい。ボ・ナは「私たち」、または「一族」です。ボ・ナ・マは森ゴブリン一般を指します。" ))
+(define (gen-to  gen player) (say gen "その通り。トを付けると何かをする者を表します。" ))
+(define (gen-ma  gen player) (say gen "そう、カ・マ・トは木こりを表す言葉です。" ))
+(define (gen-eh  gen player) (say gen "エー？ああ、そう、エー・ナ・メはあなたの仕事、または役割は何ですか？という意味です。" ))
+(define (gen-iki gen player) (say gen "ハ！ボ・イキ・ダは「私は家へ戻る」という意味です。"))
 
-(define (gen-me  gen player) (say gen "Bo-Ma-Zu. I watch the forest, or I seek the hidden ways.  Me-Lu-Ki is to grow, change, learn, explore.  Such is the path of the Wanderer!"))
-(define (gen-ka  gen player) (say gen "Ha! Ka-Ha-To means warrior.  And Me-Ka-Ha is the path of the Warrior!"))
-(define (gen-hi  gen player) (say gen "Ha! Hi-Ma-To is the word for 'shaman'.  And Me-Ha-Zu-Ru is the path of the Wizard!"))
-(define (gen-nin gen player) (say gen "Ha! Nin-Ma-To is a Forest Stalker.  And Me-Ha-Nin-Zu is the path of the Rogue!"))
-(define (gen-lu  gen player) (say gen "Ha! Lu-Da-To is one who makes.  And Me-Ha-Lu-Da is the path of the Wright!"))
+(define (gen-me  gen player) (say gen "ボ・マ・ズ、私は森を監視している、または隠された道を探している。メ・ル・キは成長、変化、学び、探求、それは迷い人の道です！"))
+(define (gen-ka  gen player) (say gen "ハ！カ・ハ・トは戦士を、そしてメ・カ・ハは戦士の生き様を表します！"))
+(define (gen-hi  gen player) (say gen "ハ！ヒ・マ・トは「呪術師」のことです。そして「メ・ハ・ズ・ル」は魔術師の生き様です！"))
+(define (gen-nin gen player) (say gen "ハ！ニン・マ・トは森の隠密です。そしてメ・ハ・ニン・ズはならず者の生き様です！"))
+(define (gen-lu  gen player) (say gen "ハ！リュ・ダ・トは作る者です。そしてメ・ハ・リュ・ダは大工の生き様です！"))
 
-(define (gen-zu       gen player) (say gen "Good! And Zu-To means seeker, or Wanderer.  [He looks at you percingly.]  Iki Meluki?"))
-(define (gen-meluki   gen player) (say gen "So, you are a seeker indeed.  I would join you, if you can master Gunodama"))
-(define (gen-gunodama gen player) (say gen "The names given by the ancestor spirits, to those who abide in the forest.  In other words, the language of the Forest Goblins."))
+(define (gen-zu       gen player) (say gen "すばらしい！そしてズ・トは探求者、または迷い人のことです。［彼は鋭い目であなたを見た。］イキ・メリュキ？"))
+(define (gen-meluki   gen player) (say gen "そう。あなたは探求者です。もしあなたがグノダマを習得したなら仲間になりましょう。"))
+(define (gen-gunodama gen player) (say gen "森に住む祖先の魂から与えられた名前、別の言葉で言えば森ゴブリンの言葉のことです。"))
 
 (define (gen-nuki knpc kpc)
-  (say knpc "That's goblinese for 'food'."))
+  (say knpc "それはゴブリン語で「食べ物」です。"))
 
 (define (gen-bonaha gen player) 
-  (say gen "Excellent! That is the goblin word for friend. You have come far in mastering their language.")
+  (say gen "すばらしい！それはゴブリンの言葉で友人です。ゴブリンの言葉がわかってきたようですね。")
   (gen-set-will-join! (kobj-gob-data gen) #t))
 
-(define (gen-shroom gen player) (say gen "She is an old friend. Can you believe she was a war-maiden in the Goblin Wars?"))
-(define (gen-maiden gen player) (say gen "It's true! I can still remember her hand-axe flashing in the moonlight "
-                                   "as she hacked her way through goblin war parties, chanting a battle-ward "
-                                   "with ragged breath! She was a sight to see."))
+(define (gen-shroom gen player) (say gen "彼女は古くからの友人です。ゴブリン戦争の頃は戦場の乙女だったと言ったら信じますか？"))
+(define (gen-maiden gen player) (say gen "本当です！彼女が息を切らせて守護の呪文を唱えながら、月明かりで輝く手斧でゴブリンの部隊をなぎ倒し道を切り開く姿を今でも覚えています。"
+                                   "彼女の活躍は目を見張るものがありました。"))
 
 (define (gen-thie knpc kpc)
-  (say knpc "I've seen no one odd around here, but the goblins who live in "
-       "the north wood recently saw a lone man traveling northeast toward "
-       "Bole.")
+  (say knpc "このあたりでは怪しい者は見ませんでした。"
+       "でも、北の森に住むゴブリンが、最近北東のボレに一人で向かう者を見たそうです。")
        (quest-data-update 'questentry-thiefrune 'tower 1)
        (quest-data-update-with 'questentry-thiefrune 'bole 1 (quest-notify (grant-party-xp-fn 10)))
        )
@@ -185,36 +182,35 @@
 (define (gen-kama knpc kpc)
   (if (is-player-party-member? ch_kama)
       (begin
-        (say knpc "I see Kama has joined you. Bonaha Kama!")
-        (say ch_kama "Unh. Bonaha Mazuto."))
+        (say knpc "カマはあなたに加わったようですね。ボナハ　カマ！")
+        (say ch_kama "ウン。　ボナハ　マズト。"))
       (begin
-        (say knpc "Kama is a forest goblin hunter. He was supposed to meet me at the edge of town a few nights back but he never showed up. Have you seen him?")
+        (say knpc "カマはゴブリンの狩人です。彼とはこの町の角で何日か前の夜に会うことになっていたのですが、現れませんでした。彼と会ったことがありますか？")
         (if (yes? kpc)
             (begin
-              (say knpc "Is he in trouble?")
+              (say knpc "何か困っていましたか？")
               (if (yes? kpc)
-                  (say knpc "We must help him if we can!")
-                  (say knpc "That is a relief!")))
-            (say knpc "If you do, let me know. I'm a bit worried.")))))
+                  (say knpc "できるなら助けに行きたい！")
+                  (say knpc "安心しました！")))
+            (say knpc "もし会ったら知らせてください。少し心配です。")))))
             
 (define (gen-ruka knpc kpc)
-  (say knpc "Ruka is the goblin's name for Angriss, their god of death. "
-       "The priests of Angriss were agitators during the goblin wars. "
-       "Her cult has all but died out since their defeat. ")
+  (say knpc "ルカとはゴブリンたちのアングリス、死の女神の呼び名です。"
+       "アングリスの神官たちは戦争の間、ゴブリンを死へと駆り立てていました。"
+       "彼女への信仰は戦争に負けてから廃れてしまいました。")
   (prompt-for-key)
-  (say knpc "Now, she is only a myth to keep children from straying into the woods, "
-       "where more practical dangers still exist."))
+  (say knpc "今では彼女は子供を森に近づけさせないための単なる言い伝えです。"
+       "森にはもっと危険なものがいますからね。"))
 
 (define (gen-clov knpc kpc)
-  (say knpc "King Clovis led the paladins in the Goblin War. "
-       "If my friend Kama would ever show up we could ask him "
-       "if the goblins ever recovered his body.")
+  (say knpc "クロービス王はゴブリン戦争で聖騎士たちを導いた者です。"
+       "もし友人のカマと会えれば、彼の亡骸がどうなったか聞くことができます。")
        (quest-data-update-with 'questentry-rune-f 'kama 1 (quest-notify nil))
        )
 
 (define (gen-band knpc kpc)
-  (say knpc "The goblins report a bandit camp somewhere to the south and west. "
-       "Perhaps Deric knows more."))
+  (say knpc "ゴブリン達は盗賊の小屋が南か西のどこかにあると言っていました。"
+       "デリック隊長はもっと詳しいことを知っているかもしれません。"))
 
 (define gen-conv
   (ifc basic-conv
@@ -269,6 +265,7 @@
        (method 'ambi gen-ambitious)
        (method 'band gen-band)
        (method 'capt gen-captain)
+       (method 'deri gen-captain)
        (method 'cave gen-cave)
        (method 'fore gen-job)
        (method 'maid gen-maiden)
@@ -295,7 +292,7 @@
 (define (mk-gen tag)
   (bind 
    (kern-mk-char tag                 ; tag
-                 "Gen"               ; name
+                 "ジェン"            ; name
                  sp_human            ; species
                  oc_ranger           ; occ
                  s_old_ranger  ; sprite

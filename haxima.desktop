@@ -1,8 +1,8 @@
 [Desktop Entry]
 Encoding=UTF-8
-Name=Haxima
+Name=Haxima日本語版
 GenericName=Role Playing Game
-Comment=An old school role playing game
+Comment=昔懐かしいロールプレイングゲーム
 Exec=haxima
 Icon=haxima.png
 Terminal=false

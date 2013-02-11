@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Paladin's Hold, in the Keep guarding Kurpolis.
+;; クロポリスの聖騎士の砦
 ;;----------------------------------------------------------------------------
 (define anne-bed ph-bed2)
 (define anne-mealplace ph-tbl2)
@@ -33,40 +33,39 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Anne is a female White Magick mage serving as a medik 
-;; in the service of Glasdrin.  
-;; She currently serves in the Paladin's Hold of the Keep guarding Kurpolis.
+;; アンネは白魔術師の女性で、医師としてグラスドリンで働いている。
+;; 彼女は現在はクロポリスの聖騎士の砦の任務についている。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (anne-name knpc kpc)
-  (say knpc "I am called Anne."))
+  (say knpc "アンネと呼ばれています。"))
 
 (define (anne-job knpc kpc)
-  (say knpc "I am a medik in the service of Glasdrin. Are you in need of healing?")
+  (say knpc "グラスドリンの医師です。治療が必要ですか？")
   (if (yes? kpc)
       (anne-trade knpc kpc)))
 
 (define (anne-trade knpc kpc)
   (if (trade-services knpc kpc
                       (list
-                       (svc-mk "Heal" 30 heal-service)
-                       (svc-mk "Cure" 30 cure-service)
-                       (svc-mk "Resurrect" 100 resurrect-service)))
+                       (svc-mk "回復" 30 heal-service)
+                       (svc-mk "治癒" 30 cure-service)
+                       (svc-mk "蘇生" 100 resurrect-service)))
       (begin
-        (say knpc "What else can I do for you?")
+        (say knpc "他に何か必要ですか？")
         (anne-trade knpc kpc))
       (begin
-        (say knpc "Will there be anything else?")
+        (say knpc "他に何か必要ですか？")
         (if (kern-conv-get-yes-no? kpc)
             (anne-trade knpc kpc)
-            (say knpc "Very well.")))))
+            (say knpc "お大事に。")))))
 
 (define (anne-medik knpc kpc)
-  (say knpc "I heal paladins who are wounded in combat. I will heal others, too, for a price."))
+  (say knpc "戦いで傷ついた聖騎士を治療しています。他の人の治療も行います。料金は必要ですが。"))
 
 (define (anne-kurp knpc kpc)
-  (say knpc "This is a savage place, not for the inexperienced. It gets worse the deeper you go."))
+  (say knpc "ここは経験の浅い人にはつらい場所です。進めば進むほどひどくなります。"))
 
 (define anne-conv
   (ifc kurpolis-conv
@@ -80,7 +79,7 @@
        (method 'heal anne-trade)
        (method 'pric anne-trade)
 
-       (method 'medik anne-medik)
+       (method 'medi anne-medik)
        (method 'kurp anne-kurp)
        ))
 
@@ -88,7 +87,7 @@
   (bind 
    (kern-mk-char 
     'ch_anne           ; tag
-    "Anne"             ; name
+    "アンネ"           ; name
     anne-species         ; species
     anne-occ              ; occ
     s_companion_wizard     ; sprite

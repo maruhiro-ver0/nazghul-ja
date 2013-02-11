@@ -1,12 +1,12 @@
 ;;----------------------------------------------------------------------------
-;; The Alchemist is numbered among the Wise, but he's not a very nice person.
-;; He's very clever, very greedy and likes to trick people. He is also very
-;; knowledgeable. He knows there is a rune buried in trigrave, and that the
-;; enchanter knows what the runes are for. He also knows that one of then
-;; entrances to the MAN's hideout is in the northwest.
+;; 錬金術師は賢者の一人として数えられる。しかし、彼はあまりよい人ではない。彼
+;; はとても有能で、とても欲深く、そして人をだますことを好む。また彼には多くの
+;; 知識がある。彼はトリグレイブの忘れられた石版のありかを知っている。そして魔
+;; 道師は石版は何のためにあるか知っている。彼は北西のにんげんの隠れ家の場所を
+;; 知っている。
 ;;
-;; The Alchemist would be very happy to obtain the blood of a hydra, dragon and
-;; lich. He will also teach the player how to make potions for gold?
+;; 錬金術師はヒドラ、竜、そしてリッチの血を手に入れるととても喜ぶ。彼は金を払
+;; えば薬の作り方を教えるかもしれない?
 ;;----------------------------------------------------------------------------
 ;;----------------------------------------------------------------------------
 ;; Constants
@@ -15,7 +15,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Oparine
+;; オパーリン
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_alch
                (list 0   0  alkemist-shop "idle")
@@ -55,57 +55,57 @@
 
 (define alch-catalog
   (list
-   (list t_heal_potion             18 "When you run out of Mani or mana in the pitch of battle, these will save your life!")
-   (list t_cure_potion             18 "An Nox may be cheaper, but nothing works better than my cure potions!")
-   (list t_mana_potion             18 "No other potions rejuvenate your mana like mine do!")
+   (list t_heal_potion             18 "戦いの真っ只中でマニ<Mani>や魔力がなくなっても、これがあれば助かるだろう！")
+   (list t_cure_potion             18 "アン・ノクス<An Nox>の方が安上がりだ。だが私の治癒の薬より効くものはないだろう！")
+   (list t_mana_potion             18 "他の薬では私のもののように魔力を取り戻せないであろう！")
    
-   (list t_poison_immunity_potion  18 "Prevention is better than a cure! With my immunity potions you need never fear poison again!")
-   (list t_invisibility_potion    100 "One quaff of this and your enemies will never find you!")
-   (list t_str_potion             999 "The strength of a troll will be yours with this potion!" )  ;; limited stock would be nice...
-   (list t_dex_potion             999 "Your arrows will fly straight as truth when you drink this potion!")  ;; limited stock would be nice...
-   (list t_int_potion             999 "The wise man seeks more wisdom! With this potion, it can be yours for a very reasonable price!")  ;; limited stock would be nice...
-   (list t_info_potion            150 "The sage said to 'Know thyself'. This potion will help!")
+   (list t_poison_immunity_potion  18 "予防は治癒に勝る！私の免疫の薬があればもう毒を恐れる必要はない！")
+   (list t_invisibility_potion    100 "これを飲んだ者は敵に見つかることはないだろう！")
+   (list t_str_potion             999 "この薬でトロルの腕力は君のものだ！" )  ;; limited stock would be nice...
+   (list t_dex_potion             999 "この薬を飲めば、君の矢は真実のようにまっすぐに飛ぶだろう！")  ;; limited stock would be nice...
+   (list t_int_potion             999 "知のある者はより知を求める！この薬はお手ごろ価格でそんな君になれるだろう！")  ;; limited stock would be nice...
+   (list t_info_potion            150 "聖人は言った。汝自身を知れ。この薬はその助けとなるだろう！")
    
-   (list t_oil                      6 "Hurl fire at your foes! Protect your flanks or cover your retreat with flaming fields of death!")
-   (list t_slime_vial              25 "More fun than a barrel of monkeys! Confound your foes with a multiplying army of slimes!")
+   (list t_oil                      6 "敵に炎を浴びせろ！君の側面を守り、死の炎の囲みに逃げ込め！")
+   (list t_slime_vial              25 "これは最高に楽しい！分裂する粘液の部隊で敵をかく乱しろ！")
    ))
 
 (define alch-merch-msgs
-  (list "I'm afraid my shop is closed now. Come by between 9:00AM to 5:00PM."
-        "I'm sure I have something you'll like! [He rubs his hands briskly]"
-        "I sometimes buy used goods... at a discount of course."
-        "Yes, let's get down to business!"
-        "You'll be back for more when you see for yourself how good my potions are!"
-        "I hope you don't regret passing up these fine potions."
-        "I can probably find some use for these."
-        "I doubt you'll find a better offer anywhere else."
-        "A pleasure doing business with you!"
-        "Perhaps next time."
+  (list "残念だが私の店は今は開いていない。午前9時から午後5時の間に来てくれたまえ。"
+        "もちろん君が好きそうな物もあるぞ！［彼はもみ手をした。］"
+        "使った物も買い取るぞ…もちろん値は下がるが。"
+        "そうだ。さあ商売を始めよう！"
+        "私の薬がどれほど良いかわかったら、もっと手に入れるためにここに来るだろう！"
+        "このすばらしい薬を買わなかったことを後悔することがなければよいが。"
+        "使い道がありそうだ。"
+        "別のもっといい買い手がいるとは思えないが。"
+        "いい取り引きができたな！"
+        "次はたのむぞ。"
         ))
 
 ;; Basics...
 (define (alch-hail knpc kpc)
-  (say knpc "[You meet a short, fat old man with a long nose] "
-       "Hello and welcome, Traveler!"))
+  (say knpc "［あなたは背が低く、長い鼻の太った老人と会った。］"
+       "こんにちは。そしていらっしゃい、旅の方！"))
 
 (define (alch-default knpc kpc)
-  (say knpc "I'm afraid I can't help you with that."))
+  (say knpc "残念だが助言はできないな。"))
 
 (define (alch-name knpc kpc)
-  (say knpc "I'm known as the Alchemist.")
+  (say knpc "錬金術師として知られている。")
   (quest-data-update 'questentry-alchemist 'found 1)
   (quest-data-complete 'questentry-alchemist)
   )
 
 (define (alch-join knpc kpc)
-  (say knpc "Too busy! And far too old for adventures."))
+  (say knpc "忙しすぎる！そして冒険には歳をとり過ぎている。"))
 
 (define (alch-job knpc kpc)
-  (say knpc "I make potions, dabble in mysteries, that sort of thing. "
-       "If you want to buy something just say so!"))
+  (say knpc "薬を作る、道楽で謎を解いてみる、そんなところだ。"
+       "何か欲しいものがあれば言ってくれ！"))
 
 (define (alch-bye knpc kpc)
-  (say knpc "Farewell! Come back again soon!"))
+  (say knpc "さようなら！！また来なさい！"))
 
 ;; Trade...
 (define (alch-trade knpc kpc) (conv-trade knpc kpc "trade" alch-merch-msgs alch-catalog))
@@ -117,24 +117,22 @@
 ;; accepted: sent to find p rune
 ;; done: known to have found p rune
 (define (alch-dragon-reward knpc kpc)
-  (say knpc "Oh, yes, the rune...")
+  (say knpc "ああ、そうだ、石版は…")
 	(prompt-for-key)
   (say knpc
-	   "The paladins have built several fortifications in the "
-	   "deeps of Kurpolis. One of the runes was buried in the "
-	   "foundations of the deepest fort.")
+	   "聖騎士はクロポリスの地下にいくつかの砦を築いている。"
+	   "石版の一つが最も深い砦に埋もれているのだ。")
 	(prompt-for-key)
   (say knpc
-	   "A pick and shovel may be enough to get it out again, "
-	   "but it might be difficult with a dozen paladins breathing "
-	   "down your neck.")
+	   "つるはしとシャベルがあれば掘り出せるだろう。"
+	   "だが、問題なのは君に付きまとう何人もの聖騎士がいることだ。")
 	   (quest-data-assign-once 'questentry-rune-p)
 	   (quest-rune-p-update)
 	   )
 	   
 (define (alch-dragon-done knpc kpc)
-  (say knpc "I am afraid I dont know the locations of the other "
-					"runes. Try asking the rest of the Wise."))
+  (say knpc "残念だが他の石版のありかはわからない。"
+					"別の賢者に聞いてみるとよいだろう。"))
 		
 (define (alch-dragon-quest knpc kpc qstat)
 	(if (kern-conv-get-yes-no? kpc)
@@ -144,7 +142,7 @@
 				)
 			((in-inventory? kpc t_rune_p)
 				(quest-done! qstat #t)
-				(say knpc "I see you have collected the Rune of Power.")
+				(say knpc "どうやら力の石版を見つけたようだな。")
 				(alch-dragon-done knpc kpc)
 				)
 			((quest-accepted? qstat)
@@ -152,9 +150,9 @@
 				)
 			((in-inventory? kpc t_dragons_blood 1)
 			  (begin
-				(say knpc "I know where ones is buried, "
-					 "and I'll tell you in exchange for that vial of "
-					 "dragon's blood you're carrying. Deal?")
+				(say knpc "その一つがどこに隠されているか知っている。"
+					 "竜の血を1ビン持ってくれば、交換で教えよう。"
+					 "どうするかね？")
 				(if (kern-conv-get-yes-no? kpc)
 					(begin
 						  (quest-accepted! qstat #t)
@@ -164,32 +162,29 @@
 						  (kern-obj-add-to-inventory knpc
 													 t_dragons_blood
 													 1)
-						  (say knpc "[He eyes the vial hungrily] "
-							   "Yes! It's just what I need!")
+						  (say knpc "［彼は飢えた目でビンを見た。］"
+							   "そうだ、これこそが私が求めていたものだ！")
 							(quest-data-update 'questentry-dragon 'done 1)
 							(quest-data-complete 'questentry-dragon)
 							(quest-data-assign-once 'questentry-dragon)
 						  (alch-dragon-reward knpc kpc))
 					(begin
-						(say knpc "Well, I suppose if you dig up the "
-						"whole Shard you'll someday find it without "
-						"my help. Good luck!")
+						(say knpc "ううむ、私の助けがなくても、シャルド中を掘り返せばいつかは見つかるだろう。"
+						"がんばりたまえ！")
 						(quest-data-assign-once 'questentry-dragon)
 					))
 				))
 			(#t
-				(say knpc "Then perhaps we can exchange favors. "
-				   "I happen to know where one of these runes "
-				   "is buried. I'll tell you its location if you "
-				   "bring me a vial of dragon's blood. ")
+				(say knpc "ならば交換だ。"
+				   "その一つがある遺跡に埋もれていると偶然聞いた。"
+				   "竜の血を1ビン持ってくれば、その場所を教えよう。")
 				(quest-data-assign-once 'questentry-dragon)))
-		(say knpc "Well, if you are, I happen to know where one is "
-		   "hidden.")))
+		(say knpc "ううむ、ならばよい。その一つの隠し場所を知っているのだが。")))
 
 (define (alch-more knpc kpc)
 	(let ((qstat (alchq-dragon (gob knpc))))
-		(say knpc "Abe knows more about the runes themselves. Are you "
-			"interested in finding the others?")
+		(say knpc "エイブは石版のことをよく知っている。"
+			"別の石版も探してみたいとは思わんかね？")
 		(quest-data-update-with 'questentry-runeinfo 'abe 1 (quest-notify nil))
 		(alch-dragon-quest knpc kpc qstat)
 	))
@@ -198,71 +193,65 @@
 	(if (not (null? (quest-data-getvalue 'questentry-dragon 'rerune)))
 		(alch-more knpc kpc)
 		(begin
-			(say knpc "[He gets a canny look] Runes, eh? I've seen a few in my time. "
-			   "Have you one to look at?")
+			(say knpc "［彼は色めき立った。］石版だと？今までに何度か見たことがある。"
+			   "君のを見せてくれないか？")
 			(if (kern-conv-get-yes-no? kpc)
 				(if (in-inventory? kpc t_rune_k 1)
 					(begin
-					  (say knpc "Yes, I see. This once belonged to the Enchanter, "
-						   "I believe. I hope you didn't steal it! "
-						   "I have seen several more like it, "
-						   "but the person you really should speak to "
-						   "is Abe.")
+					  (say knpc "やはりそうだ。これはかつて魔道師が持っていたものだと思う。"
+						   "盗んだものではないと思いたいな！"
+						   "同じようなものをいくつかみたことがある。"
+						   "君が本当に会って話さなければならないのはエイブだ。")
 							(quest-data-update 'questentry-dragon 'rerune 1)
 						   (quest-data-update-with 'questentry-runeinfo 'abe 1 (quest-notify nil))
 					  )
-					(say knpc "I don't see it. Perhaps you dropped it?"))
-				(say knpc "I might be able to help if you could show me.")))
+					(say knpc "どこにもないぞ。もしやなくしたのか？"))
+				(say knpc "見せてくれれば手助けできるかもしれない。")))
 		))
 
 (define (alch-abe knpc kpc)
-  (say knpc "An old acquaintance of mine. "
-       "Last I heard he was studying the ruins at Green Tower."))
+  (say knpc "私の古くからの知り合いだ。"
+       "今は緑の塔で遺跡を調べていると聞いている。"))
 
 (define (alch-drag knpc kpc)
-  (say knpc "I've never done it personally, but if one wants to obtain some "
-       "dragon's blood my understanding is that one must kill a dragon! "
-       "I hear they're common as cows in the regions of the Fire Sea."
+  (say knpc "実際には見たことがない。"
+       "しかし、竜の血を手に入れるためには、竜を倒さなければならないだろう！"
+       "火の海のあたりでは牛のようにありきたりのものだと聞いた。"
 			)
 	(quest-data-update-with 'questentry-dragon 'sea 1 (quest-notify nil)))
 
 
 ;; The Wise...
 (define (alch-necr knpc kpc)
-  (say knpc "The Necromancer is an old acquaintance of mine. "
-       "Since the razing of Absalot he's retired to the underworld. "
-       "'Tis a pity, but we've lost touch."))
+  (say knpc "死霊術師とは古くからの知り合いだ。"
+       "アブサロットが崩壊して以来、地下世界に引きこもっている。"
+       "哀れなことだ。だが、あれから会っていない。"))
 
 (define (alch-ench knpc kpc)
-  (say knpc "The Enchanter is a great and knowledgable Wizard. "
-       "I'm afraid we don't always see eye-to-eye. "
-       "Lately he's been pre-occupied with the Accursed."
+  (say knpc "魔道師は偉大で知識のある魔術師だ。"
+       "残念だが彼とは意見が合わないことが多い。"
+       "最近は呪われた者のことばかり気にしている。"
        ))
 
 (define (alch-man-reward knpc kpc)
-	(say knpc "In the mountains of "
-	   "the northeast, along their southern face, "
-	   "there is a secret passage. It is near coordinates "
-	   "[92 10]."))
+	(say knpc "北東の山脈に、南側に面した秘密の入り口がある。座標は[92,10]だ。"))
 
 (define (alch-man knpc kpc)
   (let ((qstat (gob knpc)))
-	  (say knpc "I've never met the MAN. "
-		   "Being the most accomplished of Wrogues, "
-		   "he probably has a fortune stashed in his hideout. "
-		   "If I were the adventurous type I might go seek it out myself. "
-		   "What about you?")
+	  (say knpc "にんげんとは会ったことがない。"
+		   "最も老獪なならず者という存在だ。"
+		   "恐らく相当な富を隠れ家に蓄えているはずだ。"
+		   "もし私が冒険者なら、自分自身で探し出そうとするだろう。"
+		   "君はどうだ？")
 	  (if (kern-conv-get-yes-no? kpc)
 		(cond
 			((alchq-hydra? qstat)
-				(say knpc "I've heard, from a reliable source, of an entrance "
-					"to the MAN's secret hideout.")
+				(say knpc "信用できる者がにんげんの隠れ家の入り口がどこにあるか教えてくれた。")
 				(alch-man-reward knpc kpc))
 			((in-inventory? kpc t_hydras_blood 1)
 				(begin
-					(say knpc "I've heard, from a reliable source, of an entrance "
-						"to the MAN's secret hideout. I'll tell you in exchange "
-						"for that vial of hydra's blood in your pack. Yes?")
+					(say knpc "信用できる者がにんげんの隠れ家の入り口がどこにあるか教えてくれた。"
+						"それは君の持っている1ビンのヒドラの血と交換で教えよう。よいな？")
 					(if (kern-conv-get-yes-no? kpc)
 						(begin
 							(alchq-hydra! qstat #t)
@@ -272,39 +261,36 @@
 							(kern-obj-add-to-inventory knpc
 								t_hydras_blood
 								1)
-							(say knpc "[He fairly drools over the noxious stuff] "
-								"Oh, lovely... lovely!")
-							(say knpc "Ahem.")
+							(say knpc "［彼はその毒物が欲しくてたまらなかったようだ。］"
+								"おお、かわいい…かわいい！")
+							(say knpc "ゴホン。")
 							(alch-man-reward knpc kpc))
-						(say knpc "'Tis a pity. You have no use for the "
-							"vial, and I am too old to go treasure-hunting."))))
+						(say knpc "残念だ。君が持っていても何の役にもたたない。"
+							"そして私は取りに行くには年を取りすぎている。"))))
 			(#t 
-				(say knpc "Well, I do hear many things, many of which are only "
-					"rumour. But a reliable source has told me of where to find "
-					"an entrance to the MAN's hideout. If you bring me a vial of "
-					"hydra's blood I'll disclose it to you.")))
-	   (say knpc "For fie, Wanderer! "
-			"I thought you were the adventurous type."))))
+				(say knpc "ううむ、多くのことを聞いたことがあるが、ほとんどはただのうわさだ。"
+					"だが、信用できる者がにんげんの隠れ家の入り口がどこにあるか教えてくれた。"
+					"もし1ビンのヒドラの血を持ってくるなら、その秘密を君に明かそう。")))
+	   (say knpc "何ということだ、迷い人よ！"
+			"君は冒険者だと思っていたよ。"))))
 
 (define (alch-hydr knpc kpc)
-  (say knpc "The hydra is a most difficult foe. "
-       "I understand that striking them only increases their strength! "
-       "But if you do succeed in killing one their blood is quite useful "
-       "to the arcane arts."))
+  (say knpc "ヒドラは最も困難な敵だ。"
+       "ただ切りつけると、それはより強くなるだけだと聞いた！"
+       "だが、殺すことができれば、その血には知る人ぞ知るすばらしい価値がある。"))
 
 (define (alch-warr knpc kpc)
-  (say knpc "On a few occasions I have met the Warritrix. "
-       "Her ferocity is legendary, "
-       "but I found her to be very calm and gracious in her demeanor. "
-       "I understand she refused to take part in the destruction of "
-       "Absalot."))
+  (say knpc "闘士とは数回会ったことがある。"
+       "彼女の残忍さは伝説的だ。"
+       "だが、見た目にはとても物静かで優雅だ。"
+       "アブサロットの破壊に参加するのを拒んだと聞いた。"))
 
 (define (alch-engi knpc kpc)
-  (say knpc "I've never met the Engineer, "
-       "I understand he is quite the recluse."))
+  (say knpc "技師とは会ったことがない。"
+       "本物の隠遁者だと聞いた。"))
 
 (define (alch-alch knpc kpc)
-  (say knpc "Yes, that's me. I am the Alchemist.")
+  (say knpc "そう、それは私だ。私が錬金術師だ。")
   (quest-data-update 'questentry-alchemist 'found 1)
   (quest-data-complete 'questentry-alchemist)
   )
@@ -312,36 +298,35 @@
 
 ;; Absalot...
 (define (alch-absa-reward knpc kpc)
-	(say knpc "There was a fortress overlooking a river of fire. "
-		 "Pity it wasn't manned, it might have turned Glasdrin's invasion. "
-		 "It will make a perilous crossing if monsters have taken it over.")
+	(say knpc "火の川を見渡せる場所に砦があった。"
+		 "グラスドリンに侵攻され、残念だがそこには人はいない。"
+		 "怪物どもが居座っていれば、そこを通るのは危険だ。")
 	(prompt-for-key)
 	(say knpc 
-		 "There is, however, an older route that bypasses the fortress. "
-		 "Probe the east wall of the first cavern, "
-		 "you will find a hidden passage.")
+		 "だが、砦への古い迂回路があるのだ。"
+		 "最初の洞窟の東側の壁を調べろ。"
+		 "隠し通路が見つかるはずだ。")
 	(prompt-for-key)
 	(say knpc
-		 "You will still need to cross the river of fire. "
-		 "There is a statue upon the river. Speak the password 'ONUS' to pass unharmed. "
-		 "Write that password down!")
+		 "それでも火の川を渡る必要がある。"
+		 "川に石像がある。それに合言葉「責任」と言えば安全に渡れる。"
+		 "合言葉を書きとめておけ！")
 	(prompt-for-key)
 	(say knpc
-		 "The passage rejoins the main route near the stairway which leads up to "
-		 "the lost city. You won't escape all the hazards of the journey, "
-		 "but it should make your life somewhat easier."))
+		 "隠し通路は失われた町の近くの坂道で通常の道と再び合流する。"
+		 "途中どんな危険があっても逃げられないが、この方法ならより簡単にたどり着けるはずだ。"))
 
 (define (alch-absa knpc kpc)
   (let ((qstat (gob knpc)))
-    (say knpc "The passage to Absalot was always dangerous even when it was maintained. "
-         "You wouldn't happen to be thinking of going there?")
+    (say knpc "アブサロットへの道のりは、崩壊の前でさえ常に危険だった。"
+         "そこへ行ってみようと思うかね？")
     (if (kern-conv-get-yes-no? kpc)
         (cond
          ((alchq-lich? qstat)
           (alch-absa-reward knpc kpc))
          ((in-inventory? kpc t_lichs_blood 1)
-          (say knpc "In exchange for that vial of lich's blood I'd be "
-               "happy to tell you of a back door. What do you say?")
+          (say knpc "その1ビンのリッチの血と交換で、喜んで裏道を教えよう。"
+               "どうするかね？")
           (if (kern-conv-get-yes-no? kpc)
               (begin
                 (alchq-lich! qstat #t)
@@ -351,48 +336,47 @@
                 (kern-obj-add-to-inventory knpc
                                            t_lichs_blood
                                            1)
-                (say knpc "[He grins and winks] Just the stuff I need!")
+                (say knpc "［彼はウィンクし、ほほえんだ。］まさにこれが求めていたものだ！")
                 (alch-absa-reward knpc kpc))
-              (say knpc "I see. No doubt you have IMPORTANT plans for "
-                   "that lich's blood. I can always get some from "
-                   "another adventurer.")))
+              (say knpc "わかった。"
+                   "間違いなく君にはその血を使った重要な計画があるのだな。"
+                   "私は常に別の冒険者から手に入れることができる。")))
          (else
-          (say knpc "Bring me a vial of lich's blood and I'll tell you "
-               "a secret way.")))
-        (say knpc "It's just a ruin now anyways. Everything was destroyed "
-             "when it was sacked."))))
+          (say knpc "1ビンのリッチの血を持ってくるのだ。"
+               "そうすれば秘密の通路を教えよう。")))
+        (say knpc "今となってはただの廃墟だ。"
+             "略奪にあったとき、全てが崩壊した。"))))
 
 (define (alch-sack knpc kpc)
-  (say knpc "Oh yes, didn't you know? Absalot was sacked by the armies "
-       "of Glasdrin, Green Tower and Oparine. Destroyed for its wickedness, "
-       "they say. [He chuckles without humour]"))
+  (say knpc "ああそうだ。知っているか？"
+       "アブサロットはグラスドリン、緑の塔、そしてオパーリンの軍隊によって略奪された。"
+       "彼らが言うには、アブサロットはその邪悪さで崩壊したのだそうだ。［彼は冷ややかに笑った。］"))
 
 (define (alch-esca knpc kpc)
-  (say knpc "Er... did I say that? I can't imagine why. Anyone who escaped "
-       "from Absalot would have the death sentence on their head."))
+  (say knpc "何…私がそう言ったのか？"
+       "なぜそんなことを言ったのだろうか。"
+       "アブサロットから逃げようとした者は、首を切り落とされ処刑された。"))
 
 (define (alch-wick knpc kpc)
-  (say knpc "Yes, Absalot was so wicked that every man, woman and child "
-       "who dwelt there had to be put to the sword. Lucky for us to have "
-       "paladins willing to carry out this righteous work! "
-       "[You detect a hint of irony in his raised eyebrows and innocent "
-       "expression]"))
+  (say knpc "そう、アブサロットは非常に邪悪だったので、全ての男、女、子供が剣で切り殺された。"
+       "我々にとって幸運だったのは、聖騎士たちはそれを正義のための行いだと信じていたことだ！"
+       "［あなたは彼のつりあがった眉と率直な言い方に、反語的なほのめかしを感じ取った。］"))
 
 (define (alch-lich knpc kpc)
-  (say knpc "A lich is an undead wizard. This foul thing corrupts all it "
-       "touches and commands armies of the dead. Its blood has many uses "
-       "in necromancy, which is not my specialty."))
+  (say knpc "リッチは不死の魔術師だ。この禁断の存在は、触れたもの全てを崩壊させることができ、"
+       "そして不死の軍団を操ることができる。その血は死霊術において多くの使い道がある。"
+       "それは私の専門ではないがな。"))
 
 ;; The Accursed...
 (define (alch-accu knpc kpc)
-  (say knpc "The so-called Accursed are a secret society blamed for "
-       "many heinous deeds, but who can say how much of that is rumour?"))
+  (say knpc "呪われた者とされているのは、多くの憎むべきものごとの原因とされている秘密の集団だ。"
+       "だが、どこまでがうわさだと誰が言えるのだろうか？"))
 
 ;; Townsfolk
 (define (alch-lia knpc kpc)
-  (say knpc "A bewitching creature! "
-       "If I could, I would break her curse. In fact, I would do it for free. "
-       "Call me an old fool!"))
+  (say knpc "魅力的な存在だ！"
+       "もし可能ならば、彼女の呪いを解いてやりたい。もっと言えば、タダでしてもよい。"
+       "おろかな年寄りと言ってくれ！"))
 
 (define alch-conv
   (ifc basic-conv
@@ -441,7 +425,7 @@
    (kern-char-arm-self
     (kern-mk-char 
      'ch_alchemist ;;.....tag
-     "Alchemist" ;;.......name
+     "錬金術師" ;;.......name
      sp_human ;;.....species
      oc_wright ;;...occupation
      s_companion_tinker ;;......sprite

@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Kun.
+;; クーン
 ;;----------------------------------------------------------------------------
 (define jake-bed )
 (kern-mk-sched 'sch_jake
@@ -26,73 +26,68 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Jake / Percy is a gint (two-headed giant) 
-;; who lives in the monster village of Kun.
-;; 
-;; Jake is the brutish left head,
-;; who acts as the bouncer for the tavern there.
-;; 
-;; Percy is the refined right head,
-;; who is the barkeep and proprietor of the tavern there.
+;; ジェイクとパーシーは巨人(2つの頭のある巨人)で、怪物の村クーンに住んでいる。
+;; ジェイクは野蛮な左の頭で、酒場の用心棒をしている。
+;; パーシーは上品な右側の頭で、酒場の主人として経営をしている。
 ;;----------------------------------------------------------------------------
 
 (define (left-head? knpc)
   (jake-left? (gob knpc)))
 (define (left-head! knpc)
   (jake-left! (gob knpc) #t)
-  (say knpc "RIGHT HERE!"))
+  (say knpc "ここだ！"))
 (define (right-head! knpc)
   (jake-left! (gob knpc) #f)
-  (say knpc "How may I be of service?"))
+  (say knpc "いかがなさりましたか？"))
 
 ;; Basics...
 (define (jake-hail knpc kpc)
-  (kern-log-msg "You meet an enormous figure with two heads. One is rough-looking, the other somewhat... "
-                "well, prissy is probably not too strong a word.")
+  (kern-log-msg "あなたは2つの頭のある巨人と会った。一方は荒々しく見え、もう一方は、何と言うか……、"
+                "神経質と言っても言い過ぎではないだろう。")
   (if (left-head? knpc)
-      (say knpc "HAIL, MANLING!")
-      (say knpc "Well met, little sir.")
+      (say knpc "よお！坊や！")
+      (say knpc "ようこそ、小さいお方。")
       ))
 
 (define (jake-default knpc kpc)
   (if (left-head? knpc)
-      (say knpc "HELL, I DON'T KNOW! ASK PERCY!")
-      (say knpc "A conundrum, to be sure.")
+      (say knpc "フン、知るかよ！パーシーに聞け！")
+      (say knpc "難しいお話でございます。")
       ))
 
 (define (jake-name knpc kpc)
   (if (left-head? knpc)
-      (say knpc "I'M JAKE! AND THIS OTHER IS PERCY! [The left head jerks to indicate the right]")
-      (say knpc "I am Percival. And my constant companion here likes to be called 'Jake'.  [The left head nods to the right]")
+      (say knpc "ジェイクだ！そしてこっちがパーシーだ！［左の頭は右を向いた。］")
+      (say knpc "パーシバルでございます。そしてこちらがわたくしの永遠の友、ジェイクでございます。［左の頭が右側にうなずいた。］")
       ))
 
 (define (jake-join knpc kpc)
   (if (left-head? knpc)
-      (say knpc "HAR! HAR! HAR!")
-      (say knpc "Oh, I'm afraid not. A most gracious offer, though, and all that.")
+      (say knpc "ハッ！ハッ！ハッ！")
+      (say knpc "ああ、申し訳ありません。身に余るお誘いでございます。")
       ))
 
 (define (jake-job knpc kpc)
   (if (left-head? knpc)
-      (say knpc "I'M THE BOUNCER, OF COURSE! NOW DRINK SOMETHING OR GET OUT!")
+      (say knpc "もちろん用心棒だ！さあ、飲むか出て行くかだ！")
       (begin
-        (say knpc "I am the proprieter and bartender. Would you care for a drink?")
+        (say knpc "わたくしは店主兼バーテンダーでございます。何かお飲みになりますか？")
         (if (yes? kpc)
             (jake-trade knpc kpc)
-            (say knpc "Please reconsider, I offer the finest.")
+            (say knpc "考え直してくださいませ。最高級のものをお出しいたします。")
             ))))
 
 (define (jake-bye knpc kpc)
   (if (left-head? knpc)
-      (say knpc "BYE!")
-      (say knpc "Farewell, do come again.")
+      (say knpc "じゃあな！")
+      (say knpc "さようなら。また会いましょう。")
       ))
 
 (define (jake-jake knpc kpc)
   (if (left-head? knpc)
-      (say knpc "YEAH? WHADDAYA WANT?")
+      (say knpc "あぁ？何の用だ？")
       (begin
-        (say knpc "Do you actually WANT to talk to Jake?")
+        (say knpc "本当にジェイクと話したいのですか？")
         (if (yes? kpc)
             (left-head! knpc)))
       ))
@@ -100,27 +95,27 @@
 (define (jake-perc knpc kpc)
   (if (left-head? knpc)
       (begin
-        (say knpc "WHA? YOU WANNA TALK TO PERCY NOW?")
+        (say knpc "なに？パーシーと話したいのか？")
         (if (yes? kpc)
             (right-head! knpc)
             ))
-      (say knpc "Yes, that's me. Can I help you?")
+      (say knpc "はい。それはわたくしです。何なりとお申し付けくださいませ。")
       ))
 
 (define (jake-drin knpc kpc)
   (if (left-head? knpc)
-      (say knpc "TALK TO PERCY!")
+      (say knpc "パーシーに言え！")
       (jake-trade knpc kpc)))
 
 
 ;; Trade...
 (define jake-merch-msgs
   (list nil ;; closed
-        "Let me show you a menu." ;; buy
+        "メニューでございます。" ;; buy
         nil ;; sell
         nil ;; trade
-        "I'm delighted I could be of assistance." ;; bought-something
-        "[sniff] Well, I shan't be offended." ;; bought-nothing
+        "お手伝いできたことを喜ばしく思います。" ;; bought-something
+        "［ため息］ああ、わたくしは落胆いたしました。" ;; bought-nothing
         nil
         nil
         nil
@@ -129,9 +124,9 @@
 
 (define jake-catalog
   (list
-   (list t_food 7 "My roast lamb is to die for! I'm afraid it's quite wasted on the usual riff-raff.")
-   (list t_beer 4 "I import casks of lager all the way from the famous brewers of Gintspar.")
-   (list t_wine 6 "We get some very good wine from a wrogue who specializes in pilfering wine cellars. I hope you don't recognize any of these bottles... Ahem")
+   (list t_food 7 "すばらしい子羊ローストでございます！恐れながら、人間にはもったいないものにございます。")
+   (list t_beer 4 "はるか遠くの有名なジャイアントスパーの醸造者から取り寄せたラガービールでございます。")
+   (list t_wine 6 "ワイン専門の泥棒から提供された最高のワインでございます。ゴホン…見覚えのないボトルだとよいのですが。")
    ))
 
 (define (jake-trade knpc kpc) (conv-trade knpc kpc "buy" jake-merch-msgs jake-catalog))
@@ -165,7 +160,7 @@
   (bind 
    (kern-mk-char 
     'ch_jake           ; tag
-    "Jake&Percival"             ; name
+    "ジェイクとパーシバル"             ; name
     jake-species         ; species
     jake-occ              ; occ
     s_gint     ; sprite

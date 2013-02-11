@@ -5,7 +5,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Oparine.
+;; オパーリン
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_bart
                (list 0  0  black-barts-bed      "sleeping")
@@ -22,28 +22,28 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Bart is a hard-drinking goblin shipwright who dwells in Oparine.
+;; バートは飲んだくれのゴブリンの造船職人で、オパーリンに住んでいる。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (bart-hail knpc kpc)
-  (say knpc "[You meet a taciturn goblin who smells of whiskey] "
-       "Unh."))
+  (say knpc "［あなたは口数の少なそうな、ウィスキーの臭いのするゴブリンと会った。］"
+       "ウン。"))
 
 (define (bart-default knpc kpc)
-  (say knpc "Eh?"))
+  (say knpc "エー？"))
 
 (define (bart-name knpc kpc)
-  (say knpc "Bart."))
+  (say knpc "バート。"))
 
 (define (bart-join knpc kpc)
-  (say knpc "[He looks at you oddly and shakes his head]"))
+  (say knpc "［彼はあなたを奇妙そうにみて、頭を振った。］"))
 
 (define (bart-job knpc kpc)
-  (say knpc "Bart make ship. Good ship."))
+  (say knpc "バートは船を作る。よい船。"))
 
 (define (bart-bye knpc kpc)
-  (say knpc "Ja."))
+  (say knpc "ジャ。"))
 
 ;; Trade...
 (define (bart-trade knpc kpc)
@@ -53,11 +53,11 @@
            (town-loc (kern-place-get-location town))
            (ship-loc (loc-offset town-loc east)))
       (if (ship-at? ship-loc)
-          (say knpc "Hunh. No room at dock. Somebody need move ship first.")
+          (say knpc "ム。船着場、場所ない。まず船動かせ。")
           (begin
             (kern-obj-relocate (mk-ship) ship-loc nil)
             (take-player-gold oparine-ship-price)
-            (say knpc "Ship ready ready outside town.")
+            (say knpc "船、外にある。")
             ))))
 
   (define (sell-ship)
@@ -66,67 +66,67 @@
            (ship-loc (loc-offset town-loc east))
            (kship (kern-place-get-vehicle ship-loc)))
       (if (null? kship)
-          (say knpc "Bart no see ship. Park at dock, come back.")
+          (say knpc "バート船見えない。船着場止めろ。また来い。")
           (begin
-            (say knpc "You want sell that junk ship? Bart give " 
+            (say knpc "このボロ船売る？バート金貨" 
                  oparine-ship-tradein-price
-                 ". Ok?")
+                 "枚渡す。いい？")
             (if (kern-conv-get-yes-no? kpc)
                 (begin
-                  (say knpc "Bart too generous, you lucky.")
+                  (say knpc "バート気前いい。あんた運いい。")
                   (kern-obj-remove kship)
                   (give-player-gold oparine-ship-tradein-price))
-                (say knpc "Hunh. That ship sink soon."))))))
+                (say knpc "ム。船すぐ沈む。"))))))
 
   (if (not (string=? "working" (kern-obj-get-activity knpc)))
-      (say knpc "Not work now. Now drink!")
+      (say knpc "今働かない。今飲む！")
       (begin
-        (say knpc "You want buy ship?")
+        (say knpc "船、買う？")
         (if (yes? kpc)
             (begin
-              (say knpc "Ship " oparine-ship-price " gold. Want ship?")
+              (say knpc "船、金貨" oparine-ship-price "枚。船欲しい？")
               (if (kern-conv-get-yes-no? kpc)
                   (if (player-has-gold? oparine-ship-price)
                       (buy-ship)
                       (begin
-                        (say knpc "You not have gold! You try cheat Bart? "
-                             "[He spits on the ground]")
+                        (say knpc "金貨足りない。バートだます？"
+                             "［彼は地面に唾を吐いた。］")
                         (kern-conv-end)))
-                  (say knpc "Fine. You swim.")))
+                  (say knpc "いい。泳げ。")))
             (begin
-              (say knpc "You want sell ship?")
+              (say knpc "船、売る？")
               (if (yes? kpc)
                   (sell-ship)
                   (begin
-                    (say knpc "Then what hell you bother Bart for?")
+                    (say knpc "ならば、バート何する？")
                     (kern-conv-end))))))))
 
 ;; Drink...
 (define (bart-drink knpc kpc)
   (if (not (string=? "working" (kern-obj-get-activity knpc)))
-      (say knpc "Let's drink!")
-      (say knpc "Work now. Drink later.")))
+      (say knpc "飲む！")
+      (say knpc "今働く。後飲む。")))
 
 
 ;; Townspeople...
 (define (bart-opar knpc kpc)
-  (say knpc "Smells like fish."))
+  (say knpc "魚の臭いする。"))
 
 (define (bart-gher knpc kpc)
-  (say knpc "Tu-gu. Bad ghost.[He makes a strange sign in the air]"))
+  (say knpc "ツ・グ。悪い魂。［彼は空中に奇妙な図形を描いた。］"))
 
 (define (bart-alch knpc kpc)
-  (say knpc "Hi-lu-to. He take low road from burning city. "
-       "Goblins cousins remember."))
+  (say knpc "ヒ・リュ・ト。燃える町から来た。"
+       "一族おぼえてる。"))
 
 (define (bart-seaw knpc kpc)
-  (say knpc "She smell like fish."))
+  (say knpc "魚の臭いする。"))
 
 (define (bart-osca knpc kpc)
-  (say knpc "Tu-to. Bart not know man-words."))
+  (say knpc "ツ・ト。バートよい話知らない。"))
 
 (define (bart-henr knpc kpc)
-  (say knpc "Bart friend. Make good drink! Bart love drink."))
+  (say knpc "バート友だち。よい酒作る！バート飲む好き。"))
 
 (define bart-conv
   (ifc basic-conv
@@ -153,6 +153,7 @@
        (method 'alch bart-alch)
        (method 'gher bart-gher)
        (method 'witc bart-seaw)
+       (method 'lia bart-seaw)
        (method 'osca bart-osca)
        (method 'henr bart-henr)
        (method 'ja   bart-bye)
@@ -162,7 +163,7 @@
 (define (mk-bart)
   (bind 
    (kern-mk-char 'ch_bart           ; tag
-                 "Bart"             ; name
+                 "バート"           ; name
                  sp_forest_goblin    ; species
                  nil                 ; occ
                  s_fgob_civilian     ; sprite

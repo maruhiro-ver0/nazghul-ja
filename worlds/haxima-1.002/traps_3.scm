@@ -3,7 +3,7 @@
 ;; ----------------------------------------------------------------------------
 (kern-load "traps_3_mechs.scm")
 (mk-dungeon-room
- 'p_traps_3 "Fun with Levers"
+ 'p_traps_3 "レバー遊び"
  (list
   "xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx "
   "xx ,, ,, ,, ,, ,, xx ,, ,, ,, ,, ,, xx ,, ,, ,, ,, ,, xx "

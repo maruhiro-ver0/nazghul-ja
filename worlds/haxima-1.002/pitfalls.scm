@@ -38,14 +38,14 @@
                      (> (+ roll bonus)
                         (pitfall-detect-dc pfall)))
                  (kern-log-msg (kern-obj-get-name kchar) 
-                               " ^c+gavoids^c- " 
+                               "は" 
                                (pitfall-name pfall) 
-                               "!")
+                               "を^c+gかわした^c-！")
                  )
                 (else
-                 (kern-log-msg (kern-obj-get-name kchar) " ^c+rtrips^c- "
+                 (kern-log-msg (kern-obj-get-name kchar) "は"
                                (pitfall-name pfall)
-                               "!")
+                               "に^c+rかかった^c-！")
                  (kern-obj-apply-damage 
                   kchar
                   "ouch" 
@@ -76,15 +76,15 @@
       result-lacks-skill
       (let ((loc (kern-ui-target (kern-obj-get-location kchar) 1)))
         (cond ((null? loc) 
-               (kern-log-msg "Abort!")
+               (kern-log-msg "中断！")
                result-no-target
                )
               ((not (terrain-ok-for-pitfall? loc)) 
-               (kern-log-msg "Wrong terrain type!")
+               (kern-log-msg "この地形にはできない！")
                result-not-here
                )
               ((occupied? loc) 
-               (kern-log-msg "Somebody is there!")
+               (kern-log-msg "誰かいる！")
                result-not-here
                )
               (else
@@ -96,18 +96,18 @@
                         #f)
                        ((not (check-roll (pitfall-use-dc pfall)
                                          (occ-thief-dice-roll kchar)))
-                        (kern-log-msg "^c+rOOPS...^c- " 
-                                      (kern-obj-get-name kchar) 
-                                      " fumbles "
-                                      (pitfall-name pfall) "!")
+                        (kern-log-msg "^c+rおおっと…^c- " 
+                                      (kern-obj-get-name kchar)
+                                      "は"
+                                      (pitfall-name pfall) "に失敗した！")
                         (kpitfall-step-handler kobj kchar)
                         result-failed
                         )
                        (else
                         (kern-log-msg (kern-obj-get-name kchar)
-                                      " plants "
+                                      "は"
                                       (pitfall-name pfall)
-                                      "!")
+                                      "を仕掛けた！")
                         (kern-obj-put-at kobj loc)
                         (kern-obj-remove-from-inventory kchar ktype 1)
                         (pitfall-set-known-to-npc! pfall #f)
@@ -124,15 +124,15 @@
 (kern-mk-sprite 's_caltrops ss_pitfalls 1 0 #f 0)
 (kern-mk-sprite 's_beartrap ss_pitfalls 1 1 #f 0)
 
-(mk-obj-type 't_caltrops "caltrops" s_caltrops layer-mechanism ktrap-ifc)
-(mk-obj-type 't_beartrap "beartrap" s_beartrap layer-mechanism ktrap-ifc)
+(mk-obj-type 't_caltrops "鉄菱" s_caltrops layer-mechanism ktrap-ifc)
+(mk-obj-type 't_beartrap "トラバサミ" s_beartrap layer-mechanism ktrap-ifc)
 
 (define (mk-caltrops)
   (let ((kobj (kern-mk-obj t_caltrops 1)))
     (kern-obj-add-effect kobj ef_permanent_invisibility nil)
-    (bind kobj (mk-pitfall "a caltrops" 18 "1d10" dc-easy))))
+    (bind kobj (mk-pitfall "鉄菱" 18 "1d10" dc-easy))))
 
 (define (mk-beartrap)
   (let ((kobj (kern-mk-obj t_beartrap 1)))
     (kern-obj-add-effect kobj ef_permanent_invisibility nil)
-    (bind kobj (mk-pitfall "a beartrap" 16 "2d10" dc-challenging))))
+    (bind kobj (mk-pitfall "トラバサミ" 16 "2d10" dc-challenging))))

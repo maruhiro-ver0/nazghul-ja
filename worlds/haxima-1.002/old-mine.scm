@@ -3,7 +3,7 @@
 ;;;;
 
 (mk-dungeon-room
- 'p_old_mine "Old Mine"
+ 'p_old_mine "วันÛ"
  (list
 		"rn rn r8 r8 rn rn rn rn rn r8 r8 r8 r8 r8 r8 r8 r8 r8 rn "
 		"rn rc bb bb ra rn rn rn rc bb bb bb .. .. .. .. bb bb r2 "

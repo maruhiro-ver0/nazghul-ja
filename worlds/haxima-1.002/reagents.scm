@@ -23,15 +23,15 @@
 
 (define reagent-types
   (list
-   (list 'sulphorous_ash "sulphurous ash" s_sulphorous_ash)
-   (list 'ginseng        "ginseng"        s_ginseng)
-   (list 'garlic         "garlic"         s_garlic)
-   (list 'spider_silk    "spider silk"    s_spider_silk)
-   (list 'blood_moss     "blood moss"     s_blood_moss)
-   (list 'black_pearl    "black pearl"    s_black_pearl)
-   (list 'nightshade     "nightshade"     s_nightshade)
-   (list 'mandrake       "mandrake"       s_mandrake)
-   (list 't_royal_cape   "royal cape mushroom" s_royal_cape)
+   (list 'sulphorous_ash "硫黄の灰"       s_sulphorous_ash)
+   (list 'ginseng        "人参"           s_ginseng)
+   (list 'garlic         "大蒜"           s_garlic)
+   (list 'spider_silk    "蜘蛛の糸"       s_spider_silk)
+   (list 'blood_moss     "血の苔"         s_blood_moss)
+   (list 'black_pearl    "黒真珠"         s_black_pearl)
+   (list 'nightshade     "ナイトシェイド" s_nightshade)
+   (list 'mandrake       "マンドレイク"   s_mandrake)
+   (list 't_royal_cape   "ロイヤルケープ茸" s_royal_cape)
    ))
 
 (map (lambda (type) (apply mk-reagent-type type)) reagent-types)

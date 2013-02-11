@@ -5,7 +5,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;;
-;; In Oparine
+;; オパーリン
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_oscar
                (list 0  0  oparine-innkeepers-bed "sleeping")
@@ -28,50 +28,50 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;;
-;; Oscar is the innkeeper in Oparine.  He is a glum fellow, with a wooden leg.
+;; オスカーはオパーリンの宿屋である。彼は陰気で木の義足をしている。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (oscar-hail knpc kpc)
-  (say knpc "[You meet a glum man with a wooden leg] Hello."))
+  (say knpc "［あなたは陰気な、木の義足の男と会った。］いらっしゃい…。"))
 
 (define (oscar-default knpc kpc)
-  (say knpc "I don't know."))
+  (say knpc "知りませんね。"))
 
 (define (oscar-name knpc kpc)
-  (say knpc "I'm Oscar the Innkeeper."))
+  (say knpc "宿屋のオスカーだ。"))
 
 (define (oscar-join knpc kpc)
-  (say knpc "I would just get in the way."))
+  (say knpc "私がいてもじゃまになるだけだよ…。"))
 
 (define (oscar-job knpc kpc)
-  (say knpc "I'm the Innkeeper. "
-       "I doubt you want to rent a room, "
-       "but if you do let me know."))
+  (say knpc "宿屋だ。"
+       "部屋が要るようには見えないが、"
+       "もし要るなら言ってくれ。"))
 
 (define (oscar-bye knpc kpc)
-  (say knpc "Bye"))
+  (say knpc "どうも。"))
 
 ;; Trade...
 (define (oscar-trade knpc kpc)
   (if (not (string=? "working" (kern-obj-get-activity knpc)))
-      (say knpc "The inn is open from 9 to 9, and I do have to eat sometime, "
-           "so try me later.")
+      (say knpc "宿屋「愉快な同居人」は午前9時から午後9時まで開いている。時々食事でいないが、"
+           "そのときは後で来てくれ。")
       (let ((door (eval 'oparine-inn-room-1-door)))
         ;; is the room still open?
         (if (not (door-locked? (kobj-gob door)))
             ;; yes - remind player
-            (say knpc "Your room is still open.")
+            (say knpc "部屋はもう開いている。")
             ;; no - ask if player needs a room
             (begin
-              (say knpc "Do you need a room?")
+              (say knpc "部屋が要るのか？")
               (if (kern-conv-get-yes-no? kpc)
                   ;; yes - player wants a room
                   (begin
                     (say knpc 
-                         "That will be " oparine-inn-room-price " gold. "
-                         "You can have the room as long as you're in town. "
-                         "Do you still want it?")
+                         "金貨" oparine-inn-room-price "枚だ。"
+                         "この町にいる限り、何度でも出入りできる。"
+                         "それでいいか？")
                     (if (kern-conv-get-yes-no? kpc)
                         ;; yes - player agrees to the price
                         (let ((gold (kern-player-get-gold)))
@@ -79,10 +79,10 @@
                           (if (>= gold oparine-inn-room-price)
                               ;; yes - player has enough gold
                               (begin
-                                (say knpc "Ok, you're in room 1, "
-                                     "but you won't like it. "
-                                     "Don't complain to me because I told you "
-                                     "so.")
+                                (say knpc "1号室だ。"
+                                     "でも気に入らないだろうね。"
+                                     "あらかじめ言っておいたんだ。"
+                                     "文句は言わないでくれよ。")
                                 (kern-player-set-gold 
                                  (- gold 
                                     oparine-inn-room-price))
@@ -90,64 +90,64 @@
                                 (kern-conv-end)
                                 )
                               ;; no - player does not have enouvh gold)
-                              (say knpc "Sorry, but you don't have the gold. "
-                                   "This isn't a poorhouse, you know." )))
+                              (say knpc "残念だが金貨が足りないな。"
+                                   "知っての通り、ここは救貧院ではない。" )))
                         ;; no - player does not agree to the price
                         (say knpc 
-                             "I knew you wouldn't.")))
+                             "わかってたよ。")))
                   ;; no - player does not want a room
-                  (say knpc "I didn't think so. "
-                       "I was just being polite.")))))))
+                  (say knpc "そうだろうね。"
+                       "社交辞令で聞いてみただけだ。")))))))
 
 ;; Inn...
 (define (oscar-inn knpc kpc)
-  (say knpc "The former owner gave it the name. "
-       "I didn't feel like changing it. Besides, that would be bad luck."))
+  (say knpc "前の奴がこの名前にしたんだ。"
+       "変えたいとは思わない。しかし、それにしても運が悪い。"))
 
 (define (oscar-luck knpc kpc)
-  (say knpc "The ghost in room 3 likes the name. I don't want the ghost of "
-       "a wicked pirate mad at me.")
+  (say knpc "この宿の名前のような亡霊が3号室にいるんだ。"
+       "恐ろしい海賊の亡霊を怒らせたくない。")
 	(quest-data-assign-once 'questentry-ghertie)
 	(quest-data-update 'questentry-ghertie 'ghertieloc 1))
 
 (define (oscar-ghost knpc kpc)
-  (say knpc "Ghastly Ghertie was murdered by her crew in room 3. "
-       "She still haunts it so I don't rent it out. "
-       "I wish she would pay her bill.")
+  (say knpc "ガーティーという客が3号室で自分の手下に殺された。"
+       "その亡霊がまだいるから3号室は貸し出せないんだ。"
+       "宿代を払って欲しいね。")
 	(quest-data-update 'questentry-ghertie 'ghertieid 1)
 	(quest-data-update 'questentry-ghertie 'ghertieloc 1)
 	(quest-data-assign-once 'questentry-ghertie))
 
 ;; Leg...
 (define (oscar-leg knpc kpc)
-  (say knpc "I tried to be a sailor but nobody would take me. "
-       "So I cut off my leg to make myself look like a sailor. "
-       "They still wouldn't take me. I miss that leg."))
+  (say knpc "船乗りになりたかったんだ。でも誰も雇ってくれなかった。"
+       "だから船乗りらしく見えるように、自分で足を切り落としたんだ。"
+       "でも雇ってくれなかった。ただ足を失っただけだ。"))
 
 ;; Townspeople...
 (define (oscar-opar knpc kpc)
-  (say knpc "This is a port city. Most of my customers are travelers who "
-       "disembark here before traveling north."))
+  (say knpc "ここは港町だ。"
+       "客のほとんどは船を降りたあと北へ向かう旅人だ。"))
 
 (define (oscar-gher knpc kpc)
-  (say knpc "Ghertie was a wicked pirate back before my time. "
-       "Her own crew murdered her and left with her ship and her treasure.")
+  (say knpc "ガーティーは恐ろしい海賊だった。"
+       "自分の手下に殺され、船と財宝を奪われたんだ。")
 	(quest-data-assign-once 'questentry-ghertie))
 
 (define (oscar-alch knpc kpc)
-  (say knpc "His shop is next to the tavern. He's always looking for weird "
-       "stuff to use in his experiments."))
+  (say knpc "彼の店は酒場のとなりにある。"
+       "いつもよくわからない実験で使う物を探している。"))
 
 (define (oscar-bart knpc kpc)
-  (say knpc "Bart the shipwright has a shop just across the way. "
-       "He usually gets pretty drunk at night. I can't keep up with him."))
+  (say knpc "バートはこの道のちょうど向かいの店の造船職人だ。"
+       "夜になるといつも大量に飲んでいる。とてもじゃないがついていけない。"))
 
 (define (oscar-seaw knpc kpc)
-  (say knpc "The sea witch is very beautiful but keeps to herself. "
-       "She ignores me, of course."))
+  (say knpc "海の魔女はとてもきれいだが、人を避けている。"
+       "彼女は私を無視している。当然だ。"))
 
 (define (oscar-henr knpc kpc)
-  (say knpc "There's a real sailor. I'll never be like him."))
+  (say knpc "本物の船乗りだ。あいつのようには絶対なれない。"))
 
 (define oscar-conv
   (ifc basic-conv
@@ -182,13 +182,14 @@
        (method 'bart oscar-bart)
        (method 'sea  oscar-seaw)
        (method 'witc oscar-seaw)
+       (method 'lia  oscar-seaw)
 
        ))
 
 (define (mk-oscar)
   (bind 
    (kern-mk-char 'ch_oscar           ; tag
-                 "Oscar"             ; name
+                 "オスカー"          ; name
                  sp_human            ; species
                  nil                 ; occ
                  s_townsman          ; sprite

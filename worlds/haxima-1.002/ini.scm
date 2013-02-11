@@ -5,7 +5,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Glasdrin.
+;; グラスドリン
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_ini
                (list 0  0  gi-bed      "sleeping")
@@ -28,59 +28,56 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Ini is a dispirited paladin, dwelling in Glasdrin.
-;; He is loyal to the ideals lived by the Warritrix,
-;; and offended by the corruption which produced her
-;; assassination.
-;; Ini is a potential party member.
+;; イニは落胆した聖騎士で、グラスドリンに住んでいる。
+;; 彼は闘士の考えに忠実で、彼女の暗殺を企てた腐敗に対して怒りを感じている。
+;; イニは仲間になる。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (ini-hail knpc kpc)
-  (say knpc "[You meet a morose paladin] Hi."))
+  (say knpc "［あなたは憂鬱そうな聖騎士と会った。］やあ。"))
 
 (define (ini-default knpc kpc)
-  (say knpc "I can't help you with that."))
+  (say knpc "わからぬ。"))
 
 (define (ini-notyet knpc kpc)
-  (say knpc "I probably shouldn't talk to civilians about that."))
+  (say knpc "一般人にはそのことを話すべきでないと考えている。"))
 
 (define (ini-name knpc kpc)
-  (say knpc "I am Inago, but everyone calls me Ini."))
+  (say knpc "アイナゴだ。だが皆はイニと呼んでいる。"))
 
 (define (ini-join knpc kpc)
   (if (is-player-party-member? knpc)
-      (say knpc "I already joined you. Now let's go!")
+      (say knpc "すでに仲間だ。さあ行こう！")
       (let ((ini (kobj-gob-data knpc)))
         (if (ini-will-join? ini)
             (begin
-              (say knpc "I thank you! Let's not waste any time finding "
-                   "the Warritrix!")
+              (say knpc "ありがとう！のんびりしている時間はない。闘士を探し出そう！")
               (kern-conv-end)
               (join-player knpc))
-            (say knpc "[Sigh] My duty is with the paladins.")
+            (say knpc "［ため息］聖騎士の任務があるのだ。")
             ))))
         
 (define (ini-lost knpc kpc)
    (let ((ini (kobj-gob-data knpc)))
      (if (ini-will-join? ini)
 			(begin
-  			(say knpc "The entrance to the Lost Halls is a cavern far to the southwest. "
-  				"Find a ship and sail to ["
+  			(say knpc "失われた殿堂の入り口は南西はるか遠くの洞窟だ。"
+  				"船で["
            (loc-x lost-halls-loc) ","
-           (loc-y lost-halls-loc) "].")
+           (loc-y lost-halls-loc) "]まで航行すれば見つかるだろう。")
 			(quest-data-update-with 'questentry-rune-l 'know-hall 1 (quest-notify nil))
 			(quest-data-update 'questentry-warritrix 'lost-hall-loc 1)
 			)
-  			(say knpc "The Lost Halls are very dangerous. I'd advise you to stay clear!"))))
+  			(say knpc "失われた殿堂はとても危険な場所だ。近づかないほうがいい。"))))
      		
 (define (ini-cave knpc kpc)
    (let ((ini (kobj-gob-data knpc)))
      (if (ini-will-join? ini)
      		(begin
-     			(say knpc "The Lost Halls themselves are deep within the caverns.")
-     			(say knpc (if (is-player-party-member? knpc) "We" "You") " will need to look for the great stairs, in the northern part of the caves.")
-     			(say knpc "Beware of the dungeon's inhabitants!")
+     			(say knpc "失われた殿堂はそれ自体が深い洞窟の中にある。")
+     			(say knpc (if (is-player-party-member? knpc) "" "") "洞窟の北にある大階段を見つけなければならないだろう。")
+     			(say knpc "迷宮の住人には気をつけなければならない！")
      			)
      		(ini-notyet knpc kpc))))
      		
@@ -88,8 +85,8 @@
    (let ((ini (kobj-gob-data knpc)))
      (if (ini-will-join? ini)
      		(begin
-     			(say knpc "Everytime we try to clear the place out, another band of gints or trolls decides to move in.")
-     			(say knpc (if (is-player-party-member? knpc) "We" "You") "'d best be prepared for a long, hard battle.")
+     			(say knpc "新しい巨人やトロルの集団がそこに入るたびに、我々はそれらを一掃しようとしてきた。")
+     			(say knpc (if (is-player-party-member? knpc) "" "") "長く苦しい戦いに備えるべきだろう。")
      			)
      		(ini-notyet knpc kpc))))
 
@@ -97,91 +94,84 @@
    (let ((ini (kobj-gob-data knpc)))
      (if (ini-will-join? ini)
      		(begin
-     			(say knpc "I know the stairs are somewhere in the north, but I'm afraid I've never been that far, so I don't know their precise location.")
+     			(say knpc "北のどこかに階段があることを知っている。だが、遠くから見ただけなので、正確な位置はわからない。")
      			)
      		(ini-notyet knpc kpc))))
      			
 (define (ini-job knpc kpc)
-  (say knpc "I'm a paladin. But I don't like it very much."))
+  (say knpc "聖騎士だ。しかしあまりこの仕事が好きではない。"))
 
 (define (ini-bye knpc kpc)
-  (say knpc "So long."))
+  (say knpc "さらばだ。"))
 
 (define (ini-warr knpc kpc)
   (cond ((player-stewardess-trial-done?)
-                (say knpc "Justice has been served, and now I can grieve her loss." ))
+                (say knpc "正義は果たされた。今やっと彼女の死を悲しむことができる。" ))
 	((player-found-warritrix?)
-                (if (ask? knpc kpc "The Stewardess is powerful, but there is a way to see that justice is done. An ancient way. A dangerous way. Will you hear me?")
-                    (say knpc "There is a statue in the center of Glasdrin. "
-                         "If you strike it with your sword, you will invoke the oldest law of the city, and a trial will be held. "
-                         "But we dare not strike it until we have convincing evidence against the Stewardess, because if our evidence is lacking then judgment will be passed on us instead!")
-                    (say knpc "We can't let the Stewardess get away with this. Someone must call her to account!")))
+                (if (ask? knpc kpc "統治者の力は絶大だ。しかし、正義を通す道がある。太古の道。危険な道だ。聞きたいか？")
+                    (say knpc "グラスドリンの中央に石像がある。"
+                         "その像を剣で打てばこの町で最も古い秩序を呼び出すことができる。そして裁きが始まるのだ。"
+                         "しかし統治者に対抗できるだけの証拠なしに打ってはならない。証拠がなくては代わりに我々が裁かれるだろう！")
+                    (say knpc "統治者をこのままにしてはおけない。誰かが罪を問わなければならない！")))
 	((quest-data-assigned? 'questentry-wise)
-		 (say knpc "[He straightens up a bit] Something is amiss! The Warritrix has "
-		      "been gone too long with no word. The Commander should have sent out "
-		      "search parties by now. Instead he sits idly by, pretending to be "
-		      "distracted by other problems. I sense foul play. Will you search for "
-		      "her?")
+		 (say knpc "［彼は少し背筋を伸ばした。］何かがおかしいのだ！"
+		      "闘士はずっと前に何も言わずに行ってしまった。"
+		      "司令官は今すぐ捜索隊を送るべきだ。だが彼は何もせず、別の問題に気を取られている。"
+		      "悪い予感がする。あなたは彼女を探しているのか？")
 		 (if (kern-conv-get-yes-no? kpc)
 		     (begin
-		       (say knpc "I would join you! I know the deeps well, and though my "
-			    "duty is here, I won't obey an order that leaves her to die.")
+		       (say knpc "ぜひ仲間に加えて欲しい！"
+		            "深淵のことはよく知っている。私はその任務に就いているのだ。"
+		            "彼女が死してその責を果たさぬ限り、彼女以外の命令に従うつもりはない。")
 		       (ini-will-join! (kobj-gob-data knpc)))
-		     (say knpc "Someone must do something! The realm owes her a great "
-			  "debt.")))
+		     (say knpc "誰かがそれを行うべきだ！ここにいる者は皆彼女に大きな借りがある。")))
 	(else
-		(say knpc "Are you looking for the Warritrix?")
+		(say knpc "闘士に会いたいのか？")
 		(if (kern-conv-get-yes-no? kpc)
 			(begin
-				(say knpc "She can be hard to find. I believe she is out on patrol right now. ")
-				(say knpc "If you want come back later, I'll keep an eye out and let you know if she's back")
+				(say knpc "彼女に会うのは困難だ。今は警備に出ているのだと思う。")
+				(say knpc "もしあなたがまたここに来るのであれば、彼女が戻っていたら知らせよう。")
 			)
 		))
 	))
 
 ;; Paladin...
 (define (ini-pala knpc kpc)
-  (say knpc "I've been a paladin my whole life. I'm not very good at it; "
-       "I get sick before and after every battle. I'm surprised they "
-       "let me stay in, but I guess they need the warm bodies. "
-       "I would have quit long ago but I don't know what else to do."
-       ))
+  (say knpc "私はこの仕事に命をかけてきた。だが私は良き聖騎士ではない。"
+       "戦いの度に気分が悪くなるのだ。聖騎士として留まるように言われるが、"
+       "ただ盾となる役立たずが欲しいからであろう。"
+       "いずれ辞めるであろうが、他に何ができるだろうか？"))
 
 (define (ini-quit knpc kpc)
-  (say knpc "I've managed to save some pay. I'll retire soon, buy a farm "
-       "near Trigrave, get away from this place. Just think: no more long "
-       "marches, no more sleeping on stony ground in the lightless deep, "
-       "no more waking up to monsters eating your squad for breakfast."
-       ))
+  (say knpc "できるだけ金を貯めるようにしている。退役したら、トリグレイブの近くの農地を買い、ここを離れようと思っている。"
+       "このようなことばかり考えている。長い行進もなく、石ころだらけの真っ暗な深淵で眠ることもなく、"
+       "部隊の仲間が怪物に食われて目が覚めることもない。"))
 
 ;; Townspeople...
 (define (ini-glas knpc kpc)
-  (say knpc "Kind of a dreary place, don't you think?")
+  (say knpc "憂鬱な所だ。そう思わぬか？")
   (kern-conv-get-yes-no? kpc)
-  (say knpc "I've always wanted to visit Green Tower, see the trees."))
+  (say knpc "緑の塔へ行き森を見ていたいといつも考えている。"))
 
 (define (ini-ange knpc kpc)
-  (say knpc "A modest lady. I once saw her spit a cave goblin with a dagger."))
+  (say knpc "あまり語らない女性だ。洞窟ゴブリンを短剣で突き刺すのを一度だけ見たことがある。"))
 
 (define (ini-spit knpc kpc)
-  (say knpc "She was assigned to my squad on a standard patrol in the "
-       "hills. We'd just barely survived an encounter with gints when some "
-       "cave goblins decided we looked like easy pickings. "
-       "It was dicey there for a while."))
+  (say knpc "丘での通常警備で彼女と同じ部隊だった。"
+       "洞窟ゴブリンとの戦いで楽勝と思っていたとき、現れた巨人から共に辛うじて生き延びた。"
+       "あのときは危なかった。"))
 
 (define (ini-patc knpc kpc)
-  (say knpc "I owe him my life."))
+  (say knpc "私の命の恩人だ。"))
 
 (define (ini-life knpc kpc)
-  (say knpc "I was killed once. We were in the deeps on patrol, dead tired "
-       "after fleeing a party of death knights that killed our medik, "
-       "and we camped right in the middle of a party of sleeping trolls. ")
+  (say knpc "私は一度殺されたようなものだ。深淵を警備していたときのことだ。"
+       "我々の医師を殺した死の騎士の部隊から敗走し、つかれきっていた。"
+       "そのとき睡眠中のトロルの集団の中に迷い込んでしまったのだ。")
   (prompt-for-key)
-  (say knpc
-       "They woke up first. One minute I was fighting for my life, "
-       "and the next I was in the hospital looking up at Doc Patch. "
-       "Nobody else survived from my squad."
-       ))
+  (say knpc "彼らはすぐに目覚めた。"
+       "私は命がけで戦ったが、気がつくと病院で眼帯先生を見上げていた。"
+       "部隊で他に生き残った者はいない。"))
 
 (define ini-conv
   (ifc glasdrin-conv
@@ -210,7 +200,8 @@
        (method 'entr ini-cave)
        (method 'stai ini-stair)
        (method 'nort ini-stair)
-       (method 'deep ini-stair)
+       ;(method 'deep ini-stair)
+       (method 'deep ini-lost)
        (method 'grea ini-stair)
        (method 'inha ini-inha)
        (method 'bewa ini-inha)
@@ -221,7 +212,7 @@
 (define (mk-ini)
   (bind 
    (kern-mk-char 'ch_ini           ; tag
-                 "Ini"             ; name
+                 "イニ"            ; name
                  sp_human            ; species
                  oc_warrior          ; occ
                  s_companion_paladin ; sprite

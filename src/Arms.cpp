@@ -261,9 +261,9 @@ bool ArmsType::fireInDirection(struct place *place, int ox, int oy,
         if (!missile->hitTarget() || !missile->getStruck())
                 return false;
 
-        log_begin("%s hit ", getName());
+        log_begin("%sは", getName());
         missile->getStruck()->describe();
-        log_end("!");
+        log_end("に命中した！");
         
         // Reference the object while damaging it, since damage can remove it
         // from the map.
@@ -272,9 +272,9 @@ bool ArmsType::fireInDirection(struct place *place, int ox, int oy,
         missile->getStruck()->damage(dice_roll(damageDice));
 
         if (missile->getStruck()->isDestroyed()) {
-                log_begin("%s destroyed ", getName());
+                log_begin("%sは", getName());
                 missile->getStruck()->describe();
-                log_end("!");
+                log_end("を倒した！");
                 mapSetDirty();
         }
         

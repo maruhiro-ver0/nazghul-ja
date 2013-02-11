@@ -26,21 +26,21 @@
 ;;     relocates the stepper.
 (define (prompt-portal-step kportal kstepper)
   (kern-print "\n")
-  (kern-print "Are you SURE you want to step there?\n")
+  (kern-print "そこに踏み込みたいか？\n")
   (if (kern-conv-get-yes-no? kstepper)
       (begin
         (kern-print "\n")
         (kern-print "\n")
-        (kern-print "Are you REALLY REALLY SURE?\n")
+        (kern-print "本当に本当にそうなのか？\n")
         (if (kern-conv-get-yes-no? kstepper)
             (begin
               (kern-print "\n")
               (kern-print "\n")
               (kern-print "\n")
-              (kern-print "Ok... you asked for it!\n")
+              (kern-print "わかった…ではそうしよう！\n")
               (portal-step kportal kstepper))
-            (kern-print "Wise move.\n")))
-        (kern-print "Make up your mind.\n")))
+            (kern-print "賢い選択だ。\n")))
+        (kern-print "決心せよ。\n")))
             
 
 (define portal-ifc
@@ -91,13 +91,13 @@
 ;;     "mechanisms" layer.  These object "types" specify a name/label, sprite,
 ;;     and a portal "interface" behavior.  Instances are created by "portal
 ;;     constructor" functions such as those below.
-(mk-obj-type 't_ladder_down "ladder leading down" s_ladder_down   layer-mechanism portal-ifc)
-(mk-obj-type 't_ladder_up   "ladder leading up"   s_ladder_up     layer-mechanism portal-ifc)
-(mk-obj-type 't_trap_door   "trap door"           '()             layer-mechanism auto-portal-ifc)
+(mk-obj-type 't_ladder_down "下りのはしご" s_ladder_down   layer-mechanism portal-ifc)
+(mk-obj-type 't_ladder_up   "上りのはしご" s_ladder_up     layer-mechanism portal-ifc)
+(mk-obj-type 't_trap_door   "落とし戸"           '()             layer-mechanism auto-portal-ifc)
 (mk-obj-type 't_bump_door   nil           '()             layer-mechanism bump-portal-ifc)
-(mk-obj-type 't_teleporter  "teleporter"          s_floor_plate   layer-mechanism prompting-auto-portal-ifc)
-(mk-obj-type 't_dungeon "dungeon" s_dungeon layer-mechanism       auto-portal-ifc)
-(mk-obj-type 't_ship_relic "ship relic" s_ship layer-mechanism auto-portal-ifc)
+(mk-obj-type 't_teleporter  "瞬間移動装置"          s_floor_plate   layer-mechanism prompting-auto-portal-ifc)
+(mk-obj-type 't_dungeon "迷宮" s_dungeon layer-mechanism       auto-portal-ifc)
+(mk-obj-type 't_ship_relic "船の残骸" s_ship layer-mechanism auto-portal-ifc)
 
 ;; mk-portal -- generic helper constructor
 (define (mk-portal type place-tag x y)
@@ -130,7 +130,7 @@
   (ifc '()
        (method 'step thief-door-step)))
 
-(mk-obj-type 't_thief_door "strange mark" s_O layer-mechanism thief-door-ifc)
+(mk-obj-type 't_thief_door "奇妙なしるし" s_O layer-mechanism thief-door-ifc)
 
 (define (mk-thief-door place-tag x y)
   (make-invisible (mk-portal t_thief_door place-tag x y)))
@@ -138,7 +138,7 @@
 ;;----------------------------------------------------------------------------
 ;; Secret Path -- visible only when Reveal is in effect
 ;;----------------------------------------------------------------------------
-(mk-obj-type 't_secret_path "secret path" s_cobblestone layer-none nil)
+(mk-obj-type 't_secret_path "隠し通路" s_cobblestone layer-none nil)
 (define (mk-secret-path)
   (make-invisible (kern-mk-obj t_secret_path 1)))
 
@@ -174,7 +174,8 @@
         #t  ;; rm-on-correct
         #t  ;; rm-on-wrong
         ))
-(define (riddle-ans riddle) (car riddle))
+;(define (riddle-ans riddle) (car riddle))
+(define (riddle-ans riddle) (list-ref riddle 0))
 (define (riddle-terrain riddle) (eval (cadr riddle)))
 (define (riddle-x riddle) (caddr riddle))
 (define (riddle-y riddle) (list-ref riddle 3))
@@ -200,18 +201,18 @@
 (define (riddle-step kmech kchar)
   (if (is-player-party-member? kchar)
       (let ((riddle (kobj-gob-data kmech)))
-        (kern-log-msg "*** STENTORIAN VOICE ***")
+        (kern-log-msg "*** 奇妙な声が聞こえた ***")
         (apply kern-log-msg (riddle-msg riddle))
-        (let ((guess (kern-conv-get-reply kchar)))
-          (cond ((eq? guess (riddle-ans riddle))
-                 (kern-log-msg "YOU MAY PASS")
+        (let ((guess (kern-conv-get-string kchar)))
+          (cond ((string=? guess (riddle-ans riddle))
+                 (kern-log-msg "通るがよい。")
                  (if (riddle-pos? riddle)
                      (riddle-trigger riddle kmech))
                  (if (riddle-rm-on-correct? riddle)
                      (kern-obj-remove kmech))
                  )
                 (else
-                 (kern-log-msg "WRONG!")
+                 (kern-log-msg "否！")
                  (if (not (riddle-pos? riddle))
                      (riddle-trigger riddle kmech))
                  (if (riddle-rm-on-wrong? riddle)
@@ -229,4 +230,3 @@
 (define (mk-riddle ans ter-tag x y w h  pos? . msg)
   (bind (kern-mk-obj t_step_riddle 1)
         (riddle-mk ans ter-tag x y w h pos? msg)))
-

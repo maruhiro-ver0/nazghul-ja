@@ -52,7 +52,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place
  'p_absalot     ; tag
- "Absalot"      ; name
+ "アブサロット" ; name
  s_ruin      ; sprite
  m_absalot      ; map
  #f              ; wraps
@@ -66,7 +66,7 @@
 
   (put (mk-ladder-down 'p_old_absalot 11 27) 2 2)
   (put (mk-clock) 12 4)
-  (put (mk-broken-clock s_clock_stopped s_clock_stopped "The clock is broken beyond repair") 34 8)
+  (put (mk-broken-clock s_clock_stopped s_clock_stopped "時計は修理できないほどに壊れている。") 34 8)
   
   )
 

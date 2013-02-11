@@ -1,7 +1,7 @@
 ;;----------------------------------------------------------------------------
-;; Sched
+;; Schedule
 ;; 
-;; In Green Tower.
+;; 緑の塔
 ;;----------------------------------------------------------------------------
 (define (mk-zone x y w h) (list 'p_green_tower x y w h))
 (kern-mk-sched 'sch_deric
@@ -26,129 +26,124 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Deric is a Captain of the Rangers in Green Tower.
+;; デリックは緑の塔の警備隊長である。
 ;;----------------------------------------------------------------------------
 
 (define (deric-name knpc kpc)
-  (say knpc "I am Captain Deric, commander of the Rangers, at your service."))
+  (say knpc "私はデリック隊長、警備隊の司令官である。何なりと申すがよい。"))
 
 (define (deric-job knpc kpc)
-  (say knpc "I command the Rangers, though I aspire to greater things. I "
-       "think I have proved myself quite well as a leader, but around here "
-       "you have to wait for someone to die before you get promoted!"))
+  (say knpc "警備隊を指揮することである。そして私にはより大きな目的がある。"
+       "私は自分の能力で指揮官の地位に上り詰めた。だが、君が昇進するためには、"
+       "誰かが死ぬのを待たなければならないだろう！"))
 
 (define (deric-health knpc kpc)
-  (say knpc "I am the very definition of good health!"))
+  (say knpc "私は健康そのものである！"))
 
 (define (deric-rangers knpc kpc)
-  (say knpc "Right then! The Rangers are charged with keeping the peace in "
-       "the Great Wood. We enforce the law, keep an eye on the goblins, that "
-       "sort of thing. We're also charged with maintenance of the forest and "
-       "keeping the roads in and out clear. If I say so myself, we have done "
-       "an amazing job under my leadership. Thanks to the hard work of my "
-       "people, of course. Ahem."))
+  (say knpc "そう！警備隊はこの広大な森の平和を守る責務を負っている。"
+       "法を守らせ、ゴブリンどもを監視するなどだ。"
+       "森を管理し、通路を維持するのも我々の仕事だ。"
+       "自分自身のことを言えば、我々は私の統率のもとすばらしい仕事をしている。"
+       "もちろん私は部下の働きに感謝している。［咳ばらい］"))
 
 (define (deric-two knpc kpc)
-  (say knpc "The upper level of the tower is mostly fortifications. The lower "
-       "level is where the council chamber, barracks, kitchen and other "
-       "facilities are. We also have a prison down there. Some think the "
-       "lower level is haunted."))
+  (say knpc "上の階のほとんどは防御設備だ。"
+       "下の階は会議室、兵舎、厨房などだ。"
+       "今は刑務所になっている。"
+       "下の階には幽霊がいると考えている者もいるようだ。"))
 
 (define (deric-haunted knpc kpc)
-  (say knpc "They say the lower level is haunted, and I for one have heard "
-       "some strange noises. They sound like they're coming from deep within "
-       "the walls - chanting, or shrieking. But I've never seen any ghosts. "
-       "And of course I am not afraid of such things!"))
+  (say knpc "下の階には幽霊がいると言う者がいる。私も奇妙な物音を聞いたことがある。"
+       "壁の奥深くから、祈るような、悲鳴のような声がした。"
+       "だが幽霊など見たことがない。"
+       "もちろん私はそんなものは恐れない！"))
 
 (define (deric-gen knpc kpc)
-  (say knpc "A splendid old chap, if a bit daft. He's a legend among the "
-       "Rangers for his efforts during the Goblin War, and one of the last "
-       "surviving veterans. Still looks to be in good shape physically, but "
-       "he's gone a bit native, if you know what I mean."))
+  (say knpc "名高き勝者、少し正気でないがな。"
+       "彼のゴブリン戦争での活躍は警備隊の間では伝説となっている。そして古強者の最後の生き残りの一人でもある。"
+       "今でも体の調子はよさそうだが、"
+       "彼は土着の者になってしまった。どういう意味かわかるだろうか。"))
 
 (define (deric-native knpc kpc)
-  (say knpc "Yes, he's adopted some of the habits of the Wood Folk - the "
-       "forest goblins. But I don't suspect him of conspiring against us - if "
-       "I did I would turn him in and perhaps get a promotion! But alas, 'tis "
-       "not the case."))
+  (say knpc "そう、彼は森の民、つまり森ゴブリンの習慣を受け入れている。"
+       "しかし彼が我々に反逆心を持っていると疑っているのではない。"
+       "もしできるなら、私は彼を改心させ、昇格させたいとすら思っている。"
+       "ああ、だがそれは不可能だろう。"
+       ))
 
 (define (deric-shroom knpc kpc)
-  (say knpc "A nice old hag. Bit of a witch, but not any trouble. Keeps a "
-       "reagent shop in the northeast corner of town."))
+  (say knpc "気難しい婆さんだ。魔女の能力が少しあるが、何の問題もない。"
+       "この町の北東で薬屋をしている。"))
 
 (define (deric-abe knpc kpc)
-  (say knpc "A queer young man. Queer as in strange, you know, not that "
-       "other... well, maybe... it's hard to say. Anyway, he studies the "
-       "ruins in the southwest corner. Working for the Royal Library or some "
-       "such."))
+  (say knpc "若い変わった男だ。変わり者というより、奇妙な…、別の言い方をすると…うまく言えんな。"
+       "とにかく、そいつは町の南西の遺跡を調べている。"
+       "王立図書館かどこかで働いているのだろう。"))
 
 
 (define (deric-tower knpc kpc)
-  (say knpc "Yes, the Tower itself which gives Green Tower its name is "
-       "located in the center of town. It is my command post and headquarters "
-       "for the Rangers. A fascinating building! Did you know it is built on "
-       "the ruins of an older tower?")
+  (say knpc "そう、この町の中央にある、緑の塔と呼ばれる塔だ。"
+       "ここが私の指揮所であり、警備隊の本部である。"
+       "すばらしい建物だ！"
+       "これが古い塔の遺跡の上に建てられたものだと知っているか？")
   (if (kern-conv-get-yes-no? kpc)
-      (say knpc "Interesting, eh? Not that I'm an expert on such things. "
-           "You'd have to talk with old Abe, or perhaps Shroom, to learn "
-           "more.")
-      (say knpc "'Tis true! What is now the Tower was once only the central "
-           "spire of a very great structure that reached much higher! And "
-           "much lower as well, if young Abe is to be believed. Currently "
-           "there are only two stories.")))
+      (say knpc "面白いと思わんか？私には詳しくはわからないが。"
+           "もっと知りたいなら、エイブか、もしかするとシュルームと話すとよいかもしれん。")
+      (say knpc "そうか！今の塔は、かつてあった巨大な尖塔の一部にすぎない！"
+           "エイブという若者のことを信じるなら、沈んでしまったそうだ。"
+           "今では二つの階しか残っていない。")))
 
 (define (deric-ambition knpc kpc)
-  (say knpc "Yes, I am quite ambitious and not afraid to admit it! No point "
-       "sneaking about when one is ambitious, it just makes people nervous. "
-       "I wouldn't do anything immoral to advance my position, of course, "
-       "I believe too firmly in the principles of our great society. Do you "
-       "have any ambitions?")
+  (say knpc "その通り。私には野心があり、それを認めることを恐れない！"
+       "人は野心を持つ者を不安に思うが、やましい点などなにもない。"
+       "無論私は今の地位にたどり着くために不正なことは何もしていない。"
+       "私はこの偉大な組織の信条を固く信じている。君には野心があるか？")
   (if (kern-conv-get-yes-no? kpc)
       (begin
-        (say knpc "Well, enough about you! I hope someday to be a Lord. "
-             "Do you think I have a chance?")
+        (say knpc "ああ、君の事はよい。私はいつの日か王になりたい。"
+             "私にはその機会があると思うか？")
         (if (kern-conv-get-yes-no? kpc)
             (begin
-              (say knpc "I knew it! You know, I wasn't sure if I could trust "
-                   "you, but you're obviously a person of insight, so I'll "
-                   "let you in on a secret.")
+              (say knpc "わかっている！君のことを信用しているわけではないが、"
+                   "鋭い洞察力を持つ者のようだ。"
+                   "君にある秘密を教えよう。")
               (deric-set-tell-secret! (kobj-gob-data knpc)))
-            (say knpc "[laughing] I'm sorry if I must disagree! People of "
-                 "destiny are never appreciated by their fellows.")))
-      (say knpc "[sigh] So many people lead worthless, wasted lives. I'm glad "
-           "I'm not one of them!")))
+            (say knpc "［笑い］すまないが意見が合わないようだな！"
+                 "選ばれし者はよく思われないものだ。")))
+      (say knpc "［ため息］多くの者どもは無価値に人生を浪費している。"
+           "私は彼らの内の一人でないことを喜んでいる！")))
 
 (define (deric-secret knpc kpc)
   (if (deric-tell-secret? (kobj-gob-data knpc))
-      (say knpc "In the lower level of the Tower there is a hidden passage. "
-           "Go down the ladder and enter the southeast supply room. "
-           "On the east wall is a secret door! "
-           "I have no idea what it was for.")
-      (say knpc "Nothing I want to tell a stranger like you!")))
+      (say knpc "塔の地下には隠された通路がある。"
+           "このはしごを降りて、南東の準備室に入れ。"
+           "東の壁に秘密の扉がある！"
+           "何のためかはわからないがな。")
+      (say knpc "君の様なよそ者に話すことは何もない！")))
 
 (define (deric-afraid knpc kpc)
-  (say knpc "Of course not! Fear is the hobgoblin of little minds. "
-       "Or is it hobgoblins are the fear of little minds? "
-       "Damn, I can never remember that silly saying."))
+  (say knpc "もちろんだ！恐れは小物のホブゴブリンだ。"
+       "いや、ホブゴブリンが小物の恐れか？"
+       "ちくしょうめ、ばかげた言い回しが思い出せない。"))
 
 (define (deric-prison knpc kpc)
-  (say knpc "Yes. Very secure. We currently only have one prisoner, "
-       "a forest goblin we caught skulking around here. "
-       "A quite vicious-looking brute, I must say. "
-       "Not that I am afraid of him. Ahem."))
+  (say knpc "そうだ。とても強固な。現在、囚人は一人しかいない。"
+       "このあたりをうろついていた森ゴブリンだ。"
+       "凶暴な獣と言うほかにない。"
+       "私はそいつを恐れたりはしない。［咳ばらい］"))
 
 (define (deric-gobl knpc kpc)
-  (say knpc "Sneaky fellows! Why, just the other day I caught one here in town and had him thrown into prison."))
+  (say knpc "卑劣なやつらだ！まあ、少し前にやつを町の中で捕まえて、刑務所に放り込んでやったがな。"))
 
 (define (deric-brute knpc kpc)
-  (say knpc "Very suspicious. He obviously did not come to trade, "
-       "for he carried no merchandise. And he speaks not a lick of Common. "
-       "In fact, he refuses to say anything! Well, some time spent "
-       "underground should loosen his tongue. I'll find out what he's "
-       "scheming."))
+  (say knpc "とても疑わしい者だ。何も品物を持っていなかったので、明らかに商売に来たのではない。"
+       "そして共通語が全く話せなかった。"
+       "いや、それどころか何も話そうとしなかった。ううむ、地下にいれば少しは話すようになりそうなものだが。"
+       "何をたくらんでいるのか突き止めなければ。"))
 
 (define (deric-default knpc kpc)
-  (say knpc "You must ask another of that!"))
+  (say knpc "別のことを聞いてくれ！"))
 
 ;; Scan the player party looking for mercs
                          
@@ -168,20 +163,19 @@
       (if (not (null? kmerc))
           (begin
             (prompt-for-key)
-            (say knpc "I'll need to re-assign that ranger to a patrol.")
+            (say knpc "私は巡回する警備隊員を再構成しなければならない。")
             (kern-char-leave-player kmerc)
             ))))
 
   (cond ((in-player-party? 'ch_nate)
-         (say knpc "I see you have apprehended the bandit leader! "
-              "Deliver him downstairs to the jailer and I will give you the "
-              "reward.")
+         (say knpc "盗賊の頭を捕らえたようだな！"
+              "地下の刑務所の看守に渡し、収容証明書を受け取ってくるのだ。")
          (rm-ranger-merc)
          (quest-data-update-with 'questentry-bandits 'captured-nate-and-talked-to-deric 1 (quest-notify nil))
          )        
         ((has? kpc t_prisoner_receipt 1)
-         (say knpc "Putting that bandit behind bars will look very good on my "
-              "record! Here is your reward.")
+         (say knpc "盗賊を檻の向こう側に追いやったことは、私の輝かしい記録になるであろう！"
+              "君に報酬を渡そう。")
          (give-player-gold 100)
          (kern-char-add-experience kpc 64)
          (take kpc t_prisoner_receipt 1)
@@ -191,59 +185,56 @@
          (quest-data-complete 'questentry-bandits)
          )
         (else
-         (say knpc "Well met, indeed!")
+         (say knpc "よく来たな！")
          )))
 
 (define (deric-bye knpc kpc)
-  (say knpc "Until next time"))
+  (say knpc "また会おう。"))
 
 (define (deric-thie knpc kpc)
-  (say knpc "Hm. The goblin brute we have locked up below may be a thief. But "
-       "he's been in our prison for some time. Now, our rangers did report "
-       "a lone man traveling north through the forest, but we know not "
-       "whence. The only thing to the north is Bole.")
+  (say knpc "ふむ。捕まえた獣のようなゴブリンは泥棒だったに違いない。"
+       "だが、奴は刑務所の中だ。森を通って北へ一人で向かう者がいたという報告はあったが、目的地はわからん。"
+       "北にはボレしかないがな。")
        (quest-data-update 'questentry-thiefrune 'tower 1)
        (quest-data-update-with 'questentry-thiefrune 'bole 1 (quest-notify (grant-party-xp-fn 10)))
        )
 
 (define (deric-accu knpc kpc)
-  (say knpc "I assure you, my good man, there are no Accursed around here."))
+  (say knpc "おい。断言するが、このあたりに呪われた者はいない。"))
 
 
 (define (deric-band knpc kpc)
   (let ((quest (deric-bandit-quest (kobj-gob-data knpc))))
     (cond ((quest-done? quest) 
-           (say knpc "I don't expect any more trouble from bandits since I "
-                "had their leader apprehended. "
-                "By you, of course. "
-                "But I had it done. "
-                "Ahem."))
+           (say knpc "私が盗賊の頭を捕らえたからには、これ以上の問題は起こらないであろう。"
+                "もちろん君のおかげだ。"
+                "だが、命じたのはこの私だ。"
+                "［咳払い］"))
           ((quest-accepted? quest)
-           (say knpc "The bandits have a hideout somewhere in these "
-                "woods.  Keep searching! And bring me their leader "
-                "back alive.")
+           (say knpc "この森のどこかに盗賊の隠れ家がある。"
+                "探し続けることだ！そして頭を生け捕りにして連れてくるのだ。")
            )
           (else
-           (say knpc "So you've heard of our bandit problem. "
-                "Yes, they have a secret hideout somewhere in these woods. "
-                "I would have flushed them out long ago, "
-                "but I haven't the men to spare. You understand. ")
+           (say knpc "盗賊の問題を聞いたのだな。"
+                "そう、やつらの隠れ家はこの森のどこかにある。"
+                "ずっと以前なら私がやつらを一掃しに行くだろう。"
+                "しかし、知ってのとおり、私の代わりはいない。")
            (prompt-for-key)
            (say knpc
-                "Say, you seem like a plucky sort. "
-                "If you capture the bandit leader and bring him here I'll "
-                "gladly reward you for your trouble. What do you say?")
+                "答えてくれ。君は勇敢そうだ。"
+                "もし盗賊の頭を捕らえ、ここに連れて来たなら、喜んで君に賞金を与えよう。"
+                "どうだろうか？")
            (if (yes? kpc)
                (begin
                  (quest-accepted! quest #t)
-                 (say knpc "Good! You may need some help. "
-                      "[He gives you a parchment]."
-                      "These orders will temporarily assign one of my Rangers "
-                      "to you. Just ask one to join your party.")
+                 (say knpc "すばらしい！君には助けが必要だろう。\n"
+                      "［彼はあなたに羊皮紙の文書を渡した。］\n"
+                      "この命令書は、警備隊の指揮権を君に一時的に譲渡するものだ。"
+                      "警備隊の一人に仲間に加わるように言いたまえ。")
                  (give kpc t_ranger_orders 1)
                  (quest-data-update-with 'questentry-bandits 'talked-to-deric 1 (quest-notify nil))
                  )
-               (say knpc "You'll never gain a reputation that way!")))
+               (say knpc "そのような態度では、栄光は決して得られないであろう！")))
           )))
                        
 
@@ -282,7 +273,7 @@
 (define (mk-deric tag)
   (bind 
    (kern-mk-char tag                 ; tag
-                 "Deric"            ; name
+                 "デリック"          ; name
                  sp_human            ; species
                  nil                 ; occ
                  s_ranger_captain   ; sprite

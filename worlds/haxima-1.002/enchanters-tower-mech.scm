@@ -76,7 +76,7 @@
                    ))	
        ))
 
-(mk-obj-type 't_mag_mirror "mirror"
+(mk-obj-type 't_mag_mirror "鏡"
 	'()
 	layer-mechanism mag-mirror-ifc)
 	
@@ -90,7 +90,7 @@
 			(lambda (kmirror kuser)
 				(if (mag-mirror-active? kmirror)
 					(let ((target-loc (mag-mirror-target-loc kmirror)))
-						(kern-log-msg (kern-obj-get-name kuser) " steps through the mirror!")
+						(kern-log-msg (kern-obj-get-name kuser) "が鏡から出てきた！")
 						(kern-obj-relocate kuser target-loc nil))
 					(let ((target-loc (kern-obj-get-location kmirror))
 							(clone (kern-obj-clone kuser)))
@@ -103,23 +103,23 @@
 						(kern-being-set-base-faction clone faction-monster)
 						(kern-char-set-ai clone 'spell-sword-ai)
 						(kern-obj-put-at clone target-loc)
-						(kern-log-msg (kern-obj-get-name kuser) "'s reflection steps through the mirror!")
+						(kern-log-msg "鏡の中から" (kern-obj-get-name kuser) "が出てきた！")
 						)
 				)))
 
 (define testmirhandler 
 			(lambda (kmirror kuser)
-				(kern-log-msg (kern-obj-get-name kuser) " spots "
+				(kern-log-msg (kern-obj-get-name kuser) "は鏡の中に"
 					(if (mag-mirror-active? kmirror)
 							(let* ((target-loc (mag-mirror-target-loc kmirror))
 									(character (get-char-at target-loc)))
 								(if (null? character)
-									"nothing"
+									"何もないの"
 									(kern-obj-get-name character)
 								))
 							(kern-obj-get-name kuser))
-						" in the mirror"
-						(if (mag-mirror-active? kmirror) "!" "")
+						"を見つけた"
+						(if (mag-mirror-active? kmirror) "！" "")
 						)
 				))
 
@@ -190,11 +190,11 @@
 (define moving-shelf-ifc
   (ifc '()  (method 'search
                    (lambda (shelf)
-					   (kern-log-msg "You find a hidden mechanism!")
+					   (kern-log-msg "隠された仕掛けを見つけた！")
                      ))
 			(method 'handle
                    (lambda (shelf kuser)
-                       (kern-log-msg "The shelf moves!")
+                       (kern-log-msg "棚が動いた！")
 					   (let ((data (gob shelf)))
 							(set-car! data (not (car data)))
 							(send-signal kuser (eval (list-ref data 3))
@@ -209,7 +209,7 @@
 					 ))
 		))
 
-(mk-obj-type 't_moving_shelf "set of shelves"
+(mk-obj-type 't_moving_shelf "棚"
 	s_bookshelf layer-mechanism moving-shelf-ifc)
 
 (define (mk-moving-shelf loc-open loc-closed trigger)
@@ -217,15 +217,15 @@
 	(list #f loc-open loc-closed trigger)))
 
 (mk-reusable-item 
- 't_mans_note "note" s_scroll norm
+ 't_mans_note "メモ" s_scroll norm
  (lambda (kletter kuser)
    (kern-ui-page-text
-		"Short Note"
-		"Hey Enchanter:"
+		"短いメモ"
+		"魔道師さん："
 		""
-		"This room is _awfully_ dusty..."
-		"Clean up more often!"
-		"   -- the MAN"
+		"この部屋は汚すぎるわ…"
+		"もっとこまめに掃除しなさい！"
+		"−にんげん"
    )))
    
    
@@ -241,7 +241,7 @@
   (ifc '()
 		(method 'handle 
 			(lambda (kclock kuser)
-				(kern-log-msg "The clock hands stop moving!")
+				(kern-log-msg "時計は動かなくなった！")
 				(powers-timestop kuser kuser 30)
 			))
 		(method 'xamine 
@@ -254,7 +254,7 @@
 						(min (if (> min 5)
 								"00"
 								(number->string (* 10 min)))))
-					(kern-log-msg "The clock reads " hour ":" min)
+					(kern-log-msg "時計は" hour "時" min "分だ。")
 				)))
 		(method 'step
 			(lambda (kmirror kuser)
@@ -272,7 +272,7 @@
             ))	
        )))
 
-(mk-obj-type 't_mag_clock "clock"
+(mk-obj-type 't_mag_clock "時計"
 	(mk-composite-sprite (list s_clock_body s_clock_hand_n s_clock_spin))
 	layer-mechanism mag-clock-ifc)
 

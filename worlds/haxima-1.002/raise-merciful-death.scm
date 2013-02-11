@@ -5,8 +5,8 @@
   (let ((loc (mk-loc p_shard 
                      merciful-death-x 
                      merciful-death-y)))
-  (kern-log-msg "From her watery grave...")
-  (kern-log-msg "...THE MERCIFUL DEATH ARISES!")
+  (kern-log-msg "海の墓から…")
+  (kern-log-msg "…慈悲深い死号が浮上した！")
   (shake-map 10)
   (kern-place-set-subplace p_merciful_death loc)
   (kern-map-set-dirty)

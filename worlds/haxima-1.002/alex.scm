@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Paladin's Hold, in the Keep guarding Kurpolis.
+;; クロポリスの聖騎士の砦
 ;;----------------------------------------------------------------------------
 (define alex-bed ph-bed3)
 (define alex-mealplace ph-tbl3)
@@ -33,63 +33,62 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Alex is a Captain in the Glasdrin Militia, 
-;; serving in the second garrison which guards 
-;; the undead-filled prison level of Kurpolis.
+;; アレックスはグラスドリン軍の隊長で、クロポリスの不死の者の階を守る第二層駐
+;; 屯地で任務についている。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (alex-hail knpc kpc)
-  (say knpc "Welcome, adventurer, and find some measure of safety behind our walls."))
+  (say knpc "ようこそ、冒険者よ。我々の壁の後ろ側は少しは安全だ。"))
 
 (define (alex-name knpc kpc)
-  (say knpc "I am Captain Alex of the Glasdrin militia."))
+  (say knpc "グラスドリン軍のアレックス隊長だ。"))
 
 (define (alex-job knpc kpc)
-  (say knpc "I am a warmage, and commander of this garrison. Do you mean to pass through our gates?")
+  (say knpc "戦闘魔術師、そしてこの駐屯地の指揮官だ。我々の門を通りたいのかね？")
   (if (yes? kpc)
       (alex-pass knpc kpc)
-      (say knpc "If you change your mind and need the password come ask me.")))
+      (say knpc "気が変わったら合言葉について尋ねてくれ。")))
 
 (define (alex-bye knpc kpc)
-  (say knpc "Watch your back out there."))
+  (say knpc "壁の外では背後に気をつけろ。"))
 
 (define (alex-warm knpc kpc)
-  (say knpc "A warmage specializes in combat spells. You know what my biggest problem is?")
+  (say knpc "戦闘魔術師は、戦闘魔法の専門家だ。私の最大のなやみがわかるかね？")
   (yes? kpc)
-  (say knpc "Finding reagents. Be sure and stock up before traveling any deeper!"))
+  (say knpc "秘薬をどう見つけるかだ。奥に行く前に備えるのを忘れるな！"))
 
 (define (alex-garr knpc kpc)
-  (say knpc "This is one of three garrisons the militia keeps in Kurpolis. "
-       "The first garrison guards the entrance to Kurpolis to keep monsters from getting to the surface. ")
+  (say knpc "ここはクロポリスにおける軍の三つの駐屯地の一つだ。"
+       "第一層駐屯地は怪物が地上へ出ないようにクロポリスの入り口を守っている。")
   (prompt-for-key)
-  (say knpc "This, the second garrison, manages the prison below and keeps the undead at bay.")
+  (say knpc "この第二層駐屯地は下の収容所を管理し、不死の者を食い止める。")
   (prompt-for-key)
-  (say knpc "The third garrison guards the way to... well, to someplace no one has any business going. ")
+  (say knpc "第三層駐屯地は…どこへ続くかわからない道を守っている。")
   )
 
 (define (alex-unde knpc kpc)
-  (say knpc "This level of Kurpolis is an ancient keep, mostly controlled by the undead. Do you want to know what I think?")
+  (say knpc "クロポリスのこの層には、不死の者が支配する古い砦がある。私の考えを知りたいか？")
   (if (yes? kpc)
-      (say knpc "I think the undead are in the service of a lich.")
-      (say knpc "Then I won't trouble you with my opinion!")))
+      (say knpc "不死の者どもはリッチに仕えているのだと考えている。")
+      (say knpc "ならば君を混乱させないため何も言わないでおこう！")))
 
 (define (alex-lich knpc kpc)
-  (say knpc "What is a lich? Why, it's an undead wizard. A lich can command the dead as well as cast all manner of spells. A most troublesome foe."))
+  (say knpc "リッチとは何か？それは不死の魔術師である。リッチは呪文と同じように死者を操ることができる。最も恐ろしい敵だ。"))
 
 (define (alex-pass knpc kpc)
-  (say knpc "The password is deep."))
+  (say knpc "合言葉は「深淵」だ。"))
 
 (define (alex-thir knpc kpc)
-  (say knpc "We've lost contact with the third garrison. "
-       "One of the soldiers from that regiment is in our prison below. "
-       "I'm afraid he is quite insane. The deep places can do that to a man."))
+  (say knpc "第三層駐屯地とは連絡が取れなくなっている。"
+       "連隊の戦士の一人が下の収容所にいる。"
+       "私は彼が本当におかしくなってしまったのではないかと恐れている。深い場所は人をそのようにしてしまう。"))
 
 (define (alex-pris knpc kpc)
-  (say knpc "If you want to visit the prison take the ladder down."))
+  (say knpc "収容所へ行きたければ、はしごを下りなさい。"))
 
 (define (alex-firs knpc kpc)
-  (say knpc "If you want to visit the first garrison take the ladder up, then travel north and then west."))
+  (say knpc "第一層駐屯地へ行きたければ、はしごを上り、北へ行き、その後西へ行きなさい。"))
 
 (define alex-conv
   (ifc kurpolis-conv
@@ -115,7 +114,7 @@
   (bind 
    (kern-mk-char 
     'ch_alex           ; tag
-    "Alex"             ; name
+    "アレックス"       ; name
     alex-species         ; species
     alex-occ              ; occ
     s_companion_wizard     ; sprite

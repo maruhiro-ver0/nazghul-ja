@@ -1,7 +1,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In Green Tower.
+;; 緑の塔
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_doris
                (list 0  0  doris-bed "sleeping")
@@ -15,19 +15,19 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Doris is the female innkeeper of the White Stag Lodge in Green Tower.
+;; ドリスは緑の塔にある白き牡鹿荘の女主人である。
 ;;----------------------------------------------------------------------------
 (define (doris-name kdoris kplayer)
-  (say kdoris "Hi, I'm Doris, innkeeper of the White Stag Lodge."))
+  (say kdoris "私はドリス、この白き牡鹿荘の主人よ。"))
 
 (define (doris-default)
-  (say kdoris "Let me think... nope, can't help you there."))
+  (say kdoris "ちょっと待って…いえ、どうすることもできないわ。"))
 
 (define (doris-join kdoris kplayer)
-  (say kdoris "[laughing] No thanks! I've got my hands full with the lodge."))
+  (say kdoris "［笑い］お断りよ！宿のことで精一杯だわ。"))
 
 (define (doris-doris knpc kpc)
-  (say knpc "Yep. That's me."))
+  (say knpc "ええ。私のことよ。"))
 
 (define (doris-trade knpc kpc)
   (let ((door (eval 'white-stag-door))
@@ -35,12 +35,12 @@
     ;; is the room still open?
     (if (not (door-locked? (kobj-gob door)))
         ;; yes - remind player
-        (say knpc "Your room is still open, silly! You can use it as long as "
-             "you're in town.")
+        (say knpc "バカねえ、部屋はもう開いているわ！"
+             "町を去るまで出入りできるのよ。")
         ;; no - ask if player needs a room
         (begin
-          (say knpc "My room is " price " gold. I'll unlock the door and you "
-               "can use it for as long as you are in town. Agreed?")
+          (say knpc "部屋は金貨" price "枚、この町を出るまで何度でも出入りできます。"
+               "よろしいですか？")
           (if (kern-conv-get-yes-no? kpc)
               ;; yes - player agrees to the price
               (let ((gold (kern-player-get-gold)))
@@ -49,96 +49,90 @@
                     ;; yes - player has enough gold
                     (begin
                       (kern-player-set-gold (- gold price))
-                      (say knpc "Very well. Take the west passage. First room "
-                           "at the end of the hall.")
+                      (say knpc "承知しました。西側の廊下を進んでください。"
+                           "広間の端の最初の部屋よ。")
                       (send-signal knpc door 'unlock)
                       (kern-conv-end)
                       )
                     ;; no - player does not have enouvh gold)
-                    (say knpc "Seems you're short of funds. Why don't you "
-                         "walk around and kill things until you loot enough "
-                         "corpses? Or whatever you bold adventurers do. [She "
-                         "smiles a bit too sweetly]")))
+                    (say knpc "お金が足りないようね。"
+                         "足りるまでこのあたりを歩き回って、誰かを殺して死体をあさってきては？"
+                         "勇敢な冒険者は皆そうしていますよ。"
+                         "［彼女は魅力的に微笑んだ。］")))
               ;; no - player does not want the room
-              (say knpc "Maybe some other time, then"))))))
+              (say knpc "ではまたの機会に。"))))))
 
 (define (doris-lodge knpc kpc)
-  (say knpc "Yep. It's all mine. It used to belong to my Daddy, God rest his "
-       "soul. Most of my customers are local folk, woodsman or travellers "
-       "wandering through."))
+  (say knpc "ええ。私の全てよ。かつては父のものだったけど、天に召されてしまいました。"
+       "お客のほとんどはこのあたりの森人や旅人よ。"))
 
 (define (doris-daddy knpc kpc)
-  (say knpc "Daddy hunted and trapped his way to a small fortune then he "
-       "built this lodge. When he died, I got the lodge."))
+  (say knpc "父は狩りで得た少しの富でこの宿を立てました。父が死んでからは私が引き継いだのです。"))
 
 (define (doris-local knpc kpc)
-  (say knpc "The people here are varied, odd and secretive. They are also "
-       "trustworthy, competent and interesting. You will not find better "
-       "friends or worse enemies then the ones you make here."))
+  (say knpc "このあたりには、変わり者から秘密のありそうな人まで色々いるわ。"
+       "皆、信用できる有能で面白い人でもあるけれど。"
+       "あなたは、ここの人達より良い友も、悪い敵も見つけることはできないでしょうね。"))
 
 (define (doris-woodsman knpc kpc)
-  (say knpc "Hunters, lumberjacks and foragers usually pass through here if "
-       "they are in the area. Wealthier sport hunters from the city take "
-       "lodging here, but usually those who work in the woods camp in the "
-       "woods. They come here for a bit of drink, company and a decent meal."))
+  (say knpc "狩人、木こり、食料を採取する人達は、このあたりに来ても普通ここを通り過ぎて行きます。"
+       "町のお金持ちは狩りで遊びに来ればここに泊まります。"
+       "でも、この森で働く者は普通は森の中でキャンプします。"
+       "ここに来るのは少し飲む、集会、ちゃんとした食事のためです。"))
 
 (define (doris-travelers knpc kpc)
-  (say knpc "Yes, folk like yourself."))
+  (say knpc "そう。あなたのような人よ。"))
 
 (define (doris-gen knpc kpc)
-  (say knpc "An old goblin-fighter. Something of a local legend. You can "
-       "find him pottering around in the woods, and he usually stops in at "
-       "night for a drink."))
+  (say knpc "昔のゴブリン戦争の戦士、このあたりでは伝説みたいな人よ。"
+       "木々の間でうろうろしているのが見つかるかもしれませんね。夜はよく飲みに来ていますよ。"))
 
 (define (doris-deric knpc kpc)
-  (say knpc "Yes, Deric. Well, if you've met Deric then you know Deric. He's "
-       "competent enough but doesn't want to spend his life in the obscurity "
-       "of a frontier post."))
+  (say knpc "ええ、デリック……。会えばどんな人かわかるわ。"
+       "彼は立派だけど、この辺境の地位に人生を費やすつもりはないようね。"))
 
 (define (doris-shroom knpc kpc)
-  (say knpc "Some say she is a witch, and that she knows some goblin magic. "
-       "She certainly is handy when anyone falls ill. She often takes her "
-       "meals here."))
+  (say knpc "彼女は魔女で、ゴブリンの魔術も知っていると言う者もいます。"
+       "彼女は誰かが病気になったときは本当に頼りになるのよ。"
+       "ここにもよく食べに来ますよ。"))
 
 (define (doris-abe knpc kpc)
-  (say knpc "Some kind of scholar from Glasdrin. He spends all his time "
-       "studying the ruins. Bookish fellow."))
+  (say knpc "グラスドリンの学者のようね。遺跡の調査にほとんどの時間を費やしているわ。"
+       "本の虫みたいな人よ。"))
 
 (define (doris-abigail knpc kpc)
-  (say knpc "She was orphaned, so I adopted her. I always wanted a child, "
-       "but that was not to be. I worry about her future... I know she "
-       "belongs among her own kind but I can't bear the thought of losing "
-       "her."))
+  (say knpc "彼女は孤児なの。それで私が養子にしたのよ。ずっと自分の子供が欲しかったけど、"
+       "できなかった。あの子の将来が不安…。"
+       "私にはあの子が失ったものの代わりはできないわ。"))
 
 (define (doris-goblins knpc kpc)
-  (say knpc "They trade with the townsfolk, I even have one as a customer "
-       "from time-to-time. But they are forbidden by law to enter cities in "
-       "large numbers, so they're always outnumbered. Most of them are hasty "
-       "to conclude their business and get back into the woods."))
+  (say knpc "彼らは町の人と交易をしているわ。"
+       "私も時々彼らから買います。"
+       "でも、彼らはいつも群れているから、大勢で町に入ることは法で禁止されているの。"
+       "彼らのほとんどは商売をすぐに切り上げて、森へと戻って行くわ。"))
 
 (define (doris-orphaned knpc kpc)
-  (say knpc "Shroom brought her to me when she was just a baby. Said she "
-       "found her in the woods besides her dead parents. I don't know what - "
-       "or who - killed them, Shroom wouldn't say. Perhaps I don't want to "
-       "know."))
+  (say knpc "シュルームが私のところにあの子を連れてきたとき、まだ赤ちゃんだった。"
+       "森の中で見つけたとき、側にいた両親は死んでいたと言ってた。"
+       "なぜ死んでいたのか、それとも殺されたのか。シュルームは何も言わなかった。"
+       "もしかしたら私が知りたくないのかもしれない。"))
 
 (define (doris-hail knpc kpc)
-  (say knpc "Welcome to the White Stag"))
+  (say knpc "白き牡鹿荘へようこそ。"))
 
 (define (doris-bye knpc kpc)
-  (say knpc "Come back anytime"))
+  (say knpc "またどうぞ。"))
 
 (define (doris-default knpc kpc)
-  (say knpc "Can't help you there"))
+  (say knpc "どうすることもできないわ。"))
 
 (define (doris-thie knpc kpc)
-  (say knpc "I haven't had any odd guests lately. Check with Deric, who gets "
-       "reports from ranger patrols. And Gen may have seen something in his "
-       "wanderings, too."))
+  (say knpc "最近は怪しい人は見ておりません。デリック隊長が警備隊員の報告を聞いているかも知れません。"
+       "ジェンも外で何か見ているかもしれませんね。"))
 
 (define (doris-band knpc kpc)
-  (say knpc "Travelers have been complaining about them! "
-       "I wish Deric would do something, they're bad for business!"))
+  (say knpc "旅人はみんな困っている！"
+       "デリックにどうにかして欲しい。このままでは商売になりません！"))
 
 (define doris-conv
   (ifc green-tower-conv
@@ -177,7 +171,7 @@
 (define (mk-doris tag)
   (bind 
    (kern-mk-char tag                 ; tag
-                 "Doris"             ; name
+                 "ドリス"            ; name
                  sp_human            ; species
                  nil                 ; occ
                  s_townswoman   ; sprite

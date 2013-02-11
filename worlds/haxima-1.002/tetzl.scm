@@ -8,7 +8,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In the monster village of Kun.
+;; 怪物の村クーン
 ;;----------------------------------------------------------------------------
 (define tetzl-bed campfire-3)
 (define tetzl-mealplace cantina-1)
@@ -33,10 +33,9 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Tetzl is a sentient spider of giant size, 
-;; living in the monster village of Kun.
+;; テツルは巨大なクモの職人で、怪物の村クーンに住んでいる。
 ;; 
-;; Currently, no dialog or quests, but this seems a missed opportunity...
+;; 現在、セリフもイベントもない。しかし、機会がないようだ…。
 ;;----------------------------------------------------------------------------
 
 
@@ -44,7 +43,7 @@
   (bind 
    (kern-mk-char 
     'ch_tetzl           ; tag
-    "Tetzl"             ; name
+    "テツル"            ; name
     tetzl-species         ; species
     tetzl-occ              ; occ
     s_spider     ; sprite

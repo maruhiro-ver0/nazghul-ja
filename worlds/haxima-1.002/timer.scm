@@ -45,7 +45,7 @@
        (method 'start ktmr-start!)
        ))
 
-(mk-obj-type 't_timer "timer" '() layer-mechanism timer-ifc)
+(mk-obj-type 't_timer "»þ·×" '() layer-mechanism timer-ifc)
 
 (define (mk-timer target-tag timeout sig)
   (bind (kern-mk-obj t_timer 1)

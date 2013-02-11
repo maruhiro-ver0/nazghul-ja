@@ -6,7 +6,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;;
-;; The schedule below is for the place "Enchanter's Tower Ground Floor"
+;; 魔道師の塔の1階
 ;;----------------------------------------------------------------------------
 (kern-mk-sched 'sch_zane
                (list 0  0  enchtwr-zane-bed        "sleeping")
@@ -31,17 +31,16 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;;
-;; Zane is a ranger of the Fens. He camps at the Enchanter's Tower,
-;; where he sells various outdoorsman gear needful for questing among 
-;; the poisonous swamps of the region.
+;; ゼインは湿地帯の警備隊員である。彼は魔道師の塔でキャンプし、このあたりの
+;; 毒の沼での野外活動で必要な物を売っている。
 ;;----------------------------------------------------------------------------
 (define zane-merch-msgs
   (list nil ;; closed
-        "I don't trust those town armories. I make my own equipment. Lemme show you what I got." ;; buy
+        "町の物は信用できない。自分で作ってる。見せてやろう。" ;; buy
         nil ;; sell
         nil ;; trade
-        "Watch your step out there." ;; bought-something
-        "Suit yourself, bub." ;; bought-nothing
+        "このあたりでは足元に気をつけろ。" ;; bought-something
+        "好きにしな。" ;; bought-nothing
         nil
         nil
         nil
@@ -51,38 +50,38 @@
 (define zane-catalog
   (list
    ;; reagents
-   (list ginseng        (* 5 reagent-price-mult) "This stuffs good for healing.")
-   (list garlic         (* 4 reagent-price-mult) "You gotta have garlic for warding.")
-   (list blood_moss     (* 6 reagent-price-mult) "Hard to find this stuff.")
-   (list nightshade     (* 8 reagent-price-mult) "This only grows in really damp places.")
-   (list mandrake       (* 10 reagent-price-mult) "All the powerful spells require these guys.")
+   (list ginseng        (* 5 reagent-price-mult) "これは回復に効く。")
+   (list garlic         (* 4 reagent-price-mult) "病気になったときいるはずだ。")
+   (list blood_moss     (* 6 reagent-price-mult) "これはなかなか見つからない。")
+   (list nightshade     (* 8 reagent-price-mult) "これは本当にジメジメした所でしか育たない。")
+   (list mandrake       (* 10 reagent-price-mult) "強い呪文にはコイツがいる。")
    
    ;; potions
-   (list t_heal_potion            21 "This stuff really helps in emergencies.")
-   (list t_cure_potion            21 "Even the best get poisoned sometimes. You gotta carry extra of these guys.")
-   (list t_poison_immunity_potion 21 "If you know you have to cross poisonous terrain, drink one of these first.")
+   (list t_heal_potion            21 "これはヤバイとき本当に役に立つ。")
+   (list t_cure_potion            21 "毒にはこれが一番いい。余分に持っておけ。")
+   (list t_poison_immunity_potion 21 "毒のある場所を通るときは、まずこれを飲んでおけ。")
    
    ;; bows, arrows and bolts 
    ;; (as an accomplished Ranger, he is also a bowyer and fletcher)
-   (list t_self_bow    30 "This little guy is lightweight and rapid fire.")
-   (list t_bow         90 "The basic bow is the perfect all-around weapon. Cheap, light, with good range.")
-   (list t_long_bow   300 "These are perfect for hunting fast game in the open.")
-   (list t_great_bow  700 "The paladin's worst nightmare. This baby will take out armored troops at long range.")
+   (list t_self_bow    30 "この小さいヤツは軽くて素早く撃てる。")
+   (list t_bow         90 "この弓はどんなときも使える。安くて軽い。射程もいい。")
+   (list t_long_bow   300 "開けた場所の狩には完璧だ。")
+   (list t_great_bow  700 "聖騎士の悪夢だ。コイツは遠くからでも鎧をぶち抜けるだろう。")
    
-   (list t_arrow        2 "I make these special, but I can part with a quiverful.")
-   (list t_bolt         2 "I make crossbow bolts to trade with town militias.")
+   (list t_arrow        2 "これは特別製だ。だが売ってやろう。")
+   (list t_bolt         2 "町の民兵のためにクロスボウの矢を作ってる。")
    ))
 
 (define (zane-trade knpc kpc) (conv-trade knpc kpc "buy" zane-merch-msgs zane-catalog))
 
 (define (zane-ench knpc kpc)
-  (say knpc "Yeah, he's locked himself inside, see. "
-       "He doesn't need people interrupting "
-       "him all the time. If you're serious, you'll find a way in."))
+  (say knpc "ああ、この中に閉じこもっている。見てみろ。"
+       "誰にもじゃまされたくないようだ。"
+       "本当に会いたければ、入る方法を見つけなければならんな。"))
 
 (define (zane-fens knpc kpc)
-  (say knpc "You're right in the middle of 'em, bub. They can be dangerous, "
-       "so watch yourself."))
+  (say knpc "ここがそのど真ん中だ。とても危険だ。"
+       "気をつけろ。"))
   
 (define zane-conv
   (ifc ranger-conv
@@ -90,46 +89,44 @@
        ;; 4 characters. The 4-char limit arises from the kernel's practice of
        ;; truncating all player queries to the first four characters. Default,
        ;; on the other hand, is a feature of the ifc mechanism (see ifc.scm).
-       (method 'default (lambda (knpc kpc) (say knpc "Ask somebody else.")))
-       (method 'hail (lambda (knpc kpc) (say knpc "[He nods]")))
-       (method 'bye (lambda (knpc kpc) (say knpc "Be seeing ya, buddy")))
+       (method 'default (lambda (knpc kpc) (say knpc "他のヤツに聞きな。")))
+       (method 'hail (lambda (knpc kpc) (say knpc "［彼はうなずいた。］")))
+       (method 'bye (lambda (knpc kpc) (say knpc "じゃあな。")))
        (method 'job (lambda (knpc kpc) 
-                      (say knpc "I'm a Ranger. I patrol the Fens.")))
-       (method 'name (lambda (knpc kpc) (say knpc "Zane.")))
+                      (say knpc "警備隊員だ。湿地帯を警備してる。")))
+       (method 'name (lambda (knpc kpc) (say knpc "ゼイン。")))
        (method 'join (lambda (knpc kpc) 
-                       (say knpc "Sorry, bub, I already got a job to do.")))
+                       (say knpc "悪いな。もう仕事がある。")))
        (method 'ench zane-ench)
        (method 'fens zane-fens)
        (method 'dang
                (lambda (knpc kpc)
-                 (say knpc "Poisonous and teeming with monsters. "
-                      "You planning to spend much time in them?")
+                 (say knpc "毒と怪物でいっぱいだ。"
+                      "しばらくここにいるつもりか？")
                  (if (kern-conv-get-yes-no? kpc)
                      (begin
-                       (say knpc "You'll want the poison immunity spell. "
-                            "You know it?")
+                       (say knpc "毒に対する呪文がいるはずだ。"
+                            "知ってるか？")
                        (if (kern-conv-get-yes-no? kpc)
-                           (say knpc "Good. I can sell you the fixin's.")
-                           (say knpc "Mix Nightshade and Garlic and chant "
-                                "Sanct Nox. I've got extra reagents I can "
-                                "sell you.")
+                           (say knpc "ならいい。材料は売ってやるぞ。")
+                           (say knpc "ナイトシェイドと大蒜を調合し、Sanct Noxと唱えろ。"
+                                "秘薬はたくさん持っているので売ってやってもいいぞ。")
                            ))
-                     (say knpc "Ok")
+                     (say knpc "それがいい。")
                      )))
        (method 'pois
                (lambda (knpc kpc)
-                 (say knpc "A green potion or the An Nox spell will cure "
-                      "poison.")))
+                 (say knpc "緑の薬かAn Noxの呪文で治る。")))
        (method 'poti
                (lambda (knpc kpc)
-                 (say knpc "I got some extra I can sell you.")))
+                 (say knpc "たくさん持っているので売ってやるぞ。")))
        (method 'mons
                (lambda (knpc kpc)
-                 (say knpc "Slimes, bandits and undead mostly.")))
+                 (say knpc "粘菌、盗賊、不死の者ども。")))
        (method 'reag
                (lambda (knpc kpc)
-                 (say knpc "I collect 'em where I can. "
-                      "I can sell you my extras.")))
+                 (say knpc "自分はどこでも見つけられる。"
+                      "あまった分は売ってやるぞ。")))
        (method 'buy zane-trade)
        (method 'sell zane-trade)
        (method 'trad zane-trade)
@@ -143,7 +140,7 @@
    (kern-char-arm-self
     (kern-mk-char 
      tag ;;..........tag
-     "Zane" ;;.......name
+     "ゼイン" ;;.......name
      sp_human ;;.....species
      oc_ranger ;;.. .occupation
      s_companion_ranger ;;..sprite

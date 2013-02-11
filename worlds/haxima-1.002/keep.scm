@@ -3,7 +3,7 @@
 (kern-load "alex.scm")
 
 (mk-dungeon-room
- 'p_great_hall "Great Hall"
+ 'p_great_hall "Âç¹­´Ö"
  (list
   "xx xx xx xx xx xx xx xx xx xx xx xx xx x! xx xx xx xx xx "
   "xx ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, xx "
@@ -62,7 +62,7 @@
 (mk-place-music p_great_hall 'ml-dungeon-adventure)
 
 (mk-dungeon-room
- 'p_paladins_hold "Paladin's Hold"
+ 'p_paladins_hold "À»µ³»Î¤ÎºÖ"
  (list
   "rn rn xx xx xx rn rn rn rn xx xx xx xx && xx xx xx xx xx "
   "rn xx xx ,, xx xx rn rn xx x! ,, ,, ,, ,, ,, ,, ,, x! xx "
@@ -98,7 +98,7 @@
  (put (mk-jones) 9 9)
  (put (mk-alex) 9 9)
 
- (put (custom-pt 'put-gate-guard 'php1 'deep) 11 9)
+ (put (custom-pt 'put-gate-guard 'php1 "¥·¥ó¥¨¥ó") 11 9)
 
  ;; inner guard
  (put (guard-pt 'crossbowman) 13 8)
@@ -118,7 +118,7 @@
 (mk-place-music p_paladins_hold 'ml-castle)
 
 (mk-dungeon-room
- 'p_treasury "Treasury"
+ 'p_treasury "ÊõÊª¸Ë"
  (list
   "xx xx xx xx xx rn xx xx xx xx xx xx xx rn xx xx xx xx xx "
   "xx ,, ,, ,, xx xx xx ,, ,, ,, ,, ,, xx xx xx ,, ,, ,, xx "
@@ -220,7 +220,7 @@
 
 
 (mk-dungeon-room
- 'p_death_knights_hold "Death Knight's Hold"
+ 'p_death_knights_hold "»à¤Îµ³»Î¤ÎºÖ"
  (list
 		"xx xx xx xx xx xx xx xx xx xx xx r8 r8 r8 r8 r8 rn rn rn "
 		"xx ,, ,, ,, ,, ,, ,, ,, ,, ,, xx .. .. .. bb bb ra rn rn "

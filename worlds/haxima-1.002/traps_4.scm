@@ -2,7 +2,7 @@
 ;; Level 4 of the Thief's Ladder
 ;; ----------------------------------------------------------------------------
 (mk-dungeon-room
- 'p_traps_4 "Labyrinth of Burning Glass"
+ 'p_traps_4 "Ç³¤¨¤ë¥¬¥é¥¹¤ÎÌÂµÜ"
  (list
   "xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx xx "
   "xx ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ,, ~, ,, ,, ,, ,, ,, xx "

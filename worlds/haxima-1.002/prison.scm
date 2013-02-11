@@ -27,7 +27,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place
  'p_prison     ; tag
- "Prison"      ; name
+ "´Æ¹ö"        ; name
  s_hamlet      ; sprite
  m_prison      ; map
  #f              ; wraps

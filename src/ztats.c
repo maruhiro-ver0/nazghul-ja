@@ -154,9 +154,9 @@ static void ztats_op_run(struct applet *applet, SDL_Rect *dims, struct session *
         }
 
 	cmdwin_clear();
-	cmdwin_spush("Stats");
-	cmdwin_spush("<ESC to exit>");
-        foogodSetHintText("\200\201=scroll ESC=exit");
+	cmdwin_spush("觉轮");
+	cmdwin_spush("<ESCで提る>");
+        foogodSetHintText("\200\201=联买 ESC=提る");
         foogodSetMode(FOOGOD_HINT);        
         
         applet->dims = *dims;
@@ -170,7 +170,7 @@ static void ztats_op_run(struct applet *applet, SDL_Rect *dims, struct session *
 
         foogodSetMode(FOOGOD_DEFAULT);
 	cmdwin_pop();
-	cmdwin_spush("ok");
+	cmdwin_spush("窗位");
 
         /* Reset to NULL; else if the current pane removes itself during a
          * session teardown it will trigger a scroll action, which will

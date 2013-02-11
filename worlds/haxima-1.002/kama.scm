@@ -10,7 +10,7 @@
 ;;----------------------------------------------------------------------------
 ;; Schedule
 ;; 
-;; In a prison cell in the dungeons below Green Tower.
+;; 緑の塔の地下の独房
 ;;----------------------------------------------------------------------------
 (define kama-cell gtl-cell1)
 (kern-mk-sched 'sch_kama
@@ -31,31 +31,29 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;; 
-;; Kama is a male Forest Goblin ranger, currently imprisoned below Green Tower.
-;; A friend of Gen, Kama was enroute to a meeting, and detained due to 
-;; some misadventure.
-;; Kama is a potential party member, 
-;; if the player can learn a bit of the Goblin language.
+;; カマは森ゴブリンの狩人の男性で、今は緑の塔の地下に収容されている。
+;; ジェンの友人で、カマは会いに来る途中に不運にも拘束された。
+;; ゴブリン語が少しわかれば、カマは仲間になる。
 ;;----------------------------------------------------------------------------
 
 ;; Basics...
 (define (kama-default knpc kpc)
-  (say knpc "[no response]"))
+  (say knpc "［反応がない。］"))
 
 (define (kama-hail knpc kpc)
-  (meet "You meet a calm goblin who regards you with a fearless, calculating gaze.")
+  (meet "［あなたは落ち着いた様子のゴブリンと会った。恐れる様子はなく、考え込んでいるような目でこちらを見ている。］")
   (if (kama-gave-food? (gob knpc))
-      (say knpc "Bonaha.")
-      (say knpc "Nuki?")
+      (say knpc "ボナハ。")
+      (say knpc "ヌキ？")
       ))
 
 (define (kama-bye knpc kpc)
-  (say knpc "[his expression never changes]"))
+  (say knpc "［彼の表情は変わらなかった。］"))
 
 ;; No == Name
 (define (kama-no knpc kpc)
   (if (kama-gave-food? (gob knpc))
-      (say knpc "[He points to himself] Kama.")
+      (say knpc "［彼は自分を指差した。］カマ。")
       (kama-default knpc kpc)))
 
 ;; Me == Job
@@ -63,10 +61,10 @@
   (if (not (kama-gave-food? (gob knpc)))
       (kama-default knpc kpc)
       (begin
-        (say knpc "Ninto. [He points to you] Zuto?")
+        (say knpc "ニント。［彼はあなたを指差した。］ズト？")
         (if (yes? kpc)
-            (say knpc "[He nods]")
-            (say knpc "[He chuckles as if he disbelieves you]")))))
+            (say knpc "［彼はうなずいた。］")
+            (say knpc "［彼はあなたを疑うような目で笑った。］")))))
 
 ;; Jo == Join
 (define (kama-jo knpc kpc)
@@ -82,14 +80,14 @@
                (or (door-locked? gob)
                    (door-magic-locked? gob)))))))
   (define (rejoin)
-    (say knpc "Ha! Iki!")
+    (say knpc "ハ！イキ！")
     (join-player knpc)
     (kern-conv-end)
     )
-  (define (join-first-time)    
-    (say knpc "Hajo! Bona ka ruka!")
-	  (say knpc "[On the ground, he scratches what looks to be a map of the Great Forest area. Where the southern edge of the forest meets the eastern mountains, he marks an X several times for emphasis.]")
-	  (quest-data-update-with 'questentry-rune-f 'angriss 1 (quest-notify nil))
+  (define (join-first-time)
+    (say knpc "ハジョ！ボナ　カ　ルカ！")
+    (say knpc "［床の上に森の辺りの地図のようなものを描き、そして森の南端が東の山脈と接する所に力を込めて何度もバツ印を描いた。］")
+    (quest-data-update-with 'questentry-rune-f 'angriss 1 (quest-notify nil))
     (kama-joined-once! (gob knpc))
     (join-player knpc)
     ;; Improve the player's relations with forest goblins
@@ -98,25 +96,25 @@
     (kern-conv-end)
     )
   (if (is-player-party-member? knpc)
-      (say knpc "[He looks confused] Ha...")
+      (say knpc "［彼は困惑した様子だ。］ハ…。")
       (if (kama-joined-once? (gob knpc))
           (rejoin)
           (if (not (kama-gave-food? (gob knpc)))
               (kama-default knpc kpc)
               (if (door-still-locked?)
-                  (say knpc "[He points to the cell door and shrugs, maybe if you opened it...]")
+                  (say knpc "［彼は独房の扉を指差し、肩をすくめた。］")
                   (join-first-time)
                   )))))
 
 (define (kama-food knpc kpc)
-  (kern-log-msg "[Do you give him some food?]")
+  (kern-log-msg "［彼に食料を与える？］")
   (define (no-food)
-    (say knpc "[He grunts and turns away]")
+    (say knpc "［彼はうなり声をあげ顔を背けた。］")
     (kern-conv-end))
   (define (yes-food)
     (kama-gave-food! (gob knpc))
-    (say knpc "[He gobbles it down hungrily and smacks his lips] "
-         "Ha nuki! [He points to you] Bonaha."))
+    (say knpc "［彼はそれをガツガツと食べた。］"
+         "ハ　ヌキ！［彼はあなたを指差した。］ボナハ。"))
   (if (yes? kpc)
       (if (> (get-food-donation knpc kpc) 0)
           (yes-food)
@@ -127,8 +125,8 @@
   (if (not (kama-gave-food? (gob knpc)))
       (kama-default knpc kpc)
       (if (any-in-inventory? kpc rune-types)
-          (say knpc "[You show him a Rune. He nods uneasily] Ruka.")
-          (say knpc "[He looks confused as you try to describe a Rune]"))))
+          (say knpc "［あなたが石版を見せると、彼は不安げにうなずいた。］ルカ。")
+          (say knpc "［石版について説明しようとしたが、彼は困惑しているようだ。］"))))
 
 ;; Ruka == Rune
 ;; Having a goblin spout out *sextant coordinates* is just daft. Changing to something descriptive
@@ -136,65 +134,65 @@
 (define (kama-ruka knpc kpc)
   (if (kama-joined-once? (gob knpc))
   		(begin
-	      (say knpc "Iki ruka.")
-    	  (say knpc "[On the ground, he scratches what looks to be a map of the Great Forest area. Where the southern edge of the forest meets the eastern mountains, he marks an X several times for emphasis.]")
+	      (say knpc "イキ　ルカ。")
+    	  (say knpc "［床の上に森の辺りの地図のようなものを描き、そして森の南端が東の山脈と接する所に力を込めて何度もバツ印を描いた。］")
     	  (quest-data-update-with 'questentry-rune-f 'angriss 1 (quest-notify nil))
       	)
       (begin
-        (say knpc "[In the dust on the cell floor he draws a circle with jointed legs. A spider. He then points to you, himself, and then he scuffs out the spider.]")
+        (say knpc "［彼は独房の床のほこりに丸と、それにつながった線を描いた。それはクモのようだった。それから彼はあなたと自分を指差し、クモの絵を消した。］")
         (prompt-for-key)
-        (say knpc "[You get the impression he is proposing an alliance with you against the spider, or whatever it is.]"))))
+        (say knpc "［どうやら彼はあなたに加わりクモと戦うことを提案しているようだ。］"))))
 
 ;; King Clovis (leader of the human forces in the war against the Goblins, one generation ago.
 (define (kama-clov knpc kpc)
   (if (not (kama-gave-food? (gob knpc)))
       (kama-default knpc kpc)  
-      (say knpc "[He looks puzzled at first, but then nods] Ruka ka choto.")))
+      (say knpc "［彼は最初はわからないようだった。だが、彼はうなずいて言った。］ルカ　カ　チョト。")))
 
 (define (kama-leav knpc kpc)
   (if (is-player-party-member? knpc)
       (begin
-        (say knpc "Kama tujo?")
+        (say knpc "カマ　ツジョ？")
         (if (yes? kpc)
             (begin
               (if (kern-char-leave-player knpc)
                   (begin
-                    (say knpc "Kama iki")
+                    (say knpc "カマ　イキ。")
                     (kern-conv-end))
-                  (say knpc "Kama tu iki")))
-            (kern-log-msg "[He looks relieved]")))
-      (kern-log-msg "[He looks confused]")))
+                  (say knpc "カマ　ツ　イキ。")))
+            (kern-log-msg "［彼は安心したようだ。］")))
+      (kern-log-msg "［彼は混乱しているようだ。］")))
 
 ;; Shakespeare
 (define (kama-zukakiguru knpc kpc)
   (begin
-    (say knpc "Ha!  Zukakiguru!")
-    (aside kpc 'ch_gen "We share a common interest, you see.")
-    (say knpc "[He looks at your puzzled expression, and tries again, speaking slowly.] Zu-Ka Ki-Gi-Ru, Choguha Zuluma: Nu Hameluto!")
-    (aside kpc 'ch_gen "Imagine my astonishment, when I learned of the true author!")
+    (say knpc "ハ！ズカキグル！")
+    (aside kpc 'ch_gen "そう、私たちの共通の関心ごとです。")
+    (say knpc "［彼はあなたの困った顔つきを見て、ゆっくりと言い直した。］ズ・カ　キ・グ・ル、チョグハ　ズリュマ：ヌ　ハメリュト！")
+    (aside kpc 'ch_gen "本当の作者を知ったときの驚きを想像してみてください！")
     ))
 
 ;; Hameluto == Good/yes/skillful, Destiny change individual (Prince Hamlet)
 (define (kama-hameluto knpc kpc)
   (begin
-  (say knpc "Hameluto?  Ha!  [Kama changes expression, and then again addresses you, with a serious aspect.]")
-  (aside kpc 'ch_gen "You are in for a treat, to hear it in the original! [Gen watches with devoted interest.]")
+  (say knpc "ハメリュト？ハ！［カマの言い方が変わった。そして真剣な顔つきで再びあなたの方を向いた。］")
+  (aside kpc 'ch_gen "あなたに聞かせてくれるそうですよ！［ジェンは興味深そうに見ている。］")
+  (prompt-for-key)
+  (say knpc "ヌボダ？ツボダ？エーグリュ！")
+  (aside kpc 'ch_gen "生きるべきか、死ぬべきか。それが問題だ！")
 
-  (say knpc "Nuboda? Tuboda? Ehgulu!")
-  (aside kpc 'ch_gen "To be, or not to be.  That is the question!")
+  (say knpc "ボグ　ハヒメ、ナツダ、カマナ、ルリュマダ？")
+  (aside kpc 'ch_gen "どちらが気高いであろうか？非道な運命のつぶてと矢に耐えるか、")
 
-  (say knpc "Bogu Hahime, Natuda, Kamana, Rulumada?")
-  (aside kpc 'ch_gen "Whether 'tis nobler in the mind, to suffer the slings and arrows of outrageous fortune?")
+  (say knpc "エー、ボメカ、イキカチョ、カツチョ！")
+  (aside kpc 'ch_gen "剣を取り困難の海に立ち向かいこれを終えるか。")
 
-  (say knpc "Eh, Bomeka Darutu, Ikikacho, Katucho!")
-  (aside kpc 'ch_gen "Or to take arms against a sea of troubles, and by opposing end them?")
-
-  (say knpc "[He seems prepared to go on at some length, do you wish to listen to the entire recital?]")
+  (say knpc "［彼はそのまま長い間語るつもりのようだ。朗読を最後まで聞くか？］")
   (if (yes? kpc)
-      (say knpc "[You listen in amazement, for quite some time.]")
-      (say knpc "Bona iki?  Ha!  [He ceases, seemingly content to wait for a more opportune moment.]")
+      (say knpc "［その後、驚くほど長い間語り続けた。］")
+      (say knpc "ボナ　イキ？ハ！［彼は止めたが、もっと語りたいようだった。］")
       )
-  (aside kpc 'ch_gen "The essence of the play comes through more clearly in the original, don't you think?")
+  (aside kpc 'ch_gen "この劇の核心の部分は、元よりも明瞭になっていると思いませんか？")
   ))
 
 (define kama-conv
@@ -224,7 +222,7 @@
   (bind 
     (kern-mk-char 
      'ch_kama           ; tag
-     "Kama"             ; name
+     "カマ"             ; name
      kama-species         ; species
      kama-occ              ; occ
      s_fgob_civilian  ; sprite

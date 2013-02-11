@@ -60,7 +60,7 @@
 (define (check-wriggle kactor)
   (cond ((null? (kern-char-get-arms kactor)) #t)
         (else
-         (kern-log-msg "Must unready arms!")
+         (kern-log-msg "装備を外さなければならない！")
          #f
          )))
       
@@ -105,7 +105,7 @@
 					
 
 (define sk_jump
-  (mk-skill "Jump" "Jump over impassable terrain"
+  (mk-skill "跳ぶ" "通れない場所を飛び越える"
             0
             0 
             #f
@@ -117,7 +117,7 @@
             ))
 
 (define sk_arm_trap
-  (mk-skill "Arm Trap" "Allows character to use beartraps and caltrops"
+  (mk-skill "罠を仕掛ける" "トラバサミや鉄菱を仕掛ける"
             0
             0
             #f
@@ -129,7 +129,7 @@
             ))
 
 (define sk_sprint
-  (mk-skill "Sprint" "Move quickly, in a straight line, for a short distance"
+  (mk-skill "走る" "短い直線をすばやく移動する"
             0
             0
             #f
@@ -142,7 +142,7 @@
             ))
 
 (define sk_wriggle
-  (mk-skill "Wriggle" "Squeeze through tight spots"
+  (mk-skill "忍び込む" "狭い場所を通り抜ける"
             base-move-ap   ;; ap
             0              ;; mp
             #f             ;; wilderness?
@@ -155,7 +155,7 @@
 
 (define sk_disarm_trap
   ;; fixme: should some special tools be required?
-  (mk-skill "Disarm Trap" "Disarm a trap on a door or chest"
+  (mk-skill "罠を外す" "扉や箱の罠を外す"
             0              ;; ap
             0              ;; mp
             #f             ;; wilderness?
@@ -167,7 +167,7 @@
             ))
 
 (define sk_stealth
-  (mk-skill "Stealth" "Avoid detection"
+  (mk-skill "隠れる" "見つからないようにする"
             base-move-ap   ;; ap
             0              ;; mp
             #f             ;; wilderness?
@@ -179,7 +179,7 @@
             ))
 
 (define sk_reach
-  (mk-skill "Reach" "Handle objects more than one tile away"
+  (mk-skill "伸ばす" "1つ向こうのものを操作する"
             base-move-ap   ;; ap
             0              ;; mp
             #f             ;; wilderness?
@@ -191,7 +191,7 @@
             ))
 
 (define sk_butcher
-  (mk-skill "Butcher" "Turn an animal corpse into food or materials"
+  (mk-skill "加工する" "動物の死体を食料や道具にする"
             0              ;; ap
             0              ;; mp
             #f             ;; wilderness?
@@ -203,7 +203,7 @@
             ))
 
 (define sk_pickpocket
-  (mk-skill "Pickpocket" "Take something from an NPC"
+  (mk-skill "盗む" "他人の物を取る"
             base-move-ap   ;; ap
             0              ;; mp
             #f             ;; wilderness?
@@ -215,7 +215,7 @@
             ))
 
 (define sk_unlock
-  (mk-skill "Unlock" "Unlock a door with a picklock"
+  (mk-skill "こじ開ける" "鍵開け道具で扉を開ける"
             0
             0
             #f
@@ -233,13 +233,13 @@
 ;; skill.
 
 (define sks_warrior
-  (kern-mk-skill-set "Warrior" (list
+  (kern-mk-skill-set "戦士" (list
                                 (list 1 sk_sprint)
                                 (list 2 sk_jump)
                                 )))
 
 (define sks_ranger
-  (kern-mk-skill-set "Ranger" (list
+  (kern-mk-skill-set "警備隊員" (list
                                 (list 1 sk_sprint)
                                 (list 2 sk_jump)
                                 (list 3 sk_arm_trap)
@@ -247,7 +247,7 @@
                                 )))
 
 (define sks_wrogue
-  (kern-mk-skill-set "Wrogue" (list 
+  (kern-mk-skill-set "ならず者" (list 
                                (list 1 sk_sprint)
                                (list 1 sk_arm_trap)
                                (list 2 sk_unlock)
@@ -260,14 +260,14 @@
                                )))
 
 (define sks_wright
-  (kern-mk-skill-set "Wright" (list 
+  (kern-mk-skill-set "職人" (list 
                                (list 1 sk_arm_trap)
                                (list 2 sk_unlock)
                                (list 3 sk_disarm_trap)
                                )))
 
 (define sks_wanderer 
-  (kern-mk-skill-set "Wanderer" (list 
+  (kern-mk-skill-set "迷い人" (list 
                                (list 2 sk_sprint)
                                (list 3 sk_jump)
                                (list 3 sk_unlock)

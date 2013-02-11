@@ -2745,11 +2745,11 @@ static pointer kern_conv_say(scheme *sc,  pointer args)
         }
         
         if (speaker->isKnown()) {
-                log_begin("^c+%c%s:^c- ", CONV_NPC_COLOR, speaker->getName());
+                log_begin("^c+%c%s: ^c-", CONV_NPC_COLOR, speaker->getName());
         } else {
                 log_begin("^c+%c", CONV_NPC_COLOR);
                 speaker->describe();
-                log_continue(":^c- ");
+                log_continue(": ^c-");
         }
 
         args = scm_car(sc, args);
@@ -2811,7 +2811,7 @@ static pointer kern_conv_get_yes_no(scheme *sc,  pointer args)
 static pointer kern_conv_get_amount(scheme *sc,  pointer args)
 {
         cmdwin_clear();
-        cmdwin_spush("How much");
+        cmdwin_spush("いくら");
         return scm_mk_integer(sc, ui_get_quantity(-1));
 }
 
@@ -3595,11 +3595,11 @@ static pointer kern_conv_begin(scheme *sc, pointer args)
                 return sc->F;                
         }
 
-	log_begin("You are accosted by ");
+	log_begin("");
         Session->subject = player_party;
 	npc->describe();
         Session->subject = NULL;
-	log_end(".");
+	log_end("が話しかけてきた。");
 
         conv_enter(npc, member, conv);
 
@@ -6990,7 +6990,7 @@ KERN_API_CALL(kern_ui_page_text)
         foogodSetMode(FOOGOD_HINT);
         statusSetPageText(title, text);
         statusSetMode(Page);
-        consolePrint("[Hit ESC to continue]\n");
+        consolePrint("[ESCキーを押すと続ける]\n");
 
         kh.fx = scroller;
         kh.data = NULL;
@@ -10063,6 +10063,64 @@ KERN_OBSOLETE_CALL(kern_set_ascii);
 KERN_OBSOLETE_CALL(kern_set_frame);
 KERN_OBSOLETE_CALL(kern_set_cursor);
 
+static int cmp_dictionary(const void *a, const void *b)
+{
+	int a_len = strlen(((struct dictionary *)a)->kana);
+	int b_len = strlen(((struct dictionary *)b)->kana);
+
+	if (a_len > b_len) {
+		return 1;
+	} else if (a_len < b_len) {
+		return -1;
+	} else {
+		return 0;
+	}
+}
+
+static int find_dictionary(const char *kana)
+{
+	int i;
+
+	for (i = 0; dictionary[i].kana != NULL; i++)
+		if (strcmp(dictionary[i].kana, kana) == 0)
+			return i;
+	return -1;
+}
+
+static void kern_dictionary(scheme *sc, pointer pp)
+{
+	int i, j;
+	char *kana, *english, *kanji;
+
+	if (dictionary == NULL) {
+		dictionary = (struct dictionary *)malloc(sizeof (struct dictionary));
+		dictionary[0].kana = NULL;
+	}
+
+	for (i = 0; scm_is_pair(sc, pp); i++) {
+		unpack(sc, &pp, "sss", &kana, &english, &kanji);
+
+		if ((j = find_dictionary(kana)) < 0) {
+			for(j = 0; dictionary[j].kana != NULL; j++)
+				;
+			dictionary = (struct dictionary *)realloc(dictionary, sizeof(struct dictionary) * (j + 2));
+
+			dictionary[j].kana = (char *)malloc(strlen(kana) + 1);
+			dictionary[j].english = (char *)malloc(strlen(english) + 1);
+			dictionary[j].kanji = (char *)malloc(strlen(kanji) + 1);
+
+			strcpy(dictionary[j].kana, kana);
+			strcpy(dictionary[j].english, english);
+			strcpy(dictionary[j].kanji, kanji);
+			dictionary[j + 1].kana = NULL;
+		}
+	}
+		
+	for(j = 0; dictionary[j].kana != NULL; j++)
+		;
+	qsort(dictionary, j, sizeof(struct dictionary), cmp_dictionary);
+}
+
 static int fincount=0; /* for debug */
 static void kern_finalize(scheme *sc, pointer pp)
 {
@@ -10523,6 +10581,8 @@ scheme *kern_init(void)
         API_DECL(sc, "kern-set-cursor", kern_set_cursor);
         API_DECL(sc, "kern-set-ascii", kern_set_ascii);
 
+        /* kern-dictionary api */
+        API_DECL(sc, "kern-dictionary", kern_dictionary);
         
         /* Revisit: probably want to provide some kind of custom port here. */
         scheme_set_output_port_file(sc, stderr);

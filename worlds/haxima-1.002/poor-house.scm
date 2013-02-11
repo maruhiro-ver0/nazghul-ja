@@ -36,7 +36,7 @@
 ;;----------------------------------------------------------------------------
 (kern-mk-place
  'p_poor_house     ; tag
- "The Poor House"      ; name
+ "µﬂ…œ±°"            ; name
  s_hamlet      ; sprite
  m_poor_house      ; map
  #f              ; wraps

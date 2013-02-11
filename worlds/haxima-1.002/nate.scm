@@ -22,13 +22,13 @@
 ;;----------------------------------------------------------------------------
 ;; Conv
 ;;
-;; Nate is a ranger of the Fens. He camps at the Enchanter's Tower.
+;; ネイトは盗賊の頭である。
 ;;----------------------------------------------------------------------------
 (define (nate-hail knpc kpc)
   (let ((nate (kobj-gob-data knpc)))
     (define (join)
-      (say knpc "When it is convenient, ask me of the secret, milord. "
-           "Meanwhile, you can trust me not to escape.")
+      (say knpc "都合がいいときに秘密について聞いてくだせえ、旦那。"
+           "それまで絶対に逃げたりしやせん。")
       (join-player knpc)
       (give kpc t_arrow 20)
       (nate-caught! nate)
@@ -36,81 +36,77 @@
       )
     (nate-met! nate)
     (cond ((nate-caught? nate)
-           (say knpc "How can I be of service?")
+           (say knpc "何でも言ってくだせえ。")
            )
           (else
-           (say knpc "There's no need to kill me, adventurer. "
-                "I may have robbed, but I have slain no one. "
-                "Let me surrender, and I'll tell you a great secret. "
-                "Agreed?")
+           (say knpc "冒険者よ、俺が殺される理由はない。"
+                "盗みはやった、でも人殺しはしてねえ。"
+                "降伏されてくれ。そうすればすげえ秘密を教えてやる。"
+                "どうだ？")
            (cond ((yes? kpc) (join))
                  (else
-                  (say knpc "Milord! Slay me and the secret will be lost with me. "
-                       "Spare me and I will join you, fight for you, and lead you to a source of ancient power. "
-                       "I will not try to escape. "
-                       "Afterwards, you can turn me in or set me free, as you like. "
-                       "Agreed?")
+                  (say knpc "旦那！俺を殺せば秘密は俺と一緒に消えちまうんだ。"
+                       "頼む、俺はあんたの仲間になって、あんたのために戦って、あんたを古き力のもとに導きたいんだ！"
+                       "抜け出したりしねえ。"
+                       "その後で俺をブタ箱に送るなり、逃がすなり好きなようにしてくれ。"
+                       "どうだ？")
                   (cond ((yes? kpc) (join))
                         (else
-                         (say knpc "It is a bloodthirsty fiend who slays those who have surrendered!")
+                         (say knpc "降伏した奴を殺すなんて血も涙もない奴だ！")
                          (kern-conv-end)
                          ))))))))
 
 (define (nate-secr knpc kpc)
   (cond ((is-player-party-member? knpc)
          (cond ((equal? (get-place knpc) p_shard)
-                (say knpc "I will tell you where to find the hidden entrance to Brundegardt!"))
+                (say knpc "ブルンデガードの隠された入り口を教えしますぜ！"))
                (else
-                (say knpc "Merciful sir! It is not safe here! Let us escape to the wilderness and I will tell "
-                     "you there.")
+                (say knpc "旦那！ここは安全ではありませんぜ！荒野へ出てそれから話しやしょう。")
                 )))
         (else
-         (say knpc "The secret is safe with me.")
+         (say knpc "ここなら秘密は安全だ。")
          )))
 
 (define (nate-brun knpc kpc)
   (if (is-player-party-member? knpc)
-      (say knpc "Milord, we must search for Brundegardt where the forest road passes north through the mountains. "
-           "I'll tell you the password when we are there.")
-      (say knpc "Mums the word!")))
+      (say knpc "旦那、森の道を北に進んだ山の所でブルンデガードを探しやしょう。"
+           "そこで合言葉を教えますぜ。")
+      (say knpc "その言葉を言うな！")))
 
 (define (nate-pass knpc kpc)
   (if (is-player-party-member? knpc)
       (cond ((equal? (get-place knpc) p_brundegardt)
-             (say knpc "Yes, here we are. You've done well, milord. The password... "
-                  "[he clenches his teeth] "
-                  "...NOOR. [He sighs] It is NOOR.")
+             (say knpc "そう、ここだ。よく見つけやしたね旦那。合言葉は…"
+                  "［彼は歯をかみ締めた］"
+                  "…ノア。［彼はため息をついた。］合言葉はノアだ。")
              (prompt-for-key)
-             (say knpc "Merciful sir, I beg of you a boon. "
-                  "Long have I yearned to enter Brundegardt and learn its "
-                  "secrets. Let us go together, and should we live, you "
-                  "may do with me as you see fit. Will you grant me this?")
+             (say knpc "旦那、お願いがありやす。"
+                  "ずっと長い間、ブルンデガードに入る方法を探し、やっとのことで秘密を見つけやした。"
+                  "一緒に連れて行ってくだせえ。そして生き延びやしょう。何なりと申し付けてくだせえ。"
+                  "お願げえしやす。")
              (cond ((yes? kpc)
-                    (say knpc "I am forever in your debt! But this place has "
-                         "lain hidden for ages. We know not what awaits within. "
-                         "We had best supply ourselves as best we can, with "
-                         "torches, food and lockpicks.")
+                    (say knpc "ご恩は一生忘れやせん！でもここは長いこと隠されていやした。"
+                         "中に何がいるか分かりやせん。"
+                         "松明、食料、鍵開け道具をできるだけ持って行きやしょう。")
                     (prompt-for-key)
-                    (say knpc "But most of all, we will need a goodly store of "
-                         "magical reagents for the mixing of spells. "
-                         "I hope you have some of the wizardly skill, "
-                         "for mark my words: we shall need it ere we are done."))
+                    (say knpc "でも、一番大切なのは、呪文を調合するための秘薬でやす。"
+                         "旦那に魔術師の能力があればよいのでやすが。"
+                         "この言葉を覚えていてくだせえ。「それを終えれば、それが必ず必要になる。」"))
                    (else
-                    (say knpc "I beg you to reconsider, but if you do not then heed "
-                         "my warning, for I bear you no ill will, "
-                         "you being a mere soldier of fortune like myself: "
-                         "do not enter Brundegardt alone, "
-                         "and take with you what supplies you can steal or purchase.")
+                    (say knpc "考えなおしてくだせえ。でも、もし俺を連れて行かねえのなら、"
+                         "警告を聞いてくだせえ。"
+                         "旦那のようなちょっとした戦士でも、一人でブルンデガードに入ってはいけやせん。"
+                         "盗みや強奪の能力がある者を連れていくべきでやす。")
                     )))
              (else
-              (say knpc "But sir! We have not reached Brundegardt!")
+              (say knpc "でも旦那！ここはブルンデガードではありやせん！")
               ))
-      (say knpc "Password? What password?")
+      (say knpc "合言葉？何の合言葉だ？")
       ))
 
 (define nate-conv
   (ifc basic-conv
-       (method 'name (lambda (knpc kpc) (say knpc "I am called Nate.")))
+       (method 'name (lambda (knpc kpc) (say knpc "ネイトと呼ばれている。")))
        (method 'brun nate-brun)
        (method 'hail nate-hail)
        (method 'pass nate-pass)
@@ -119,10 +115,10 @@
 
 (define nate-greetings
   (list
-   "I surrender!"
-   "Don't kill me!"
-   "You've caught me!"
-   "Please, take me prisoner!"
+   "降伏する！"
+   "殺さないでくれ！"
+   "捕まえてくれ！"
+   "たのむ、牢屋に連れて行ってくれ！"
    ))
 
 (define (nate-ai knpc)
@@ -144,7 +140,7 @@
    (kern-char-arm-self
     (kern-mk-char 
      'ch_nate ;;..........tag
-     "Nate" ;;.......name
+     "ネイト" ;;.......name
      sp_human ;;.....species
      oc_wrogue ;;.. .occupation
      s_companion_bard ;;..sprite

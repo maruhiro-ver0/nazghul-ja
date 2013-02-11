@@ -65,8 +65,8 @@ typedef struct ui_select_target_req
 
 } ui_select_target_req_t;
 
-#define SCROLLER_HINT "\005\006=scroll ENT=select ESC=exit"
-#define PAGER_HINT  "\005\006=scroll ESC=exit"
+#define SCROLLER_HINT "\005\006=联买 ENT=疯年 ESC=提る"
+#define PAGER_HINT  "\005\006=山绩 ESC=提る"
 
 extern int dirkey(struct KeyHandler *kh, int key, int keymod);
 extern int cardinaldirkey(struct KeyHandler *kh, int key, int keymod);

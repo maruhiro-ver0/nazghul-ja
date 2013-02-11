@@ -10,7 +10,7 @@
        (method 'handle bim-toggle)
        (method 'state lever-state)))
 
-(mk-obj-type 't_lever "lever" '() layer-mechanism lever-ifc)
+(mk-obj-type 't_lever "レバー" '() layer-mechanism lever-ifc)
 
 (define (mk-lever dest-tag)
   (bind (kern-mk-obj t_lever 1)
@@ -49,7 +49,7 @@
 ;;----------------------------------------------------------------------------
 
 (mk-obj-type 't_hidden_mech  ;; tag
-             "hidden mechanism"       ;; name
+             "隠された仕掛け"       ;; name
              s_blank    ;; sprite
              layer-tfeat    ;; stacking layer
              nil    ;; interface

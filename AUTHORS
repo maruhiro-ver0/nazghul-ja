@@ -1,0 +1,119 @@
+To find out what should go in this file, see "Information For
+Maintainers of GNU Software" (maintain.texi), the section called
+"Recording Contributors".
+
+In alphabetical order by last name....
+
+Amorim, Roberto:
+scripts/nazghul.iss:
+	Adding the Inno Setup script file used to generate the Windows installer
+
+Bauer, Andreas:
+In src/Makefile.in, worlds/Makefile.in, configure, configure.ac, configure.in,
+depcomp, install-sh, ltmain.sh, missing, mkinstalldirs, src/Makefile.am,
+Makefile.in, NEWS, RELEASE_NOTES, acinclude.m4, aclocal.m4, autogen.sh,
+config.guess, config.sub, AUTHORS, ChangeLog, Makefile.am
+        Changed build system to GNU-compliant scheme
+
+Douglas, Tim:
+In src/scheme.c:
+        Fixed compile error on Max OS X
+In src/skill.c, src/skill_set.c, src/skill_set_entry.c, src/templ.c:
+	checks for malloc.h, to fix OsX Build
+
+Gabbert, Kevin:
+In worlds/haxima-1.001/images/kgabbert
+        Created images in .png file(s)
+
+Garrison, Karl:
+In src/cmd.c, src/cmd.h, src/ctrl.c, src/event.h:
+	Added command to dump terrain sprites as one BMP per frame
+
+Gervais, David:
+In worlds/haxima-1.001/images/dgervais
+        Created images in .png file(s)
+
+Glasby, Sam:
+(See user sglasby in the ChangeLog)
+In src/combat.c, src/cursor.cpp, src/event.h, src/play.c, src/play.h:
+	Added an (X)amine command, which is an extended (L)ook.
+In src/play.c, src/character.cpp, src/character.h, src/combat.c, src/status.c:
+	Added pmask to Ztats display
+	Added ammo display to Attack prompt
+	Require confirmation for attack self
+In src/game.c, src/terrain.c, src/terrain.h, src/terrain_map.c
+	Lots of changes to terrain palettes.
+In src/event.h, src/play.c, src/terrain.c, src/terrain.h:
+	Added and implemented (T)errain editing command
+In worlds/haxima-1.001/images
+        Reorganized images throughout all
+In worlds/haxima-1.001/images/sglasby
+        Created images in .png file(s)
+In worlds/haxima-1.001 created:
+        P_terrain_test.scm, P_terrain_test.scm, scenery.scm
+In worlds/haxima-1.001 made changes throughout:
+        session.scm, sprites.scm, sprite-sets.scm, palette.scm, objs.scm,
+        moongate-clearing.scm
+
+Johansson, Janne:
+In src/terrain_map.c, fixes for compiler warnings.
+In configure.ac, fix for SDL_image.h include path
+In doc/GAME_RULES, doc/MAP_HACKERS_GUIDE, doc/USERS_GUIDE, doc/world_building/sound_sample_media.txt:
+	various nitpicks in docs and spelling fixes
+In src/ascii.c, uninitialized nitpickings. shuts gcc4 up
+In src/terrain_map.c, fixing compiler warnings
+
+Links, Bernhard:
+In configure.ac, change for checking SDL install
+In worlds/haxima-1.002/Makefile.am, added missing file(s)
+In src/haxima.c, scheme.c, images.c, common.c, sound.c, session.c: added
+        commandline include dir and save dir
+
+McNutt, Gordon:
+(See user gmcnutt in the ChangeLog)
+In worlds/haxima-1.001:
+        First version of all files except images/* other than images/gmcnutt,
+        and P_terrain_test.scm, P_terrain_test.scm, scenery.scm
+In worlds/haxima-1.002:
+        All files, some re-used from haxima-1.001
+Everywhere else:
+        Most changes except where otherwise noted.
+
+Parker, Kris:
+(See user kaypy in the ChangeLog)
+In worlds/haxima-1.002/shapes.png, provided human knight sprite based on
+        existing sprite and added transparency to some sprites
+In worlds/haxima-1.002/food.png and addons.png, added transparency to some
+        sprites
+Added worlds/haxima-1.002/newmonst.png, newfolks.png
+In worlds/haxima-1.002/building.png, added the tower sprite
+In worlds/haxima-1.002/sprite-sets.scm, sprites.scm and npc-types.scm, added
+        new goblin sprites
+In worlds/haxima-1.002/mouse.scm, minor bugfix
+Added nazghul.nsi, nazinst.ico
+In src/factions.h, minor bugfix
+
+Patersen, Jim (http://www.mfiles.co.uk):
+In worlds/haxima-1.002/music:
+        ballad.mid
+        dragon-slayer.mid
+        into-battle.mid
+        Minuet-like-Mozart.mid
+        bassoons-and-harpsichord.mid  
+        fair-camelot.mid       
+        Lute-and-recorder-ballad.mid  
+        plainchant-recorder-trio.mid
+        double-trios.mid              
+        game-music2.mid        
+        medieval-quest.mid            
+        wind-trio.mid
+        dragon-quest.mid              
+        harpsichord-piece.mid  
+        minstrel-dance.mid
+
+Riberdy, Steve:
+In worlds/haxima-1.002/runestones.png, provided the images
+
+Steele, Joshua:
+In worlds/haxima-1.001/images/jsteele
+        Created images in .png file(s)

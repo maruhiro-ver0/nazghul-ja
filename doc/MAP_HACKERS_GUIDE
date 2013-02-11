@@ -1,0 +1,304 @@
+$Id: MAP_HACKERS_GUIDE,v 1.7 2007/01/23 08:32:13 icepic Exp $
+
+                     MAP HACKER'S GUIDE TO NAZGHUL/HAXIMA
+
+
+                        "The map is not the territory."
+                                     --Alfred Korzybski
+
+
+                                 INTRODUCTION
+
+So you want to modify Haxima? Or maybe you find Haxima pathetic and know you
+can do better. Then you've come to the right place. The Haxima scripts will
+give you lots of examples on how to do things, if you can figure them
+out. Since you're a smart guy I'm sure you can, but an explanation here or
+there might speed things up. Here you'll find a discussion of the principles of
+how to build a game like Haxima with the nazghul engine.
+
+This manual is still in its infancy. If you don't find what you're looking for
+feel free to email requests or suggestions to
+
+        nazghul-devel@lists.sourceforge.net
+
+Happy hacking!
+
+
+                                   CONCEPTS
+
+COMPOSITE SPRITE
+        First, see SPRITE. A composite sprite is a sprite made up of layers of
+        other sprites.
+
+GOB     Scheme data associated with a kernel data structure. The kernel never
+        accesses this data, it is meant to be used by scripts to customize or
+        augment these data structures. Objects, object types and astral bodies
+        all optionally have gobs.
+
+OBJECT  Something which exists on the map and is not part of the scenery.
+
+OBJECT TYPE
+        Read-only data associated with and shared by a class of objects. A type
+        is a kernel data structure which describes attributes that are common
+        to an entire class of objects. For example, all short swords have the
+        same sprite and basic attributes, and all sword objects refer to the
+        sword object type to provide these attributes. In fact, simple objects
+        like short swords may be implemented in the kernel as little more than
+        an object type and a location.
+
+        There are several classes of object type: a generic base class, an arms
+        type, a vehicle type, and a field type. Every object type class has a
+        fixed set of attributes. These can be extended by the script, however,
+        by attaching a gob to the object type.
+
+SPRITE  An animation sequence which shows an object. Every visible object has a
+        sprite. Sprites can be composed of other sprites, see COMPOSITE SPRITE.
+
+SPRITE SET
+        Usually sprite images are collected into files with lots of images in
+        them. A sprite set refers to the file and stores information like
+        how big the images are, how many are in the file, etc. Sprites refer to
+        sprite sets. Different sprites can share some of the same images,
+        although few ever do.
+
+TAG     A name given to a kernel data structure so that it can be referred to
+        by a scheme variable. Tags are important because they can be used when
+        saving a game to allow objects to refer to one another when the game is
+        reloaded.
+
+
+                       QUICK START: HOW TO CHANGE A MAP
+
+Start haxima with the -d option:
+
+      $ haxima -d
+
+Start a game, then invoke the terrain editor using the Ctrl-T command. Like a
+paint program, terrain editing has the concept of a current "brush", which is a
+terrain type. 
+
+The following keybindings are in effect:
+
+        Arrow keys - move the cursor
+        [0-9]-Arrow - jump the cursor
+        Space/Enter - change the terrain under the cursor
+        PgUp/PgDn - scroll the available terrain list to change the brush
+        Home/End - jump to the top or bottom of the available terrain list
+        C - copy; set the terrain under the cursor as the brush
+        F - terrain fill (uses the 4-neighbor algorithm)
+        ESC - abort edit mode
+        Ctrl-[0-9] - save the brush in a "quick access" terrain slot
+        [0-9] - load the brush with the quick access terrain slot
+ 
+"Quick Access" slots start as all walls. Palette.scm holds the list of terrain
+types.
+
+When you are done editing, save the game like you normally would. Your changes
+will be there the next time you start the game. If you want your changes to be
+part of a game started from "Start New Game" the current process involves
+modifying some Scheme files.
+
+To add your changes to the "Start New Game" scripts you need to find your
+changes in the file you saved and copy-and-paste them into the proper startup
+.scm file. In general, you must find the name of the place which is using the
+map and search for it in the .scm files, then replace the starting map with
+your own.
+
+
+                                  KERNEL API
+
+This section documents the kernel calls available to scripts. The document
+format is moduled after the UNIX man pages, which, like so many things in UNIX,
+have served well enough over the last 30-odd years to be worth emulating.
+
+----------------------------------------------------------------------------
+NAME
+        kern-sprite-apply-matrix - apply a color conversion matrix to a sprite
+
+SYNOPSIS
+        (kern-sprite-apply-matrix <sprite> <matrix>)
+
+DESCRIPTION
+        The purpose of this is to alter the colors of a sprite. The idea is you
+        create one sprite, probably in grayscale, and use this procedure to
+        make different colored variations of it. This works by applying the
+        matrix to the sprite, resulting in a linear remapping of the sprite
+        colors to another set of colors. The matrix is in the form:
+
+                (list (list <c01> <c02> <c03>)
+                      (list <c11> <c12> <c13>)
+                      (list <c21> <c22> <c23>)
+                      (list <k1> <k2> <k3>))
+
+        This matrix is applied to the red, green and blue components of each
+        pixel in the sprite like this:
+
+                r = R * c00 + G * c01 + B * c02 + k1
+                g = R * c10 + G * c11 + B * c12 + k2
+                b = R * c20 + G * c21 + B * c22 + k3
+                 
+        Where r, g and b are the result and R, G and B are the original values
+        for the pixel. The result for a component will be clamped to [0, 255].
+
+        The underlying image is copied before being modified. This means that
+        if the sprite is a clone of another sprite, the other sprite will not
+        be modified.
+
+RETURNS
+        The modified sprite. If something is wrong with the arguments it
+        returns the original, unmodified sprite.
+
+EXAMPLES
+
+        This applies an identity matrix, which does nothing:
+
+                (kern-sprite-apply-matrix ksprite
+                                          '((1 0 0)
+                                            (0 1 0)
+                                            (0 0 1)
+                                            (0 0 0)))
+
+        This matrix will convert a grayscale image to blue:
+
+                0 0 0
+                0 0 0
+                0 0 1
+                0 0 0
+
+        This will swap red and blue:
+
+                0 0 1
+                0 1 0
+                1 0 0
+                0 0 0
+
+        This will lighten every pixel by a fixed offset:
+        
+                1   0  0
+                0   1  0
+                0   0  1
+                64 64 64
+
+         This will darken every pixel by a scale factor:
+
+                0.5 0   0
+                0   0.5 0
+                0   0   0.5
+                0   0   0
+
+----------------------------------------------------------------------------
+NAME
+        kern-sprite-blit-over - blit one sprite over another one
+
+SYNOPSIS
+        (kern-sprite-blit-over <dest> <src>)
+
+DESCRIPTION
+        The images of the destination sprite will be copied and then modified
+        by the blit, so you don't have to worry about other sprites that refer
+        to the same images. The two sprites should have the same number of
+        frames and the same dimensions or the results are not defined. The
+        modification will not be saved with the game, so it needs to be redone
+        at load time.
+
+        Blitting over uses more memory than decorating sprites because it makes
+        an extra copy of all the sprite frames. It is faster, though, because
+        it only blits all the sprite components once when it is created,
+        instead of every time it is rendered.
+
+        Blitting is also preferrable for composite weapon sprites, because
+        composite sprite building does not have good support for recursively
+        composite sprites. Unreadying composite weapon sprites will strip them
+        down to their bare sprite. But weapon sprites built via blitting over
+        do not have this problem, because stripping down a blitted-over sprite
+        has no effect.
+
+RETURNS
+        The modified destination sprite.
+
+EXAMPLES
+        (define s_fancy_shield (kern-sprite-blit-over s_shield s_emblem))
+
+----------------------------------------------------------------------------
+NAME
+        kern-sprite-clone - copy a sprite
+
+SYNOPSIS
+        (kern-sprite-clone <original> <new-tag>)
+
+DESCRIPTION
+        Use this when you want to make a modified version of a sprite but still
+        want to keep the original intact. You can assign the clone its own tag
+        and henceforth refer to the tag as a scheme variable, or you can pass
+        in nil and just use the return value.
+
+RETURNS
+        The cloned sprite, or nil if 'original' was a bad arg or a memory
+        allocation failure prevented creation of the clone.
+
+EXAMPLES
+        ;; Clone grass and turn it brown to make dirt
+        (kern-sprite-clone s_grass 's_dirt)
+        (kern-sprite-apply-matrix s_dirt green-to-brown-matrix)
+
+----------------------------------------------------------------------------
+NAME
+        kern-type-set/get-gob - associate scheme data with an object type
+
+SYNOPSIS
+        (kern-type-set-gob <ktype> <cell>)
+        (kern-type-get-gob <ktype>)
+
+DESCRIPTION
+
+        kern-type-set-gob associates 'cell' with the object type 'ktype', so
+        that it can later be found by scripts via kern-type-get-gob. 'ktype'
+        must be the result of a call to kern-mk-obj-type.
+
+        The purpose is to add game-specific information to a kernel data
+        structure so that closures called from the kernel can find it. This
+        information is not visible to the kernel.
+
+        Unlike the gobs attached to objects, gobs attached to object types are
+        not written to the save-game file. For that matter, object types are
+        not written, either, and must be reloaded for every game.
+
+----------------------------------------------------------------------------
+NAME
+        kern-sprite-strip-decorations - remove all decorations from a base
+        sprite
+
+SYNOPSIS
+        (kern-sprite-strip-decorations <sprite>)
+
+DESCRIPTION
+        Remove all decorations from <sprite> and discard them (see
+        sprite_append_decoration()). Useful for rebuilding decorated sprites
+        from scratch.
+
+        This does not remove layers built via kern-sprite-blit-over.
+
+RETURNS
+        The base sprite.
+
+EXAMPLES
+        ;; Make a ship with sails.
+        (define s_ship (kern-sprite-append-decorations (list s_ship s_sails)))
+
+        ;; Nah, changed my mind.
+        (define s_ship (kern-sprite-strip-decorations s_ship))
+
+
+----------------------------------------------------------------------------
+NAME
+        -
+
+SYNOPSIS
+        ()
+
+DESCRIPTION
+
+RETURNS
+
+EXAMPLES
+

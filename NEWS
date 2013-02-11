@@ -1,0 +1,257 @@
+Changes between 0.7.0 and 0.7.1
+o Fixed c++ compile warnings (g++ (GCC) 4.4.4 20100630 (Red Hat 4.4.4-10))
+o Fixed missing libpng DLL in win32 release
+Changes between 0.6.0 and 0.7.0
+Engine
+o Y)use command for skills
+o Quest log in the Z)stats pane
+o Intro scene
+o Misc bugfixes
+Haxima
+o Music
+o Warritrix quest resolved
+o Wilderness spawns slightly more challenging
+o Smoke bombs
+o Misc bugfixes
+Changes between 0.5.6 and 0.6.0
+Engine
+o Detailed speed handling added
+o Backend support for multiple actions per turn
+o Better support for diagonal movement
+o Terrains can now have partial opacity
+o Backend support for skills- wrogue skills added, but not enabled yet
+o Enhanced weapon callbacks and behaviour
+o Enhancements to the built in map editor
+o Better support for script/engine integration via script defined engine variables
+o Revisions to Zstats screens
+o Improved npc party behaviour when player is camping
+o Fixed: Memory leaks are hopefully all cleaned up now
+o New effects: smoke, beam attacks
+o Fixed: several crashes
+o Objects are not dropped on water or air
+Module
+o New spells
+o Random dungeon code generalized, new random dungeons added
+o More movement types added, to distinguish fast creatures from merely fast-moving ones
+o New items, weapons and shopping options
+o Equipment now affects character speed
+o Fixes and additions to conversations
+o Fixed: problems with porcullises not working
+o Visibly distinguishable moons
+o Burning glass maze fairer
+o Characters will no longer voluntarily walk off cliffs (chasm terrain now only selectively lethal))
+o Improved hidden map behaviour
+o Many spellbooks added and distributed
+o Several tweaks to combat balance
+o Fixed: problems entering places diagonally
+o More sprites
+o More hires terrains, directional 'natural rock' walls
+o First pass at a template for new games (now out of date already, sigh)
+o Vehicle combat maps upgraded
+o Various minor bugfixes
+
+Changes between nazghul 0.5.6 and 0.5.5:
+o Fixed: crash when dying upon exit from tutorial cave
+o Fixed: various minor bug-fixes
+
+Changes between nazghul 0.5.5 and 0.5.4:
+Kernel changes:
+o SAVED GAMES FROM PREVIOUS VERSIONS BROKEN! (sorry)
+o Support for smaller displays
+o Multiple saved games supported (with screenshots)
+o Colorized text
+o Character stats affect spell outcomes
+o Character stats have more effect on combat
+o Character and global effects now shown as icons instead of letter codes
+o U)sed and R)eadied items moved to top of list for quicker access next time
+o Mouse targeting
+o New settings menu to turn sound off and change the screen size
+o Better error handling if init script cannot be found
+o Missiles handle line-of-fire better when standing next to corners
+o Support for large icons on big critter (sorry, not multi-tile yet)
+o Disable '>' when standing over a town to prevent abuse
+o M)ix command now shows how many of that spell are already mixed
+o Spell inventory shows icons and stats about spell
+o Bugfixes
+Haxima changesL
+o Reduced most reagent and consumable prices
+o Undead immune to sleep and kill spells
+o Boss dude at end of game immune to charm
+o Some new spells
+o Some new quests and dungeons
+o Lots of new sprites
+o Simple character creation at start of game
+o New in-game objects: clocks, mirrors, watches, bookshelf, caltrops, viles of
+  slime (fun!) and a spell book
+o New NPCs: ratlings, sludge kraken, griffins and carybids
+o Better flee algorithm for NPCs who have had enough
+o Doors may be trapped like chests; multiple traps may be applied
+o S)earching chests or doors might detect a trap, or might set one off
+o Sextant and In Wis both report location as [x=<x> y=<y>]
+o When party members leave they U)nready their equipment and give it back
+o Mesmeme now has prismatic gaze, making him somewhat useful in combat
+o You can name your ships
+o Some new characters
+o Bugfixes
+
+Changes between nazghul 0.5.3 and nazghul 0.5.4:
+o Blended terrain [1]
+o Misc. improved sprites
+o Fixes for: spinning arrows on ground, S rune visibility, "dropped" key
+  presses, solo mode/rendezvous abuse, fire slimes dividing into green slimes,
+  immobile critters, misc. spelling/grammar, party mode + save game abuse, solo
+  moded + posession lockup, Alchemist's lich quest, invisibility scrolls not
+  getting consumed when used, extra ship on town entry bug, wind not updated on
+  load bug, t)alk targeting invisible people abuse, missing Abigail character
+  [1], misc. haxima plot fixes, misc. other
+o Minor limited tweaks to some weapon stats
+o Reagents a lot cheaper now
+o New bottom level of Kurpolis (warning: evil) [1]
+o Demons immune to kill spell
+o Improved pathfinding performance
+o Fixes for 64bit compilation
+o Added sextants
+[1] Changes not applicable with previous saved games
+
+
+Changes between nazghul 0.5.2 and nazghul 0.5.3:
+o Bugfix: assert in status.c after disarmed or acid dissolves readied 
+o New sprites: gint mage, tower, activated altar, PC's, goblins, transparent
+  moon sprites
+o Balance: fireballs no longer drop fire fields where they 
+o Bugfix: hydra's weren't appearing on wilderness combat maps
+o Bugfix: pirate ships spawning in Fens
+o Bugfix: dragons, hydras, lichs and spiders dropped some loot in wilderness
+o Accursed loot
+o Accursed Templar and Roland use human knight sprite
+o Fire slimes drop flaming oils
+o "Normal" UNIX-style installation for source distros
+o New commandline -I (game data dir) and -G (save game dir) options
+o Fixed Gregor and Tooth's sleeping locations
+o Disarm now drops the target's weapon on the ground at his feet
+o Bugfix: nazghul junk (where junk was not a valid load file) caused a segfault
+o G)et now always scoops up everything
+o Bugfix: after leaving, Roland and Kama couldn't rejoin
+o Tweaked armour defense, prices
+o Bugfix: troll loot not using 
+o Added eclipse and improved moon phases
+o Fixed many plural names
+o Drunken staggering doesn't swap
+o Opening sequence tweaks
+
+Changes between nazghul 0.5.1 and nazghul 0.5.2:
+o Bugfix: purchasing a cure service from a healer didn't work
+o Bugfix: when zoomed out, transparency shows up as magenta
+o Bugfix: spawn points in Fun with Levers weren't getting triggered
+o Bugfix: canceling u)se scroll was using up scroll
+o Bugfix  NPC parties getting into towns and dungeons
+o Bugfix: Kathryn not giving player her Wis Quas scroll upon join
+o Bugfix: ladder up from Dank Cave led to wrong location
+o Bugfix: Bole's inn-room door was not being locked on town re-entry
+o Bugfix: dryads in combat/town maps would walk
+o Bugfix: when t)alking and a person was nearby, target origin started on
+  person instead of player
+o Bugfix: g)et didn't work with Runes on the ground
+o Bugfix: selling itesm - list updated improperly. Actually, list was just
+  getting built improperly from the get-go.
+o Bugfix: kathryn's letter was defined in kathryn.scm, which might not be
+  loaded before the letter is referenced in the script.
+o Bugfix: found a part of the wilderness map that was incorrectly impassable
+o Bugfix: old entrance to slimy cavern still in moongate clearing
+o Bugfix: +4 iron helm stats were wrong
+o Ctrl-Q now means "quit without saving"
+o Ctrl-S now means "save without quitting"
+o Command-line options changed
+o Increased dragon HP
+o Changed quit-without-saving keybinding from ctrl-Q to ctrl-S
+o Casting spells now gives XP
+o Doubled XP required for level advancement
+o Removed unthiefly treasure from Thief's Den
+o New sprites: rune stones, human knight, shop signs
+o Added transparency to all sprites
+o New NPC type: fire slimes
+o NPC's no longer drop loot on the wilderness map
+o Gen buffed up
+
+Changes between nazghul 0.5.0 and 0.5.1:
+o Bugfix: some spells like In Ex Por would be
+  consumed even if the player aborted without
+  selecting a target (In Sanct, Sanct and An Ex
+  Por were also affected)
+o Bugfix: searching corpses from saved games
+  sometimes caused script errors
+o Bugfix: if Kathrn in party but Thud alive and
+  not in party, crash when player encounters the
+  Mouse
+o Bugfix: error in the script when the Necromancer
+  summoned Luximene.
+o Bugfix: if a party member died it's readied
+  items were lost.
+o Bugfix: moongate near Glasdrin was positioned
+  over an impassable mountain
+o Bugfix: spider's sometimes dropped piles of
+  spider silk with zero (0) objects in them
+o Bugfix: cannon-killing a large gint party cuased
+  a crash
+o Bugfix: shroom's trade conv broken
+o Bugfix: NPC pirates caused bad save file
+
+Major changes between nazghul 0.5.0 and 0.4.0:
+
+Haxima changes:
+o Haxima is now a complete game.
+o Wilderness map
+o Several towns
+o Several dungeons
+o A main quest which can be completed
+o Several side quests
+
+Kernel changes:
+o NPC target highlighting shows friends and foes
+o Attack command autotargets nearest foe
+o Talk command autotargets nearest object with a conversation
+o Main menu added
+
+Changes between nazghul 0.3.3 and 0.4.0:
+
+Haxima changes:
+o Fixed the sprite for the eldritch blade
+o Trolls can pick up boulders
+o Improved NPC taunts
+o Improved various NPC conversations
+o Rebalanced some weapons and armor
+o Improved performance in crowded places
+o Added monster generators in Lost Halls
+o Characters can climb over boulders at some 
+  risk of falling off
+o Bugfix: inn prices lower than advertised
+o Bugfix: occupied doors should stay open
+o Bugfix: opening troll corpse in Abandoned Cellar
+o Started a new town: the Enchanter's Tower
+o Added a few new spells (undocumented - talk to 
+  NPC's to discover them)
+o Feat request: Shopkeepers tell you what time 
+  they open
+o Feat request: ESC exits combat when done (note: 
+  '<' already did)
+o Feat request: resurrected characters should be 
+  asleep
+o Feat request: automatically open doors when 
+  walking into them
+o Misc new objects, terrains and the odd NPC 
+  character
+
+Kernel changes:
+o Fixed several crashes that occurred  on reload
+o Andreas Bauer improved the configure and build 
+  system(now GNU-compliant)
+o Bugfix: crash when using picklocks on objects
+o Bugfix: setting a watch in camp means certain 
+  death
+o Added "fill" command (f key) to terrain editor
+o Added "copy' command (c key) to terrain editor
+o Bugfix: camping procedure corrupted (crash)
+o Bugfix: crash when a Character's target is 
+  killed by someone else
+o Bugfix: NPC bow "vanishes" when they run out of
+  arrows
